@@ -33,15 +33,25 @@ DEST = {
 }
 
 CHAT_VN_CHANNELS = [
-    'vietnam_chatt', 'vungtau_chat', 'dalat_forum', 'danang_forum',
-    'danang_expats', 'danang_woman', 'danang_chatik', 'kamran_chat',
-    'kuinen_chat', 'nhatrang_chatik', 'nhatrang_expats', 'phanthiet_chat',
-    'fukuok_chatik', 'hochiminh_chat', 'hanoi_chat'
+    'nhatrang_bg', 'NhaTrangchat', 'NhaTrang55', 'svoi_nhatrang',
+    'zhenskiy_nhatrang', 'NhaTrangLady', 'NhaTrangSun',
+    'Danang_Viet', 'danang_women', 'danangchat_ask', 'zhenskiy_danang',
+    'Danang_people', 'Vietnam_Danang1', 'chat_danang', 'danang_chats',
+    'phanthietchat111', 'Nyachang_Vietnam', 'onus_vietnam', 'Viza_Vietnam',
+    'Dalat_Vietnam', 'vietnam_chat1', 'vietnam_chats',
+    'HoChiMinh_Saigon', 'HoChiMinhChatik', 'hochiminh01_bg',
+    'phu_quoc_chat', 'phuquoc_getmir_chat', 'fukuok_chat', 'chat_fukuok',
+    'Hanoi_Viet', 'hanoi24hhh', 'hanoi_chats', 'Danang16', 'hanoichatvip'
 ]
 
 CHAT_TH_CHANNELS = [
-    'thailand_chat', 'bangkok_chat', 'phuket_chat', 'pattaya_chat',
-    'chiang_mai_chat', 'hua_hin_chat', 'krabi_chat'
+    'oawnWI6robot', 'meqpownopnbot', 'Phuket_chatBG', 'barakholka_pkhuket',
+    'htlewrobot', 'Fhsmxvdbot', 'chat_phuket', 'chats_phuket',
+    'huahinrus', 'rentinthai', 'bangkok_chat_znakomstva', 'Bangkok_market_bg',
+    'vse_svoi_bangkok', 'visa_thailand_chat', 'thailand_4at', 'rent_thailand_chat',
+    'thailand_chatt1', 'ThailandChat_INF', 'chat_thailand', 'Bangkok_chatBG',
+    'chat_bangkok', 'Bangkok_chats', 'PattayaSale', 'fgfps_bot',
+    'pattayachatonline', 'Pattayapar', 'chats_pattaya', 'phuketdating', 'KrabiChat'
 ]
 
 ALL_CHAT_CHANNELS = CHAT_VN_CHANNELS + CHAT_TH_CHANNELS
