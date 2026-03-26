@@ -6598,7 +6598,7 @@
             if (!feed) return;
             feed.innerHTML = '<div style="text-align:center;padding:20px;color:#bbb;font-size:13px;">⏳ Загрузка...</div>';
             try {
-                let url = `/api/listings/chat?country=thailand&limit=60`;
+                let url = `/api/listings/chat?country=vietnam&limit=60`;
                 if (channel) url += `&source_channel=${encodeURIComponent(channel)}`;
                 const r = await fetch(url);
                 const items = await r.json();

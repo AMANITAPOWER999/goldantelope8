@@ -21,7 +21,7 @@ D = {
     'THAI': 'thailandparsing',
     'BIKE': 'baykivietnam',
     'CHAT_VN': 'chatiparsing',
-    'CHAT_TH': 'chatthparsing'
+    'CHAT_TH': 'chatiparsing'
 }
 
 CHAT_VN_CHANNELS = [
