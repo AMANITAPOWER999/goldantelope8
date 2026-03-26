@@ -12452,11 +12452,17 @@
             const cards = document.getElementById('mon-chats-cards');
             const summary = document.getElementById('mon-chats-summary');
             if (!tbody) return;
-            tbody.innerHTML = '<tr><td colspan="5" style="padding:20px;text-align:center;color:#888;">⏳ Загрузка...</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="5" style="padding:20px;text-align:center;color:#888;">⏳ Загрузка статистики HF Space... (может занять до 30 сек если Space спит)</td></tr>';
+            if (summary) summary.textContent = 'Подключаемся к HF Space...';
             try {
-                const r = await fetch(HF_CHAT_SPACE + '/status', {signal: AbortSignal.timeout(10000)});
-                if (!r.ok) throw new Error('HTTP ' + r.status);
+                const r = await fetch('/api/hf-stats', {signal: AbortSignal.timeout(40000)});
                 const d = await r.json();
+                if (!r.ok) {
+                    const errMsg = d.message || ('HTTP ' + r.status);
+                    if (tbody) tbody.innerHTML = `<tr><td colspan="5" style="padding:20px;text-align:center;color:#f88;font-size:13px;">⏸ ${errMsg}</td></tr>`;
+                    if (summary) summary.textContent = '';
+                    return;
+                }
 
                 // Summary cards
                 if (cards) {
@@ -12500,7 +12506,11 @@
                 }
                 if (summary) summary.textContent = `HF Space: ${d.status||'?'} | пользователь: ${d.user||'—'} | запущен: ${d.started_at||'—'}`;
             } catch(e) {
-                if (tbody) tbody.innerHTML = `<tr><td colspan="5" style="padding:20px;text-align:center;color:#f44;">Ошибка подключения к HF Space: ${e.message}</td></tr>`;
+                const msg = e.message?.includes('timeout') || e.name === 'TimeoutError'
+                    ? '⏸ HF Space не отвечает — возможно спит. Нажмите «↻ Обновить» через 1-2 минуты.'
+                    : `Ошибка: ${e.message}`;
+                if (tbody) tbody.innerHTML = `<tr><td colspan="5" style="padding:20px;text-align:center;color:#f88;font-size:13px;">${msg}</td></tr>`;
+                if (summary) summary.textContent = '';
             }
         }
 

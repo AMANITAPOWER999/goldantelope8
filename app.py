@@ -6046,6 +6046,22 @@ threading.Thread(target=_auto_setup_webhook, daemon=True, name='WebhookSetup').s
 logger.info('Telethon background forwarder отключён (используйте /api/admin/telethon-forward)')
 
 
+@app.route('/api/hf-stats')
+def hf_space_stats():
+    import requests as _req
+    HF_URL = 'https://poweramanita-a.hf.space/status'
+    try:
+        r = _req.get(HF_URL, timeout=35)
+        r.raise_for_status()
+        return jsonify(r.json())
+    except _req.exceptions.Timeout:
+        return jsonify({'error': 'timeout', 'message': 'HF Space не отвечает (спит или перезапускается). Попробуйте через 1-2 минуты.'}), 504
+    except _req.exceptions.ConnectionError:
+        return jsonify({'error': 'connection', 'message': 'Нет соединения с HF Space.'}), 502
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
 @app.route('/api/telethon/stats')
 def telethon_stats():
     try:
