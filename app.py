@@ -6318,7 +6318,7 @@ button{background:#d4af37;color:#000;border:none;padding:12px 24px;font-size:16p
 <h2>🔐 Telegram Session Setup</h2>
 <div id="step1">
   <p>Шаг 1: Отправить код на телефон</p>
-  <input id="phone" value="+840343893121" placeholder="Телефон">
+  <input id="phone" value="+84343893121" placeholder="Телефон">
   <button onclick="sendCode()">Отправить код</button>
 </div>
 <div id="step2" style="display:none">
@@ -6341,7 +6341,7 @@ async function verifyCode(){
   document.getElementById('result').innerHTML='⏳ Авторизация...';
   const r=await fetch('/tg-auth/verify',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code:code})});
   const d=await r.json();
-  if(d.ok){document.getElementById('result').innerHTML='<b>✅ Сессия создана!</b><br><div class="result">'+d.session+'</div>';}
+  if(d.ok){document.getElementById('result').innerHTML='<b>✅ '+d.user+' — авторизован!</b><br><p>Парсер запущен автоматически.</p><p><a href="/parser-status">📊 Смотреть статус парсера</a></p><details><summary>StringSession (для бэкапа)</summary><div class="result">'+d.session+'</div></details>';}
   else document.getElementById('result').innerHTML='❌ '+d.error;
 }
 </script></body></html>'''
@@ -6424,14 +6424,56 @@ def tg_auth_verify():
     t.start()
     t.join(timeout=30)
     if result.get('ok'):
-        app.logger.info(f'TG Auth OK: {result["user"]}')
-        return jsonify({'ok': True, 'session': result['session'], 'user': result['user']})
+        sess_str = result['session']
+        with open('parser_session.txt', 'w') as f:
+            f.write(sess_str)
+        app.logger.info(f'TG Auth OK: {result["user"]} — session saved, starting parser')
+        try:
+            import telethon_parser
+            telethon_parser.start()
+        except Exception as _pe:
+            app.logger.warning(f'Parser start error: {_pe}')
+        return jsonify({'ok': True, 'session': sess_str, 'user': result['user']})
     return jsonify({'ok': False, 'error': result.get('error', 'Ошибка')})
+
+
+@app.route('/parser-status')
+def parser_status_page():
+    try:
+        import telethon_parser
+        status = telethon_parser.get_status()
+        is_running = telethon_parser.STATS.get('running', False)
+    except Exception as e:
+        status = f'Ошибка импорта парсера: {e}'
+        is_running = False
+    color = '#2ecc71' if is_running else '#e67e22'
+    return f'''<!DOCTYPE html><html><head><meta charset="utf-8">
+<title>Parser Status</title>
+<meta http-equiv="refresh" content="15">
+<style>body{{font-family:monospace;background:#111;color:#eee;padding:20px;}}
+h2{{color:#d4af37;}} pre{{background:#1a1a1a;padding:15px;border-radius:8px;white-space:pre-wrap;font-size:13px;}}
+.badge{{display:inline-block;padding:4px 12px;border-radius:12px;background:{color};color:#000;font-weight:bold;margin-bottom:12px;}}
+a{{color:#d4af37;}}</style></head>
+<body>
+<h2>🦌 GoldAntelope — Статус парсера</h2>
+<div class="badge">{"✅ РАБОТАЕТ" if is_running else "⏳ ОЖИДАНИЕ"}</div>
+<pre>{status}</pre>
+<p><a href="/tg-auth">🔐 Авторизация</a> | <a href="/">🏠 Главная</a></p>
+</body></html>'''
 
 
 if __name__ == '__main__':
     import threading
     t = threading.Thread(target=run_bot, daemon=True)
     t.start()
+    try:
+        import telethon_parser
+        if telethon_parser.get_session():
+            app.logger.info('TELETHON_SESSION найдена — запускаю парсер...')
+            telethon_parser.start()
+        else:
+            app.logger.info('TELETHON_SESSION не задана — авторизуйтесь через /tg-auth')
+    except Exception as _e:
+        app.logger.warning(f'Парсер не запущен: {_e}')
     port = int(os.environ.get('PORT', 8080))
     app.run(host='0.0.0.0', port=port, debug=False)
