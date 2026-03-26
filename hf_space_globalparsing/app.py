@@ -19,8 +19,36 @@ SESS = os.environ.get('TELETHON_SESSION', '')
 D = {
     'VIET': 'vietnamparsing',
     'THAI': 'thailandparsing',
-    'BIKE': 'visaranvietnam'
+    'BIKE': 'visaranvietnam',
+    'CHAT_VN': 'chatiparsing'
 }
+
+CHAT_VN_CHANNELS = [
+    'vietnam_chatt', 'vungtau_chat', 'dalat_forum', 'danang_forum',
+    'danang_expats', 'danang_woman', 'danang_chatik', 'kamran_chat',
+    'kuinen_chat', 'nhatrang_chatik', 'nhatrang_expats', 'phanthiet_chat',
+    'fukuok_chatik', 'hochiminh_chat', 'hanoi_chat'
+]
+
+EMOJI_RE = re.compile(
+    "[\U00010000-\U0010ffff"
+    "\U0001F600-\U0001F64F"
+    "\U0001F300-\U0001F5FF"
+    "\U0001F680-\U0001F6FF"
+    "\U0001F1E0-\U0001F1FF"
+    "\U00002702-\U000027B0"
+    "\U000024C2-\U0001F251"
+    "]+",
+    flags=re.UNICODE
+)
+
+def clean_chat_text(t):
+    if not t:
+        return ""
+    t = EMOJI_RE.sub('', t)
+    t = re.sub(r't\.me/\S+|http\S+', '', t)
+    t = " ".join(t.split())
+    return t.strip()
 
 M = {
     'THAI': [
@@ -44,7 +72,8 @@ M = {
     'BIKE': [
         'bike_nhatrang', 'motohub_nhatrang', 'NhaTrang_moto_market', 'RentBikeUniq',
         'BK_rental', 'nha_trang_rent', 'RentTwentyTwo22NhaTrang'
-    ]
+    ],
+    'CHAT_VN': CHAT_VN_CHANNELS
 }
 
 STATS = {
@@ -226,6 +255,41 @@ async def _run_client():
 
     total_ok = sum(len(v) for v in STATS['connected'].values())
     log.info(f'Total: {total_ok} channels. Listening for new messages...')
+
+    chat_vn_usernames = {c.lower() for c in CHAT_VN_CHANNELS}
+
+    @client.on(events.NewMessage(chats=all_ents))
+    async def hchat(e):
+        """Обработчик текстовых сообщений из чатов Вьетнама -> @chatiparsing"""
+        try:
+            chat = await e.get_chat()
+            un = (getattr(chat, 'username', None) or '').lower()
+        except Exception:
+            return
+        if un not in chat_vn_usernames:
+            return
+        if e.media:
+            return
+        t = e.raw_text or e.text or ""
+        t = clean_chat_text(t)
+        if not t or len(t) < 3:
+            return
+        if len(t) > 300:
+            t = t[:297] + "..."
+        try:
+            src_link = f"https://t.me/{un}/{e.id}"
+            text = f"{t}\n\n{src_link}"
+            await client.send_message(D['CHAT_VN'], text, parse_mode=None)
+            STATS['forwarded'] += 1
+            STATS['last_forward'] = time.strftime('%H:%M:%S UTC', time.gmtime())
+            STATS['per_channel'][un] = STATS['per_channel'].get(un, 0) + 1
+            log.info(f'CHAT @{un} -> @{D["CHAT_VN"]} | total: {STATS["forwarded"]}')
+        except FloodWaitError as fw:
+            log.warning(f'FloodWait {fw.seconds}s, sleeping...')
+            await asyncio.sleep(fw.seconds + 5)
+        except Exception as ex:
+            STATS['errors'] += 1
+            log.warning(f'Chat forward error: {ex}')
 
     @client.on(events.NewMessage(chats=all_ents))
     async def h(e):
