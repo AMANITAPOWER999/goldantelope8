@@ -272,11 +272,30 @@ async def _run_client():
         STATS['failed'][grp] = fail
         log.info(f'[{grp}] -> @{DEST[grp]}: {len(ok)}/{len(names)} ok, {len(fail)} failed')
 
-    STATS['connected']['CHAT'] = ALL_CHAT_CHANNELS
-    STATS['failed']['CHAT'] = []
-    log.info(f'[CHAT] -> @{DEST["CHAT"]}: {len(ALL_CHAT_CHANNELS)} channels (VN:{len(CHAT_VN_CHANNELS)} + TH:{len(CHAT_TH_CHANNELS)})')
+    all_chat_ents = []
+    chat_ok, chat_fail = [], []
+    for n in ALL_CHAT_CHANNELS:
+        if n.lower() in dialogs_map:
+            all_chat_ents.append(dialogs_map[n.lower()])
+            chat_ok.append(n)
+        else:
+            try:
+                ent = await asyncio.wait_for(client.get_input_entity(n), timeout=10)
+                all_chat_ents.append(ent)
+                chat_ok.append(n)
+                await asyncio.sleep(0.3)
+            except asyncio.TimeoutError:
+                chat_fail.append(n)
+            except FloodWaitError as fw:
+                await asyncio.sleep(min(fw.seconds, 30))
+                chat_fail.append(n)
+            except Exception:
+                chat_fail.append(n)
+    STATS['connected']['CHAT'] = chat_ok
+    STATS['failed']['CHAT'] = chat_fail
+    log.info(f'[CHAT] -> @{DEST["CHAT"]}: {len(chat_ok)}/{len(ALL_CHAT_CHANNELS)} ok, {len(chat_fail)} failed')
 
-    all_chat_set = {c.lower() for c in ALL_CHAT_CHANNELS}
+    all_chat_set = {c.lower() for c in chat_ok}
     album_buffer = {}
 
     @client.on(events.NewMessage(chats=all_re_ents))
@@ -364,7 +383,7 @@ async def _run_client():
             STATS['errors'] += 1
             log.warning(f'Album error: {ex}')
 
-    @client.on(events.NewMessage(chats=ALL_CHAT_CHANNELS))
+    @client.on(events.NewMessage(chats=all_chat_ents if all_chat_ents else ALL_CHAT_CHANNELS))
     async def handle_chat(e):
         try:
             chat = await e.get_chat()
