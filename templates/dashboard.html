@@ -3210,7 +3210,7 @@
                     </div>
                     <!-- Лента сообщений чатов -->
                     <div style="border-top: 1px solid #f0f0f0; padding: 12px 16px;">
-                        <div id="vn-chat-feed" style="max-height: 460px; overflow-y: auto; display: flex; flex-direction: column; gap: 7px;">
+                        <div id="vn-chat-feed" style="max-height: 920px; overflow-y: auto; display: flex; flex-direction: column; gap: 7px;">
                             <div style="text-align: center; padding: 30px; color: #ccc; font-size: 13px;">Выберите город для просмотра сообщений</div>
                         </div>
                     </div>
@@ -6557,7 +6557,13 @@
                     feed.innerHTML = '<div style="text-align:center;padding:30px;color:#bbb;font-size:13px;">Сообщений пока нет — парсер только начал работу</div>';
                     return;
                 }
-                feed.innerHTML = items.slice(0, 60).map(item => {
+                // Сортируем: старые сверху, новые снизу
+                const sorted = items.slice().sort((a, b) => {
+                    const da = a.date ? new Date(a.date) : 0;
+                    const db = b.date ? new Date(b.date) : 0;
+                    return da - db;
+                });
+                feed.innerHTML = sorted.slice(-60).map(item => {
                     const src = (item.source_channel || '').replace('@','');
                     const link = item.tg_link || (src && item.message_id ? `https://t.me/${src}/${item.message_id}` : null);
                     const dateStr = item.date ? new Date(item.date).toLocaleString('ru-RU', {day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}) : '';
@@ -6565,12 +6571,14 @@
                     return `<div style="background:#f8f9fa;border-radius:8px;padding:10px 13px;border-left:3px solid #d4af37;">
                         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;">
                             <a href="https://t.me/${src}" target="_blank" style="color:#0088cc;font-size:12px;font-weight:600;text-decoration:none;">@${src}</a>
-                            <span style="color:#bbb;font-size:11px;">${dateStr}</span>
+                            <span style="background:#f0f0f0;color:#777;font-size:11px;padding:2px 7px;border-radius:10px;">${dateStr}</span>
                         </div>
                         <div style="color:#333;font-size:13px;line-height:1.5;white-space:pre-wrap;">${text}</div>
                         ${link ? `<a href="${link}" target="_blank" style="display:inline-block;margin-top:6px;font-size:11px;color:#0088cc;text-decoration:none;">→ открыть в Telegram</a>` : ''}
                     </div>`;
                 }).join('');
+                // Прокручиваем вниз — новые сообщения снизу
+                feed.scrollTop = feed.scrollHeight;
             } catch(e) {
                 feed.innerHTML = '<div style="text-align:center;padding:20px;color:#f44;font-size:13px;">Ошибка загрузки</div>';
             }
