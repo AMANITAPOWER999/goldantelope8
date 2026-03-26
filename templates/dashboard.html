@@ -5080,7 +5080,7 @@
                         <div style="display:flex; gap:6px; margin-bottom:14px; flex-wrap:wrap;">
                             <button onclick="monSwitchTab('channels')" id="mon-tab-channels" style="padding:7px 16px; border:none; border-radius:7px; cursor:pointer; font-size:13px; font-weight:600; background:#5865f2; color:white;">📋 По каналам</button>
                             <button onclick="monSwitchTab('hf')" id="mon-tab-hf" style="padding:7px 16px; border:none; border-radius:7px; cursor:pointer; font-size:13px; font-weight:600; background:#2a2a3d; color:#aaa;">🌐 HF источники</button>
-                            <button onclick="monSwitchTab('countries')" id="mon-tab-countries" style="padding:7px 16px; border:none; border-radius:7px; cursor:pointer; font-size:13px; font-weight:600; background:#2a2a3d; color:#aaa;">🌏 По странам</button>
+                            <button onclick="monSwitchTab('chats')" id="mon-tab-chats" style="padding:7px 16px; border:none; border-radius:7px; cursor:pointer; font-size:13px; font-weight:600; background:#2a2a3d; color:#aaa;">💬 Чаты</button>
                             <input type="text" id="mon-search" placeholder="🔍 поиск по каналу..." oninput="monFilterTable()" style="margin-left:auto; padding:7px 12px; background:#1a1a2e; border:1px solid #333; border-radius:7px; color:#ddd; font-size:13px; min-width:160px;">
                         </div>
 
@@ -5128,9 +5128,29 @@
                             </div>
                         </div>
 
-                        <!-- По странам -->
-                        <div id="mon-tab-countries-content" style="display:none;">
-                            <div id="mon-countries-grid" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(200px,1fr)); gap:12px;"></div>
+                        <!-- Чаты — статистика переслок -->
+                        <div id="mon-tab-chats-content" style="display:none;">
+                            <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px; flex-wrap:wrap;">
+                                <div id="mon-chats-summary" style="font-size:12px; color:#888;"></div>
+                                <button onclick="loadHFChatStats()" style="margin-left:auto; padding:7px 16px; background:#1565c0; color:white; border:none; border-radius:7px; cursor:pointer; font-size:12px; font-weight:600;">↻ Обновить статистику</button>
+                            </div>
+                            <!-- Сводка -->
+                            <div id="mon-chats-cards" style="display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:10px; margin-bottom:16px;"></div>
+                            <!-- Таблица по каналам -->
+                            <div style="overflow-x:auto;">
+                                <table style="width:100%; border-collapse:collapse; font-size:13px;">
+                                    <thead>
+                                        <tr style="background:#1a1a2e; color:#888;">
+                                            <th style="padding:9px 10px; text-align:left; border-bottom:1px solid #2a2a3d;">#</th>
+                                            <th style="padding:9px 10px; text-align:left; border-bottom:1px solid #2a2a3d;">Канал-источник</th>
+                                            <th style="padding:9px 10px; text-align:left; border-bottom:1px solid #2a2a3d;">Страна</th>
+                                            <th style="padding:9px 10px; text-align:right; border-bottom:1px solid #2a2a3d;">Переслано</th>
+                                            <th style="padding:9px 10px; text-align:left; border-bottom:1px solid #2a2a3d;">Назначение</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="mon-chats-tbody" style="color:#ccc;"></tbody>
+                                </table>
+                            </div>
                         </div>
 
                         <div id="mon-loading" style="text-align:center; color:#555; padding:30px; font-size:14px;">Нажмите "Обновить" для загрузки статистики</div>
@@ -12251,7 +12271,7 @@
 
         function monSwitchTab(tab) {
             _monCurrentTab = tab;
-            ['channels','hf','countries'].forEach(t => {
+            ['channels','hf','chats'].forEach(t => {
                 const btn = document.getElementById('mon-tab-'+t);
                 const cont = document.getElementById('mon-tab-'+t+'-content');
                 if (btn) btn.style.background = t === tab ? '#5865f2' : '#2a2a3d';
@@ -12259,6 +12279,79 @@
                 if (cont) cont.style.display = t === tab ? 'block' : 'none';
             });
             if (_monData) renderMonTables(_monData);
+            if (tab === 'chats') loadHFChatStats();
+        }
+
+        const HF_CHAT_SPACE = 'https://poweramanita-a.hf.space';
+        const CHAT_VN_SET = new Set(['vietnam_chatt','vungtau_chat','dalat_forum','danang_forum','danang_expats','danang_woman','danang_chatik','kamran_chat','kuinen_chat','nhatrang_chatik','nhatrang_expats','phanthiet_chat','fukuok_chatik','hochiminh_chat','hanoi_chat']);
+        const CHAT_TH_SET = new Set(['thailand_chat','bangkok_chat','phuket_chat','pattaya_chat','chiang_mai_chat','hua_hin_chat','krabi_chat']);
+        const RE_VN_SET = new Set(['phuquoc_rent_wt','phyquocnedvigimost','Viet_Life_Phu_Quoc_rent','nhatrangapartment','tanrealtorgh','viet_life_niachang','nychang_arenda','rent_nha_trang','nyachang_nedvizhimost','nedvizimost_nhatrang','nhatrangforrent79','NhatrangRentl','arenda_v_nyachang','rent_appart_nha','Arenda_Nyachang_Zhilye','NhaTrang_rental','realestatebythesea_1','NhaTrang_Luxury','luckyhome_nhatrang','rentnhatrang','megasforrentnhatrang','viethome','Vietnam_arenda','huynhtruonq','DaNangRentAFlat','danag_viet_life_rent','Danang_House','DaNangApartmentRent','danang_arenda','arenda_v_danang','HoChiMinhRentI','hcmc_arenda','Hanoirentapartment','HanoiRentl','Hanoi_Rent','PhuquocRentl'].map(x=>x.toLowerCase()));
+        const RE_TH_SET = new Set(['arenda_phukets','THAILAND_REAL_ESTATE_PHUKET','housephuket','arenda_phuket_thailand','phuket_nedvizhimost_rent','phuketsk_arenda','phuket_nedvizhimost_thailand','phuketsk_for_rent','phuket_rentas','rentalsphuketonli','rentbuyphuket','Phuket_thailand05','nedvizhimost_pattaya','arenda_pattaya','pattaya_realty_estate','HappyHomePattaya','sea_bangkok','Samui_for_you','sea_phuket','realty_in_thailand','nedvig_thailand','thailand_nedvizhimost','globe_nedvizhka_Thailand'].map(x=>x.toLowerCase()));
+        const BIKE_SET = new Set(['bike_nhatrang','motohub_nhatrang','NhaTrang_moto_market','RentBikeUniq','BK_rental','nha_trang_rent','RentTwentyTwo22NhaTrang'].map(x=>x.toLowerCase()));
+
+        function getChannelMeta(ch) {
+            const c = ch.toLowerCase();
+            if (CHAT_VN_SET.has(c)) return {country:'🇻🇳 Вьетнам', dest:'@chatiparsing'};
+            if (CHAT_TH_SET.has(c)) return {country:'🇹🇭 Таиланд', dest:'@chatiparsing'};
+            if (RE_VN_SET.has(c)) return {country:'🇻🇳 Вьетнам', dest:'@vietnamparsing'};
+            if (RE_TH_SET.has(c)) return {country:'🇹🇭 Таиланд', dest:'@thailandparsing'};
+            if (BIKE_SET.has(c)) return {country:'🇻🇳 Байки', dest:'@baykivietnam'};
+            return {country:'—', dest:'—'};
+        }
+
+        async function loadHFChatStats() {
+            const tbody = document.getElementById('mon-chats-tbody');
+            const cards = document.getElementById('mon-chats-cards');
+            const summary = document.getElementById('mon-chats-summary');
+            if (!tbody) return;
+            tbody.innerHTML = '<tr><td colspan="5" style="padding:20px;text-align:center;color:#888;">⏳ Загрузка...</td></tr>';
+            try {
+                const r = await fetch(HF_CHAT_SPACE + '/status', {signal: AbortSignal.timeout(10000)});
+                if (!r.ok) throw new Error('HTTP ' + r.status);
+                const d = await r.json();
+
+                // Summary cards
+                if (cards) {
+                    cards.innerHTML = [
+                        {label:'Всего переслано', val: (d.forwarded||0).toLocaleString('ru'), color:'#d4af37'},
+                        {label:'Фото', val: (d.photos||0).toLocaleString('ru'), color:'#4caf50'},
+                        {label:'Альбомы', val: (d.albums||0).toLocaleString('ru'), color:'#2196f3'},
+                        {label:'Дедупликация', val: (d.dedup||0).toLocaleString('ru'), color:'#ff9800'},
+                        {label:'Ошибки', val: (d.errors||0).toLocaleString('ru'), color:'#f44336'},
+                        {label:'Посл. пересылка', val: d.last_forward||'—', color:'#888'},
+                    ].map(c=>`<div style="background:#1a1a2e;border-radius:8px;padding:12px;border:1px solid #2a2a3d;">
+                        <div style="font-size:11px;color:#666;margin-bottom:4px;">${c.label}</div>
+                        <div style="font-size:18px;font-weight:700;color:${c.color};">${c.val}</div>
+                    </div>`).join('');
+                }
+
+                // Per-channel table
+                const perCh = d.top_channels || {};
+                const rows = Object.entries(perCh).sort((a,b)=>b[1]-a[1]);
+                if (!rows.length) {
+                    tbody.innerHTML = '<tr><td colspan="5" style="padding:20px;text-align:center;color:#555;">Нет данных от HF Space</td></tr>';
+                } else {
+                    tbody.innerHTML = rows.map(([ch, cnt], i) => {
+                        const meta = getChannelMeta(ch);
+                        const bar = Math.round((cnt / (rows[0][1]||1)) * 80);
+                        return `<tr style="border-bottom:1px solid #1a1a2e;">
+                            <td style="padding:8px 10px;color:#555;">${i+1}</td>
+                            <td style="padding:8px 10px;">
+                                <a href="https://t.me/${ch}" target="_blank" style="color:#0088cc;text-decoration:none;font-weight:600;">@${ch}</a>
+                                <div style="margin-top:3px;background:#2a2a3d;border-radius:3px;height:4px;width:100%;max-width:200px;">
+                                    <div style="background:#d4af37;border-radius:3px;height:4px;width:${bar}%;"></div>
+                                </div>
+                            </td>
+                            <td style="padding:8px 10px;font-size:12px;">${meta.country}</td>
+                            <td style="padding:8px 10px;text-align:right;font-weight:700;color:#d4af37;">${cnt.toLocaleString('ru')}</td>
+                            <td style="padding:8px 10px;font-size:12px;color:#4caf50;">${meta.dest}</td>
+                        </tr>`;
+                    }).join('');
+                }
+                if (summary) summary.textContent = `HF Space: ${d.status||'?'} | пользователь: ${d.user||'—'} | запущен: ${d.started_at||'—'}`;
+            } catch(e) {
+                if (tbody) tbody.innerHTML = `<tr><td colspan="5" style="padding:20px;text-align:center;color:#f44;">Ошибка подключения к HF Space: ${e.message}</td></tr>`;
+            }
         }
 
         function monFilterTable() {
@@ -12518,31 +12611,9 @@
                 }).join('') || '<tr><td colspan="8" style="padding:20px;text-align:center;color:#444;">Нет данных</td></tr>';
             }
 
-            // ── По странам ──
-            else if (_monCurrentTab === 'countries') {
-                const grid = document.getElementById('mon-countries-grid');
-                if (!grid) return;
-                const totals = lst.country_totals || {};
-                const catTotals = lst.category_totals || {};
-                grid.innerHTML = Object.entries(totals).map(([country, total]) => {
-                    return `<div style="background:#1a1a2e;border-radius:10px;padding:16px;border:1px solid #2a2a3d;">
-                        <div style="font-size:24px;margin-bottom:6px;">${COUNTRY_FLAGS[country]||country}</div>
-                        <div style="font-size:15px;font-weight:700;color:#e8e8ff;text-transform:capitalize;margin-bottom:10px;">${country}</div>
-                        <div style="font-size:26px;font-weight:800;color:#d4af37;margin-bottom:10px;">${total.toLocaleString('ru')}</div>
-                        <div style="font-size:11px;color:#666;">объявлений в базе</div>
-                    </div>`;
-                }).join('');
-                // Also add category breakdown
-                const catBlock = document.createElement('div');
-                catBlock.style.cssText = 'grid-column:1/-1;background:#1a1a2e;border-radius:10px;padding:16px;border:1px solid #2a2a3d;';
-                catBlock.innerHTML = '<div style="font-size:13px;font-weight:600;color:#888;margin-bottom:12px;">По категориям (все страны):</div><div style="display:flex;flex-wrap:wrap;gap:8px;">' +
-                    Object.entries(catTotals).sort((a,b)=>b[1]-a[1]).map(([cat,n]) =>
-                        `<div style="background:#12122a;border-radius:6px;padding:8px 12px;border:1px solid #2a2a3d;">
-                            <div style="font-size:12px;color:#aaa;">${CATEGORY_NAMES[cat]||cat}</div>
-                            <div style="font-size:16px;font-weight:700;color:#d4af37;">${n.toLocaleString('ru')}</div>
-                        </div>`
-                    ).join('') + '</div>';
-                grid.appendChild(catBlock);
+            // ── Чаты — обрабатывается через loadHFChatStats() ──
+            else if (_monCurrentTab === 'chats') {
+                // данные грузятся отдельно через loadHFChatStats
             }
         }
 
