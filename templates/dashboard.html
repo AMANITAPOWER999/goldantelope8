@@ -6011,7 +6011,7 @@
                 if(typeof loadChatFeed==='function') loadChatFeed();
                 const vnSec = document.getElementById('vn-chat-section');
                 const thSec = document.getElementById('th-chat-section');
-                if (window.currentCountry === 'thailand') {
+                if (currentCountry === 'thailand') {
                     if(vnSec) vnSec.style.display = 'none';
                     if(thSec) thSec.style.display = '';
                     if(typeof loadThChatFeed==='function') loadThChatFeed(_activeThChat||'');
