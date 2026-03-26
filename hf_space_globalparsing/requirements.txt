@@ -1,3 +1,4 @@
-telethon
-Pillow
-gradio
+fastapi==0.115.0
+uvicorn==0.30.6
+telethon==1.42.0
+Pillow>=10.0.0
