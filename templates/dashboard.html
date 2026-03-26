@@ -3133,6 +3133,133 @@
         <div id="chat" class="content">
             <div style="max-width: 900px; margin: 0 auto;">
 
+                <!-- Чаты Вьетнама — только для страны vietnam -->
+                <div id="vn-chat-section" style="display:none; background: white; border-radius: 14px; border: 1px solid #e8e8e8; overflow: hidden; margin-bottom: 18px; box-shadow: 0 3px 12px rgba(0,0,0,0.07);">
+                    <div style="background: linear-gradient(135deg, #d4af37 0%, #f5d170 100%); padding: 14px 20px; display: flex; align-items: center; gap: 10px;">
+                        <span style="font-size: 22px;">🇻🇳</span>
+                        <span style="font-weight: 700; font-size: 16px; color: #5a3e00;">Чаты Вьетнама</span>
+                        <span style="font-size: 12px; color: #7a5800; margin-left: auto; background: rgba(255,255,255,0.4); padding: 3px 10px; border-radius: 12px;" id="vn-chat-active-label"></span>
+                    </div>
+                    <div style="padding: 14px 16px 10px; display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px;">
+                        <button class="vn-chat-btn" data-channel="" onclick="switchVnChat('')"
+                            style="display:flex;align-items:center;gap:7px;padding:10px 12px;border-radius:10px;border:2px solid #d4af37;background:#d4af37;color:#5a3e00;font-size:13px;font-weight:700;cursor:pointer;transition:all .15s;">
+                            🌐 <span>Все</span>
+                        </button>
+                        <button class="vn-chat-btn" data-channel="vietnam_chatt" onclick="switchVnChat('vietnam_chatt')"
+                            style="display:flex;align-items:center;gap:7px;padding:10px 12px;border-radius:10px;border:1.5px solid #e0e0e0;background:#fafafa;color:#444;font-size:13px;cursor:pointer;transition:all .15s;">
+                            🇻🇳 <span>Вьетнам</span>
+                        </button>
+                        <button class="vn-chat-btn" data-channel="nhatrang_chatik" onclick="switchVnChat('nhatrang_chatik')"
+                            style="display:flex;align-items:center;gap:7px;padding:10px 12px;border-radius:10px;border:1.5px solid #e0e0e0;background:#fafafa;color:#444;font-size:13px;cursor:pointer;transition:all .15s;">
+                            🏖️ <span>Нячанг</span>
+                        </button>
+                        <button class="vn-chat-btn" data-channel="nhatrang_expats" onclick="switchVnChat('nhatrang_expats')"
+                            style="display:flex;align-items:center;gap:7px;padding:10px 12px;border-radius:10px;border:1.5px solid #e0e0e0;background:#fafafa;color:#444;font-size:13px;cursor:pointer;transition:all .15s;">
+                            🌴 <span>Нячанг exp</span>
+                        </button>
+                        <button class="vn-chat-btn" data-channel="danang_forum" onclick="switchVnChat('danang_forum')"
+                            style="display:flex;align-items:center;gap:7px;padding:10px 12px;border-radius:10px;border:1.5px solid #e0e0e0;background:#fafafa;color:#444;font-size:13px;cursor:pointer;transition:all .15s;">
+                            🌊 <span>Дананг</span>
+                        </button>
+                        <button class="vn-chat-btn" data-channel="danang_expats" onclick="switchVnChat('danang_expats')"
+                            style="display:flex;align-items:center;gap:7px;padding:10px 12px;border-radius:10px;border:1.5px solid #e0e0e0;background:#fafafa;color:#444;font-size:13px;cursor:pointer;transition:all .15s;">
+                            🌍 <span>Дананг exp</span>
+                        </button>
+                        <button class="vn-chat-btn" data-channel="danang_woman" onclick="switchVnChat('danang_woman')"
+                            style="display:flex;align-items:center;gap:7px;padding:10px 12px;border-radius:10px;border:1.5px solid #e0e0e0;background:#fafafa;color:#444;font-size:13px;cursor:pointer;transition:all .15s;">
+                            👩 <span>Дананг ♀</span>
+                        </button>
+                        <button class="vn-chat-btn" data-channel="danang_chatik" onclick="switchVnChat('danang_chatik')"
+                            style="display:flex;align-items:center;gap:7px;padding:10px 12px;border-radius:10px;border:1.5px solid #e0e0e0;background:#fafafa;color:#444;font-size:13px;cursor:pointer;transition:all .15s;">
+                            💬 <span>Дананг чат</span>
+                        </button>
+                        <button class="vn-chat-btn" data-channel="hochiminh_chat" onclick="switchVnChat('hochiminh_chat')"
+                            style="display:flex;align-items:center;gap:7px;padding:10px 12px;border-radius:10px;border:1.5px solid #e0e0e0;background:#fafafa;color:#444;font-size:13px;cursor:pointer;transition:all .15s;">
+                            🏙️ <span>Хошимин</span>
+                        </button>
+                        <button class="vn-chat-btn" data-channel="hanoi_chat" onclick="switchVnChat('hanoi_chat')"
+                            style="display:flex;align-items:center;gap:7px;padding:10px 12px;border-radius:10px;border:1.5px solid #e0e0e0;background:#fafafa;color:#444;font-size:13px;cursor:pointer;transition:all .15s;">
+                            🏛️ <span>Ханой</span>
+                        </button>
+                        <button class="vn-chat-btn" data-channel="fukuok_chatik" onclick="switchVnChat('fukuok_chatik')"
+                            style="display:flex;align-items:center;gap:7px;padding:10px 12px;border-radius:10px;border:1.5px solid #e0e0e0;background:#fafafa;color:#444;font-size:13px;cursor:pointer;transition:all .15s;">
+                            🏝️ <span>Фукуок</span>
+                        </button>
+                        <button class="vn-chat-btn" data-channel="vungtau_chat" onclick="switchVnChat('vungtau_chat')"
+                            style="display:flex;align-items:center;gap:7px;padding:10px 12px;border-radius:10px;border:1.5px solid #e0e0e0;background:#fafafa;color:#444;font-size:13px;cursor:pointer;transition:all .15s;">
+                            ⛵ <span>Вунг Тау</span>
+                        </button>
+                        <button class="vn-chat-btn" data-channel="dalat_forum" onclick="switchVnChat('dalat_forum')"
+                            style="display:flex;align-items:center;gap:7px;padding:10px 12px;border-radius:10px;border:1.5px solid #e0e0e0;background:#fafafa;color:#444;font-size:13px;cursor:pointer;transition:all .15s;">
+                            🏔️ <span>Далат</span>
+                        </button>
+                        <button class="vn-chat-btn" data-channel="phanthiet_chat" onclick="switchVnChat('phanthiet_chat')"
+                            style="display:flex;align-items:center;gap:7px;padding:10px 12px;border-radius:10px;border:1.5px solid #e0e0e0;background:#fafafa;color:#444;font-size:13px;cursor:pointer;transition:all .15s;">
+                            🌅 <span>Фантьет</span>
+                        </button>
+                        <button class="vn-chat-btn" data-channel="kamran_chat" onclick="switchVnChat('kamran_chat')"
+                            style="display:flex;align-items:center;gap:7px;padding:10px 12px;border-radius:10px;border:1.5px solid #e0e0e0;background:#fafafa;color:#444;font-size:13px;cursor:pointer;transition:all .15s;">
+                            ✈️ <span>Камрань</span>
+                        </button>
+                        <button class="vn-chat-btn" data-channel="kuinen_chat" onclick="switchVnChat('kuinen_chat')"
+                            style="display:flex;align-items:center;gap:7px;padding:10px 12px;border-radius:10px;border:1.5px solid #e0e0e0;background:#fafafa;color:#444;font-size:13px;cursor:pointer;transition:all .15s;">
+                            🌿 <span>Куйнён</span>
+                        </button>
+                    </div>
+                    <div style="border-top: 1px solid #f0f0f0; padding: 12px 16px;">
+                        <div id="vn-chat-feed" style="max-height: 920px; overflow-y: auto; display: flex; flex-direction: column; gap: 7px;">
+                            <div style="text-align: center; padding: 30px; color: #ccc; font-size: 13px;">Выберите город для просмотра сообщений</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Чаты Таиланда — только для страны thailand -->
+                <div id="th-chat-section" style="display:none; background: white; border-radius: 14px; border: 1px solid #e8e8e8; overflow: hidden; margin-bottom: 18px; box-shadow: 0 3px 12px rgba(0,0,0,0.07);">
+                    <div style="background: linear-gradient(135deg, #d4af37 0%, #f5d170 100%); padding: 14px 20px; display: flex; align-items: center; gap: 10px;">
+                        <span style="font-size: 22px;">🇹🇭</span>
+                        <span style="font-weight: 700; font-size: 16px; color: #5a3e00;">Чаты Таиланда</span>
+                        <span style="font-size: 12px; color: #7a5800; margin-left: auto; background: rgba(255,255,255,0.4); padding: 3px 10px; border-radius: 12px;" id="th-chat-active-label"></span>
+                    </div>
+                    <div style="padding: 14px 16px 10px; display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px;">
+                        <button class="th-chat-btn" data-channel="" onclick="switchThChat('')"
+                            style="display:flex;align-items:center;gap:7px;padding:10px 12px;border-radius:10px;border:2px solid #d4af37;background:#d4af37;color:#5a3e00;font-size:13px;font-weight:700;cursor:pointer;transition:all .15s;">
+                            🌐 <span>Все</span>
+                        </button>
+                        <button class="th-chat-btn" data-channel="thailand_chat" onclick="switchThChat('thailand_chat')"
+                            style="display:flex;align-items:center;gap:7px;padding:10px 12px;border-radius:10px;border:1.5px solid #e0e0e0;background:#fafafa;color:#444;font-size:13px;cursor:pointer;transition:all .15s;">
+                            🇹🇭 <span>Таиланд</span>
+                        </button>
+                        <button class="th-chat-btn" data-channel="bangkok_chat" onclick="switchThChat('bangkok_chat')"
+                            style="display:flex;align-items:center;gap:7px;padding:10px 12px;border-radius:10px;border:1.5px solid #e0e0e0;background:#fafafa;color:#444;font-size:13px;cursor:pointer;transition:all .15s;">
+                            🏙️ <span>Бангкок</span>
+                        </button>
+                        <button class="th-chat-btn" data-channel="phuket_chat" onclick="switchThChat('phuket_chat')"
+                            style="display:flex;align-items:center;gap:7px;padding:10px 12px;border-radius:10px;border:1.5px solid #e0e0e0;background:#fafafa;color:#444;font-size:13px;cursor:pointer;transition:all .15s;">
+                            🏝️ <span>Пхукет</span>
+                        </button>
+                        <button class="th-chat-btn" data-channel="pattaya_chat" onclick="switchThChat('pattaya_chat')"
+                            style="display:flex;align-items:center;gap:7px;padding:10px 12px;border-radius:10px;border:1.5px solid #e0e0e0;background:#fafafa;color:#444;font-size:13px;cursor:pointer;transition:all .15s;">
+                            🌊 <span>Паттайя</span>
+                        </button>
+                        <button class="th-chat-btn" data-channel="chiang_mai_chat" onclick="switchThChat('chiang_mai_chat')"
+                            style="display:flex;align-items:center;gap:7px;padding:10px 12px;border-radius:10px;border:1.5px solid #e0e0e0;background:#fafafa;color:#444;font-size:13px;cursor:pointer;transition:all .15s;">
+                            🏔️ <span>Чиангмай</span>
+                        </button>
+                        <button class="th-chat-btn" data-channel="hua_hin_chat" onclick="switchThChat('hua_hin_chat')"
+                            style="display:flex;align-items:center;gap:7px;padding:10px 12px;border-radius:10px;border:1.5px solid #e0e0e0;background:#fafafa;color:#444;font-size:13px;cursor:pointer;transition:all .15s;">
+                            🌴 <span>Хуахин</span>
+                        </button>
+                        <button class="th-chat-btn" data-channel="krabi_chat" onclick="switchThChat('krabi_chat')"
+                            style="display:flex;align-items:center;gap:7px;padding:10px 12px;border-radius:10px;border:1.5px solid #e0e0e0;background:#fafafa;color:#444;font-size:13px;cursor:pointer;transition:all .15s;">
+                            🐚 <span>Краби</span>
+                        </button>
+                    </div>
+                    <div style="border-top: 1px solid #f0f0f0; padding: 12px 16px;">
+                        <div id="th-chat-feed" style="max-height: 920px; overflow-y: auto; display: flex; flex-direction: column; gap: 7px;">
+                            <div style="text-align: center; padding: 30px; color: #ccc; font-size: 13px;">Выберите город для просмотра сообщений</div>
+                        </div>
+                    </div>
+                </div>
 
             </div>
         </div>
@@ -5880,7 +6007,20 @@
             let tabBtn = document.querySelector(`[data-tab="${tabName}"]`);
             if (tabBtn) tabBtn.classList.add('active');
             if (tabName === 'stats') { if(typeof loadStats==='function') loadStats(); }
-            else if (tabName === 'chat') { if(typeof loadChatFeed==='function') loadChatFeed(); if(typeof loadVnChatFeed==='function') loadVnChatFeed(_activeVnChat||''); if(typeof loadThChatFeed==='function') loadThChatFeed(_activeThChat||''); }
+            else if (tabName === 'chat') {
+                if(typeof loadChatFeed==='function') loadChatFeed();
+                const vnSec = document.getElementById('vn-chat-section');
+                const thSec = document.getElementById('th-chat-section');
+                if (window.currentCountry === 'thailand') {
+                    if(vnSec) vnSec.style.display = 'none';
+                    if(thSec) thSec.style.display = '';
+                    if(typeof loadThChatFeed==='function') loadThChatFeed(_activeThChat||'');
+                } else {
+                    if(thSec) thSec.style.display = 'none';
+                    if(vnSec) vnSec.style.display = '';
+                    if(typeof loadVnChatFeed==='function') loadVnChatFeed(_activeVnChat||'');
+                }
+            }
             else if (tabName === 'settings') { if(typeof loadKidsFeed==='function') loadKidsFeed(); if(typeof loadKidsCounts==='function') loadKidsCounts(); }
             else if (tabName === 'submit-kids') { if(typeof loadKidsCaptcha==='function') loadKidsCaptcha(); }
             else if (tabName === 'submit-medicine') { if(typeof loadMedicineCaptcha==='function') loadMedicineCaptcha(); }
