@@ -1,4 +1,5 @@
-import os, asyncio, re, difflib, time, logging, io, threading
+import os, asyncio, re, uvicorn, difflib, time, logging, io
+from fastapi import FastAPI
 from telethon import TelegramClient, events
 from telethon.sessions import StringSession
 from telethon.tl.types import MessageMediaPhoto
@@ -6,7 +7,6 @@ from telethon.errors import FloodWaitError
 from PIL import Image
 
 def _phash(img, hash_size=8):
-    """Простая реализация average-hash через Pillow (без numpy/scipy/imagehash)."""
     size = hash_size * 4
     img = img.convert('L').resize((size, size), Image.LANCZOS)
     pixels = list(img.getdata())
@@ -19,6 +19,8 @@ def _phash_dist(h1, h2):
 logging.basicConfig(level=logging.INFO)
 log = logging.getLogger('parser')
 
+app = FastAPI()
+
 API_ID = int(os.environ.get('TELETHON_API_ID', '32881984'))
 API_HASH = os.environ.get('TELETHON_API_HASH', 'd2588f09dfbc5103ef77ef21c07dbf8b')
 SESS = os.environ.get('TELETHON_SESSION', '')
@@ -26,42 +28,8 @@ SESS = os.environ.get('TELETHON_SESSION', '')
 D = {
     'VIET': 'vietnamparsing',
     'THAI': 'thailandparsing',
-    'BIKE': 'baykivietnam',
-    'CHAT_VN': 'chatiparsing',
-    'CHAT_TH': 'chatiparsing'
+    'BIKE': 'baykivietnam'
 }
-
-CHAT_VN_CHANNELS = [
-    'vietnam_chatt', 'vungtau_chat', 'dalat_forum', 'danang_forum',
-    'danang_expats', 'danang_woman', 'danang_chatik', 'kamran_chat',
-    'kuinen_chat', 'nhatrang_chatik', 'nhatrang_expats', 'phanthiet_chat',
-    'fukuok_chatik', 'hochiminh_chat', 'hanoi_chat'
-]
-
-CHAT_TH_CHANNELS = [
-    'thailand_chat', 'bangkok_chat', 'phuket_chat', 'pattaya_chat',
-    'chiang_mai_chat', 'hua_hin_chat', 'krabi_chat'
-]
-
-EMOJI_RE = re.compile(
-    "[\U00010000-\U0010ffff"
-    "\U0001F600-\U0001F64F"
-    "\U0001F300-\U0001F5FF"
-    "\U0001F680-\U0001F6FF"
-    "\U0001F1E0-\U0001F1FF"
-    "\U00002702-\U000027B0"
-    "\U000024C2-\U0001F251"
-    "]+",
-    flags=re.UNICODE
-)
-
-def clean_chat_text(t):
-    if not t:
-        return ""
-    t = EMOJI_RE.sub('', t)
-    t = re.sub(r't\.me/\S+|http\S+', '', t)
-    t = " ".join(t.split())
-    return t.strip()
 
 M = {
     'THAI': [
@@ -85,8 +53,7 @@ M = {
     'BIKE': [
         'bike_nhatrang', 'motohub_nhatrang', 'NhaTrang_moto_market', 'RentBikeUniq',
         'BK_rental', 'nha_trang_rent', 'RentTwentyTwo22NhaTrang'
-    ],
-    'CHAT_VN': CHAT_VN_CHANNELS
+    ]
 }
 
 STATS = {
@@ -185,7 +152,7 @@ def phash_is_dup(h):
 async def dup_by_phash_single(client, media):
     h = await compute_phash(client, media)
     if h is not None and phash_is_dup(h):
-        log.info(f'pHash dedup: single photo hash={h}')
+        log.info(f'pHash dedup: single photo')
         return True
     return False
 
@@ -194,7 +161,7 @@ async def dup_by_phash_album(client, photos):
         return False
     h = await compute_phash(client, photos[0].media)
     if h is not None and phash_is_dup(h):
-        log.info(f'pHash dedup: album first photo hash={h}')
+        log.info(f'pHash dedup: album first photo')
         return True
     return False
 
@@ -230,11 +197,7 @@ async def _run_client():
     STATS['running'] = True
     log.info(f'Authorized: {me.first_name} (id={me.id})')
 
-    # Раздельные списки: real-estate каналы и чат-каналы
-    all_ents = []          # для VIET/THAI/BIKE (resolve через dialogs/get_input_entity)
-    chat_vn_names = list(CHAT_VN_CHANNELS)  # CHAT_VN используем как username-строки напрямую
-    chat_th_names = list(CHAT_TH_CHANNELS)  # CHAT_TH используем как username-строки напрямую
-
+    all_ents = []
     log.info('Loading dialogs...')
     dialogs_map = {}
     try:
@@ -251,7 +214,6 @@ async def _run_client():
     except Exception as ex:
         log.warning(f'Dialog load error: {ex}')
 
-    # Resolve только VIET/THAI/BIKE — без CHAT_VN
     for grp in ('THAI', 'VIET', 'BIKE'):
         names = M[grp]
         ok, fail = [], []
@@ -281,119 +243,64 @@ async def _run_client():
         STATS['failed'][grp] = fail
         log.info(f'[{grp}] -> @{D[grp]}: {len(ok)}/{len(names)} ok, {len(fail)} failed')
 
-    # CHAT_VN — регистрируем username-строки напрямую, без resolve
-    STATS['connected']['CHAT_VN'] = chat_vn_names
-    STATS['failed']['CHAT_VN'] = []
-    log.info(f'[CHAT_VN] -> @{D["CHAT_VN"]}: {len(chat_vn_names)} channels (by username)')
-
-    # CHAT_TH — то же самое
-    STATS['connected']['CHAT_TH'] = chat_th_names
-    STATS['failed']['CHAT_TH'] = []
-    log.info(f'[CHAT_TH] -> @{D["CHAT_TH"]}: {len(chat_th_names)} channels (by username)')
-
     total_ok = sum(len(v) for v in STATS['connected'].values())
     log.info(f'Total: {total_ok} channels. Listening for new messages...')
 
-    chat_vn_usernames = {c.lower() for c in CHAT_VN_CHANNELS}
-    chat_th_usernames = {c.lower() for c in CHAT_TH_CHANNELS}
-
-    @client.on(events.NewMessage(chats=chat_vn_names))
-    async def hchat(e):
-        """Обработчик текстовых сообщений из чатов Вьетнама -> @chatiparsing"""
-        try:
-            chat = await e.get_chat()
-            un = (getattr(chat, 'username', None) or '').lower()
-        except Exception:
-            return
-        if un not in chat_vn_usernames:
-            return
-        if e.media:
-            return
-        t = e.raw_text or e.text or ""
-        t = clean_chat_text(t)
-        if not t or len(t) < 3:
-            return
-        if len(t) > 300:
-            t = t[:297] + "..."
-        try:
-            src_link = f"https://t.me/{un}/{e.id}"
-            text = f"{t}\n\n{src_link}"
-            await client.send_message(D['CHAT_VN'], text, parse_mode=None)
-            STATS['forwarded'] += 1
-            STATS['last_forward'] = time.strftime('%H:%M:%S UTC', time.gmtime())
-            STATS['per_channel'][un] = STATS['per_channel'].get(un, 0) + 1
-            log.info(f'CHAT @{un} -> @{D["CHAT_VN"]} | total: {STATS["forwarded"]}')
-        except FloodWaitError as fw:
-            log.warning(f'FloodWait {fw.seconds}s, sleeping...')
-            await asyncio.sleep(fw.seconds + 5)
-        except Exception as ex:
-            STATS['errors'] += 1
-            log.warning(f'Chat forward error: {ex}')
-
-    @client.on(events.NewMessage(chats=chat_th_names))
-    async def hchat_th(e):
-        """Обработчик текстовых сообщений из чатов Таиланда -> @chatthparsing"""
-        try:
-            chat = await e.get_chat()
-            un = (getattr(chat, 'username', None) or '').lower()
-        except Exception:
-            return
-        if un not in chat_th_usernames:
-            return
-        if e.media:
-            return
-        t = e.raw_text or e.text or ""
-        t = clean_chat_text(t)
-        if not t or len(t) < 3:
-            return
-        if len(t) > 300:
-            t = t[:297] + "..."
-        try:
-            src_link = f"https://t.me/{un}/{e.id}"
-            text = f"{t}\n\n{src_link}"
-            await client.send_message(D['CHAT_TH'], text, parse_mode=None)
-            STATS['forwarded'] += 1
-            STATS['last_forward'] = time.strftime('%H:%M:%S UTC', time.gmtime())
-            STATS['per_channel'][un] = STATS['per_channel'].get(un, 0) + 1
-            log.info(f'CHAT @{un} -> @{D["CHAT_TH"]} | total: {STATS["forwarded"]}')
-        except FloodWaitError as fw:
-            log.warning(f'FloodWait {fw.seconds}s, sleeping...')
-            await asyncio.sleep(fw.seconds + 5)
-        except Exception as ex:
-            STATS['errors'] += 1
-            log.warning(f'Chat TH forward error: {ex}')
+    album_buffer = {}
 
     @client.on(events.NewMessage(chats=all_ents))
-    async def h(e):
-        if e.grouped_id:
-            return
-        if not e.media or not isinstance(e.media, MessageMediaPhoto):
+    async def handle(e):
+        try:
+            chat = await e.get_chat()
+            un = (getattr(chat, 'username', None) or '').lower()
+        except Exception:
             return
 
-        t = e.raw_text or ""
-        if len(t) < 15 or dup(t):
+        reg = get_region(un)
+        txt = cl(e.raw_text or e.text or '')
+        if dup(txt):
             STATS['dedup'] += 1
-            return
-        if dup_by_size_single(e.media):
-            STATS['dedup'] += 1
-            return
-        if await dup_by_phash_single(client, e.media):
-            STATS['dedup'] += 1
-            STATS['phash_dedup'] = STATS.get('phash_dedup', 0) + 1
             return
 
         try:
-            chat = await e.get_chat()
-            un = chat.username if hasattr(chat, 'username') and chat.username else str(e.chat_id)
-            reg = get_region(un)
-            src_link = f"https://t.me/{un}/{e.id}"
-            caption = f"{cl(t)}\n\n{src_link}".strip() if t else src_link
-            await client.send_message(D[reg], caption[:1020], file=e.media, parse_mode=None)
-            STATS['forwarded'] += 1
-            STATS['photos'] += 1
-            STATS['last_forward'] = time.strftime('%H:%M:%S UTC', time.gmtime())
-            STATS['per_channel'][un] = STATS['per_channel'].get(un, 0) + 1
-            log.info(f'MSG @{un} -> @{D[reg]} | total: {STATS["forwarded"]}')
+            gid = e.grouped_id
+            if gid:
+                if gid not in album_buffer:
+                    album_buffer[gid] = []
+                    asyncio.get_event_loop().call_later(2.0,
+                        lambda g=gid, r=reg, u=un: asyncio.ensure_future(
+                            flush_album(client, g, r, u)
+                        )
+                    )
+                album_buffer[gid].append(e)
+                return
+
+            if e.media and isinstance(e.media, MessageMediaPhoto):
+                if dup_by_size_single(e.media):
+                    STATS['dedup'] += 1
+                    return
+                if await dup_by_phash_single(client, e.media):
+                    STATS['dedup'] += 1
+                    STATS['phash_dedup'] = STATS.get('phash_dedup', 0) + 1
+                    return
+                src_link = f"https://t.me/{un}/{e.id}"
+                caption = f"{txt}\n\n{src_link}".strip() if txt else src_link
+                await client.send_message(D[reg], caption[:1020], file=e.media, parse_mode=None)
+                STATS['forwarded'] += 1
+                STATS['photos'] += 1
+                STATS['last_forward'] = time.strftime('%H:%M:%S UTC', time.gmtime())
+                STATS['per_channel'][un] = STATS['per_channel'].get(un, 0) + 1
+                log.info(f'PHOTO @{un} -> @{D[reg]} | total: {STATS["forwarded"]}')
+            else:
+                if not txt or len(txt) < 10:
+                    return
+                src_link = f"https://t.me/{un}/{e.id}"
+                msg = f"{txt}\n\n{src_link}"
+                await client.send_message(D[reg], msg[:4000], parse_mode=None)
+                STATS['forwarded'] += 1
+                STATS['last_forward'] = time.strftime('%H:%M:%S UTC', time.gmtime())
+                STATS['per_channel'][un] = STATS['per_channel'].get(un, 0) + 1
+                log.info(f'TEXT @{un} -> @{D[reg]} | total: {STATS["forwarded"]}')
         except FloodWaitError as fw:
             log.warning(f'FloodWait {fw.seconds}s, sleeping...')
             await asyncio.sleep(fw.seconds + 5)
@@ -401,34 +308,27 @@ async def _run_client():
             STATS['errors'] += 1
             log.warning(f'Forward error: {ex}')
 
-    @client.on(events.Album(chats=all_ents))
-    async def ha(e):
-        p = [m for m in e.messages if isinstance(m.media, MessageMediaPhoto)]
+    async def flush_album(client, gid, reg, un):
+        msgs = album_buffer.pop(gid, [])
+        if not msgs:
+            return
+        p = [m.media for m in msgs if m.media and isinstance(m.media, MessageMediaPhoto)]
         if not p:
             return
-        if dup(e.text):
+        if dup_by_size_album(msgs):
             STATS['dedup'] += 1
             return
-        if dup_by_size_album(p):
-            STATS['dedup'] += 1
-            return
-        if await dup_by_phash_album(client, p):
+        if await dup_by_phash_album(client, msgs):
             STATS['dedup'] += 1
             STATS['phash_dedup'] = STATS.get('phash_dedup', 0) + 1
             return
-
+        longest = max(
+            (cl(m.raw_text or m.text or '') for m in msgs),
+            key=len, default=''
+        )
+        src_link = f"https://t.me/{un}/{msgs[0].id}"
         try:
-            chat = await e.get_chat()
-            un = chat.username if hasattr(chat, 'username') and chat.username else str(e.chat_id)
-            reg = get_region(un)
-            src_link = f"https://t.me/{un}/{e.messages[0].id}"
-            t = e.text or ""
-            longest = t
-            for m in e.messages:
-                mt = m.raw_text or m.text or ""
-                if len(mt) > len(longest):
-                    longest = mt
-            caption = f"{cl(longest)}\n\n{src_link}".strip() if longest else src_link
+            caption = f"{longest}\n\n{src_link}".strip() if longest else src_link
             await client.send_message(D[reg], caption[:1020], file=p, parse_mode=None)
             STATS['forwarded'] += 1
             STATS['photos'] += len(p)
@@ -445,46 +345,36 @@ async def _run_client():
 
     await client.run_until_disconnected()
 
-def get_status_text():
-    s = STATS
-    lines = [
-        f"🟢 Статус: {'работает' if s['running'] else 'запускается...'}",
-        f"👤 Аккаунт: {s['user'] or '—'}",
-        f"🕐 Запущен: {s['started_at'] or '—'}",
-        f"📨 Переслано: {s['forwarded']} | 📸 Фото: {s['photos']} | 🗂 Альбомов: {s['albums']}",
-        f"🔁 Дублей: {s['dedup']} | ⚠️ Ошибок: {s['errors']}",
-        f"⏱ Последняя пересылка: {s['last_forward'] or '—'}",
-        "",
-        "📡 Подключённые каналы:",
-    ]
-    for grp, names in s['connected'].items():
-        lines.append(f"  [{grp}] {len(names)} каналов → @{D.get(grp,'?')}")
-    failed = {k: v for k, v in s['failed'].items() if v}
-    if failed:
-        lines.append("❌ Не удалось подключить:")
-        for grp, names in failed.items():
-            lines.append(f"  [{grp}] {', '.join(names[:5])}")
-    top = dict(sorted(s['per_channel'].items(), key=lambda x: -x[1])[:10])
-    if top:
-        lines.append("\n🏆 Топ каналов:")
-        for ch, cnt in top.items():
-            lines.append(f"  @{ch}: {cnt}")
-    return "\n".join(lines)
+@app.on_event("startup")
+async def sup():
+    asyncio.create_task(start_client())
 
-def _run_telethon():
-    loop = asyncio.new_event_loop()
-    asyncio.set_event_loop(loop)
-    loop.run_until_complete(start_client())
+@app.get("/")
+async def root():
+    return {
+        "status": "running" if STATS['running'] else "starting",
+        "user": STATS['user'],
+        "started_at": STATS['started_at'],
+        "connected": {k: len(v) for k, v in STATS['connected'].items()},
+        "failed": {k: v for k, v in STATS['failed'].items() if v},
+        "forwarded": STATS['forwarded'],
+        "photos": STATS['photos'],
+        "albums": STATS['albums'],
+        "dedup": STATS['dedup'],
+        "phash_dedup": STATS.get('phash_dedup', 0),
+        "phash_cache_size": len(PHASH_CACHE),
+        "errors": STATS['errors'],
+        "last_forward": STATS['last_forward'],
+        "top_channels": dict(sorted(STATS['per_channel'].items(), key=lambda x: -x[1])[:15]),
+    }
 
-threading.Thread(target=_run_telethon, daemon=True).start()
+@app.get("/health")
+async def health():
+    return {"ok": True, "running": STATS['running']}
 
-import gradio as gr
+@app.get("/status")
+async def status():
+    return await root()
 
-with gr.Blocks(title="GoldAntelope Parser") as demo:
-    gr.Markdown("## 🦌 GoldAntelope Parser — Статус")
-    status_box = gr.Textbox(label="Статус", lines=20, interactive=False, value=get_status_text)
-    refresh_btn = gr.Button("🔄 Обновить")
-    refresh_btn.click(fn=get_status_text, outputs=status_box)
-    demo.load(fn=get_status_text, outputs=status_box, every=30)
-
-demo.launch(server_name="0.0.0.0", server_port=7860)
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=7860)
