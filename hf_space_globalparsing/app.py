@@ -222,12 +222,16 @@ async def _run_client():
 
     dialogs_map = {}
     try:
-        async for dialog in client.iter_dialogs():
-            chat = dialog.entity
-            un = getattr(chat, 'username', None)
-            if un:
-                dialogs_map[un.lower()] = dialog.input_entity
+        async def _load_dialogs():
+            async for dialog in client.iter_dialogs(limit=300):
+                chat = dialog.entity
+                un = getattr(chat, 'username', None)
+                if un:
+                    dialogs_map[un.lower()] = dialog.input_entity
+        await asyncio.wait_for(_load_dialogs(), timeout=60)
         log.info(f'Dialogs loaded: {len(dialogs_map)}')
+    except asyncio.TimeoutError:
+        log.warning(f'iter_dialogs timeout, got {len(dialogs_map)} so far — continuing')
     except Exception as ex:
         log.warning(f'Dialog load error: {ex}')
 
@@ -240,12 +244,18 @@ async def _run_client():
                 ok.append(n)
             else:
                 try:
-                    ent = await client.get_input_entity(n)
+                    ent = await asyncio.wait_for(
+                        client.get_input_entity(n), timeout=10
+                    )
                     all_ents.append(ent)
                     ok.append(n)
-                    await asyncio.sleep(0.5)
+                    await asyncio.sleep(0.3)
+                except asyncio.TimeoutError:
+                    log.warning(f'Timeout resolving @{n}')
+                    fail.append(n)
                 except FloodWaitError as fw:
                     log.warning(f'FloodWait {fw.seconds}s @{n}')
+                    await asyncio.sleep(min(fw.seconds, 30))
                     fail.append(n)
                 except Exception:
                     fail.append(n)
