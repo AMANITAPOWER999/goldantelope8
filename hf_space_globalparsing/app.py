@@ -217,9 +217,11 @@ async def _run_client():
     STATS['running'] = True
     log.info(f'Authorized: {me.first_name} (id={me.id})')
 
-    all_ents = []
-    log.info('Loading dialogs...')
+    # Раздельные списки: real-estate каналы и чат-каналы
+    all_ents = []          # для VIET/THAI/BIKE (resolve через dialogs/get_input_entity)
+    chat_vn_names = list(CHAT_VN_CHANNELS)  # CHAT_VN используем как username-строки напрямую
 
+    log.info('Loading dialogs...')
     dialogs_map = {}
     try:
         async def _load_dialogs():
@@ -235,7 +237,9 @@ async def _run_client():
     except Exception as ex:
         log.warning(f'Dialog load error: {ex}')
 
-    for grp, names in M.items():
+    # Resolve только VIET/THAI/BIKE — без CHAT_VN
+    for grp in ('THAI', 'VIET', 'BIKE'):
+        names = M[grp]
         ok, fail = [], []
         for n in names:
             key = n.lower()
@@ -263,12 +267,17 @@ async def _run_client():
         STATS['failed'][grp] = fail
         log.info(f'[{grp}] -> @{D[grp]}: {len(ok)}/{len(names)} ok, {len(fail)} failed')
 
+    # CHAT_VN — регистрируем username-строки напрямую, без resolve
+    STATS['connected']['CHAT_VN'] = chat_vn_names
+    STATS['failed']['CHAT_VN'] = []
+    log.info(f'[CHAT_VN] -> @{D["CHAT_VN"]}: {len(chat_vn_names)} channels (by username)')
+
     total_ok = sum(len(v) for v in STATS['connected'].values())
     log.info(f'Total: {total_ok} channels. Listening for new messages...')
 
     chat_vn_usernames = {c.lower() for c in CHAT_VN_CHANNELS}
 
-    @client.on(events.NewMessage(chats=all_ents))
+    @client.on(events.NewMessage(chats=chat_vn_names))
     async def hchat(e):
         """Обработчик текстовых сообщений из чатов Вьетнама -> @chatiparsing"""
         try:
