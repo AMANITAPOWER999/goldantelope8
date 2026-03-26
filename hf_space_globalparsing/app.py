@@ -19,8 +19,9 @@ SESS = os.environ.get('TELETHON_SESSION', '')
 D = {
     'VIET': 'vietnamparsing',
     'THAI': 'thailandparsing',
-    'BIKE': 'visaranvietnam',
-    'CHAT_VN': 'chatiparsing'
+    'BIKE': 'baykivietnam',
+    'CHAT_VN': 'chatiparsing',
+    'CHAT_TH': 'chatthparsing'
 }
 
 CHAT_VN_CHANNELS = [
@@ -28,6 +29,11 @@ CHAT_VN_CHANNELS = [
     'danang_expats', 'danang_woman', 'danang_chatik', 'kamran_chat',
     'kuinen_chat', 'nhatrang_chatik', 'nhatrang_expats', 'phanthiet_chat',
     'fukuok_chatik', 'hochiminh_chat', 'hanoi_chat'
+]
+
+CHAT_TH_CHANNELS = [
+    'thailand_chat', 'bangkok_chat', 'phuket_chat', 'pattaya_chat',
+    'chiang_mai_chat', 'hua_hin_chat', 'krabi_chat'
 ]
 
 EMOJI_RE = re.compile(
@@ -220,6 +226,7 @@ async def _run_client():
     # Раздельные списки: real-estate каналы и чат-каналы
     all_ents = []          # для VIET/THAI/BIKE (resolve через dialogs/get_input_entity)
     chat_vn_names = list(CHAT_VN_CHANNELS)  # CHAT_VN используем как username-строки напрямую
+    chat_th_names = list(CHAT_TH_CHANNELS)  # CHAT_TH используем как username-строки напрямую
 
     log.info('Loading dialogs...')
     dialogs_map = {}
@@ -272,10 +279,16 @@ async def _run_client():
     STATS['failed']['CHAT_VN'] = []
     log.info(f'[CHAT_VN] -> @{D["CHAT_VN"]}: {len(chat_vn_names)} channels (by username)')
 
+    # CHAT_TH — то же самое
+    STATS['connected']['CHAT_TH'] = chat_th_names
+    STATS['failed']['CHAT_TH'] = []
+    log.info(f'[CHAT_TH] -> @{D["CHAT_TH"]}: {len(chat_th_names)} channels (by username)')
+
     total_ok = sum(len(v) for v in STATS['connected'].values())
     log.info(f'Total: {total_ok} channels. Listening for new messages...')
 
     chat_vn_usernames = {c.lower() for c in CHAT_VN_CHANNELS}
+    chat_th_usernames = {c.lower() for c in CHAT_TH_CHANNELS}
 
     @client.on(events.NewMessage(chats=chat_vn_names))
     async def hchat(e):
@@ -309,6 +322,39 @@ async def _run_client():
         except Exception as ex:
             STATS['errors'] += 1
             log.warning(f'Chat forward error: {ex}')
+
+    @client.on(events.NewMessage(chats=chat_th_names))
+    async def hchat_th(e):
+        """Обработчик текстовых сообщений из чатов Таиланда -> @chatthparsing"""
+        try:
+            chat = await e.get_chat()
+            un = (getattr(chat, 'username', None) or '').lower()
+        except Exception:
+            return
+        if un not in chat_th_usernames:
+            return
+        if e.media:
+            return
+        t = e.raw_text or e.text or ""
+        t = clean_chat_text(t)
+        if not t or len(t) < 3:
+            return
+        if len(t) > 300:
+            t = t[:297] + "..."
+        try:
+            src_link = f"https://t.me/{un}/{e.id}"
+            text = f"{t}\n\n{src_link}"
+            await client.send_message(D['CHAT_TH'], text, parse_mode=None)
+            STATS['forwarded'] += 1
+            STATS['last_forward'] = time.strftime('%H:%M:%S UTC', time.gmtime())
+            STATS['per_channel'][un] = STATS['per_channel'].get(un, 0) + 1
+            log.info(f'CHAT @{un} -> @{D["CHAT_TH"]} | total: {STATS["forwarded"]}')
+        except FloodWaitError as fw:
+            log.warning(f'FloodWait {fw.seconds}s, sleeping...')
+            await asyncio.sleep(fw.seconds + 5)
+        except Exception as ex:
+            STATS['errors'] += 1
+            log.warning(f'Chat TH forward error: {ex}')
 
     @client.on(events.NewMessage(chats=all_ents))
     async def h(e):

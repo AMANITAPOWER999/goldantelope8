@@ -4137,7 +4137,7 @@ def monitoring_stats():
                 category_totals[cat] = category_totals.get(cat, 0) + len(items)
                 country_totals[country] += len(items)
                 for item in items:
-                    _AGGREGATORS = {'vietnamparsing','thailandparsing','visaranvietnam'}
+                    _AGGREGATORS = {'vietnamparsing','thailandparsing','baykivietnam'}
                     _IGNORE_SRC = _AGGREGATORS | {'https','http','s','joinchat','c'}
                     src = ''
                     tl = item.get('telegram_link', '')
@@ -4360,7 +4360,7 @@ def _run_fetch_empty():
 
     # Маппинг группы → канал-получатель
     _DST_CHANNELS = {
-        'BIKE': 'visaranvietnam',
+        'BIKE': 'baykivietnam',
         'VIET': 'vietnamparsing',
         'THAI': 'thailandparsing',
     }
@@ -4600,7 +4600,7 @@ def _run_forward_100(only_groups=None):
         _FWD100_STATE.update({'running': False, 'done': True, 'error': 'no bot token'})
         return
 
-    DST = {'BIKE': 'visaranvietnam', 'VIET': 'vietnamparsing', 'THAI': 'thailandparsing'}
+    DST = {'BIKE': 'baykivietnam', 'VIET': 'vietnamparsing', 'THAI': 'thailandparsing'}
 
     M = {
         'THAI': [

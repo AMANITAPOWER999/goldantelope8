@@ -20,7 +20,7 @@ BARAHOLKA_GROUP = 'hsjsbkskbs'  # supergroup @hsjsbkskbs = baraholkainvietnam
 
 # Extra channels: username -> (category, transport_type or subcategory)
 EXTRA_CHANNELS = {
-    'visaranvietnam':       ('transport', 'bikes'),
+    'baykivietnam':       ('transport', 'bikes'),
     'baraholkainvietnam':   ('marketplace', None),
     'hsjsbkskbs':           ('marketplace', None),  # same supergroup
     'razvlecheniyavietnam': ('entertainment', None),
