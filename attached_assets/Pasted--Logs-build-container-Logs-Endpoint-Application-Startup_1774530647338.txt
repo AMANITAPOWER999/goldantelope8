@@ -1,0 +1,65 @@
+
+Logs
+
+build
+container
+
+Logs Endpoint
+
+
+
+===== Application Startup at 2026-03-26 13:05:48 =====
+
+/app/app.py:398: DeprecationWarning: 
+        on_event is deprecated, use lifespan event handlers instead.
+
+        Read more about it in the
+        [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+        
+  @app.on_event("startup")
+INFO:     Started server process [1]
+INFO:     Waiting for application startup.
+INFO:telethon.network.mtprotosender:Connecting to 91.108.56.142:443/TcpFull...
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:7860 (Press CTRL+C to quit)
+INFO:telethon.network.mtprotosender:Connection to 91.108.56.142:443/TcpFull complete!
+INFO:parser:Authorized: 1 (id=8755035125)
+INFO:parser:Loading dialogs...
+INFO:parser:Dialogs loaded: 109
+INFO:parser:[THAI] -> @thailandparsing: 23/23 ok, 0 failed
+INFO:parser:[VIET] -> @vietnamparsing: 36/36 ok, 0 failed
+INFO:parser:[BIKE] -> @baykivietnam: 7/7 ok, 0 failed
+INFO:parser:[CHAT] -> @chatiparsing: 22 channels (VN:15 + TH:7)
+INFO:parser:Total: 88 channels. Listening...
+INFO:telethon.client.downloads:Starting direct file download in chunks of 131072 at 0, stride 131072
+/app/app.py:12: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  pixels = list(img.getdata())
+INFO:parser:[VIET] ALBUM @nedvizimost_nhatrang -> @vietnamparsing | 1 photos
+INFO:parser:[VIET] @nychang_arenda -> @vietnamparsing | total: 2
+INFO:telethon.client.updates:Got difference for channel 1673710713 updates
+INFO:telethon.client.downloads:Starting direct file download in chunks of 131072 at 0, stride 131072
+INFO:telethon.client.downloads:Starting direct file download in chunks of 131072 at 0, stride 131072
+INFO:telethon.client.downloads:File lives in another DC
+INFO:parser:[THAI] ALBUM @nedvizhimost_pattaya -> @thailandparsing | 9 photos
+INFO:telethon.network.mtprotosender:Connecting to 149.154.167.41:443/TcpFull...
+INFO:telethon.network.mtprotosender:Connection to 149.154.167.41:443/TcpFull complete!
+INFO:telethon.client.telegrambaseclient:Exporting auth for new borrowed sender in DcOption(id=2, ip_address='149.154.167.41', port=443, ipv6=False, media_only=False, tcpo_only=False, cdn=False, static=False, this_port_only=False, secret=None)
+INFO:parser:[VIET] ALBUM @nychang_arenda -> @vietnamparsing | 10 photos
+INFO:parser:[THAI] @phuket_rentas -> @thailandparsing | total: 5
+INFO:telethon.client.updates:Got difference for channel 1981277415 updates
+INFO:telethon.client.downloads:Starting direct file download in chunks of 131072 at 0, stride 131072
+INFO:parser:[THAI] @realty_in_thailand -> @thailandparsing | total: 6
+INFO:parser:[VIET] ALBUM @rent_nha_trang -> @vietnamparsing | 5 photos
+INFO:telethon.client.downloads:Starting direct file download in chunks of 131072 at 0, stride 131072
+INFO:parser:[VIET] ALBUM @rent_nha_trang -> @vietnamparsing | 3 photos
+INFO:telethon.client.telegrambaseclient:Disconnecting borrowed sender for DC 2
+INFO:telethon.network.mtprotosender:Disconnecting from 149.154.167.41:443/TcpFull...
+INFO:telethon.network.mtprotosender:Disconnection from 149.154.167.41:443/TcpFull complete!
+INFO:telethon.client.downloads:Starting direct file download in chunks of 131072 at 0, stride 131072
+INFO:telethon.client.downloads:Starting direct file download in chunks of 131072 at 0, stride 131072
+INFO:telethon.client.downloads:File lives in another DC
+INFO:telethon.network.mtprotosender:Connecting to 149.154.167.41:443/TcpFull...
+INFO:telethon.network.mtprotosender:Connection to 149.154.167.41:443/TcpFull complete!
+INFO:telethon.client.downloads:File lives in another DC
+INFO:parser:[VIET] ALBUM @rent_nha_trang -> @vietnamparsing | 8 photos
+INFO:parser:[VIET] ALBUM @nedvizimost_nhatrang -> @vietnamparsing | 7 photos
