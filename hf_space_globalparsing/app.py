@@ -5,7 +5,17 @@ from telethon.sessions import StringSession
 from telethon.tl.types import MessageMediaPhoto
 from telethon.errors import FloodWaitError
 from PIL import Image
-import imagehash
+
+def _phash(img, hash_size=8):
+    """Простая реализация average-hash через Pillow (без numpy/scipy/imagehash)."""
+    size = hash_size * 4
+    img = img.convert('L').resize((size, size), Image.LANCZOS)
+    pixels = list(img.getdata())
+    mean = sum(pixels) / len(pixels)
+    return [p > mean for p in pixels]
+
+def _phash_dist(h1, h2):
+    return sum(a != b for a, b in zip(h1, h2))
 
 logging.basicConfig(level=logging.INFO)
 log = logging.getLogger('parser')
@@ -157,7 +167,7 @@ async def compute_phash(client, media):
         await client.download_media(media, file=buf, thumb=-1)
         buf.seek(0)
         img = Image.open(buf)
-        h = imagehash.phash(img, hash_size=8)
+        h = _phash(img, hash_size=8)
         buf.close()
         return h
     except Exception as ex:
@@ -168,7 +178,7 @@ def phash_is_dup(h):
     if h is None:
         return False
     for cached in PHASH_CACHE:
-        if abs(h - cached) <= PHASH_THRESHOLD:
+        if _phash_dist(h, cached) <= PHASH_THRESHOLD:
             return True
     PHASH_CACHE.append(h)
     if len(PHASH_CACHE) > MAX_PHASH_CACHE:
