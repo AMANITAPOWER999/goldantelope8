@@ -7091,6 +7091,34 @@
   ],
   "real_estate": [
     {
+      "id": "vietnamparsing_54204",
+      "title": "https://t.me/nedvizimost_nhatrang/499733",
+      "text": "https://t.me/nedvizimost_nhatrang/499733",
+      "description": "https://t.me/nedvizimost_nhatrang/499733",
+      "city": "Нячанг",
+      "city_ru": "Нячанг",
+      "listing_type": "rent",
+      "price": null,
+      "price_display": "",
+      "contact": "@nedvizimost_nhatrang",
+      "telegram_link": "https://t.me/nedvizimost_nhatrang/499733",
+      "source_group": "@vietnamparsing",
+      "photos": [
+        "https://cdn5.telesco.pe/file/iXT1O7vA-MTLCX2LS-poZliirZH2ll8XHba7bmVzEuNKL8fHAmeZyzF7Iz5cMCdOg6sdha5xgooHHNbNkQbEMEC6H51XvPGk4afB5oEHSCz4HBGHM-FSiUBypAZx6yvKVDmibrKl8zfvf27qU2b8SE9omwfPEo_BNBpqTK9p5gYb3r1crdgmpepR8vwaTDggQcSvlVZexBqmyf8NTaWWgKKXGUkiFpKC0vYx0fyR4Oijc39vGA3OkG-z4AXOep77tVpGVkUaSnCB500_-UcS7j4tm5wljhRtGDnwhTKBE29oNXDtg6xosTKcL8i1bv-_tgWhoDY7e1LeUsrg_m0fDA.jpg"
+      ],
+      "image_url": "https://cdn5.telesco.pe/file/iXT1O7vA-MTLCX2LS-poZliirZH2ll8XHba7bmVzEuNKL8fHAmeZyzF7Iz5cMCdOg6sdha5xgooHHNbNkQbEMEC6H51XvPGk4afB5oEHSCz4HBGHM-FSiUBypAZx6yvKVDmibrKl8zfvf27qU2b8SE9omwfPEo_BNBpqTK9p5gYb3r1crdgmpepR8vwaTDggQcSvlVZexBqmyf8NTaWWgKKXGUkiFpKC0vYx0fyR4Oijc39vGA3OkG-z4AXOep77tVpGVkUaSnCB500_-UcS7j4tm5wljhRtGDnwhTKBE29oNXDtg6xosTKcL8i1bv-_tgWhoDY7e1LeUsrg_m0fDA.jpg",
+      "all_images": [
+        "https://cdn5.telesco.pe/file/iXT1O7vA-MTLCX2LS-poZliirZH2ll8XHba7bmVzEuNKL8fHAmeZyzF7Iz5cMCdOg6sdha5xgooHHNbNkQbEMEC6H51XvPGk4afB5oEHSCz4HBGHM-FSiUBypAZx6yvKVDmibrKl8zfvf27qU2b8SE9omwfPEo_BNBpqTK9p5gYb3r1crdgmpepR8vwaTDggQcSvlVZexBqmyf8NTaWWgKKXGUkiFpKC0vYx0fyR4Oijc39vGA3OkG-z4AXOep77tVpGVkUaSnCB500_-UcS7j4tm5wljhRtGDnwhTKBE29oNXDtg6xosTKcL8i1bv-_tgWhoDY7e1LeUsrg_m0fDA.jpg"
+      ],
+      "date": "2026-03-26T13:06:04+00:00",
+      "category": "real_estate",
+      "status": "approved",
+      "country": "vietnam",
+      "message_id": 54204,
+      "has_media": true,
+      "hidden": false
+    },
+    {
       "id": "vietnamparsing_54194",
       "title": "вилла №1273 Спальни: 4 Стоимость: 67 000 000 VND в месяц Бассейн: Даты занятости и локацию объекта можно посмотреть в ка",
       "text": "вилла №1273 Спальни: 4 Стоимость: 67 000 000 VND в месяц Бассейн: Даты занятости и локацию объекта можно посмотреть в карточке объекта у нас на сайте: Для брони или бесплатного подбора объекта на ваши даты пишите welltravel_vn\n\nhttps://t.me/phuquoc_rent_wt/4776",
