@@ -3236,39 +3236,6 @@
                         <div class="loading"><div class="spinner"></div></div>
                     </div>
                     
-                    <!-- Форма отправки сообщений -->
-                    <div id="chat-send-form" style="padding: 8px 12px; border-top: 1px solid #eee; background: white;">
-                        <!-- Строка идентификации + выбор чата -->
-                        <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 6px; flex-wrap: wrap;">
-                            <span style="font-size: 12px; color: #666; white-space: nowrap;">👤 Вы:</span>
-                            <input type="text" id="chat-username-input" placeholder="Ваш ник" style="width: 120px; padding: 5px 9px; border: 1.5px solid #667eea; border-radius: 7px; font-size: 13px;"
-                                onchange="localStorage.setItem('chat_nickname', this.value.trim())">
-                            <span style="font-size: 12px; color: #666; white-space: nowrap;">📢 Чат:</span>
-                            <select id="chat-target-select" style="flex: 1; min-width: 140px; padding: 5px 9px; border: 1.5px solid #ddd; border-radius: 7px; font-size: 13px; color: #333; background: white;">
-                                <option value="">💬 Сообщество GA</option>
-                                <option value="vietnam_chatt">🇻🇳 Вьетнам общий</option>
-                                <option value="nhatrang_chatik">🏖️ Нячанг</option>
-                                <option value="nhatrang_expats">🌴 Нячанг экспаты</option>
-                                <option value="danang_forum">🌊 Дананг</option>
-                                <option value="danang_expats">🌍 Дананг экспаты</option>
-                                <option value="danang_woman">👩 Дананг женщины</option>
-                                <option value="danang_chatik">💬 Дананг чатик</option>
-                                <option value="hochiminh_chat">🏙️ Хошимин</option>
-                                <option value="hanoi_chat">🏛️ Ханой</option>
-                                <option value="fukuok_chatik">🏝️ Фукуок</option>
-                                <option value="vungtau_chat">⛵ Вунг Тау</option>
-                                <option value="dalat_forum">🏔️ Далат</option>
-                                <option value="phanthiet_chat">🌅 Фантьет</option>
-                                <option value="kamran_chat">✈️ Камрань</option>
-                                <option value="kuinen_chat">🌿 Куйнён</option>
-                            </select>
-                        </div>
-                        <!-- Строка ввода + кнопка -->
-                        <div style="display: flex; gap: 8px;">
-                            <input type="text" id="chat-message-input" placeholder="Введите сообщение..." style="flex: 1; padding: 6px 10px; border: 1.5px solid #ddd; border-radius: 7px; font-size: 13px;" onkeypress="if(event.key==='Enter')sendChatMessage()">
-                            <button onclick="sendChatMessage()" style="padding: 6px 16px; background: #667eea; color: white; border: none; border-radius: 7px; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap;">📤 Отправить</button>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
