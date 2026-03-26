@@ -76,3 +76,16 @@ flask-sqlalchemy
 gunicorn
 psycopg2-binary
 beautifulsoup4
+aiohttp
+beautifulsoup4
+cryptg
+flask
+flask-compress
+gevent
+gunicorn
+pillow
+python-dotenv
+python-telegram-bot
+qrcode
+requests
+telethon
