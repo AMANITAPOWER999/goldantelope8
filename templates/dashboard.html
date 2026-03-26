@@ -3132,6 +3132,86 @@
         <!-- Чат -->
         <div id="chat" class="content">
             <div style="max-width: 900px; margin: 0 auto;">
+
+                <!-- Вьетнам чаты — быстрое переключение -->
+                <div style="background: white; border-radius: 12px; border: 1px solid #e0e0e0; padding: 16px; margin-bottom: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+                        <span style="font-size: 18px;">🇻🇳</span>
+                        <span style="font-weight: 700; font-size: 15px; color: #333;">Чаты Вьетнама</span>
+                        <span style="font-size: 12px; color: #999; margin-left: auto;" id="vn-chat-active-label"></span>
+                    </div>
+                    <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px;">
+                        <button class="vn-chat-btn" data-channel="" onclick="switchVnChat('')"
+                            style="padding: 6px 13px; border-radius: 20px; border: 2px solid #d4af37; background: #d4af37; color: white; font-size: 12px; font-weight: 600; cursor: pointer;">
+                            🌐 Все
+                        </button>
+                        <button class="vn-chat-btn" data-channel="vietnam_chatt" onclick="switchVnChat('vietnam_chatt')"
+                            style="padding: 6px 13px; border-radius: 20px; border: 2px solid #ddd; background: white; color: #555; font-size: 12px; cursor: pointer;">
+                            🇻🇳 Вьетнам
+                        </button>
+                        <button class="vn-chat-btn" data-channel="nhatrang_chatik" onclick="switchVnChat('nhatrang_chatik')"
+                            style="padding: 6px 13px; border-radius: 20px; border: 2px solid #ddd; background: white; color: #555; font-size: 12px; cursor: pointer;">
+                            🏖️ Нячанг
+                        </button>
+                        <button class="vn-chat-btn" data-channel="nhatrang_expats" onclick="switchVnChat('nhatrang_expats')"
+                            style="padding: 6px 13px; border-radius: 20px; border: 2px solid #ddd; background: white; color: #555; font-size: 12px; cursor: pointer;">
+                            🌴 Нячанг экспаты
+                        </button>
+                        <button class="vn-chat-btn" data-channel="danang_forum" onclick="switchVnChat('danang_forum')"
+                            style="padding: 6px 13px; border-radius: 20px; border: 2px solid #ddd; background: white; color: #555; font-size: 12px; cursor: pointer;">
+                            🌊 Дананг
+                        </button>
+                        <button class="vn-chat-btn" data-channel="danang_expats" onclick="switchVnChat('danang_expats')"
+                            style="padding: 6px 13px; border-radius: 20px; border: 2px solid #ddd; background: white; color: #555; font-size: 12px; cursor: pointer;">
+                            🌍 Дананг экспаты
+                        </button>
+                        <button class="vn-chat-btn" data-channel="danang_woman" onclick="switchVnChat('danang_woman')"
+                            style="padding: 6px 13px; border-radius: 20px; border: 2px solid #ddd; background: white; color: #555; font-size: 12px; cursor: pointer;">
+                            👩 Дананг женщины
+                        </button>
+                        <button class="vn-chat-btn" data-channel="danang_chatik" onclick="switchVnChat('danang_chatik')"
+                            style="padding: 6px 13px; border-radius: 20px; border: 2px solid #ddd; background: white; color: #555; font-size: 12px; cursor: pointer;">
+                            💬 Дананг чатик
+                        </button>
+                        <button class="vn-chat-btn" data-channel="hochiminh_chat" onclick="switchVnChat('hochiminh_chat')"
+                            style="padding: 6px 13px; border-radius: 20px; border: 2px solid #ddd; background: white; color: #555; font-size: 12px; cursor: pointer;">
+                            🏙️ Хошимин
+                        </button>
+                        <button class="vn-chat-btn" data-channel="hanoi_chat" onclick="switchVnChat('hanoi_chat')"
+                            style="padding: 6px 13px; border-radius: 20px; border: 2px solid #ddd; background: white; color: #555; font-size: 12px; cursor: pointer;">
+                            🏛️ Ханой
+                        </button>
+                        <button class="vn-chat-btn" data-channel="fukuok_chatik" onclick="switchVnChat('fukuok_chatik')"
+                            style="padding: 6px 13px; border-radius: 20px; border: 2px solid #ddd; background: white; color: #555; font-size: 12px; cursor: pointer;">
+                            🏝️ Фукуок
+                        </button>
+                        <button class="vn-chat-btn" data-channel="vungtau_chat" onclick="switchVnChat('vungtau_chat')"
+                            style="padding: 6px 13px; border-radius: 20px; border: 2px solid #ddd; background: white; color: #555; font-size: 12px; cursor: pointer;">
+                            ⛵ Вунг Тау
+                        </button>
+                        <button class="vn-chat-btn" data-channel="dalat_forum" onclick="switchVnChat('dalat_forum')"
+                            style="padding: 6px 13px; border-radius: 20px; border: 2px solid #ddd; background: white; color: #555; font-size: 12px; cursor: pointer;">
+                            🏔️ Далат
+                        </button>
+                        <button class="vn-chat-btn" data-channel="phanthiet_chat" onclick="switchVnChat('phanthiet_chat')"
+                            style="padding: 6px 13px; border-radius: 20px; border: 2px solid #ddd; background: white; color: #555; font-size: 12px; cursor: pointer;">
+                            🌅 Фантьет
+                        </button>
+                        <button class="vn-chat-btn" data-channel="kamran_chat" onclick="switchVnChat('kamran_chat')"
+                            style="padding: 6px 13px; border-radius: 20px; border: 2px solid #ddd; background: white; color: #555; font-size: 12px; cursor: pointer;">
+                            ✈️ Камрань
+                        </button>
+                        <button class="vn-chat-btn" data-channel="kuinen_chat" onclick="switchVnChat('kuinen_chat')"
+                            style="padding: 6px 13px; border-radius: 20px; border: 2px solid #ddd; background: white; color: #555; font-size: 12px; cursor: pointer;">
+                            🌿 Куйнён
+                        </button>
+                    </div>
+                    <!-- Лента сообщений чатов -->
+                    <div id="vn-chat-feed" style="max-height: 420px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px;">
+                        <div style="text-align: center; padding: 30px; color: #bbb; font-size: 13px;">Выберите чат для просмотра сообщений</div>
+                    </div>
+                </div>
+
                 <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; padding: 20px; margin-bottom: 15px; color: white;">
                     <h3 style="margin: 0 0 8px 0; font-size: 20px;">💬 Чат сообщества GoldAntelope</h3>
                     <p style="margin: 0; opacity: 0.9; font-size: 13px;">Общайтесь с русскоязычным сообществом Азии. Авторизация через Telegram.</p>
@@ -5908,7 +5988,7 @@
             let tabBtn = document.querySelector(`[data-tab="${tabName}"]`);
             if (tabBtn) tabBtn.classList.add('active');
             if (tabName === 'stats') { if(typeof loadStats==='function') loadStats(); }
-            else if (tabName === 'chat') { if(typeof loadChatFeed==='function') loadChatFeed(); }
+            else if (tabName === 'chat') { if(typeof loadChatFeed==='function') loadChatFeed(); if(typeof loadVnChatFeed==='function') loadVnChatFeed(_activeVnChat||''); }
             else if (tabName === 'settings') { if(typeof loadKidsFeed==='function') loadKidsFeed(); if(typeof loadKidsCounts==='function') loadKidsCounts(); }
             else if (tabName === 'submit-kids') { if(typeof loadKidsCaptcha==='function') loadKidsCaptcha(); }
             else if (tabName === 'submit-medicine') { if(typeof loadMedicineCaptcha==='function') loadMedicineCaptcha(); }
@@ -6426,7 +6506,7 @@
             updateRates();
             loadStats();
             updateAllCityCounts();
-            if (document.getElementById('chat').classList.contains('active')) loadChatFeed();
+            if (document.getElementById('chat').classList.contains('active')) { loadChatFeed(); loadVnChatFeed(''); }
             loadListings('restaurants');
             loadListings('real_estate');
         }
@@ -6460,6 +6540,55 @@
         }
         
         setInterval(updateWeather, 3600000);
+
+        let _activeVnChat = '';
+
+        async function switchVnChat(channel) {
+            _activeVnChat = channel;
+            // Обновляем стиль кнопок
+            document.querySelectorAll('.vn-chat-btn').forEach(btn => {
+                const isActive = btn.dataset.channel === channel;
+                btn.style.background = isActive ? '#d4af37' : 'white';
+                btn.style.color = isActive ? 'white' : '#555';
+                btn.style.borderColor = isActive ? '#d4af37' : '#ddd';
+                btn.style.fontWeight = isActive ? '600' : '400';
+            });
+            const label = document.getElementById('vn-chat-active-label');
+            if (label) label.textContent = channel ? `@${channel}` : '';
+            await loadVnChatFeed(channel);
+        }
+
+        async function loadVnChatFeed(channel) {
+            const feed = document.getElementById('vn-chat-feed');
+            if (!feed) return;
+            feed.innerHTML = '<div style="text-align:center;padding:20px;color:#bbb;font-size:13px;">⏳ Загрузка...</div>';
+            try {
+                let url = `/api/listings/chat?country=vietnam&limit=60`;
+                if (channel) url += `&source_channel=${encodeURIComponent(channel)}`;
+                const r = await fetch(url);
+                const items = await r.json();
+                if (!items || items.length === 0) {
+                    feed.innerHTML = '<div style="text-align:center;padding:30px;color:#bbb;font-size:13px;">Сообщений пока нет — парсер только начал работу</div>';
+                    return;
+                }
+                feed.innerHTML = items.slice(0, 60).map(item => {
+                    const src = (item.source_channel || '').replace('@','');
+                    const link = item.tg_link || (src && item.message_id ? `https://t.me/${src}/${item.message_id}` : null);
+                    const dateStr = item.date ? new Date(item.date).toLocaleString('ru-RU', {day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}) : '';
+                    const text = (item.description || item.title || '').substring(0, 300);
+                    return `<div style="background:#f8f9fa;border-radius:8px;padding:10px 13px;border-left:3px solid #d4af37;">
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;">
+                            <a href="https://t.me/${src}" target="_blank" style="color:#0088cc;font-size:12px;font-weight:600;text-decoration:none;">@${src}</a>
+                            <span style="color:#bbb;font-size:11px;">${dateStr}</span>
+                        </div>
+                        <div style="color:#333;font-size:13px;line-height:1.5;white-space:pre-wrap;">${text}</div>
+                        ${link ? `<a href="${link}" target="_blank" style="display:inline-block;margin-top:6px;font-size:11px;color:#0088cc;text-decoration:none;">→ открыть в Telegram</a>` : ''}
+                    </div>`;
+                }).join('');
+            } catch(e) {
+                feed.innerHTML = '<div style="text-align:center;padding:20px;color:#f44;font-size:13px;">Ошибка загрузки</div>';
+            }
+        }
 
         function loadChatFeed() {
             // Загружаем сохранённый ник

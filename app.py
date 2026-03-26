@@ -986,6 +986,11 @@ def get_listings(category):
             filtered = [x for x in filtered if x.get('marketplace_category') == subcategory]
         else:
             filtered = [x for x in filtered if x.get('subcategory') == subcategory]
+
+    source_channel = request.args.get('source_channel')
+    if source_channel:
+        ch = source_channel.lstrip('@').lower()
+        filtered = [x for x in filtered if (x.get('source_channel', '') or '').lstrip('@').lower() == ch]
     
     # Маппинг русских названий городов на английские
     city_name_mapping = {
