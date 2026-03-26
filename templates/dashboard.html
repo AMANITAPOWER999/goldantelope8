@@ -12327,7 +12327,9 @@
 
                 // Per-channel table
                 const perCh = d.top_channels || {};
-                const rows = Object.entries(perCh).sort((a,b)=>b[1]-a[1]);
+                const rows = Object.entries(perCh)
+                    .filter(([ch]) => CHAT_VN_SET.has(ch.toLowerCase()) || CHAT_TH_SET.has(ch.toLowerCase()))
+                    .sort((a,b)=>b[1]-a[1]);
                 if (!rows.length) {
                     tbody.innerHTML = '<tr><td colspan="5" style="padding:20px;text-align:center;color:#555;">Нет данных от HF Space</td></tr>';
                 } else {
