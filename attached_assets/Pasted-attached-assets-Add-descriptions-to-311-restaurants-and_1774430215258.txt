@@ -1,0 +1,140 @@
+attached_assets
+Add descriptions to 311 restaurants and update data file
+yesterday
+goldantelopeasia
+Full upload: +181 files, dedup listings
+3 days ago
+hf_space_globalparsing
+Update code to handle Telegram FloodWait errors and improve channel p…
+yesterday
+static
+Upload remaining 155 files
+3 days ago
+templates
+Load all images in sliders immediately for faster viewing
+19 hours ago
+.gitignore
+Full upload: +181 files, dedup listings
+3 days ago
+.replit
+Update system to use dialogs for faster channel loading
+yesterday
+PARSING_STRATEGY.md
+Full upload: +181 files, dedup listings
+3 days ago
+Procfile
+Update Procfile
+3 days ago
+RAILWAY_ENV_VARS.md
+Full upload: +181 files, dedup listings
+3 days ago
+SPAM_PROTECTION.md
+Full upload: +181 files, dedup listings
+3 days ago
+additional_parser.py
+Update additional_parser.py
+3 days ago
+ads_channels_vietnam.json
+Update ads_channels_vietnam.json
+3 days ago
+app.py
+Update git push endpoint to use SSH; cleanup
+19 hours ago
+banner_config.json
+Saved progress at the end of the loop
+2 days ago
+channel_parser.py
+Update channel_parser.py
+3 days ago
+chat_parser.py
+Update chat_parser.py
+3 days ago
+groups_stats_thailand.json
+Update groups_stats_thailand.json
+3 days ago
+groups_stats_vietnam.json
+Update groups_stats_vietnam.json
+3 days ago
+listings_data.json
+Add full photo sliders for all restaurants
+20 hours ago
+listings_india.json
+Update listings_india.json
+3 days ago
+listings_indonesia.json
+Update listings_indonesia.json
+3 days ago
+listings_thailand.json
+Update git push endpoint to use SSH; cleanup
+19 hours ago
+listings_vietnam.json
+Add new real estate listing for Vietnam
+19 hours ago
+main.py
+Update main.py
+3 days ago
+parser_config_vietnam.json
+Update parser_config_vietnam.json
+3 days ago
+post_log.txt
+Integrate restaurant posting into the application with background thr…
+yesterday
+post_progress.json
+Make restaurant listings link to Telegram and use Telegram photos
+20 hours ago
+post_restaurants_to_tg.py
+Integrate restaurant posting into the application with background thr…
+yesterday
+pyproject.toml
+Add and update Telegram channel listings for Vietnam and Thailand
+yesterday
+raw_dump.json
+Full upload: +181 files, dedup listings
+3 days ago
+recover_kids_photos.py
+Full upload: +181 files, dedup listings
+3 days ago
+replit.md
+Full upload: +181 files, dedup listings
+3 days ago
+requirements.txt
+Add necessary libraries for application functionality
+2 days ago
+runtime.txt
+Full upload: +181 files, dedup listings
+3 days ago
+setup_telegram_session.py
+Full upload: +181 files, dedup listings
+3 days ago
+telegram_bot.py
+Add multiple country and language options to the catalog navigation
+2 days ago
+telethon_forwarder.py
+Update system to use dialogs for faster channel loading
+yesterday
+tg_file_paths_cache.json
+Improve image loading in listings and restaurant sections
+20 hours ago
+tg_photo_cache.json
+Eager loading for all slider images; fix lazy-slider in both renders
+19 hours ago
+thailand_channels.json
+Full upload: +181 files, dedup listings
+3 days ago
+thailandparsing_parser.py
+Remove listings without photos and add spam filters
+2 days ago
+uv.lock
+Full upload: +181 files, dedup listings
+3 days ago
+vietnam_channels.json
+Full upload: +181 files, dedup listings
+3 days ago
+vietnamparsing_parser.py
+Map Telegram channel posts to the chat category for Vietnam
+yesterday
+Repository files navigation
+README
+Add a README
+Help people interested in this repository understand your project.
+

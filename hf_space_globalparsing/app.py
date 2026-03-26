@@ -1,0 +1,344 @@
+import os, asyncio, re, uvicorn, difflib, time, logging, io
+from fastapi import FastAPI
+from telethon import TelegramClient, events
+from telethon.sessions import StringSession
+from telethon.tl.types import MessageMediaPhoto
+from telethon.errors import FloodWaitError
+from PIL import Image
+import imagehash
+
+logging.basicConfig(level=logging.INFO)
+log = logging.getLogger('parser')
+
+app = FastAPI()
+
+API_ID = int(os.environ.get('TELETHON_API_ID', '32881984'))
+API_HASH = os.environ.get('TELETHON_API_HASH', 'd2588f09dfbc5103ef77ef21c07dbf8b')
+SESS = os.environ.get('TELETHON_SESSION', '')
+
+D = {
+    'VIET': 'vietnamparsing',
+    'THAI': 'thailandparsing',
+    'BIKE': 'visaranvietnam'
+}
+
+M = {
+    'THAI': [
+        'arenda_phukets','THAILAND_REAL_ESTATE_PHUKET','housephuket','arenda_phuket_thailand',
+        'phuket_nedvizhimost_rent','phuketsk_arenda','phuket_nedvizhimost_thailand','phuketsk_for_rent',
+        'phuket_rentas','rentalsphuketonli','rentbuyphuket','Phuket_thailand05','nedvizhimost_pattaya',
+        'arenda_pattaya','pattaya_realty_estate','HappyHomePattaya','sea_bangkok','Samui_for_you',
+        'sea_phuket','realty_in_thailand','nedvig_thailand','thailand_nedvizhimost',
+        'globe_nedvizhka_Thailand'
+    ],
+    'VIET': [
+        'phuquoc_rent_wt', 'phyquocnedvigimost', 'Viet_Life_Phu_Quoc_rent', 'nhatrangapartment',
+        'tanrealtorgh', 'viet_life_niachang','nychang_arenda','rent_nha_trang','nyachang_nedvizhimost',
+        'nedvizimost_nhatrang','nhatrangforrent79','NhatrangRentl','arenda_v_nyachang','rent_appart_nha',
+        'Arenda_Nyachang_Zhilye','NhaTrang_rental','realestatebythesea_1','NhaTrang_Luxury',
+        'luckyhome_nhatrang','rentnhatrang','megasforrentnhatrang','viethome',
+        'Vietnam_arenda','huynhtruonq','DaNangRentAFlat','danag_viet_life_rent','Danang_House',
+        'DaNangApartmentRent','danang_arenda','arenda_v_danang','HoChiMinhRentI','hcmc_arenda',
+        'Hanoirentapartment','HanoiRentl','Hanoi_Rent','PhuquocRentl'
+    ],
+    'BIKE': [
+        'bike_nhatrang', 'motohub_nhatrang', 'NhaTrang_moto_market', 'RentBikeUniq',
+        'BK_rental', 'nha_trang_rent', 'RentTwentyTwo22NhaTrang'
+    ]
+}
+
+STATS = {
+    'running': False,
+    'started_at': None,
+    'user': None,
+    'connected': {},
+    'failed': {},
+    'forwarded': 0,
+    'photos': 0,
+    'albums': 0,
+    'dedup': 0,
+    'errors': 0,
+    'last_forward': None,
+    'per_channel': {},
+}
+
+H = []
+SENT_ALBUM_SIZES = set()
+SENT_SINGLE_SIZES = set()
+PHASH_CACHE = []
+MAX_DEDUP_CACHE = 2000
+MAX_PHASH_CACHE = 5000
+PHASH_THRESHOLD = 8
+
+def cl(t):
+    if not t: return ""
+    t = re.sub(r"t\.me/\S+|http\S+|#[A-Za-z0-9_а-яА-ЯёЁ]+|Источник:.*", "", t, flags=re.I)
+    t = re.sub(r'[^\w\s.,!?:;()\-+=%№"\'/]', '', t)
+    return " ".join(t.split())
+
+def dup(t):
+    if not t or len(t) < 20: return False
+    c = re.sub(r'[^a-zA-Zа-яА-ЯёЁ0-9]', '', t)
+    for o in H:
+        if difflib.SequenceMatcher(None, c, o).ratio() > 0.88: return True
+    H.append(c)
+    if len(H) > 500: H.pop(0)
+    return False
+
+def photo_total_size(media):
+    try:
+        if hasattr(media, 'photo') and hasattr(media.photo, 'sizes'):
+            return sum(getattr(s, 'size', 0) for s in media.photo.sizes if hasattr(s, 'size'))
+    except Exception:
+        pass
+    return 0
+
+def dup_by_size_album(photos):
+    if len(photos) < 2:
+        return False
+    total = sum(photo_total_size(m.media) for m in photos)
+    if total > 0:
+        key = (len(photos), total)
+        if key in SENT_ALBUM_SIZES:
+            return True
+        SENT_ALBUM_SIZES.add(key)
+        if len(SENT_ALBUM_SIZES) > MAX_DEDUP_CACHE:
+            SENT_ALBUM_SIZES.pop()
+    return False
+
+def dup_by_size_single(media):
+    sz = photo_total_size(media)
+    if sz > 0:
+        if sz in SENT_SINGLE_SIZES:
+            return True
+        SENT_SINGLE_SIZES.add(sz)
+        if len(SENT_SINGLE_SIZES) > MAX_DEDUP_CACHE:
+            SENT_SINGLE_SIZES.pop()
+    return False
+
+async def compute_phash(client, media):
+    try:
+        buf = io.BytesIO()
+        await client.download_media(media, file=buf, thumb=-1)
+        buf.seek(0)
+        img = Image.open(buf)
+        h = imagehash.phash(img, hash_size=8)
+        buf.close()
+        return h
+    except Exception as ex:
+        log.debug(f'pHash error: {ex}')
+        return None
+
+def phash_is_dup(h):
+    if h is None:
+        return False
+    for cached in PHASH_CACHE:
+        if abs(h - cached) <= PHASH_THRESHOLD:
+            return True
+    PHASH_CACHE.append(h)
+    if len(PHASH_CACHE) > MAX_PHASH_CACHE:
+        PHASH_CACHE.pop(0)
+    return False
+
+async def dup_by_phash_single(client, media):
+    h = await compute_phash(client, media)
+    if h is not None and phash_is_dup(h):
+        log.info(f'pHash dedup: single photo hash={h}')
+        return True
+    return False
+
+async def dup_by_phash_album(client, photos):
+    if not photos:
+        return False
+    h = await compute_phash(client, photos[0].media)
+    if h is not None and phash_is_dup(h):
+        log.info(f'pHash dedup: album first photo hash={h}')
+        return True
+    return False
+
+def get_region(un):
+    return next((r for r, l in M.items() if any(x.lower() == un.lower() for x in l)), 'VIET')
+
+async def start_client():
+    if not SESS:
+        log.error('TELETHON_SESSION not set!')
+        return
+
+    while True:
+        try:
+            await _run_client()
+        except Exception as ex:
+            log.error(f'Client disconnected: {ex}. Reconnecting in 30s...')
+            STATS['running'] = False
+            await asyncio.sleep(30)
+
+async def _run_client():
+    client = TelegramClient(StringSession(SESS), API_ID, API_HASH,
+                            connection_retries=10, retry_delay=5,
+                            auto_reconnect=True)
+    await client.connect()
+
+    if not await client.is_user_authorized():
+        log.error('Session invalid!')
+        return
+
+    me = await client.get_me()
+    STATS['user'] = f'{me.first_name} (id={me.id})'
+    STATS['started_at'] = time.strftime('%Y-%m-%d %H:%M:%S UTC', time.gmtime())
+    STATS['running'] = True
+    log.info(f'Authorized: {me.first_name} (id={me.id})')
+
+    all_ents = []
+    log.info('Loading dialogs...')
+
+    dialogs_map = {}
+    try:
+        async for dialog in client.iter_dialogs():
+            chat = dialog.entity
+            un = getattr(chat, 'username', None)
+            if un:
+                dialogs_map[un.lower()] = dialog.input_entity
+        log.info(f'Dialogs loaded: {len(dialogs_map)}')
+    except Exception as ex:
+        log.warning(f'Dialog load error: {ex}')
+
+    for grp, names in M.items():
+        ok, fail = [], []
+        for n in names:
+            key = n.lower()
+            if key in dialogs_map:
+                all_ents.append(dialogs_map[key])
+                ok.append(n)
+            else:
+                try:
+                    ent = await client.get_input_entity(n)
+                    all_ents.append(ent)
+                    ok.append(n)
+                    await asyncio.sleep(0.5)
+                except FloodWaitError as fw:
+                    log.warning(f'FloodWait {fw.seconds}s @{n}')
+                    fail.append(n)
+                except Exception:
+                    fail.append(n)
+        STATS['connected'][grp] = ok
+        STATS['failed'][grp] = fail
+        log.info(f'[{grp}] -> @{D[grp]}: {len(ok)}/{len(names)} ok, {len(fail)} failed')
+
+    total_ok = sum(len(v) for v in STATS['connected'].values())
+    log.info(f'Total: {total_ok} channels. Listening for new messages...')
+
+    @client.on(events.NewMessage(chats=all_ents))
+    async def h(e):
+        if e.grouped_id:
+            return
+        if not e.media or not isinstance(e.media, MessageMediaPhoto):
+            return
+
+        t = e.raw_text or ""
+        if len(t) < 15 or dup(t):
+            STATS['dedup'] += 1
+            return
+        if dup_by_size_single(e.media):
+            STATS['dedup'] += 1
+            return
+        if await dup_by_phash_single(client, e.media):
+            STATS['dedup'] += 1
+            STATS['phash_dedup'] = STATS.get('phash_dedup', 0) + 1
+            return
+
+        try:
+            chat = await e.get_chat()
+            un = chat.username if hasattr(chat, 'username') and chat.username else str(e.chat_id)
+            reg = get_region(un)
+            src_link = f"https://t.me/{un}/{e.id}"
+            caption = f"{cl(t)}\n\n{src_link}".strip() if t else src_link
+            await client.send_message(D[reg], caption[:1020], file=e.media, parse_mode=None)
+            STATS['forwarded'] += 1
+            STATS['photos'] += 1
+            STATS['last_forward'] = time.strftime('%H:%M:%S UTC', time.gmtime())
+            STATS['per_channel'][un] = STATS['per_channel'].get(un, 0) + 1
+            log.info(f'MSG @{un} -> @{D[reg]} | total: {STATS["forwarded"]}')
+        except FloodWaitError as fw:
+            log.warning(f'FloodWait {fw.seconds}s, sleeping...')
+            await asyncio.sleep(fw.seconds + 5)
+        except Exception as ex:
+            STATS['errors'] += 1
+            log.warning(f'Forward error: {ex}')
+
+    @client.on(events.Album(chats=all_ents))
+    async def ha(e):
+        p = [m for m in e.messages if isinstance(m.media, MessageMediaPhoto)]
+        if not p:
+            return
+        if dup(e.text):
+            STATS['dedup'] += 1
+            return
+        if dup_by_size_album(p):
+            STATS['dedup'] += 1
+            return
+        if await dup_by_phash_album(client, p):
+            STATS['dedup'] += 1
+            STATS['phash_dedup'] = STATS.get('phash_dedup', 0) + 1
+            return
+
+        try:
+            chat = await e.get_chat()
+            un = chat.username if hasattr(chat, 'username') and chat.username else str(e.chat_id)
+            reg = get_region(un)
+            src_link = f"https://t.me/{un}/{e.messages[0].id}"
+            t = e.text or ""
+            longest = t
+            for m in e.messages:
+                mt = m.raw_text or m.text or ""
+                if len(mt) > len(longest):
+                    longest = mt
+            caption = f"{cl(longest)}\n\n{src_link}".strip() if longest else src_link
+            await client.send_message(D[reg], caption[:1020], file=p, parse_mode=None)
+            STATS['forwarded'] += 1
+            STATS['photos'] += len(p)
+            STATS['albums'] += 1
+            STATS['last_forward'] = time.strftime('%H:%M:%S UTC', time.gmtime())
+            STATS['per_channel'][un] = STATS['per_channel'].get(un, 0) + 1
+            log.info(f'ALBUM @{un} -> @{D[reg]} | {len(p)} photos | total: {STATS["forwarded"]}')
+        except FloodWaitError as fw:
+            log.warning(f'FloodWait {fw.seconds}s, sleeping...')
+            await asyncio.sleep(fw.seconds + 5)
+        except Exception as ex:
+            STATS['errors'] += 1
+            log.warning(f'Album error: {ex}')
+
+    await client.run_until_disconnected()
+
+@app.on_event("startup")
+async def sup():
+    asyncio.create_task(start_client())
+
+@app.get("/")
+async def root():
+    return {
+        "status": "running" if STATS['running'] else "starting",
+        "user": STATS['user'],
+        "started_at": STATS['started_at'],
+        "connected": {k: len(v) for k, v in STATS['connected'].items()},
+        "failed": {k: v for k, v in STATS['failed'].items() if v},
+        "forwarded": STATS['forwarded'],
+        "photos": STATS['photos'],
+        "albums": STATS['albums'],
+        "dedup": STATS['dedup'],
+        "phash_dedup": STATS.get('phash_dedup', 0),
+        "phash_cache_size": len(PHASH_CACHE),
+        "errors": STATS['errors'],
+        "last_forward": STATS['last_forward'],
+        "top_channels": dict(sorted(STATS['per_channel'].items(), key=lambda x: -x[1])[:15]),
+    }
+
+@app.get("/health")
+async def health():
+    return {"ok": True, "running": STATS['running']}
+
+@app.get("/status")
+async def status():
+    return await root()
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=7860)
