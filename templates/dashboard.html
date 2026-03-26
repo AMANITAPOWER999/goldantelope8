@@ -6593,15 +6593,27 @@
             await loadThChatFeed(channel);
         }
 
+        const TH_CHAT_CHANNELS = new Set([
+            'thailand_chat','bangkok_chat','phuket_chat','pattaya_chat',
+            'chiang_mai_chat','hua_hin_chat','krabi_chat'
+        ]);
+
         async function loadThChatFeed(channel) {
             const feed = document.getElementById('th-chat-feed');
             if (!feed) return;
             feed.innerHTML = '<div style="text-align:center;padding:20px;color:#bbb;font-size:13px;">⏳ Загрузка...</div>';
             try {
-                let url = `/api/listings/chat?country=vietnam&limit=60`;
+                let url = `/api/listings/chat?country=vietnam&limit=200`;
                 if (channel) url += `&source_channel=${encodeURIComponent(channel)}`;
                 const r = await fetch(url);
-                const items = await r.json();
+                let items = await r.json();
+                // Если канал не выбран — фильтруем только тайские каналы
+                if (!channel) {
+                    items = items.filter(item => {
+                        const src = (item.source_channel || '').replace('@','').toLowerCase();
+                        return TH_CHAT_CHANNELS.has(src);
+                    });
+                }
                 if (!items || items.length === 0) {
                     feed.innerHTML = '<div style="text-align:center;padding:30px;color:#bbb;font-size:13px;">Сообщений пока нет — парсер только начал работу</div>';
                     return;
