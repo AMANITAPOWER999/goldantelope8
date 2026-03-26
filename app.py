@@ -6303,6 +6303,113 @@ def internal_git_push():
     return jsonify({'output': out, 'success': 'fatal' not in out[-1] and 'error' not in out[-1].lower()})
 
 
+# ── Временный endpoint генерации Telethon StringSession ──
+_tg_auth_state = {}  # phone_hash, client
+
+@app.route('/tg-auth', methods=['GET'])
+def tg_auth_page():
+    return '''<!DOCTYPE html><html><head><meta charset="utf-8">
+<title>TG Auth</title>
+<style>body{font-family:sans-serif;max-width:500px;margin:60px auto;padding:20px}
+input{width:100%;padding:10px;margin:8px 0;box-sizing:border-box;font-size:16px}
+button{background:#d4af37;color:#000;border:none;padding:12px 24px;font-size:16px;cursor:pointer;border-radius:6px;width:100%}
+.result{background:#f0f0f0;padding:12px;border-radius:6px;word-break:break-all;margin-top:12px;font-size:12px}</style></head>
+<body>
+<h2>🔐 Telegram Session Setup</h2>
+<div id="step1">
+  <p>Шаг 1: Отправить код на телефон</p>
+  <input id="phone" value="+840343893121" placeholder="Телефон">
+  <button onclick="sendCode()">Отправить код</button>
+</div>
+<div id="step2" style="display:none">
+  <p>Шаг 2: Введите код из Telegram</p>
+  <input id="code" placeholder="Код (5 цифр)" maxlength="5">
+  <button onclick="verifyCode()">Авторизоваться</button>
+</div>
+<div id="result"></div>
+<script>
+async function sendCode(){
+  const ph=document.getElementById('phone').value;
+  document.getElementById('result').innerHTML='⏳ Отправка...';
+  const r=await fetch('/tg-auth/send-code',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({phone:ph})});
+  const d=await r.json();
+  if(d.ok){document.getElementById('step1').style.display='none';document.getElementById('step2').style.display='';document.getElementById('result').innerHTML='✅ Код отправлен!';}
+  else document.getElementById('result').innerHTML='❌ '+d.error;
+}
+async function verifyCode(){
+  const code=document.getElementById('code').value;
+  document.getElementById('result').innerHTML='⏳ Авторизация...';
+  const r=await fetch('/tg-auth/verify',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code:code})});
+  const d=await r.json();
+  if(d.ok){document.getElementById('result').innerHTML='<b>✅ Сессия создана!</b><br><div class="result">'+d.session+'</div>';}
+  else document.getElementById('result').innerHTML='❌ '+d.error;
+}
+</script></body></html>'''
+
+@app.route('/tg-auth/send-code', methods=['POST'])
+def tg_auth_send_code():
+    import asyncio, threading
+    from telethon import TelegramClient
+    from telethon.sessions import StringSession
+    data = request.get_json()
+    phone = data.get('phone', '').strip()
+    API_ID = 32881984
+    API_HASH = 'd2588f09dfbc5103ef77ef21c07dbf8b'
+
+    result = {}
+    def run():
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        async def _do():
+            client = TelegramClient(StringSession(), API_ID, API_HASH)
+            await client.connect()
+            r = await client.send_code_request(phone)
+            _tg_auth_state['hash'] = r.phone_code_hash
+            _tg_auth_state['phone'] = phone
+            _tg_auth_state['client'] = client
+            _tg_auth_state['loop'] = loop
+            result['ok'] = True
+        loop.run_until_complete(_do())
+    t = threading.Thread(target=run)
+    t.start()
+    t.join(timeout=20)
+    if result.get('ok'):
+        return jsonify({'ok': True})
+    return jsonify({'ok': False, 'error': 'Не удалось отправить код'})
+
+@app.route('/tg-auth/verify', methods=['POST'])
+def tg_auth_verify():
+    import asyncio
+    data = request.get_json()
+    code = data.get('code', '').strip()
+    client = _tg_auth_state.get('client')
+    phone = _tg_auth_state.get('phone')
+    phone_hash = _tg_auth_state.get('hash')
+    loop = _tg_auth_state.get('loop')
+    if not client or not phone_hash:
+        return jsonify({'ok': False, 'error': 'Сначала запросите код'})
+    result = {}
+    async def _do():
+        try:
+            await client.sign_in(phone=phone, code=code, phone_code_hash=phone_hash)
+            me = await client.get_me()
+            session_str = client.session.save()
+            result['ok'] = True
+            result['session'] = session_str
+            result['user'] = f'{me.first_name} (id={me.id})'
+        except Exception as e:
+            result['ok'] = False
+            result['error'] = str(e)
+        finally:
+            try: await client.disconnect()
+            except: pass
+    loop.run_until_complete(_do())
+    if result.get('ok'):
+        app.logger.info(f'TG Auth OK: {result["user"]} | session len={len(result["session"])}')
+        return jsonify({'ok': True, 'session': result['session'], 'user': result['user']})
+    return jsonify({'ok': False, 'error': result.get('error', 'Ошибка')})
+
+
 if __name__ == '__main__':
     import threading
     t = threading.Thread(target=run_bot, daemon=True)
