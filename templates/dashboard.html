@@ -3229,16 +3229,41 @@
                             <button onclick="logoutChat()" style="padding: 4px 10px; background: #dc3545; color: white; border: none; border-radius: 6px; font-size: 11px; cursor: pointer; margin-left: 10px;">Выйти</button>
                         </div>
                     </div>
-                    <div id="chat-messages" style="height: 600px; overflow-y: auto; padding: 10px; background: #fafafa;">
+                    <div id="chat-messages" style="height: 1200px; overflow-y: auto; padding: 10px; background: #fafafa;">
                         <div class="loading"><div class="spinner"></div></div>
                     </div>
                     
-                    <!-- Форма отправки сообщений -->
-                    <div id="chat-send-form" style="padding: 12px; border-top: 1px solid #eee; background: white;">
-                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                            <input type="text" id="chat-username-input" placeholder="Ваш ник" style="width: 120px; padding: 12px; border: 2px solid #667eea; border-radius: 8px; font-size: 14px;">
-                            <input type="text" id="chat-message-input" placeholder="Введите сообщение..." style="flex: 1; min-width: 150px; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 14px;" onkeypress="if(event.key==='Enter')sendChatMessage()">
-                            <button onclick="sendChatMessage()" style="padding: 12px 24px; background: #667eea; color: white; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer;">📤 Отправить</button>
+                    <!-- Форма отправки сообщений (компактная) -->
+                    <div id="chat-send-form" style="padding: 8px 12px; border-top: 1px solid #eee; background: white;">
+                        <!-- Строка идентификации + выбор чата -->
+                        <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 6px; flex-wrap: wrap;">
+                            <span style="font-size: 11px; color: #999; white-space: nowrap;">👤 Вы:</span>
+                            <input type="text" id="chat-username-input" placeholder="Ваш ник" style="width: 110px; padding: 5px 8px; border: 1.5px solid #667eea; border-radius: 6px; font-size: 12px;"
+                                onchange="localStorage.setItem('chat_nickname', this.value.trim())">
+                            <span style="font-size: 11px; color: #999; white-space: nowrap; margin-left: 6px;">📢 Чат:</span>
+                            <select id="chat-target-select" style="flex: 1; min-width: 130px; padding: 5px 8px; border: 1.5px solid #ddd; border-radius: 6px; font-size: 12px; color: #333; background: white;">
+                                <option value="">💬 Сообщество GA</option>
+                                <option value="vietnam_chatt">🇻🇳 Вьетнам общий</option>
+                                <option value="nhatrang_chatik">🏖️ Нячанг</option>
+                                <option value="nhatrang_expats">🌴 Нячанг экспаты</option>
+                                <option value="danang_forum">🌊 Дананг</option>
+                                <option value="danang_expats">🌍 Дананг экспаты</option>
+                                <option value="danang_woman">👩 Дананг женщины</option>
+                                <option value="danang_chatik">💬 Дананг чатик</option>
+                                <option value="hochiminh_chat">🏙️ Хошимин</option>
+                                <option value="hanoi_chat">🏛️ Ханой</option>
+                                <option value="fukuok_chatik">🏝️ Фукуок</option>
+                                <option value="vungtau_chat">⛵ Вунг Тау</option>
+                                <option value="dalat_forum">🏔️ Далат</option>
+                                <option value="phanthiet_chat">🌅 Фантьет</option>
+                                <option value="kamran_chat">✈️ Камрань</option>
+                                <option value="kuinen_chat">🌿 Куйнён</option>
+                            </select>
+                        </div>
+                        <!-- Строка ввода + кнопка -->
+                        <div style="display: flex; gap: 8px;">
+                            <input type="text" id="chat-message-input" placeholder="Введите сообщение..." style="flex: 1; padding: 7px 10px; border: 1.5px solid #ddd; border-radius: 6px; font-size: 13px;" onkeypress="if(event.key==='Enter')sendChatMessage()">
+                            <button onclick="sendChatMessage()" style="padding: 7px 16px; background: #667eea; color: white; border: none; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap;">📤 Отправить</button>
                         </div>
                     </div>
                 </div>
@@ -6596,6 +6621,14 @@
             if (savedNickname) {
                 const nicknameInput = document.getElementById('chat-username-input');
                 if (nicknameInput) nicknameInput.value = savedNickname;
+                // Показываем имя в шапке
+                const userInfo = document.getElementById('chat-user-info');
+                const logoutBtn = document.getElementById('chat-logout-btn');
+                const usernameSpan = document.getElementById('chat-username');
+                if (userInfo && savedNickname) {
+                    userInfo.innerHTML = `<span style="color:#667eea;font-weight:600;font-size:13px;">👤 ${savedNickname}</span>`;
+                }
+                if (logoutBtn) logoutBtn.style.display = 'none';
             }
             loadChatMessages();
             
@@ -6646,14 +6679,23 @@
         async function sendChatMessage() {
             const usernameInput = document.getElementById('chat-username-input');
             const messageInput = document.getElementById('chat-message-input');
-            const username = usernameInput.value.trim() || 'Гость';
+            const targetSelect = document.getElementById('chat-target-select');
+            const username = (usernameInput ? usernameInput.value.trim() : '') || localStorage.getItem('chat_nickname') || 'Гость';
             const message = messageInput.value.trim();
+            const targetChannel = targetSelect ? targetSelect.value : '';
             if (!message) return;
-            messageInput.value = '';
-            // Сохраняем ник в localStorage
-            if (username !== 'Гость') {
+            // Сохраняем ник
+            if (username && username !== 'Гость') {
                 localStorage.setItem('chat_nickname', username);
             }
+            // Если выбран конкретный Telegram-чат — открываем его
+            if (targetChannel) {
+                const encodedMsg = encodeURIComponent(message);
+                window.open(`https://t.me/${targetChannel}`, '_blank');
+                messageInput.value = '';
+                return;
+            }
+            messageInput.value = '';
             try {
                 const r = await fetch('/api/chat/send', {
                     method: 'POST',
