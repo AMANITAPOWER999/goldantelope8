@@ -488,3 +488,4 @@ with gr.Blocks(title="GoldAntelope Parser") as demo:
     demo.load(fn=get_status_text, outputs=status_box, every=30)
 
 demo.launch(server_name="0.0.0.0", server_port=7860)
+

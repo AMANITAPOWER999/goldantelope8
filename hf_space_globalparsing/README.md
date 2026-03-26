@@ -3,16 +3,12 @@ title: Globalparsing
 emoji: 🦌
 colorFrom: green
 colorTo: yellow
-sdk: docker
+sdk: gradio
+sdk_version: 4.44.1
+app_file: app.py
 pinned: true
 ---
 
 # Globalparsing
 
 Telegram channel aggregator parser for GoldAntelope ASIA.
-
-## Environment Variables
-
-Set these in Space Settings → Variables and Secrets:
-
-- `TELETHON_SESSION` — Telethon StringSession string
