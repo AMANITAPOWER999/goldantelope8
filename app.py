@@ -6366,46 +6366,65 @@ def tg_auth_send_code():
             r = await client.send_code_request(phone)
             _tg_auth_state['hash'] = r.phone_code_hash
             _tg_auth_state['phone'] = phone
-            _tg_auth_state['client'] = client
-            _tg_auth_state['loop'] = loop
             result['ok'] = True
-        loop.run_until_complete(_do())
+            await client.disconnect()
+        try:
+            loop.run_until_complete(_do())
+        except Exception as e:
+            result['error'] = str(e)
+        finally:
+            loop.close()
     t = threading.Thread(target=run)
     t.start()
     t.join(timeout=20)
     if result.get('ok'):
         return jsonify({'ok': True})
-    return jsonify({'ok': False, 'error': 'Не удалось отправить код'})
+    return jsonify({'ok': False, 'error': result.get('error', 'Не удалось отправить код')})
 
 @app.route('/tg-auth/verify', methods=['POST'])
 def tg_auth_verify():
-    import asyncio
+    import asyncio, threading
+    from telethon import TelegramClient
+    from telethon.sessions import StringSession
     data = request.get_json()
     code = data.get('code', '').strip()
-    client = _tg_auth_state.get('client')
     phone = _tg_auth_state.get('phone')
     phone_hash = _tg_auth_state.get('hash')
-    loop = _tg_auth_state.get('loop')
-    if not client or not phone_hash:
+    if not phone_hash:
         return jsonify({'ok': False, 'error': 'Сначала запросите код'})
+    API_ID = 32881984
+    API_HASH = 'd2588f09dfbc5103ef77ef21c07dbf8b'
     result = {}
-    async def _do():
+    def run():
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        async def _do():
+            client = TelegramClient(StringSession(), API_ID, API_HASH)
+            await client.connect()
+            try:
+                await client.sign_in(phone=phone, code=code, phone_code_hash=phone_hash)
+                me = await client.get_me()
+                result['ok'] = True
+                result['session'] = client.session.save()
+                result['user'] = f'{me.first_name} (id={me.id})'
+            except Exception as e:
+                result['ok'] = False
+                result['error'] = str(e)
+            finally:
+                try: await client.disconnect()
+                except: pass
         try:
-            await client.sign_in(phone=phone, code=code, phone_code_hash=phone_hash)
-            me = await client.get_me()
-            session_str = client.session.save()
-            result['ok'] = True
-            result['session'] = session_str
-            result['user'] = f'{me.first_name} (id={me.id})'
+            loop.run_until_complete(_do())
         except Exception as e:
             result['ok'] = False
             result['error'] = str(e)
         finally:
-            try: await client.disconnect()
-            except: pass
-    loop.run_until_complete(_do())
+            loop.close()
+    t = threading.Thread(target=run)
+    t.start()
+    t.join(timeout=30)
     if result.get('ok'):
-        app.logger.info(f'TG Auth OK: {result["user"]} | session len={len(result["session"])}')
+        app.logger.info(f'TG Auth OK: {result["user"]}')
         return jsonify({'ok': True, 'session': result['session'], 'user': result['user']})
     return jsonify({'ok': False, 'error': result.get('error', 'Ошибка')})
 
