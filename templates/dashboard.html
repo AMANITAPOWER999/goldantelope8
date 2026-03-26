@@ -5592,7 +5592,7 @@
             if (lang !== 'ru') {
                 setTimeout(() => translateVisibleCards(lang), 400);
             } else {
-                // Restore all card texts to original Russian (with full HTML formatting)
+                // Restore all card texts to original (with full HTML formatting)
                 document.querySelectorAll('[data-orig]').forEach(el => {
                     const origHtml = el.getAttribute('data-orig-html');
                     if (origHtml) {
@@ -5602,6 +5602,8 @@
                     }
                     el.removeAttribute('data-tq');
                 });
+                // After restoring, auto-translate any English-language cards to Russian
+                setTimeout(() => translateVisibleCards('ru'), 400);
             }
         }
         
@@ -5913,8 +5915,6 @@
         }
 
         function translateVisibleCards(lang = currentLang) {
-            if (lang === 'ru') return;
-
             // Cancel any existing observer and pending queue for old lang
             translationQueue = [];
             activeTranslationLang = lang;
@@ -5928,12 +5928,22 @@
             });
             if (allCards.length === 0) return;
 
+            // Helper: decide whether to translate a given element
+            function shouldQueue(el) {
+                if (lang !== 'ru') return true;
+                // For Russian UI: only translate elements whose text is in English
+                const txt = (el.getAttribute('data-orig') || el.textContent).trim();
+                return isEnglishOnly(txt);
+            }
+
             // Phase 1: immediately queue viewport-visible cards (+ 300px margin)
             const vh = window.innerHeight;
             allCards.forEach(c => {
                 const r = c.getBoundingClientRect();
                 if (r.top < vh + 300 && r.bottom > -300) {
-                    _getCardElems(c).forEach(({ el, maxLen }) => _queueElem(el, maxLen, lang));
+                    _getCardElems(c).forEach(({ el, maxLen }) => {
+                        if (shouldQueue(el)) _queueElem(el, maxLen, lang);
+                    });
                 }
             });
 
@@ -5943,7 +5953,9 @@
                 entries.forEach(entry => {
                     if (!entry.isIntersecting) return;
                     translationObserver.unobserve(entry.target);
-                    _getCardElems(entry.target).forEach(({ el, maxLen }) => _queueElem(el, maxLen, lang));
+                    _getCardElems(entry.target).forEach(({ el, maxLen }) => {
+                        if (shouldQueue(el)) _queueElem(el, maxLen, lang);
+                    });
                 });
             }, { rootMargin: '300px 0px' });
 
@@ -7563,8 +7575,8 @@
                         try {
                             grid.innerHTML = items.map(item => renderListingCard(item, 'visas')).join('');
                             console.log('DEBUG: Rendered', items.length, 'visas cards');
-                            // Переводим карточки если выбран не русский язык
-                            if (currentLang !== 'ru' && typeof translateVisibleCards === 'function') {
+                            // Переводим карточки (включая авто-перевод английских на русский)
+                            if (typeof translateVisibleCards === 'function') {
                                 setTimeout(() => translateVisibleCards(), 600);
                             }
                         } catch(renderErr) {
@@ -8953,8 +8965,8 @@
                             window._scrollObserver.observe(sentinel);
                         }
                         
-                        // Переводим карточки если выбран не русский язык
-                        if (currentLang !== 'ru' && typeof translateVisibleCards === 'function') {
+                        // Переводим карточки (включая авто-перевод английских на русский)
+                        if (typeof translateVisibleCards === 'function') {
                             setTimeout(() => translateVisibleCards(), 600);
                         }
                     }
@@ -11184,8 +11196,8 @@
                         grid.innerHTML = '<div style="text-align: center; padding: 40px; color: #888;">Нет объявлений</div>';
                     } else {
                         grid.innerHTML = items.map(item => renderListingCard(item, 'medicine')).join('');
-                        // Переводим карточки если выбран не русский язык
-                        if (currentLang !== 'ru' && typeof translateVisibleCards === 'function') {
+                        // Переводим карточки (включая авто-перевод английских на русский)
+                        if (typeof translateVisibleCards === 'function') {
                             setTimeout(() => translateVisibleCards(), 600);
                         }
                     }
