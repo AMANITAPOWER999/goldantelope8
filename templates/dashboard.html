@@ -3397,26 +3397,6 @@
                             style="display:flex;align-items:center;gap:7px;padding:10px 12px;border-radius:10px;border:1.5px solid #e0e0e0;background:#fafafa;color:#444;font-size:13px;cursor:pointer;transition:all .15s;">
                             🐚 <span>Краби</span>
                         </button>
-                        <button class="th-chat-btn" data-channel="oawnWI6robot" onclick="switchThChat('oawnWI6robot')"
-                            style="display:flex;align-items:center;gap:7px;padding:10px 12px;border-radius:10px;border:1.5px solid #e0e0e0;background:#fafafa;color:#444;font-size:13px;cursor:pointer;transition:all .15s;">
-                            🤖 <span>Phuket Bot 1</span>
-                        </button>
-                        <button class="th-chat-btn" data-channel="meqpownopnbot" onclick="switchThChat('meqpownopnbot')"
-                            style="display:flex;align-items:center;gap:7px;padding:10px 12px;border-radius:10px;border:1.5px solid #e0e0e0;background:#fafafa;color:#444;font-size:13px;cursor:pointer;transition:all .15s;">
-                            🤖 <span>Phuket Bot 2</span>
-                        </button>
-                        <button class="th-chat-btn" data-channel="htlewrobot" onclick="switchThChat('htlewrobot')"
-                            style="display:flex;align-items:center;gap:7px;padding:10px 12px;border-radius:10px;border:1.5px solid #e0e0e0;background:#fafafa;color:#444;font-size:13px;cursor:pointer;transition:all .15s;">
-                            🤖 <span>TH Bot</span>
-                        </button>
-                        <button class="th-chat-btn" data-channel="Fhsmxvdbot" onclick="switchThChat('Fhsmxvdbot')"
-                            style="display:flex;align-items:center;gap:7px;padding:10px 12px;border-radius:10px;border:1.5px solid #e0e0e0;background:#fafafa;color:#444;font-size:13px;cursor:pointer;transition:all .15s;">
-                            🤖 <span>TH Bot 2</span>
-                        </button>
-                        <button class="th-chat-btn" data-channel="fgfps_bot" onclick="switchThChat('fgfps_bot')"
-                            style="display:flex;align-items:center;gap:7px;padding:10px 12px;border-radius:10px;border:1.5px solid #e0e0e0;background:#fafafa;color:#444;font-size:13px;cursor:pointer;transition:all .15s;">
-                            🤖 <span>Pattaya Bot</span>
-                        </button>
                     </div>
                     <div style="border-top: 1px solid #f0f0f0; padding: 12px 16px;">
                         <div id="th-chat-feed" style="max-height: 920px; overflow-y: auto; display: flex; flex-direction: column; gap: 7px;">
@@ -6788,12 +6768,11 @@
         }
 
         const TH_CHAT_CHANNELS = new Set([
-            'oawnwi6robot','meqpownopnbot','phuket_chatbg','barakholka_pkhuket',
-            'htlewrobot','fhsmxvdbot','chat_phuket','chats_phuket',
+            'phuket_chatbg','barakholka_pkhuket','chat_phuket','chats_phuket',
             'huahinrus','rentinthai','bangkok_chat_znakomstva','bangkok_market_bg',
             'vse_svoi_bangkok','visa_thailand_chat','thailand_4at','rent_thailand_chat',
             'thailand_chatt1','thailandchat_inf','chat_thailand','bangkok_chatbg',
-            'chat_bangkok','bangkok_chats','pattayasale','fgfps_bot',
+            'chat_bangkok','bangkok_chats','pattayasale',
             'pattayachatonline','pattayapar','chats_pattaya','phuketdating','krabichat'
         ]);
 
@@ -12453,7 +12432,7 @@
 
         const HF_CHAT_SPACE = 'https://poweramanita-a.hf.space';
         const CHAT_VN_SET = new Set(['nhatrang_bg','nhatrangchat','nhatrang55','svoi_nhatrang','zhenskiy_nhatrang','nhatranglady','nhatrangsun','danang_viet','danang_women','danangchat_ask','zhenskiy_danang','danang_people','vietnam_danang1','chat_danang','danang_chats','phanthietchat111','nyachang_vietnam','onus_vietnam','viza_vietnam','dalat_vietnam','vietnam_chat1','vietnam_chats','hochiminh_saigon','hochiminhchatik','hochiminh01_bg','phu_quoc_chat','phuquoc_getmir_chat','fukuok_chat','chat_fukuok','hanoi_viet','hanoi24hhh','hanoi_chats','danang16','hanoichatvip']);
-        const CHAT_TH_SET = new Set(['oawnwi6robot','meqpownopnbot','phuket_chatbg','barakholka_pkhuket','htlewrobot','fhsmxvdbot','chat_phuket','chats_phuket','huahinrus','rentinthai','bangkok_chat_znakomstva','bangkok_market_bg','vse_svoi_bangkok','visa_thailand_chat','thailand_4at','rent_thailand_chat','thailand_chatt1','thailandchat_inf','chat_thailand','bangkok_chatbg','chat_bangkok','bangkok_chats','pattayasale','fgfps_bot','pattayachatonline','pattayapar','chats_pattaya','phuketdating','krabichat']);
+        const CHAT_TH_SET = new Set(['phuket_chatbg','barakholka_pkhuket','chat_phuket','chats_phuket','huahinrus','rentinthai','bangkok_chat_znakomstva','bangkok_market_bg','vse_svoi_bangkok','visa_thailand_chat','thailand_4at','rent_thailand_chat','thailand_chatt1','thailandchat_inf','chat_thailand','bangkok_chatbg','chat_bangkok','bangkok_chats','pattayasale','pattayachatonline','pattayapar','chats_pattaya','phuketdating','krabichat']);
         const RE_VN_SET = new Set(['phuquoc_rent_wt','phyquocnedvigimost','Viet_Life_Phu_Quoc_rent','nhatrangapartment','tanrealtorgh','viet_life_niachang','nychang_arenda','rent_nha_trang','nyachang_nedvizhimost','nedvizimost_nhatrang','nhatrangforrent79','NhatrangRentl','arenda_v_nyachang','rent_appart_nha','Arenda_Nyachang_Zhilye','NhaTrang_rental','realestatebythesea_1','NhaTrang_Luxury','luckyhome_nhatrang','rentnhatrang','megasforrentnhatrang','viethome','Vietnam_arenda','huynhtruonq','DaNangRentAFlat','danag_viet_life_rent','Danang_House','DaNangApartmentRent','danang_arenda','arenda_v_danang','HoChiMinhRentI','hcmc_arenda','Hanoirentapartment','HanoiRentl','Hanoi_Rent','PhuquocRentl'].map(x=>x.toLowerCase()));
         const RE_TH_SET = new Set(['arenda_phukets','THAILAND_REAL_ESTATE_PHUKET','housephuket','arenda_phuket_thailand','phuket_nedvizhimost_rent','phuketsk_arenda','phuket_nedvizhimost_thailand','phuketsk_for_rent','phuket_rentas','rentalsphuketonli','rentbuyphuket','Phuket_thailand05','nedvizhimost_pattaya','arenda_pattaya','pattaya_realty_estate','HappyHomePattaya','sea_bangkok','Samui_for_you','sea_phuket','realty_in_thailand','nedvig_thailand','thailand_nedvizhimost','globe_nedvizhka_Thailand'].map(x=>x.toLowerCase()));
         const BIKE_SET = new Set(['bike_nhatrang','motohub_nhatrang','NhaTrang_moto_market','RentBikeUniq','BK_rental','nha_trang_rent','RentTwentyTwo22NhaTrang'].map(x=>x.toLowerCase()));
