@@ -6577,8 +6577,10 @@
                         ${link ? `<a href="${link}" target="_blank" style="display:inline-block;margin-top:6px;font-size:11px;color:#0088cc;text-decoration:none;">→ открыть в Telegram</a>` : ''}
                     </div>`;
                 }).join('');
-                // Прокручиваем вниз — новые сообщения снизу
+                // Прокручиваем внутри ленты к последнему сообщению
                 feed.scrollTop = feed.scrollHeight;
+                // Прокручиваем страницу так, чтобы низ ленты был виден
+                setTimeout(() => feed.scrollIntoView({behavior: 'smooth', block: 'end'}), 80);
             } catch(e) {
                 feed.innerHTML = '<div style="text-align:center;padding:20px;color:#f44;font-size:13px;">Ошибка загрузки</div>';
             }
