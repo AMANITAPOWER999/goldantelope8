@@ -3237,14 +3237,14 @@
                     </div>
                     
                     <!-- Форма отправки сообщений -->
-                    <div id="chat-send-form" style="padding: 14px 16px; border-top: 1px solid #eee; background: white;">
+                    <div id="chat-send-form" style="padding: 8px 12px; border-top: 1px solid #eee; background: white;">
                         <!-- Строка идентификации + выбор чата -->
-                        <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 10px; flex-wrap: wrap;">
-                            <span style="font-size: 13px; color: #666; white-space: nowrap;">👤 Вы:</span>
-                            <input type="text" id="chat-username-input" placeholder="Ваш ник" style="width: 140px; padding: 9px 12px; border: 2px solid #667eea; border-radius: 8px; font-size: 14px;"
+                        <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 6px; flex-wrap: wrap;">
+                            <span style="font-size: 12px; color: #666; white-space: nowrap;">👤 Вы:</span>
+                            <input type="text" id="chat-username-input" placeholder="Ваш ник" style="width: 120px; padding: 5px 9px; border: 1.5px solid #667eea; border-radius: 7px; font-size: 13px;"
                                 onchange="localStorage.setItem('chat_nickname', this.value.trim())">
-                            <span style="font-size: 13px; color: #666; white-space: nowrap; margin-left: 4px;">📢 Чат:</span>
-                            <select id="chat-target-select" style="flex: 1; min-width: 160px; padding: 9px 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 14px; color: #333; background: white;">
+                            <span style="font-size: 12px; color: #666; white-space: nowrap;">📢 Чат:</span>
+                            <select id="chat-target-select" style="flex: 1; min-width: 140px; padding: 5px 9px; border: 1.5px solid #ddd; border-radius: 7px; font-size: 13px; color: #333; background: white;">
                                 <option value="">💬 Сообщество GA</option>
                                 <option value="vietnam_chatt">🇻🇳 Вьетнам общий</option>
                                 <option value="nhatrang_chatik">🏖️ Нячанг</option>
@@ -3264,9 +3264,9 @@
                             </select>
                         </div>
                         <!-- Строка ввода + кнопка -->
-                        <div style="display: flex; gap: 10px;">
-                            <input type="text" id="chat-message-input" placeholder="Введите сообщение..." style="flex: 1; padding: 10px 14px; border: 2px solid #ddd; border-radius: 8px; font-size: 14px;" onkeypress="if(event.key==='Enter')sendChatMessage()">
-                            <button onclick="sendChatMessage()" style="padding: 10px 22px; background: #667eea; color: white; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; white-space: nowrap;">📤 Отправить</button>
+                        <div style="display: flex; gap: 8px;">
+                            <input type="text" id="chat-message-input" placeholder="Введите сообщение..." style="flex: 1; padding: 6px 10px; border: 1.5px solid #ddd; border-radius: 7px; font-size: 13px;" onkeypress="if(event.key==='Enter')sendChatMessage()">
+                            <button onclick="sendChatMessage()" style="padding: 6px 16px; background: #667eea; color: white; border: none; border-radius: 7px; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap;">📤 Отправить</button>
                         </div>
                     </div>
                 </div>
