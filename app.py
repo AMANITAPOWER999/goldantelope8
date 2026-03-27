@@ -6053,7 +6053,18 @@ def hf_space_stats():
     try:
         r = _req.get(HF_URL, timeout=35)
         r.raise_for_status()
-        return jsonify(r.json())
+        data = r.json()
+        try:
+            import telethon_parser as _tp
+            chat_per_ch = dict(_tp.STATS.get('per_channel', {}))
+            if chat_per_ch:
+                data['chat_per_channel'] = chat_per_ch
+                data['chat_forwarded'] = _tp.STATS.get('forwarded', 0)
+                data['chat_started_at'] = _tp.STATS.get('started_at')
+                data['chat_user'] = _tp.STATS.get('user')
+        except Exception:
+            pass
+        return jsonify(data)
     except _req.exceptions.Timeout:
         return jsonify({'error': 'timeout', 'message': 'HF Space не отвечает (спит или перезапускается). Попробуйте через 1-2 минуты.'}), 504
     except _req.exceptions.ConnectionError:
