@@ -924,6 +924,29 @@ def get_kids_type_counts():
     
     return jsonify(counts)
 
+def _enrich_tg_images(items):
+    """Для объявлений с tg_file_ids подставляет прямую ссылку /tg_file/{id},
+    если image_url пустой или это истёкший cdn5.telesco.pe URL."""
+    for item in items:
+        fids = item.get('tg_file_ids') or []
+        if not fids:
+            continue
+        url = item.get('image_url', '') or ''
+        need_replace = (
+            not url or
+            'telesco.pe' in url or
+            'cdn' in url.lower()
+        )
+        if need_replace:
+            item['image_url'] = f'/tg_file/{fids[0]}'
+        # Дополнительные фото (image_url_2..4)
+        for i, fid in enumerate(fids[1:4], start=2):
+            key = f'image_url_{i}'
+            cur = item.get(key, '') or ''
+            if not cur or 'telesco.pe' in cur or 'cdn' in cur.lower():
+                item[key] = f'/tg_file/{fid}'
+
+
 @app.route('/api/listings/<category>')
 def get_listings(category):
     country = request.args.get('country', 'vietnam')
@@ -1404,6 +1427,7 @@ def get_listings(category):
         limit = int(request.args.get('limit', 0))
         if limit > 0:
             filtered = filtered[offset:offset + limit]
+        _enrich_tg_images(filtered)
         return jsonify(filtered)
     
     # Сортировка по дате - новые сверху
@@ -1415,6 +1439,7 @@ def get_listings(category):
     if limit > 0:
         filtered = filtered[offset:offset + limit]
     
+    _enrich_tg_images(filtered)
     return jsonify(filtered)
 
 @app.route('/api/add-listing', methods=['POST'])
