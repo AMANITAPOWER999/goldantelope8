@@ -115,5 +115,70 @@
     "image_hash": "fa4adead54a2b25282d2b0955d8ed1f5",
     "has_media": true,
     "price": null
+  },
+  {
+    "id": "vmestenaphukete_276936",
+    "category": "chat",
+    "title": "Здравствуйте, где кальян покурить на патонге ?",
+    "description": "Здравствуйте, где кальян покурить на патонге ?",
+    "date": "2026-03-27T09:30:06+00:00",
+    "source_channel": "@vmestenaphukete",
+    "message_id": 276936,
+    "image_url": null,
+    "image_hash": null,
+    "has_media": false,
+    "price": null
+  },
+  {
+    "id": "vmestenaphukete_276935",
+    "category": "chat",
+    "title": "Можно, вдоль пляда идти. Мы так ходили",
+    "description": "Можно, вдоль пляда идти. Мы так ходили",
+    "date": "2026-03-27T09:29:26+00:00",
+    "source_channel": "@vmestenaphukete",
+    "message_id": 276935,
+    "image_url": null,
+    "image_hash": null,
+    "has_media": false,
+    "price": null
+  },
+  {
+    "id": "vmestenaphukete_276934",
+    "category": "chat",
+    "title": "Где получше карон, ката или ката Ной?) в плане водорослей, планктона сегодня?)",
+    "description": "Где получше карон, ката или ката Ной?) в плане водорослей, планктона сегодня?)",
+    "date": "2026-03-27T09:24:55+00:00",
+    "source_channel": "@vmestenaphukete",
+    "message_id": 276934,
+    "image_url": null,
+    "image_hash": null,
+    "has_media": false,
+    "price": null
+  },
+  {
+    "id": "vmestenaphukete_276933",
+    "category": "chat",
+    "title": "Сегодня спрашивала, не ответили. Мы все равно поехали на Карон, никто не кусал.",
+    "description": "Сегодня спрашивала, не ответили. Мы все равно поехали на Карон, никто не кусал.",
+    "date": "2026-03-27T09:19:39+00:00",
+    "source_channel": "@vmestenaphukete",
+    "message_id": 276933,
+    "image_url": null,
+    "image_hash": null,
+    "has_media": false,
+    "price": null
+  },
+  {
+    "id": "vmestenaphukete_276932",
+    "category": "chat",
+    "title": "Мы просто любим сесть, поспать и в Тае!😂 Поэтому без заморочек. С верой и надеждой👌",
+    "description": "Мы просто любим сесть, поспать и в Тае!😂 Поэтому без заморочек. С верой и надеждой👌",
+    "date": "2026-03-27T09:01:10+00:00",
+    "source_channel": "@vmestenaphukete",
+    "message_id": 276932,
+    "image_url": null,
+    "image_hash": null,
+    "has_media": false,
+    "price": null
   }
 ]
