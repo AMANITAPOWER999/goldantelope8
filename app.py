@@ -3015,10 +3015,14 @@ threading.Thread(target=_prewarm_restaurant_file_paths, daemon=True).start()
 
 
 def _prewarm_restaurant_disk_photos():
-    """Фоновый прогрев: скачивает фото всех ресторанов на диск один раз.
-    После этого /tg_img/ отдаёт с диска без обращений к CDN."""
+    """Фоновый прогрев: скачивает фото всех ресторанов через Bot API на диск один раз.
+    После этого /tg_img/ отдаёт с диска — CDN не используется совсем."""
     import time as _t
-    _t.sleep(20)  # подождать пока Flask поднимется
+    _t.sleep(25)  # подождать пока индекс file_id построится
+    bot_token = os.environ.get('TELEGRAM_BOT_TOKEN', '')
+    if not bot_token:
+        logger.warning('[disk_prewarm] Нет TELEGRAM_BOT_TOKEN, прогрев пропущен')
+        return
     try:
         vn_data = json.load(open('listings_vietnam.json', 'r', encoding='utf-8'))
         rests = vn_data.get('restaurants', [])
@@ -3026,42 +3030,33 @@ def _prewarm_restaurant_disk_photos():
         return
     cached_dir = _TG_DISK_CACHE_DIR
     downloaded = 0; skipped = 0; failed = 0
-    hdrs = {'User-Agent': 'TelegramBot (like TwitterBot)', 'Accept': 'text/html'}
     for r in rests:
         msg_ids = r.get('photo_msg_ids') or []
-        if not msg_ids:
+        fids = r.get('tg_file_ids') or []
+        if not msg_ids or not fids:
+            failed += 1
             continue
         mid = msg_ids[0]
+        fid = fids[0]
         disk_path = os.path.join(cached_dir, f'restoranvietnam_{mid}.jpg')
         if os.path.exists(disk_path) and os.path.getsize(disk_path) > 500:
             skipped += 1
             continue
-        try:
-            page = requests.get(f'https://t.me/restoranvietnam/{mid}', headers=hdrs, timeout=10)
-            if page.status_code != 200:
-                failed += 1
-                continue
-            m = re.search(r'<meta property="og:image" content="([^"]+)"', page.text)
-            if not m:
-                m = re.search(r'<meta name="twitter:image" content="([^"]+)"', page.text)
-            if not m:
-                failed += 1
-                continue
-            cdn_url = m.group(1).replace('&amp;', '&')
-            img = requests.get(cdn_url, timeout=15)
-            if img.status_code == 200 and len(img.content) > 500:
+        img_data = _bot_api_download(fid, bot_token)
+        if img_data:
+            try:
                 tmp = disk_path + '.tmp'
                 with open(tmp, 'wb') as f:
-                    f.write(img.content)
+                    f.write(img_data)
                 os.replace(tmp, disk_path)
                 downloaded += 1
-            else:
+            except Exception as ex:
+                logger.debug(f'disk prewarm save {mid}: {ex}')
                 failed += 1
-        except Exception as ex:
+        else:
             failed += 1
-            logger.debug(f'disk prewarm {mid}: {ex}')
-        _t.sleep(0.3)  # пауза между запросами
-    logger.info(f'[disk_prewarm] Ресторанов: {downloaded} скачано, {skipped} уже есть, {failed} ошибок')
+        _t.sleep(0.15)
+    logger.info(f'[disk_prewarm] Bot API: {downloaded} скачано, {skipped} уже есть, {failed} ошибок')
 
 
 threading.Thread(target=_prewarm_restaurant_disk_photos, daemon=True, name='DiskPhotoPrewarm').start()
@@ -3110,48 +3105,93 @@ def tg_file_proxy(file_id):
 _TG_DISK_CACHE_DIR = 'tg_photo_cache'
 os.makedirs(_TG_DISK_CACHE_DIR, exist_ok=True)
 
+# Маппинг: (channel, msg_id) → file_id, построенный из listings_vietnam.json при старте
+_msg_to_file_id: dict = {}
+_msg_to_file_id_lock = threading.Lock()
+
+
+def _build_msg_to_file_id_index():
+    """Индексируем все tg_file_ids из листингов: (channel, msg_id) → file_id."""
+    try:
+        vn = json.load(open('listings_vietnam.json', 'r', encoding='utf-8'))
+        idx = {}
+        for r in vn.get('restaurants', []):
+            mids = r.get('photo_msg_ids') or []
+            fids = r.get('tg_file_ids') or []
+            ch = r.get('source', 'restoranvietnam')
+            for i, mid in enumerate(mids):
+                if i < len(fids) and fids[i]:
+                    idx[(ch, int(mid))] = fids[i]
+        with _msg_to_file_id_lock:
+            _msg_to_file_id.update(idx)
+        logger.info(f'[file_id_index] Проиндексировано {len(idx)} пар msg_id→file_id')
+    except Exception as e:
+        logger.warning(f'[file_id_index] Ошибка: {e}')
+
+
+threading.Thread(target=_build_msg_to_file_id_index, daemon=True, name='FileIdIndexer').start()
+
+
+def _bot_api_download(file_id: str, bot_token: str) -> bytes | None:
+    """Скачивает файл через Bot API напрямую с api.telegram.org (без CDN)."""
+    try:
+        r = requests.get(
+            f'https://api.telegram.org/bot{bot_token}/getFile',
+            params={'file_id': file_id},
+            timeout=10
+        )
+        j = r.json()
+        if not j.get('ok'):
+            logger.warning(f'getFile failed for {file_id[:40]}: {j.get("description")}')
+            return None
+        file_path = j['result']['file_path']
+        img = requests.get(
+            f'https://api.telegram.org/file/bot{bot_token}/{file_path}',
+            timeout=20
+        )
+        if img.status_code == 200 and len(img.content) > 500:
+            return img.content
+    except Exception as e:
+        logger.warning(f'_bot_api_download error: {e}')
+    return None
+
+
 @app.route('/tg_img/<channel>/<int:post_id>')
 def tg_photo_proxy(channel, post_id):
-    """Отдаёт фото из Telegram канала. Байты кэшируются на диск — CDN нужен только
-    при первом запросе, после чего всё идёт с нашего сервера."""
+    """Отдаёт фото из Telegram канала через Bot API (без CDN).
+    Байты кэшируются на диск — api.telegram.org нужен только при первом запросе."""
     safe_ch = re.sub(r'[^a-zA-Z0-9_]', '', channel)
     disk_path = os.path.join(_TG_DISK_CACHE_DIR, f'{safe_ch}_{post_id}.jpg')
 
-    # 1. Диск-кэш: если файл уже скачан — отдаём сразу, без CDN
+    # 1. Диск-кэш: если файл уже скачан — отдаём мгновенно, без сети
     if os.path.exists(disk_path) and os.path.getsize(disk_path) > 500:
         try:
             with open(disk_path, 'rb') as f:
                 data = f.read()
             return Response(data, status=200, headers={
                 'Content-Type': 'image/jpeg',
-                'Cache-Control': 'public, max-age=2592000',  # 30 дней
+                'Cache-Control': 'public, max-age=2592000',
             })
         except Exception:
             pass
 
+    bot_token = os.environ.get('TELEGRAM_BOT_TOKEN', '')
     img_data = None
 
-    # 2. og:image (один раз через CDN) — скачиваем и сохраняем байты на диск навсегда
-    if not img_data:
-        try:
-            hdrs = {'User-Agent': 'TelegramBot (like TwitterBot)', 'Accept': 'text/html'}
-            r = requests.get(f'https://t.me/{channel}/{post_id}', headers=hdrs, timeout=10)
-            if r.status_code == 200:
-                m = re.search(r'<meta property="og:image" content="([^"]+)"', r.text)
-                if not m:
-                    m = re.search(r'<meta name="twitter:image" content="([^"]+)"', r.text)
-                if m:
-                    cdn_url = m.group(1).replace('&amp;', '&')
-                    img_r = requests.get(cdn_url, timeout=15)
-                    if img_r.status_code == 200 and len(img_r.content) > 500:
-                        img_data = img_r.content
-        except Exception as e:
-            logger.warning(f'tg_photo_proxy og:image error {channel}/{post_id}: {e}')
+    # 2. Получаем file_id из нашего индекса и скачиваем через Bot API (прямой Telegram, без CDN)
+    if bot_token:
+        with _msg_to_file_id_lock:
+            ch_key = 'restoranvietnam' if channel == 'restoranvietnam' else channel
+            file_id = _msg_to_file_id.get((ch_key, post_id))
+        if file_id:
+            img_data = _bot_api_download(file_id, bot_token)
+        else:
+            logger.debug(f'tg_photo_proxy: нет file_id для {channel}/{post_id}')
 
     if not img_data:
         return Response(status=404)
 
-    # 4. Сохраняем на диск (атомарно)
+    # 3. Сохраняем на диск (атомарно)
     try:
         tmp = disk_path + '.tmp'
         with open(tmp, 'wb') as f:
@@ -3162,7 +3202,7 @@ def tg_photo_proxy(channel, post_id):
 
     return Response(img_data, status=200, headers={
         'Content-Type': 'image/jpeg',
-        'Cache-Control': 'public, max-age=2592000',  # 30 дней
+        'Cache-Control': 'public, max-age=2592000',
     })
 
 # ============ УПРАВЛЕНИЕ ГОРОДАМИ ============
