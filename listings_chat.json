@@ -2975,5 +2975,31 @@
     "image_hash": null,
     "has_media": false,
     "price": null
+  },
+  {
+    "id": "vmestenaphukete_277171",
+    "category": "chat",
+    "title": "Как называется ресторан?",
+    "description": "Как называется ресторан?",
+    "date": "2026-03-27T16:46:02+00:00",
+    "source_channel": "@vmestenaphukete",
+    "message_id": 277171,
+    "image_url": null,
+    "image_hash": null,
+    "has_media": false,
+    "price": null
+  },
+  {
+    "id": "vmestenaphukete_277170",
+    "category": "chat",
+    "title": "Всем привет! Я на острове недавно, хочется найти кого-то для прогулок и веселья. Куда стоит сходить?",
+    "description": "Всем привет! Я на острове недавно, хочется найти кого-то для прогулок и веселья. Куда стоит сходить?",
+    "date": "2026-03-27T16:31:42+00:00",
+    "source_channel": "@vmestenaphukete",
+    "message_id": 277170,
+    "image_url": null,
+    "image_hash": null,
+    "has_media": false,
+    "price": null
   }
 ]
