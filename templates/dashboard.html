@@ -1243,88 +1243,7 @@
             <button class="tab" data-tab="news" onclick="switchTab('news')"><img src="/static/icons/photoshoot.jpg" data-light-src="/static/icons/photoshoot.jpg" data-dark-src="/static/icons/photoshoot_dark.png" alt=""><span>Фотосессия</span></button>
             <button class="tab" data-tab="medicine" onclick="switchTab('medicine')"><img src="/static/icons/medicine_new.png" data-light-src="/static/icons/medicine_new.png" data-dark-src="/static/icons/medicine_dark.png" alt=""><span>Медицина</span></button>
             <button class="tab" data-tab="chat" onclick="switchTab('chat')"><img src="/static/images/icons/chat.jpg" data-light-src="/static/images/icons/chat.jpg" data-dark-src="/static/icons/chat_dark.png" alt=""><span>Чат</span></button>
-            <button class="tab" data-tab="stats" onclick="switchTab('stats')"><img src="/static/icons/statistics.png" data-light-src="/static/icons/statistics.png" data-dark-src="/static/icons/statistics_dark.png" alt=""><span>Реклама ТГ</span></button>
             <button class="tab" data-tab="admin" onclick="switchTab('admin')"><span>⚙️ Админ</span></button>
-        </div>
-
-        <!-- Реклама ТГ -->
-        <div id="stats" class="content">
-            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 12px; margin-bottom: 20px;">
-                <h2 style="margin: 0 0 10px 0;">📢 Telegram Ads - Реклама в каналах</h2>
-                <p style="margin: 0; opacity: 0.9;">Разместите рекламу в популярных Telegram группах Азии. Охват тысяч русскоязычных пользователей!</p>
-            </div>
-            
-            <div style="background: white; border-radius: 12px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 20px;">
-                <h3 style="margin: 0 0 15px 0; color: #333; font-size: 18px;">📋 Доступные группы для рекламы</h3>
-                
-                <!-- Фильтр по городам (динамический для каждой страны) -->
-                <div id="ads-city-filter" style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 15px;">
-                </div>
-                
-                <div style="overflow-x: auto;">
-                    <table id="ads-table" style="width: 100%; border-collapse: collapse; font-size: 14px;">
-                        <thead>
-                            <tr style="background: linear-gradient(135deg, #d4af37 0%, #f4d03f 100%); color: white;">
-                                <th style="padding: 12px; text-align: left; border-radius: 8px 0 0 0;">Группа</th>
-                                <th style="padding: 12px; text-align: center;">Охват</th>
-                                <th style="padding: 12px; text-align: center;">💰 Цена</th>
-                                <th style="padding: 12px; text-align: center;">Контакт</th>
-                                <th style="padding: 12px; text-align: center; border-radius: 0 8px 0 0;">Заказать</th>
-                            </tr>
-                        </thead>
-                        <tbody id="ads-tbody">
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            
-            <div style="background: white; border-radius: 12px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-                <h3 style="margin: 0 0 15px 0; color: #333; font-size: 18px;">➕ Добавить свой канал</h3>
-                <p style="color: #666; margin-bottom: 15px; font-size: 13px;">У вас есть Telegram канал? Добавьте его в наш каталог и получайте заказы на рекламу!</p>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
-                    <div>
-                        <label style="display: block; font-size: 12px; color: #666; margin-bottom: 5px;">Название канала *</label>
-                        <input type="text" id="add-channel-name" placeholder="@your_channel" required style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px; font-size: 14px; box-sizing: border-box;">
-                    </div>
-                    <div>
-                        <label style="display: block; font-size: 12px; color: #666; margin-bottom: 5px;">Категория *</label>
-                        <select id="add-channel-category" required style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px; font-size: 14px; box-sizing: border-box;">
-                            <option value="chat">💬 Чат</option>
-                            <option value="visas">🏖️ Визы</option>
-                            <option value="realestate">🏠 Недвижимость</option>
-                            <option value="transport">🏍️ Транспорт</option>
-                            <option value="exchange">💱 Обмен денег</option>
-                            <option value="marketplace">🛍️ Барахолка</option>
-                            <option value="restaurants">🍽️ Рестораны</option>
-                            <option value="tours">🧳 Экскурсии</option>
-                            <option value="entertainment">🎮 Развлечения</option>
-                            <option value="medicine">🏥 Медицина</option>
-                            <option value="news">📰 Новости</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label style="display: block; font-size: 12px; color: #666; margin-bottom: 5px;">Город *</label>
-                        <select id="add-channel-city" required style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px; font-size: 14px; box-sizing: border-box;">
-                            <!-- Города загружаются динамически -->
-                        </select>
-                    </div>
-                    <div>
-                        <label style="display: block; font-size: 12px; color: #666; margin-bottom: 5px;">Подписчиков *</label>
-                        <input type="number" id="add-channel-members" placeholder="1000" required style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px; font-size: 14px; box-sizing: border-box;">
-                    </div>
-                    <div>
-                        <label style="display: block; font-size: 12px; color: #666; margin-bottom: 5px;">Цена за пост ($) *</label>
-                        <input type="number" id="add-channel-price" placeholder="30" required style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px; font-size: 14px; box-sizing: border-box;">
-                    </div>
-                    <div>
-                        <label style="display: block; font-size: 12px; color: #666; margin-bottom: 5px;">Контакт для связи *</label>
-                        <input type="text" id="add-channel-contact" placeholder="@your_username" required style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px; font-size: 14px; box-sizing: border-box;">
-                    </div>
-                </div>
-                <p style="font-size: 11px; color: #999; margin-top: 10px;">* Все поля обязательны для заполнения</p>
-                <button onclick="addChannelForAds()" style="margin-top: 15px; padding: 12px 30px; background: linear-gradient(135deg, #4CAF50, #45a049); color: white; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer;">➕ Добавить канал</button>
-                <div id="add-channel-status" style="margin-top: 10px;"></div>
-            </div>
         </div>
 
         <!-- Рестораны -->
@@ -5615,14 +5534,6 @@
                         <div id="pending-list" style="display: grid; gap: 15px;"></div>
                     </div>
                     
-                    <!-- Модерация рекламных каналов -->
-                    <div style="background: white; border-radius: 12px; padding: 20px; border: 1px solid #ddd; margin-bottom: 20px;">
-                        <h3 style="margin: 0 0 15px 0; color: #333;">📢 Модерация рекламных каналов</h3>
-                        <button onclick="loadPendingAdsChannels()" style="padding: 10px 20px; background: #667eea; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; margin-bottom: 15px;">🔄 Загрузить ожидающие</button>
-                        <div id="pending-ads-count" style="font-size: 14px; color: #666; margin-bottom: 10px;"></div>
-                        <div id="pending-ads-list" style="display: grid; gap: 10px;"></div>
-                    </div>
-
                     <div style="background: #fafafa; padding: 20px; border-radius: 8px; border: 1px solid #eee; margin-top: 20px;">
                         <h4 style="margin: 0 0 15px 0; color: #333;">🖼️ Управление баннерами (${currentCountry})</h4>
                         
@@ -5744,7 +5655,7 @@
         const translations = {
             ru: {
                 countries: { vietnam: '🇻🇳 Вьетнам', thailand: '🇹🇭 Тайланд', india: '🇮🇳 Индия', indonesia: '🇮🇩 Индонезия' },
-                tabs: { entertainment: 'Развлечения', restaurants: 'Рестораны', tours: 'Экскурсии', transport: 'Транспорт', realestate: 'Недвижимость', exchange: 'Обмен денег', settings: 'Дети', marketplace: 'Барахолка', visas: 'Визаран', news: 'Фотосессия', medicine: 'Медицина', chat: 'Чат', stats: 'Реклама ТГ' },
+                tabs: { entertainment: 'Развлечения', restaurants: 'Рестораны', tours: 'Экскурсии', transport: 'Транспорт', realestate: 'Недвижимость', exchange: 'Обмен денег', settings: 'Дети', marketplace: 'Барахолка', visas: 'Визаран', news: 'Фотосессия', medicine: 'Медицина', chat: 'Чат' },
                 status: { parser: 'Парсер:', total: 'Всего объявлений:', updated: 'Обновлено:', online: 'На портале', lang: 'Язык' },
                 filters: { rent: '🔑 Аренда', sale: '🏠 Продажа', ascending: '📈 По возрастанию', descending: '📉 По убыванию', newest: '🆕 Новые', oldest: '🕰️ Ранние', reset: '✕ Сброс', upto7m: 'До 7 млн', upto15m: 'До 15 млн', from15m: 'От 15 млн', upto30k: 'До 30,000 THB', upto100k: 'До 100,000 THB', all: 'Все', bike: '🏍️ Мотоцикл', car: '🚗 Авто', scooter: '🛵 Скутер', groups: '📌 Группы:', selectGroup: '-- Выбрать группу --', listings: 'объявлений', submit: '📝 Подать', listing: 'объявление' },
                 transport: { bikes: '🏍️ Байки', cars: '🚗 Авто', yachts: '⛵ Яхты', bicycles: '🚲 Велосипеды', submit: '📝 Подать', add: 'Добавить транспорт', cityFilter: '🏙️ Город:' },
@@ -5757,7 +5668,7 @@
             },
             en: {
                 countries: { vietnam: '🇻🇳 Vietnam', thailand: '🇹🇭 Thailand', india: '🇮🇳 India', indonesia: '🇮🇩 Indonesia' },
-                tabs: { entertainment: 'Entertainment', restaurants: 'Restaurants', tours: 'Tours', transport: 'Transport', realestate: 'Real Estate', exchange: 'Money Exchange', settings: 'For Kids', marketplace: 'Marketplace', visas: 'Visa Runs', news: 'Photoshoots', medicine: 'Medicine', chat: 'Chat', stats: 'TG Ads' },
+                tabs: { entertainment: 'Entertainment', restaurants: 'Restaurants', tours: 'Tours', transport: 'Transport', realestate: 'Real Estate', exchange: 'Money Exchange', settings: 'For Kids', marketplace: 'Marketplace', visas: 'Visa Runs', news: 'Photoshoots', medicine: 'Medicine', chat: 'Chat' },
                 status: { parser: 'Parser:', total: 'Total listings:', updated: 'Updated:', online: 'Online', lang: 'Language' },
                 filters: { rent: '🔑 Rent', sale: '🏠 Sale', ascending: '📈 Ascending', descending: '📉 Descending', newest: '🆕 Newest', oldest: '🕰️ Oldest', reset: '✕ Reset', upto7m: 'Up to 7M', upto15m: 'Up to 15M', from15m: 'From 15M', upto30k: 'Up to 30,000 THB', upto100k: 'Up to 100,000 THB', all: 'All', bike: '🏍️ Motorbike', car: '🚗 Car', scooter: '🛵 Scooter', groups: '📌 Groups:', selectGroup: '-- Select group --', listings: 'listings', submit: '📝 Submit', listing: 'listing' },
                 transport: { bikes: '🏍️ Bikes', cars: '🚗 Cars', yachts: '⛵ Yachts', bicycles: '🚲 Bicycles', submit: '📝 Submit', add: 'Add Vehicle', cityFilter: '🏙️ City:' },
@@ -5770,7 +5681,7 @@
             },
             vi: {
                 countries: { vietnam: '🇻🇳 Việt Nam', thailand: '🇹🇭 Thái Lan', india: '🇮🇳 Ấn Độ', indonesia: '🇮🇩 Inđônêxia' },
-                tabs: { entertainment: 'Giải trí', restaurants: 'Nhà hàng', tours: 'Tour', transport: 'Vận chuyển', realestate: 'Bất động sản', exchange: 'Đổi tiền', settings: 'Cho trẻ em', marketplace: 'Chợ đồ cũ', visas: 'Visa Run', news: 'Chụp ảnh', medicine: 'Y tế', chat: 'Trò chuyện', stats: 'QC Telegram' },
+                tabs: { entertainment: 'Giải trí', restaurants: 'Nhà hàng', tours: 'Tour', transport: 'Vận chuyển', realestate: 'Bất động sản', exchange: 'Đổi tiền', settings: 'Cho trẻ em', marketplace: 'Chợ đồ cũ', visas: 'Visa Run', news: 'Chụp ảnh', medicine: 'Y tế', chat: 'Trò chuyện' },
                 status: { parser: 'Parser:', total: 'Tổng tin:', updated: 'Cập nhật:', online: 'Trực tuyến', lang: 'Ngôn ngữ' },
                 filters: { rent: '🔑 Thuê', sale: '🏠 Bán', ascending: '📈 Tăng dần', descending: '📉 Giảm dần', newest: '🆕 Mới nhất', oldest: '🕰️ Cũ nhất', reset: '✕ Đặt lại', upto7m: 'Đến 7 triệu', upto15m: 'Đến 15 triệu', from15m: 'Từ 15 triệu', upto30k: 'Đến 30,000 THB', upto100k: 'Đến 100,000 THB', all: 'Tất cả', bike: '🏍️ Xe máy', car: '🚗 Ô tô', scooter: '🛵 Xe tay ga', groups: '📌 Nhóm:', selectGroup: '-- Chọn nhóm --', listings: 'tin đăng', submit: '📝 Đăng', listing: 'tin' },
                 transport: { bikes: '🏍️ Xe máy', cars: '🚗 Ô tô', yachts: '⛵ Du thuyền', bicycles: '🚲 Xe đạp', submit: '📝 Đăng', add: 'Thêm phương tiện', cityFilter: '🏙️ Thành phố:' },
@@ -5783,7 +5694,7 @@
             },
             th: {
                 countries: { vietnam: '🇻🇳 เวียดนาม', thailand: '🇹🇭 ไทย', india: '🇮🇳 อินเดีย', indonesia: '🇮🇩 อินโดนีเซีย' },
-                tabs: { entertainment: 'ความบันเทิง', restaurants: 'ร้านอาหาร', tours: 'ทัวร์', transport: 'ขนส่ง', realestate: 'อสังหาริมทรัพย์', exchange: 'แลกเงิน', settings: 'สำหรับเด็ก', marketplace: 'ตลาด', visas: 'วีซ่า', news: 'ถ่ายภาพ', medicine: 'การแพทย์', chat: 'แชท', stats: 'โฆษณา TG' },
+                tabs: { entertainment: 'ความบันเทิง', restaurants: 'ร้านอาหาร', tours: 'ทัวร์', transport: 'ขนส่ง', realestate: 'อสังหาริมทรัพย์', exchange: 'แลกเงิน', settings: 'สำหรับเด็ก', marketplace: 'ตลาด', visas: 'วีซ่า', news: 'ถ่ายภาพ', medicine: 'การแพทย์', chat: 'แชท' },
                 status: { parser: 'Parser:', total: 'ประกาศทั้งหมด:', updated: 'อัปเดต:', online: 'ออนไลน์', lang: 'ภาษา' },
                 filters: { rent: '🔑 เช่า', sale: '🏠 ขาย', ascending: '📈 น้อยไปมาก', descending: '📉 มากไปน้อย', newest: '🆕 ใหม่ที่สุด', oldest: '🕰️ เก่าที่สุด', reset: '✕ รีเซ็ต', upto7m: 'ถึง 7M', upto15m: 'ถึง 15M', from15m: 'จาก 15M', upto30k: 'ถึง 30,000 บาท', upto100k: 'ถึง 100,000 บาท', all: 'ทั้งหมด', bike: '🏍️ มอเตอร์ไซค์', car: '🚗 รถยนต์', scooter: '🛵 สกู๊ตเตอร์', groups: '📌 กลุ่ม:', selectGroup: '-- เลือกกลุ่ม --', listings: 'ประกาศ', submit: '📝 ส่ง', listing: 'ประกาศ' },
                 transport: { bikes: '🏍️ มอเตอร์ไซค์', cars: '🚗 รถยนต์', yachts: '⛵ เรือยอช์ต', bicycles: '🚲 จักรยาน', submit: '📝 ส่ง', add: 'เพิ่มยานพาหนะ', cityFilter: '🏙️ เมือง:' },
@@ -6477,8 +6388,7 @@
             if (contentEl) contentEl.classList.add('active');
             let tabBtn = document.querySelector(`[data-tab="${tabName}"]`);
             if (tabBtn) tabBtn.classList.add('active');
-            if (tabName === 'stats') { if(typeof loadStats==='function') loadStats(); }
-            else if (tabName === 'chat') {
+            if (tabName === 'chat') {
                 if(typeof loadChatFeed==='function') loadChatFeed();
                 const vnSec = document.getElementById('vn-chat-section');
                 const thSec = document.getElementById('th-chat-section');
@@ -7007,7 +6917,6 @@
             if (adminAuthenticated) renderAdminBanners();
             
             updateRates();
-            loadStats();
             updateAllCityCounts();
             if (document.getElementById('chat').classList.contains('active')) { loadChatFeed(); loadVnChatFeed(''); }
             loadListings('restaurants');
@@ -7506,14 +7415,12 @@
                 .then(r => r.json())
                 .then(data => {
                     const totalEl = document.getElementById('total-items');
-                    const statusEl = document.getElementById('parser-status');
+                    const statusEl = document.getElementById('parser-status-badge');
                     const updateEl = document.getElementById('last-update');
                     if (totalEl) totalEl.innerText = data.total_listings;
                     if (statusEl) statusEl.innerText = data.parser_status === 'connected' ? 'Подключен' : 'Отключен';
                     if (updateEl) updateEl.innerText = new Date(data.last_update).toLocaleTimeString('ru-RU');
                 });
-            
-            loadGroupsStats();
         }
         
         // Маппинг категорий API на названия tabs
@@ -7533,64 +7440,6 @@
             };
             return mapping[cat] || cat;
         }
-        
-        function loadAdsChannels() {
-            const cityParam = currentAdsCity ? `&city=${encodeURIComponent(currentAdsCity)}` : '';
-            fetch(`/api/ads-channels?country=${currentCountry}${cityParam}`)
-                .then(r => r.json())
-                .then(data => {
-                    const tbody = document.getElementById('ads-tbody');
-                    if (!data.channels || data.channels.length === 0) {
-                        tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 20px; color: #888;">Пока нет каналов. Добавьте свой!</td></tr>';
-                        return;
-                    }
-                    
-                    const categoryNames = {
-                        'chat': '💬 Чат',
-                        'visas': '🏖️ Визы',
-                        'realestate': '🏠 Недвижимость',
-                        'transport': '🏍️ Транспорт',
-                        'exchange': '💱 Обмен',
-                        'marketplace': '🛍️ Барахолка',
-                        'restaurants': '🍽️ Рестораны',
-                        'tours': '🧳 Экскурсии',
-                        'entertainment': '🎮 Развлечения',
-                        'medicine': '🏥 Медицина',
-                        'news': '📰 Новости'
-                    };
-                    
-                    let rows = '';
-                    for (const ch of data.channels) {
-                        const catName = categoryNames[ch.category] || ch.category;
-                        const cityName = ch.city || '';
-                        const adminBtns = adminAuthenticated ? `
-                            <button onclick="editAdsChannel('${ch.id}', '${ch.name.replace(/'/g, "\\'")}', '${ch.category}', ${ch.members}, ${ch.price}, '${ch.contact.replace(/'/g, "\\'")}', '${(ch.city || '').replace(/'/g, "\\'")}')" style="padding: 6px 12px; background: #FF9800; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px; margin-right: 5px;">✏️</button>
-                            <button onclick="deleteAdsChannel('${ch.id}', '${ch.name.replace(/'/g, "\\'")}')" style="padding: 6px 12px; background: #f44336; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">🗑️</button>
-                        ` : '';
-                        rows += `
-                            <tr style="border-bottom: 1px solid #eee;">
-                                <td style="padding: 12px;">
-                                    <div style="font-weight: 600;">${ch.name}</div>
-                                    <div style="font-size: 12px; color: #888;">${catName}${cityName ? ' • ' + cityName : ''}</div>
-                                </td>
-                                <td style="padding: 12px; text-align: center;">${ch.members.toLocaleString()}</td>
-                                <td style="padding: 12px; text-align: center; font-weight: bold; color: #d4af37;">$${ch.price}</td>
-                                <td style="padding: 12px; text-align: center;">
-                                    <a href="https://t.me/${ch.contact.replace('@', '')}" target="_blank" style="color: #0088cc; text-decoration: none;">${ch.contact}</a>
-                                </td>
-                                <td style="padding: 12px; text-align: center;">
-                                    ${adminBtns}
-                                    <a href="https://t.me/${ch.contact.replace('@', '')}" target="_blank" style="padding: 8px 16px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; border-radius: 6px; text-decoration: none; font-size: 13px;">📩 Заказать</a>
-                                </td>
-                            </tr>
-                        `;
-                    }
-                    tbody.innerHTML = rows;
-                })
-                .catch(e => console.error('Error loading ads channels:', e));
-        }
-        
-        let currentAdsCity = '';
         
         const citiesByCountry = {
             'vietnam': ['Нячанг', 'Хошимин', 'Дананг', 'Ханой', 'Фукуок', 'Фантьет', 'Муйне', 'Далат', 'Камрань'],
@@ -7834,8 +7683,6 @@
         
         const cityImages = sectionCityImages.tours.thailand;
         
-        const adsCitiesByCountry = citiesByCountry;
-        
         // Города для форм подачи объявлений с русскими названиями
         const formCitiesByCountry = {
             'vietnam': [
@@ -8021,84 +7868,6 @@
             if (realestateLabel) realestateLabel.textContent = '💰 Цена (' + currency + ') *';
         }
         
-        function renderAdsCityFilter() {
-            const container = document.getElementById('ads-city-filter');
-            const cities = adsCitiesByCountry[currentCountry] || [];
-            
-            let html = `<button class="ads-city-btn" data-city="" onclick="filterAdsByCity('')" style="padding: 8px 16px; border: 2px solid #667eea; border-radius: 20px; background: ${currentAdsCity === '' ? '#667eea' : '#fff'}; color: ${currentAdsCity === '' ? 'white' : '#333'}; cursor: pointer; font-size: 13px; font-weight: 500;">Все города</button>`;
-            
-            for (const city of cities) {
-                const isActive = currentAdsCity === city;
-                html += `<button class="ads-city-btn" data-city="${city}" onclick="filterAdsByCity('${city}')" style="padding: 8px 16px; border: 2px solid #667eea; border-radius: 20px; background: ${isActive ? '#667eea' : '#fff'}; color: ${isActive ? 'white' : '#333'}; cursor: pointer; font-size: 13px;">${city}</button>`;
-            }
-            
-            container.innerHTML = html;
-        }
-        
-        function updateAdsCitySelect() {
-            const select = document.getElementById('add-channel-city');
-            if (!select) return;
-            const cities = adsCitiesByCountry[currentCountry] || [];
-            
-            let html = '';
-            for (const city of cities) {
-                html += `<option value="${city}">${city}</option>`;
-            }
-            html += '<option value="other">Другой</option>';
-            select.innerHTML = html;
-        }
-        
-        function filterAdsByCity(city) {
-            currentAdsCity = city;
-            document.querySelectorAll('.ads-city-btn').forEach(btn => {
-                btn.style.background = btn.dataset.city === city ? '#667eea' : '#fff';
-                btn.style.color = btn.dataset.city === city ? 'white' : '#333';
-            });
-            loadAdsChannels();
-        }
-        
-        async function addChannelForAds() {
-            const name = document.getElementById('add-channel-name').value.trim();
-            const category = document.getElementById('add-channel-category').value;
-            const city = document.getElementById('add-channel-city').value;
-            const members = parseInt(document.getElementById('add-channel-members').value) || 0;
-            const price = parseInt(document.getElementById('add-channel-price').value) || 0;
-            const contact = document.getElementById('add-channel-contact').value.trim();
-            const status = document.getElementById('add-channel-status');
-            
-            if (!name || !contact || !city || !members || !price) {
-                status.innerHTML = '<span style="color: #dc3545;">Заполните все обязательные поля</span>';
-                return;
-            }
-            
-            try {
-                const r = await fetch('/api/ads-channels/add', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({name, category, city, members, price, contact, country: currentCountry})
-                });
-                const data = await r.json();
-                if (data.success) {
-                    status.innerHTML = '<span style="color: #4CAF50;">✅ Канал отправлен на модерацию!</span>';
-                    document.getElementById('add-channel-name').value = '';
-                    document.getElementById('add-channel-members').value = '';
-                    document.getElementById('add-channel-price').value = '';
-                    document.getElementById('add-channel-contact').value = '';
-                } else {
-                    status.innerHTML = `<span style="color: #dc3545;">${data.error}</span>`;
-                }
-            } catch(e) {
-                status.innerHTML = '<span style="color: #dc3545;">Ошибка сети</span>';
-            }
-        }
-        
-        function loadGroupsStats() {
-            currentAdsCity = '';
-            renderAdsCityFilter();
-            updateAdsCitySelect();
-            loadAdsChannels();
-        }
-
         function isEnglishOnly(text) {
             if (!text) return false;
             for (let i = 0; i < text.length; i++) {
@@ -9640,14 +9409,12 @@
             document.getElementById('vietnam-medicine-buttons').style.display = 'block';
         
         updateRates();
-        loadStats();
         loadRealEstateCounts();
         loadExchangeCounts();
         loadKidsCounts();
         loadVisasCounts();
         loadMarketplaceCounts();
         setInterval(updateRates, 60000);
-        setInterval(loadStats, 5000);
         
         const visitorId = 'user_' + Math.random().toString(36).substr(2, 9);
         function pingOnline() {
@@ -12516,190 +12283,6 @@
                 }
             } catch (err) {
                 alert('Ошибка модерации');
-            }
-        }
-
-        async function loadPendingAdsChannels() {
-            try {
-                const response = await fetch(`/api/ads-channels?country=${currentCountry}&pending=1`);
-                const data = await response.json();
-                
-                const countEl = document.getElementById('pending-ads-count');
-                const listEl = document.getElementById('pending-ads-list');
-                
-                countEl.textContent = `📢 Ожидают модерации: ${data.channels.length}`;
-                
-                if (data.channels.length === 0) {
-                    listEl.innerHTML = '<p style="color: #666;">Нет каналов на модерацию</p>';
-                    return;
-                }
-                
-                const categoryNames = {
-                    'chat': '💬 Чат', 'visas': '🏖️ Визы', 'realestate': '🏠 Недвижимость',
-                    'transport': '🏍️ Транспорт', 'exchange': '💱 Обмен', 'marketplace': '🛍️ Барахолка',
-                    'restaurants': '🍽️ Рестораны', 'tours': '🧳 Экскурсии', 'entertainment': '🎮 Развлечения',
-                    'medicine': '🏥 Медицина', 'news': '📰 Новости'
-                };
-                
-                listEl.innerHTML = data.channels.map(ch => `
-                    <div style="background: #f9f9f9; border-radius: 8px; padding: 15px; border: 1px solid #ddd; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
-                        <div>
-                            <div style="font-weight: 600; font-size: 15px;">${ch.name}</div>
-                            <div style="font-size: 13px; color: #666;">${categoryNames[ch.category] || ch.category} | ${ch.members.toLocaleString()} подписчиков | $${ch.price}</div>
-                            <div style="font-size: 12px; color: #888;">Контакт: ${ch.contact}</div>
-                        </div>
-                        <div style="display: flex; gap: 8px;">
-                            <button onclick="moderateAdsChannel('${ch.id}', 'approve')" style="padding: 8px 16px; background: #4CAF50; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">✅ Одобрить</button>
-                            <button onclick="moderateAdsChannel('${ch.id}', 'reject')" style="padding: 8px 16px; background: #ff6b6b; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">❌ Отклонить</button>
-                        </div>
-                    </div>
-                `).join('');
-            } catch (err) {
-                document.getElementById('pending-ads-count').textContent = '❌ Ошибка загрузки';
-            }
-        }
-        
-        async function moderateAdsChannel(channelId, action) {
-            try {
-                const response = await fetch('/api/admin/ads-channels/approve', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        password: adminPassword_val,
-                        country: currentCountry,
-                        channel_id: channelId,
-                        action: action
-                    })
-                });
-                const data = await response.json();
-                
-                if (data.success) {
-                    alert(data.message);
-                    loadPendingAdsChannels();
-                    loadAdsChannels();
-                } else {
-                    alert('Ошибка: ' + (data.error || 'Неизвестная ошибка'));
-                }
-            } catch (err) {
-                alert('Ошибка модерации');
-            }
-        }
-        
-        async function deleteAdsChannel(channelId, channelName) {
-            if (!confirm(`Удалить канал "${channelName}"?`)) return;
-            
-            try {
-                const response = await fetch('/api/admin/ads-channels/delete', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        password: adminPassword_val,
-                        country: currentCountry,
-                        channel_id: channelId
-                    })
-                });
-                const data = await response.json();
-                
-                if (data.success) {
-                    alert(data.message);
-                    loadAdsChannels();
-                } else {
-                    alert('Ошибка: ' + (data.error || 'Неизвестная ошибка'));
-                }
-            } catch (err) {
-                alert('Ошибка удаления');
-            }
-        }
-        
-        function editAdsChannel(id, name, category, members, price, contact, city) {
-            const categoryOptions = `
-                <option value="chat" ${category === 'chat' ? 'selected' : ''}>💬 Чат</option>
-                <option value="visas" ${category === 'visas' ? 'selected' : ''}>🏖️ Визы</option>
-                <option value="realestate" ${category === 'realestate' ? 'selected' : ''}>🏠 Недвижимость</option>
-                <option value="transport" ${category === 'transport' ? 'selected' : ''}>🏍️ Транспорт</option>
-                <option value="exchange" ${category === 'exchange' ? 'selected' : ''}>💱 Обмен</option>
-                <option value="marketplace" ${category === 'marketplace' ? 'selected' : ''}>🛍️ Барахолка</option>
-                <option value="restaurants" ${category === 'restaurants' ? 'selected' : ''}>🍽️ Рестораны</option>
-                <option value="tours" ${category === 'tours' ? 'selected' : ''}>🧳 Экскурсии</option>
-                <option value="entertainment" ${category === 'entertainment' ? 'selected' : ''}>🎮 Развлечения</option>
-                <option value="medicine" ${category === 'medicine' ? 'selected' : ''}>🏥 Медицина</option>
-                <option value="news" ${category === 'news' ? 'selected' : ''}>📰 Новости</option>
-            `;
-            
-            const modal = document.createElement('div');
-            modal.id = 'ads-edit-modal';
-            modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 10000;';
-            modal.innerHTML = `
-                <div style="background: white; border-radius: 12px; padding: 25px; max-width: 450px; width: 90%; max-height: 90vh; overflow-y: auto;">
-                    <h3 style="margin: 0 0 20px 0; color: #333;">✏️ Редактировать канал</h3>
-                    <div style="display: grid; gap: 15px;">
-                        <div>
-                            <label style="font-size: 13px; color: #666; font-weight: 600;">Название канала</label>
-                            <input type="text" id="edit-ads-name" value="${name}" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; margin-top: 5px; box-sizing: border-box;">
-                        </div>
-                        <div>
-                            <label style="font-size: 13px; color: #666; font-weight: 600;">Категория</label>
-                            <select id="edit-ads-category" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; margin-top: 5px;">${categoryOptions}</select>
-                        </div>
-                        <div>
-                            <label style="font-size: 13px; color: #666; font-weight: 600;">Подписчики</label>
-                            <input type="number" id="edit-ads-members" value="${members}" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; margin-top: 5px; box-sizing: border-box;">
-                        </div>
-                        <div>
-                            <label style="font-size: 13px; color: #666; font-weight: 600;">Цена ($)</label>
-                            <input type="number" id="edit-ads-price" value="${price}" step="0.01" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; margin-top: 5px; box-sizing: border-box;">
-                        </div>
-                        <div>
-                            <label style="font-size: 13px; color: #666; font-weight: 600;">Контакт</label>
-                            <input type="text" id="edit-ads-contact" value="${contact}" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; margin-top: 5px; box-sizing: border-box;">
-                        </div>
-                        <div>
-                            <label style="font-size: 13px; color: #666; font-weight: 600;">Город</label>
-                            <input type="text" id="edit-ads-city" value="${city}" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; margin-top: 5px; box-sizing: border-box;">
-                        </div>
-                    </div>
-                    <div style="display: flex; gap: 10px; margin-top: 20px;">
-                        <button onclick="saveAdsChannelEdit('${id}')" style="flex: 1; padding: 12px; background: #4CAF50; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">💾 Сохранить</button>
-                        <button onclick="document.getElementById('ads-edit-modal').remove()" style="flex: 1; padding: 12px; background: #999; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">Отмена</button>
-                    </div>
-                </div>
-            `;
-            document.body.appendChild(modal);
-            modal.onclick = (e) => { if (e.target === modal) modal.remove(); };
-        }
-        
-        async function saveAdsChannelEdit(channelId) {
-            const newData = {
-                name: document.getElementById('edit-ads-name').value,
-                category: document.getElementById('edit-ads-category').value,
-                members: document.getElementById('edit-ads-members').value,
-                price: document.getElementById('edit-ads-price').value,
-                contact: document.getElementById('edit-ads-contact').value,
-                city: document.getElementById('edit-ads-city').value
-            };
-            
-            try {
-                const response = await fetch('/api/admin/ads-channels/edit', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        password: adminPassword_val,
-                        country: currentCountry,
-                        channel_id: channelId,
-                        data: newData
-                    })
-                });
-                const data = await response.json();
-                
-                if (data.success) {
-                    alert(data.message);
-                    document.getElementById('ads-edit-modal').remove();
-                    loadAdsChannels();
-                } else {
-                    alert('Ошибка: ' + (data.error || 'Неизвестная ошибка'));
-                }
-            } catch (err) {
-                alert('Ошибка сохранения');
             }
         }
 

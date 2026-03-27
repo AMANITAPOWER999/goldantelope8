@@ -1311,5 +1311,70 @@
     "image_hash": null,
     "has_media": false,
     "price": null
+  },
+  {
+    "id": "vmestenaphukete_276995",
+    "category": "chat",
+    "title": "Нужны 2 чел,подработка на завтра \nсвободный график,плтим вовремя 6т каждому",
+    "description": "Нужны 2 чел,подработка на завтра \nсвободный график,плтим вовремя 6т каждому",
+    "date": "2026-03-27T11:35:42+00:00",
+    "source_channel": "@vmestenaphukete",
+    "message_id": 276995,
+    "image_url": null,
+    "image_hash": null,
+    "has_media": false,
+    "price": null
+  },
+  {
+    "id": "vmestenaphukete_276994",
+    "category": "chat",
+    "title": "Есть какой то отдельный тг где все фотографы Пхукета ?",
+    "description": "Есть какой то отдельный тг где все фотографы Пхукета ?",
+    "date": "2026-03-27T11:26:06+00:00",
+    "source_channel": "@vmestenaphukete",
+    "message_id": 276994,
+    "image_url": null,
+    "image_hash": null,
+    "has_media": false,
+    "price": null
+  },
+  {
+    "id": "phuket_chat1_580692",
+    "category": "chat",
+    "title": ",Всем привет , высокий , симпатичный , образованный ,познакомлюсь с девушкой , деньги , байк все ест",
+    "description": ",Всем привет , высокий , симпатичный , образованный ,познакомлюсь с девушкой , деньги , байк все есть , в лс",
+    "date": "2026-03-27T11:33:02+00:00",
+    "source_channel": "@phuket_chat1",
+    "message_id": 580692,
+    "image_url": null,
+    "image_hash": null,
+    "has_media": false,
+    "price": null
+  },
+  {
+    "id": "bangkok_chat_znakomstva_130354",
+    "category": "chat",
+    "title": "Если не пропустят в самом начале перед эскалатором, то только в общей очереди стоять\nТам нет стоек а",
+    "description": "Если не пропустят в самом начале перед эскалатором, то только в общей очереди стоять\nТам нет стоек аэрофлота на распечатку",
+    "date": "2026-03-27T11:28:08+00:00",
+    "source_channel": "@bangkok_chat_znakomstva",
+    "message_id": 130354,
+    "image_url": null,
+    "image_hash": null,
+    "has_media": false,
+    "price": null
+  },
+  {
+    "id": "bangkok_chat_znakomstva_130353",
+    "category": "chat",
+    "title": "Там теперь электронная таможня",
+    "description": "Там теперь электронная таможня",
+    "date": "2026-03-27T11:27:11+00:00",
+    "source_channel": "@bangkok_chat_znakomstva",
+    "message_id": 130353,
+    "image_url": null,
+    "image_hash": null,
+    "has_media": false,
+    "price": null
   }
 ]
