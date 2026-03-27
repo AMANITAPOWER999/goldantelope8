@@ -892,6 +892,44 @@
         }
         .theme-toggle-btn:hover { background: rgba(212,175,55,0.15); }
 
+        /* ── Мобильная адаптация пилюли в шапке ── */
+        @media (max-width: 600px) {
+            #rates-display {
+                gap: 4px !important;
+                padding: 4px 8px !important;
+                white-space: nowrap !important;
+            }
+            /* Скрываем название города, оставляем иконку + температуру */
+            #weather-city {
+                display: none !important;
+            }
+            #weather-temp {
+                font-size: 12px !important;
+            }
+            #online-count {
+                font-size: 12px !important;
+            }
+            .lang-btn {
+                padding: 2px 5px !important;
+                font-size: 10px !important;
+            }
+            .theme-toggle-btn {
+                padding: 2px 7px !important;
+                font-size: 13px !important;
+            }
+        }
+        @media (max-width: 400px) {
+            /* Совсем маленькие экраны — пилюля на вторую строку */
+            .header-top {
+                flex-wrap: wrap;
+            }
+            #rates-display {
+                width: 100%;
+                justify-content: center !important;
+                margin-top: 4px;
+            }
+        }
+
         html.dark body {
             background: #07070f;
             background-image: none;
