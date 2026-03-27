@@ -923,13 +923,32 @@
             box-shadow: 0 1px 6px rgba(0,0,0,.4);
         }
         html.dark .card h3 {
-            color: #5aabff;
+            color: #5aabff !important;
         }
         html.dark .card p {
-            color: #888;
+            color: #ccc !important;
         }
         html.dark .card .meta {
-            color: #555;
+            color: #aaa !important;
+        }
+        html.dark .listing-grid .card,
+        html.dark .listing-grid .card * {
+            color: #ccc !important;
+        }
+        html.dark .listing-grid .card h3,
+        html.dark .listing-grid .card a {
+            color: #5aabff !important;
+        }
+        html.dark .listing-grid .card [style*="color:#d4af37"],
+        html.dark .listing-grid .card [style*="color: #d4af37"],
+        html.dark .listing-grid .card [style*="#d4af37"] {
+            color: #d4af37 !important;
+        }
+        html.dark .listing-grid .card [style*="color:#31a24c"],
+        html.dark .listing-grid .card [style*="color:#4caf50"],
+        html.dark .listing-grid .card [style*="color:green"],
+        html.dark .listing-grid .card [style*="color:#16a34a"] {
+            color: #4caf50 !important;
         }
         html.dark .card:hover {
             background: #232340;
