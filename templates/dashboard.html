@@ -872,13 +872,125 @@
                 font-size: 11px !important;
             }
         }
+        /* ══════════════════════════════════════════
+           ТЁМНЫЙ РЕЖИМ  (html.dark)
+           ══════════════════════════════════════════ */
+        .theme-toggle-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 3px 10px;
+            border: 1.5px solid #d4af37;
+            border-radius: 20px;
+            background: transparent;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            color: #555;
+            transition: all 0.25s;
+            white-space: nowrap;
+        }
+        .theme-toggle-btn:hover { background: rgba(212,175,55,0.15); }
+
+        html.dark body {
+            background: #07070f;
+            background-image: none;
+            color: #ccc;
+        }
+        html.dark .header {
+            background: #1a1a2e;
+            border-color: #d4af37;
+            box-shadow: 0 2px 20px rgba(0,0,0,.5);
+        }
+        html.dark .tabs {
+            background: #1a1a2e;
+        }
+        html.dark .tab {
+            color: #aaa;
+        }
+        html.dark .tab.active {
+            background: #0f0f1a;
+            color: #eee;
+            border-color: #d4af37;
+            box-shadow: 0 4px 12px rgba(212,175,55,.25);
+        }
+        html.dark .content {
+            background: #07070f;
+        }
+        html.dark .card {
+            background: #1a1a2e;
+            border-color: #2a2a3d;
+            box-shadow: 0 1px 6px rgba(0,0,0,.4);
+        }
+        html.dark .card h3 {
+            color: #5aabff;
+        }
+        html.dark .card p {
+            color: #888;
+        }
+        html.dark .card .meta {
+            color: #555;
+        }
+        html.dark .card:hover {
+            background: #232340;
+            border-color: #5aabff;
+            box-shadow: 0 2px 10px rgba(90,171,255,.15);
+        }
+        html.dark .card-slider {
+            background: #0f0f1a;
+        }
+        html.dark .country-selector {
+            border-color: #2a2a3d;
+        }
+        html.dark .country-btn {
+            background: #0f0f1a;
+            color: #aaa;
+            border-color: #2a2a3d;
+        }
+        html.dark .country-btn.active {
+            background: #d4af37;
+            color: #1a1a2e;
+            border-color: #d4af37;
+        }
+        html.dark .rates-display {
+            background: rgba(212,175,55,0.1) !important;
+        }
+        html.dark .lang-btn {
+            color: #888 !important;
+        }
+        html.dark #weather-city {
+            color: #888 !important;
+        }
+        html.dark .theme-toggle-btn {
+            color: #d4af37;
+            border-color: #d4af37;
+        }
+        /* Фильтры, кнопки */
+        html.dark .filters button,
+        html.dark select {
+            background: #1a1a2e;
+            color: #ccc;
+            border-color: #2a2a3d;
+        }
+        html.dark input[type="text"],
+        html.dark input[type="number"],
+        html.dark textarea {
+            background: #1a1a2e;
+            color: #ccc;
+            border-color: #2a2a3d;
+        }
+        /* Скролл */
+        html.dark ::-webkit-scrollbar { width: 8px; height: 8px; }
+        html.dark ::-webkit-scrollbar-track { background: #0f0f1a; }
+        html.dark ::-webkit-scrollbar-thumb { background: #2a2a3d; border-radius: 4px; }
+        html.dark ::-webkit-scrollbar-thumb:hover { background: #3a3a5d; }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
             <div class="header-top">
-                <img src="/static/images/logo.png" alt="Goldantelope" style="height: 100px; width: auto;">
+                <img id="site-logo" src="/static/images/logo.png" alt="Goldantelope" style="height: 100px; width: auto;">
                 <div class="country-selector" id="user-country-selector">
                     <button class="country-btn active" onclick="switchCountry('vietnam')" style="font-size:15px;padding:8px 18px;font-weight:700;">🇻🇳 Вьетнам</button>
                     <button class="country-btn" onclick="switchCountry('thailand')" style="font-size:15px;padding:8px 18px;font-weight:700;">🇹🇭 Тайланд</button>
@@ -898,6 +1010,7 @@
                     <button onclick="switchLang('en')" id="lang-en" class="lang-btn" style="padding: 3px 8px; border: none; border-radius: 12px; background: transparent; color: #666; cursor: pointer; font-size: 11px; font-weight: 600;">EN</button>
                     <button onclick="switchLang('vi')" id="lang-vi" class="lang-btn" style="padding: 3px 8px; border: none; border-radius: 12px; background: transparent; color: #666; cursor: pointer; font-size: 11px; font-weight: 600;">VI</button>
                     <button onclick="switchLang('th')" id="lang-th" class="lang-btn" style="padding: 3px 8px; border: none; border-radius: 12px; background: transparent; color: #666; cursor: pointer; font-size: 11px; font-weight: 600;">TH</button>
+                    <button onclick="toggleTheme()" id="theme-toggle-btn" class="theme-toggle-btn" title="Переключить тему">🌙</button>
                 </div>
             </div>
             
@@ -13153,6 +13266,39 @@
                     btn.style.display = 'none';
                 }
             }, {passive: true});
+        })();
+
+        // ── Переключатель тёмного / светлого режима ──
+        const LOGO_LIGHT = '/static/images/logo.png';
+        const LOGO_DARK  = '/static/images/logo_dark.jpg';
+
+        function applyTheme(dark) {
+            const html = document.documentElement;
+            const logo = document.getElementById('site-logo');
+            const btn  = document.getElementById('theme-toggle-btn');
+            if (dark) {
+                html.classList.add('dark');
+                if (logo) logo.src = LOGO_DARK;
+                if (btn)  btn.textContent = '☀️';
+            } else {
+                html.classList.remove('dark');
+                if (logo) logo.src = LOGO_LIGHT;
+                if (btn)  btn.textContent = '🌙';
+            }
+        }
+
+        function toggleTheme() {
+            const isDark = document.documentElement.classList.contains('dark');
+            const next = !isDark;
+            applyTheme(next);
+            try { localStorage.setItem('ga_theme', next ? 'dark' : 'light'); } catch(e) {}
+        }
+
+        // Применяем сохранённую тему при загрузке
+        (function(){
+            let saved = 'light';
+            try { saved = localStorage.getItem('ga_theme') || 'light'; } catch(e) {}
+            applyTheme(saved === 'dark');
         })();
     </script>
 </body>
