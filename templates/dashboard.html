@@ -6530,11 +6530,11 @@
                     return url;
                 }).filter(Boolean);
             } else {
-                // For restaurants: use tg_file_ids via bot API proxy (direct Telegram, no CDN)
-                if (category === 'restaurants' && Array.isArray(item.tg_file_ids) && item.tg_file_ids.length > 0) {
-                    images = item.tg_file_ids.map(fid => `/tg_file/${encodeURIComponent(fid)}`);
-                } else if (category === 'restaurants' && Array.isArray(item.photo_msg_ids) && item.photo_msg_ids.length > 0) {
+                // For restaurants: prefer photo_msg_ids (public @restoranvietnam channel, always reliable)
+                if (category === 'restaurants' && Array.isArray(item.photo_msg_ids) && item.photo_msg_ids.length > 0) {
                     images = item.photo_msg_ids.map(mid => `/tg_img/restoranvietnam/${mid}`);
+                } else if (category === 'restaurants' && Array.isArray(item.tg_file_ids) && item.tg_file_ids.length > 0) {
+                    images = item.tg_file_ids.map(fid => `/tg_file/${encodeURIComponent(fid)}`);
                 } else {
                     if (images.length === 0) {
                         if (item.image_url && !item.image_url.startsWith('tg_file:')) images.push(item.image_url);

@@ -925,26 +925,34 @@ def get_kids_type_counts():
     return jsonify(counts)
 
 def _enrich_tg_images(items):
-    """Для объявлений с tg_file_ids подставляет прямую ссылку /tg_file/{id},
-    если image_url пустой или это истёкший cdn5.telesco.pe URL."""
+    """Подставляет рабочие URL фото для ресторанов и других объявлений.
+    Для ресторанов @restoranvietnam: приоритет photo_msg_ids → tg_file_ids.
+    Для остальных: tg_file_ids → image_url как есть."""
     for item in items:
-        fids = item.get('tg_file_ids') or []
-        if not fids:
-            continue
         url = item.get('image_url', '') or ''
-        need_replace = (
-            not url or
-            'telesco.pe' in url or
-            'cdn' in url.lower()
-        )
-        if need_replace:
+        need_replace = not url or 'telesco.pe' in url or ('cdn' in url.lower() and 'bunny' not in url.lower())
+
+        # Рестораны: фото берём из публичного канала @restoranvietnam по ID поста
+        msg_ids = item.get('photo_msg_ids') or []
+        if msg_ids and item.get('source', item.get('category')) in ('restoranvietnam', 'restaurants'):
+            if need_replace:
+                item['image_url'] = f'/tg_img/restoranvietnam/{msg_ids[0]}'
+            for i, mid in enumerate(msg_ids[1:4], start=2):
+                key = f'image_url_{i}'
+                cur = item.get(key, '') or ''
+                if not cur or 'telesco.pe' in cur:
+                    item[key] = f'/tg_img/restoranvietnam/{mid}'
+            continue
+
+        # Остальные: используем tg_file_ids как запасной вариант
+        fids = item.get('tg_file_ids') or []
+        if fids and need_replace:
             item['image_url'] = f'/tg_file/{fids[0]}'
-        # Дополнительные фото (image_url_2..4)
-        for i, fid in enumerate(fids[1:4], start=2):
-            key = f'image_url_{i}'
-            cur = item.get(key, '') or ''
-            if not cur or 'telesco.pe' in cur or 'cdn' in cur.lower():
-                item[key] = f'/tg_file/{fid}'
+            for i, fid in enumerate(fids[1:4], start=2):
+                key = f'image_url_{i}'
+                cur = item.get(key, '') or ''
+                if not cur or 'telesco.pe' in cur or 'cdn' in cur.lower():
+                    item[key] = f'/tg_file/{fid}'
 
 
 @app.route('/api/listings/<category>')
