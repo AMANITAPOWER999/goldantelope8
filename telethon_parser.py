@@ -35,8 +35,7 @@ CHAT_TH_CHANNELS = [
     'Phuket_chatBG', 'barakholka_pkhuket', 'chat_phuket', 'chats_phuket',
     'huahinrus', 'rentinthai', 'bangkok_chat_znakomstva', 'Bangkok_market_bg',
     'vse_svoi_bangkok', 'visa_thailand_chat', 'thailand_4at', 'rent_thailand_chat',
-    'thailand_chatt1', 'ThailandChat_INF', 'chat_thailand', 'Bangkok_chatBG',
-    'chat_bangkok', 'Bangkok_chats', 'PattayaSale',
+    'thailand_chatt1', 'chat_bangkok', 'Bangkok_chats', 'PattayaSale',
     'pattayachatonline', 'Pattayapar', 'chats_pattaya', 'phuketdating', 'KrabiChat',
 ]
 

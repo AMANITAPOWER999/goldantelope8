@@ -3357,18 +3357,6 @@
                             style="display:flex;align-items:center;gap:7px;padding:10px 12px;border-radius:10px;border:1.5px solid #e0e0e0;background:#fafafa;color:#444;font-size:13px;cursor:pointer;transition:all .15s;">
                             🇹🇭 <span>TH Chat 1</span>
                         </button>
-                        <button class="th-chat-btn" data-channel="ThailandChat_INF" onclick="switchThChat('ThailandChat_INF')"
-                            style="display:flex;align-items:center;gap:7px;padding:10px 12px;border-radius:10px;border:1.5px solid #e0e0e0;background:#fafafa;color:#444;font-size:13px;cursor:pointer;transition:all .15s;">
-                            🇹🇭 <span>TH Chat INF</span>
-                        </button>
-                        <button class="th-chat-btn" data-channel="chat_thailand" onclick="switchThChat('chat_thailand')"
-                            style="display:flex;align-items:center;gap:7px;padding:10px 12px;border-radius:10px;border:1.5px solid #e0e0e0;background:#fafafa;color:#444;font-size:13px;cursor:pointer;transition:all .15s;">
-                            🇹🇭 <span>Chat Таиланд</span>
-                        </button>
-                        <button class="th-chat-btn" data-channel="Bangkok_chatBG" onclick="switchThChat('Bangkok_chatBG')"
-                            style="display:flex;align-items:center;gap:7px;padding:10px 12px;border-radius:10px;border:1.5px solid #e0e0e0;background:#fafafa;color:#444;font-size:13px;cursor:pointer;transition:all .15s;">
-                            🏙️ <span>Бангкок chatBG</span>
-                        </button>
                         <button class="th-chat-btn" data-channel="chat_bangkok" onclick="switchThChat('chat_bangkok')"
                             style="display:flex;align-items:center;gap:7px;padding:10px 12px;border-radius:10px;border:1.5px solid #e0e0e0;background:#fafafa;color:#444;font-size:13px;cursor:pointer;transition:all .15s;">
                             🏙️ <span>Chat Бангкок</span>
@@ -12437,7 +12425,7 @@
 
         const HF_CHAT_SPACE = 'https://poweramanita-a.hf.space';
         const CHAT_VN_SET_ARR = ['nhatrang_bg','NhaTrangchat','NhaTrang55','svoi_nhatrang','zhenskiy_nhatrang','NhaTrangLady','NhaTrangSun','Danang_Viet','danang_women','danangchat_ask','zhenskiy_danang','Danang_people','Vietnam_Danang1','chat_danang','danang_chats','phanthietchat111','Nyachang_Vietnam','onus_vietnam','Viza_Vietnam','Dalat_Vietnam','vietnam_chat1','vietnam_chats','HoChiMinh_Saigon','HoChiMinhChatik','hochiminh01_bg','phu_quoc_chat','phuquoc_getmir_chat','fukuok_chat','chat_fukuok','hanoichatvip'];
-        const CHAT_TH_SET_ARR = ['Phuket_chatBG','barakholka_pkhuket','chat_phuket','chats_phuket','huahinrus','rentinthai','bangkok_chat_znakomstva','Bangkok_market_bg','vse_svoi_bangkok','visa_thailand_chat','thailand_4at','rent_thailand_chat','thailand_chatt1','ThailandChat_INF','chat_thailand','Bangkok_chatBG','chat_bangkok','Bangkok_chats','PattayaSale','pattayachatonline','Pattayapar','chats_pattaya','phuketdating','KrabiChat'];
+        const CHAT_TH_SET_ARR = ['Phuket_chatBG','barakholka_pkhuket','chat_phuket','chats_phuket','huahinrus','rentinthai','bangkok_chat_znakomstva','Bangkok_market_bg','vse_svoi_bangkok','visa_thailand_chat','thailand_4at','rent_thailand_chat','thailand_chatt1','chat_bangkok','Bangkok_chats','PattayaSale','pattayachatonline','Pattayapar','chats_pattaya','phuketdating','KrabiChat'];
         const CHAT_VN_SET = new Set(CHAT_VN_SET_ARR.map(x=>x.toLowerCase()));
         const CHAT_TH_SET = new Set(CHAT_TH_SET_ARR.map(x=>x.toLowerCase()));
         const RE_VN_SET = new Set(['phuquoc_rent_wt','phyquocnedvigimost','Viet_Life_Phu_Quoc_rent','nhatrangapartment','tanrealtorgh','viet_life_niachang','nychang_arenda','rent_nha_trang','nyachang_nedvizhimost','nedvizimost_nhatrang','nhatrangforrent79','NhatrangRentl','arenda_v_nyachang','rent_appart_nha','Arenda_Nyachang_Zhilye','NhaTrang_rental','realestatebythesea_1','NhaTrang_Luxury','luckyhome_nhatrang','rentnhatrang','megasforrentnhatrang','viethome','Vietnam_arenda','huynhtruonq','DaNangRentAFlat','danag_viet_life_rent','Danang_House','DaNangApartmentRent','danang_arenda','arenda_v_danang','HoChiMinhRentI','hcmc_arenda','Hanoirentapartment','HanoiRentl','Hanoi_Rent','PhuquocRentl'].map(x=>x.toLowerCase()));
