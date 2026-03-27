@@ -958,6 +958,34 @@
         html.dark .card-slider {
             background: #0f0f1a;
         }
+        /* Кнопки фильтров и сортировки — убираем белый фон */
+        html.dark .sort-btn,
+        html.dark .filter-btn,
+        html.dark .filter-type-btn,
+        html.dark .reset-btn,
+        html.dark .group-filter-btn {
+            background: #1a1a2e !important;
+            color: #ccc !important;
+        }
+        html.dark .sort-btn:hover,
+        html.dark .filter-btn:hover,
+        html.dark .filter-type-btn:hover,
+        html.dark .reset-btn:hover {
+            background: #252540 !important;
+            color: #fff !important;
+        }
+        /* Панель с названием города и счётчиком внутри city-btn */
+        html.dark .tour-city-btn .city-info,
+        html.dark .tour-city-btn .city-name,
+        html.dark .realestate-city-btn .city-info,
+        html.dark .realestate-city-btn .city-name {
+            background: rgba(15,15,26,0.82) !important;
+            color: #eee !important;
+        }
+        html.dark .tour-city-btn .city-info *,
+        html.dark .realestate-city-btn .city-info * {
+            color: #eee !important;
+        }
         html.dark .country-selector {
             border-color: #2a2a3d;
         }
