@@ -1180,6 +1180,92 @@
         html.dark ::-webkit-scrollbar-track { background: #0f0f1a; }
         html.dark ::-webkit-scrollbar-thumb { background: #2a2a3d; border-radius: 4px; }
         html.dark ::-webkit-scrollbar-thumb:hover { background: #3a3a5d; }
+
+        /* ===== ТЁМНЫЙ РЕЖИМ — ВСЕ ЧАТЫ ===== */
+        html.dark #vn-chat-section,
+        html.dark #th-chat-section,
+        html.dark #in-chat-section,
+        html.dark #id-chat-section {
+            background: #1a1a2e !important;
+            border-color: #2a2a3d !important;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.4) !important;
+        }
+
+        html.dark .vn-chat-btn {
+            background: #1e2035 !important;
+            color: #c8c8d8 !important;
+            border-color: #2a2a3d !important;
+        }
+        html.dark .vn-chat-btn:hover {
+            background: #252545 !important;
+            border-color: #d4af37 !important;
+            color: #f0e0a0 !important;
+        }
+        html.dark .vn-chat-btn[style*="background:#d4af37"],
+        html.dark .vn-chat-btn[style*="background: #d4af37"] {
+            background: #d4af37 !important;
+            color: #3a2800 !important;
+            border-color: #d4af37 !important;
+        }
+
+        html.dark #chat-messages > div {
+            background: #1e2035 !important;
+            border-color: #2a2a3d !important;
+        }
+        html.dark #chat-messages > div[style*="background: #e3f2fd"],
+        html.dark #chat-messages > div[style*="background:#e3f2fd"] {
+            background: #1a2a3a !important;
+            border-color: #2a4a6a !important;
+        }
+        html.dark #chat-messages [style*="color: #333"],
+        html.dark #chat-messages [style*="color:#333"] {
+            color: #d0d0e0 !important;
+        }
+        html.dark #chat-messages [style*="color: #999"],
+        html.dark #chat-messages [style*="color:#999"] {
+            color: #7a7a9a !important;
+        }
+
+        html.dark #chat input[type="text"],
+        html.dark #chat textarea,
+        html.dark #chat select {
+            background: #1e2035 !important;
+            color: #d0d0e0 !important;
+            border-color: #2a2a3d !important;
+        }
+        html.dark #chat [style*="background: white"],
+        html.dark #chat [style*="background:white"],
+        html.dark #chat [style*="background:#fff"],
+        html.dark #chat [style*="background: #fff"],
+        html.dark #chat [style*="background:#fafafa"],
+        html.dark #chat [style*="background: #fafafa"],
+        html.dark #chat [style*="background:#f8f9fa"],
+        html.dark #chat [style*="background: #f8f9fa"] {
+            background: #1e2035 !important;
+        }
+        html.dark #chat [style*="color:#333"],
+        html.dark #chat [style*="color: #333"],
+        html.dark #chat [style*="color:#444"],
+        html.dark #chat [style*="color: #444"],
+        html.dark #chat [style*="color:#555"],
+        html.dark #chat [style*="color: #555"] {
+            color: #c8c8d8 !important;
+        }
+        html.dark #chat [style*="color:#666"],
+        html.dark #chat [style*="color: #666"],
+        html.dark #chat [style*="color:#888"],
+        html.dark #chat [style*="color: #888"],
+        html.dark #chat [style*="color:#999"],
+        html.dark #chat [style*="color: #999"] {
+            color: #8888a8 !important;
+        }
+        html.dark #chat [style*="border: 1px solid #e"],
+        html.dark #chat [style*="border:1px solid #e"],
+        html.dark #chat [style*="border-color:#e"],
+        html.dark #chat [style*="border: 1.5px solid #e"],
+        html.dark #chat [style*="border:1.5px solid #e"] {
+            border-color: #2a2a3d !important;
+        }
     </style>
 </head>
 <body>
@@ -6395,13 +6481,18 @@
                     const isMe = myNickname && msg.username === myNickname;
                     const deleteBtn = isAdmin ? `<button onclick="deleteChatMessage('${msg.id}')" style="background: #dc3545; color: white; border: none; padding: 2px 6px; border-radius: 4px; font-size: 10px; cursor: pointer; margin-left: 5px;">🗑️</button>` : '';
                     const blockBtn = isAdmin && !isMe ? `<button onclick="blockChatUser('${msg.username}')" style="background: #ff9800; color: white; border: none; padding: 2px 6px; border-radius: 4px; font-size: 10px; cursor: pointer; margin-left: 3px;">🚫</button>` : '';
+                    const isDark = document.documentElement.classList.contains('dark');
+                    const bg = isMe ? (isDark ? '#1a2a3a' : '#e3f2fd') : (isDark ? '#1e2035' : 'white');
+                    const border = isMe ? (isDark ? '#2a4a6a' : '#90caf9') : (isDark ? '#2a2a3d' : '#e0e0e0');
+                    const textColor = isDark ? '#d0d0e0' : '#333';
+                    const timeColor = isDark ? '#7a7a9a' : '#999';
                     return `
-                        <div style="background: ${isMe ? '#e3f2fd' : 'white'}; border-radius: 8px; padding: 8px 12px; margin-bottom: 6px; border: 1px solid ${isMe ? '#90caf9' : '#e0e0e0'};">
+                        <div style="background: ${bg}; border-radius: 8px; padding: 8px 12px; margin-bottom: 6px; border: 1px solid ${border};">
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
                                 <span style="font-weight: 600; color: #667eea; font-size: 13px;">@${msg.username}${deleteBtn}${blockBtn}</span>
-                                <span style="color: #999; font-size: 11px;">${timeStr}</span>
+                                <span style="color: ${timeColor}; font-size: 11px;">${timeStr}</span>
                             </div>
-                            <div style="color: #333; font-size: 14px; line-height: 1.4; white-space: pre-wrap;">${msg.message}</div>
+                            <div style="color: ${textColor}; font-size: 14px; line-height: 1.4; white-space: pre-wrap;">${msg.message}</div>
                         </div>
                     `;
                 }).join('');
