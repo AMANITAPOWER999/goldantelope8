@@ -32,6 +32,42 @@ LISTINGS_FILE = 'listings_vietnam.json'
 INITIAL_FETCH_LIMIT = 200
 POLL_INTERVAL = 60
 
+# Диапазоны Unicode эмодзи для strip_emoji()
+_EMOJI_RANGES = (
+    (0x1F300, 0x1F9FF),  # Misc symbols, emoticons, transport, supplemental symbols
+    (0x1FA00, 0x1FAFF),  # Chess, tools, etc.
+    (0x2600,  0x27BF),   # Misc symbols & dingbats
+    (0x2300,  0x23FF),   # Misc technical (⏰ etc.)
+    (0x25A0,  0x25FF),   # Geometric shapes
+    (0x2700,  0x27BF),   # Dingbats
+    (0x1F000, 0x1F02F),  # Mahjong / playing cards
+    (0x1F0A0, 0x1F0FF),
+    (0x1F100, 0x1F1FF),  # Enclosed alphanumeric supplement
+    (0x1F200, 0x1F2FF),  # Enclosed ideographic supplement
+)
+_SKIP_CODEPOINTS = {0x200D, 0xFE0F, 0x20E3, 0xFE00}
+
+
+def strip_emoji(text: str) -> str:
+    """Удаляет эмодзи и декоративные символы, оставляя чистый текст."""
+    result = []
+    for ch in text:
+        cp = ord(ch)
+        if cp in _SKIP_CODEPOINTS:
+            continue
+        cat = unicodedata.category(ch)
+        if cat in ('So', 'Cs'):  # Symbol Other / Surrogates
+            continue
+        if any(lo <= cp <= hi for lo, hi in _EMOJI_RANGES):
+            continue
+        result.append(ch)
+    cleaned = ''.join(result)
+    # Убираем лишние пробелы и пустые строки
+    cleaned = re.sub(r'[ \t]{2,}', ' ', cleaned)
+    cleaned = re.sub(r'\n{3,}', '\n\n', cleaned)
+    return cleaned.strip()
+
+
 USD_TO_VND = 25300
 EUR_TO_VND = 27500
 
@@ -565,11 +601,15 @@ def build_listing_item(msg: dict, item_id: str) -> dict | None:
     if len(_main_content) < 15:
         return None  # no real description — would show "Описание недоступно"
 
+    # Очищаем описание от эмодзи для отображения (заголовок, цена, город уже извлечены)
+    clean_text = strip_emoji(text)
+    clean_title = strip_emoji(title)
+
     return {
         'id': item_id,
-        'title': title,
-        'text': text,
-        'description': text,
+        'title': clean_title,
+        'text': clean_text,
+        'description': clean_text,
         'city': city,
         'city_ru': city,
         'listing_type': listing_type,
@@ -1519,10 +1559,10 @@ def repair_link_only_listings():
                 skipped += 1
                 continue
 
-            new_desc = fetched + (f'\n\n{target_url}' if target_url else '')
+            new_desc = strip_emoji(fetched + (f'\n\n{target_url}' if target_url else ''))
             item['description'] = new_desc
             item['text'] = new_desc
-            item['title'] = extract_title(fetched)
+            item['title'] = strip_emoji(extract_title(fetched))
             if not item.get('city') or item['city'] in ('', 'Другое'):
                 item['city'] = detect_city(fetched) or item.get('city', '')
                 item['city_ru'] = item['city']
