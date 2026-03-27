@@ -1238,9 +1238,7 @@
             <button class="tab active" data-tab="realestate" onclick="switchTab('realestate')"><img src="/static/icons/realestate.png" data-light-src="/static/icons/realestate.png" data-dark-src="/static/icons/realestate_dark.png" alt=""><span>Недвижимость</span></button>
             <button class="tab" data-tab="exchange" onclick="switchTab('exchange')"><img src="/static/icons/exchange.png" data-light-src="/static/icons/exchange.png" data-dark-src="/static/icons/exchange_dark.png" alt=""><span>Обмен денег</span></button>
             <button class="tab" data-tab="settings" onclick="switchTab('settings')"><img src="/static/icons/kids_new.png" data-light-src="/static/icons/kids_new.png" data-dark-src="/static/icons/kids_dark.png" alt=""><span>Дети</span></button>
-            <button class="tab" data-tab="marketplace" onclick="switchTab('marketplace')"><img src="/static/images/icons/marketplace.jpg" data-light-src="/static/images/icons/marketplace.jpg" data-dark-src="/static/icons/marketplace_dark.png" alt=""><span>Барахолка</span></button>
             <button class="tab" data-tab="visas" onclick="switchTab('visas')"><img src="/static/icons/visas.jpg" data-light-src="/static/icons/visas.jpg" data-dark-src="/static/icons/visas_dark.png" alt=""><span>Визаран</span></button>
-            <button class="tab" data-tab="news" onclick="switchTab('news')"><img src="/static/icons/photoshoot.jpg" data-light-src="/static/icons/photoshoot.jpg" data-dark-src="/static/icons/photoshoot_dark.png" alt=""><span>Фотосессия</span></button>
             <button class="tab" data-tab="medicine" onclick="switchTab('medicine')"><img src="/static/icons/medicine_new.png" data-light-src="/static/icons/medicine_new.png" data-dark-src="/static/icons/medicine_dark.png" alt=""><span>Медицина</span></button>
             <button class="tab" data-tab="chat" onclick="switchTab('chat')"><img src="/static/images/icons/chat.jpg" data-light-src="/static/images/icons/chat.jpg" data-dark-src="/static/icons/chat_dark.png" alt=""><span>Чат</span></button>
             <button class="tab" data-tab="admin" onclick="switchTab('admin')"><span>⚙️ Админ</span></button>
@@ -2105,80 +2103,6 @@
             </div>
         </div>
 
-        <!-- Форма подачи барахолки -->
-        <div id="submit-marketplace" class="content">
-            <div style="max-width: 600px; margin: 0 auto;">
-                <div style="background: linear-gradient(135deg, #795548 0%, #5D4037 100%); color: white; border-radius: 12px; padding: 20px; margin-bottom: 20px;">
-                    <h2 style="margin: 0 0 10px 0; font-size: 22px;">🛍️ Добавить товар в барахолку</h2>
-                    <p style="margin: 0; opacity: 0.9;">Продайте или отдайте вещи. После модерации объявление появится на сайте.</p>
-                </div>
-                <form id="submit-marketplace-form" onsubmit="submitMarketplace(event)" style="background: white; border-radius: 12px; padding: 20px; border: 1px solid #ddd;">
-                    <div style="margin-bottom: 15px;">
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Название *</label>
-                        <input type="text" id="marketplace-title" required placeholder="Например: iPhone 13, диван, велосипед..." style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; box-sizing: border-box;">
-                    </div>
-                    <div style="margin-bottom: 15px;">
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">📦 Категория *</label>
-                        <select id="marketplace-category" required style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; box-sizing: border-box;">
-                            <option value="electronics">📱 Электроника</option>
-                            <option value="clothing">👗 Одежда и аксессуары</option>
-                            <option value="furniture">🛋️ Мебель и дом</option>
-                            <option value="free">🎁 Отдам бесплатно</option>
-                        </select>
-                    </div>
-                    <div style="margin-bottom: 15px;">
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">🏙️ Город *</label>
-                        <select id="marketplace-form-city" required style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; box-sizing: border-box;">
-                            <option value="Nha Trang">Нячанг</option>
-                            <option value="Ho Chi Minh">Хошимин</option>
-                            <option value="Da Nang">Дананг</option>
-                            <option value="Hanoi">Ханой</option>
-                            <option value="Phu Quoc">Фукуок</option>
-                        </select>
-                    </div>
-                    <div style="margin-bottom: 15px;">
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">📝 Описание *</label>
-                        <textarea id="marketplace-description" required rows="3" maxlength="500" placeholder="Состояние, размеры, особенности..." style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; box-sizing: border-box; resize: vertical;"></textarea>
-                    </div>
-                    <div style="margin-bottom: 15px;">
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">💰 Цена (VND)</label>
-                        <input type="number" id="marketplace-price" placeholder="0 = бесплатно" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; box-sizing: border-box;">
-                    </div>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px;">
-                    <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">👤 Контактное лицо *</label>
-                        <input type="text" id="marketplace-contact" required placeholder="Ваше имя" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; box-sizing: border-box;">
-                    </div>
-                    <div>
-                            <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #0088cc;">✈️ Telegram *</label>
-                            <input type="text" id="marketplace-form-telegram" required placeholder="@username" style="width: 100%; padding: 12px; border: 1px solid #0088cc; border-radius: 6px; font-size: 14px; box-sizing: border-box;">
-                        </div>
-                </div>
-                    <div style="margin-bottom: 15px;">
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">📷 Фото (до 4 шт)</label>
-                        <div class="photo-upload-grid">
-                            <div class="photo-upload-wrapper"><input type="file" id="marketplace-photo-0" accept="image/*"><span class="file-placeholder" data-i18n-file>Chưa chọn tệp</span></div>
-                            <div class="photo-upload-wrapper"><input type="file" id="marketplace-photo-1" accept="image/*"><span class="file-placeholder" data-i18n-file>Chưa chọn tệp</span></div>
-                            <div class="photo-upload-wrapper"><input type="file" id="marketplace-photo-2" accept="image/*"><span class="file-placeholder" data-i18n-file>Chưa chọn tệp</span></div>
-                            <div class="photo-upload-wrapper"><input type="file" id="marketplace-photo-3" accept="image/*"><span class="file-placeholder" data-i18n-file>Chưa chọn tệp</span></div>
-                        </div>
-                    </div>
-                    <div style="margin-bottom: 15px; padding: 15px; background: #f5f5f5; border-radius: 6px;">
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">🤖 Капча *</label>
-                        <div style="display: flex; gap: 10px; align-items: center;">
-                            <span id="marketplace-captcha-question" style="font-size: 18px; font-weight: bold; color: #333;">Загрузка...</span>
-                            <input type="text" id="marketplace-captcha" required placeholder="Ответ" style="width: 100px; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; text-align: center;">
-                            <button type="button" onclick="loadMarketplaceCaptcha()" style="padding: 10px; background: #eee; border: none; border-radius: 6px; cursor: pointer;">🔄</button>
-                        </div>
-                        <input type="hidden" id="marketplace-captcha-token">
-                        <input type="hidden" id="marketplace-captcha-answer">
-                    </div>
-                    <div id="marketplace-submit-status" style="margin-bottom: 15px; font-size: 14px; display: none;"></div>
-                    <button type="submit" style="width: 100%; padding: 15px; background: #795548; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 16px;">📤 Отправить на модерацию</button>
-                </form>
-            </div>
-        </div>
-
         <!-- Форма подачи визарана -->
         <div id="submit-visas" class="content">
             <div style="max-width: 600px; margin: 0 auto;">
@@ -2256,81 +2180,6 @@
                     </div>
                     <div id="visas-submit-status" style="margin-bottom: 15px; font-size: 14px; display: none;"></div>
                     <button type="submit" style="width: 100%; padding: 15px; background: #00BCD4; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 16px;">📤 Отправить на модерацию</button>
-                </form>
-            </div>
-        </div>
-
-        <!-- Форма подачи фотосессии -->
-        <div id="submit-photosession" class="content">
-            <div style="max-width: 600px; margin: 0 auto;">
-                <div style="background: linear-gradient(135deg, #673AB7 0%, #512DA8 100%); color: white; border-radius: 12px; padding: 20px; margin-bottom: 20px;">
-                    <h2 style="margin: 0 0 10px 0; font-size: 22px;">📸 Добавить фотосессию</h2>
-                    <p style="margin: 0; opacity: 0.9;">Предложите услуги фотографа. После модерации объявление появится на сайте.</p>
-                </div>
-                <form id="submit-photosession-form" onsubmit="submitPhotosession(event)" style="background: white; border-radius: 12px; padding: 20px; border: 1px solid #ddd;">
-                    <div style="margin-bottom: 15px;">
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Название *</label>
-                        <input type="text" id="photosession-title" required placeholder="Например: Свадебная фотосессия, портрет..." style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; box-sizing: border-box;">
-                    </div>
-                    <div style="margin-bottom: 15px;">
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">📷 Тип съёмки</label>
-                        <select id="photosession-type" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; box-sizing: border-box;">
-                            <option value="Портретная">👤 Портретная</option>
-                            <option value="Свадебная">💒 Свадебная</option>
-                            <option value="Семейная">👨‍👩‍👧 Семейная</option>
-                            <option value="Контент">📱 Контент для соцсетей</option>
-                            <option value="Коммерческая">🏢 Коммерческая</option>
-                        </select>
-                    </div>
-                    <div style="margin-bottom: 15px;">
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">🏙️ Город *</label>
-                        <select id="photosession-city" required style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; box-sizing: border-box;">
-                            <option value="Нячанг">Нячанг</option>
-                            <option value="Хошимин">Хошимин</option>
-                            <option value="Дананг">Дананг</option>
-                            <option value="Ханой">Ханой</option>
-                            <option value="Фукуок">Фукуок</option>
-                        </select>
-                    </div>
-                    <div style="margin-bottom: 15px;">
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">📝 Описание *</label>
-                        <textarea id="photosession-description" required rows="4" maxlength="500" placeholder="Что входит в услугу, стиль, опыт..." style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; box-sizing: border-box; resize: vertical;"></textarea>
-                    </div>
-                    <div style="margin-bottom: 15px;">
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">💰 Цена (USD)</label>
-                        <input type="number" id="photosession-price" placeholder="100" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; box-sizing: border-box;">
-                    </div>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px;">
-                    <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">👤 Контактное лицо *</label>
-                        <input type="text" id="photosession-contact" required placeholder="Ваше имя" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; box-sizing: border-box;">
-                    </div>
-                    <div>
-                            <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #0088cc;">✈️ Telegram *</label>
-                            <input type="text" id="photosession-telegram" required placeholder="@username" style="width: 100%; padding: 12px; border: 1px solid #0088cc; border-radius: 6px; font-size: 14px; box-sizing: border-box;">
-                        </div>
-                </div>
-                    <div style="margin-bottom: 15px;">
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">📷 Примеры работ (до 4 шт)</label>
-                        <div class="photo-upload-grid">
-                            <div class="photo-upload-wrapper"><input type="file" id="photosession-photo-0" accept="image/*"><span class="file-placeholder" data-i18n-file>Chưa chọn tệp</span></div>
-                            <div class="photo-upload-wrapper"><input type="file" id="photosession-photo-1" accept="image/*"><span class="file-placeholder" data-i18n-file>Chưa chọn tệp</span></div>
-                            <div class="photo-upload-wrapper"><input type="file" id="photosession-photo-2" accept="image/*"><span class="file-placeholder" data-i18n-file>Chưa chọn tệp</span></div>
-                            <div class="photo-upload-wrapper"><input type="file" id="photosession-photo-3" accept="image/*"><span class="file-placeholder" data-i18n-file>Chưa chọn tệp</span></div>
-                        </div>
-                    </div>
-                    <div style="margin-bottom: 15px; padding: 15px; background: #f5f5f5; border-radius: 6px;">
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">🤖 Капча *</label>
-                        <div style="display: flex; gap: 10px; align-items: center;">
-                            <span id="photosession-captcha-question" style="font-size: 18px; font-weight: bold; color: #333;">Загрузка...</span>
-                            <input type="text" id="photosession-captcha" required placeholder="Ответ" style="width: 100px; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; text-align: center;">
-                            <button type="button" onclick="loadPhotosessionCaptcha()" style="padding: 10px; background: #eee; border: none; border-radius: 6px; cursor: pointer;">🔄</button>
-                        </div>
-                        <input type="hidden" id="photosession-captcha-token">
-                        <input type="hidden" id="photosession-captcha-answer">
-                    </div>
-                    <div id="photosession-submit-status" style="margin-bottom: 15px; font-size: 14px; display: none;"></div>
-                    <button type="submit" style="width: 100%; padding: 15px; background: #673AB7; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 16px;">📤 Отправить на модерацию</button>
                 </form>
             </div>
         </div>
@@ -2717,155 +2566,6 @@
             </div>
         </div>
 
-        <!-- Барахолка -->
-        <div id="marketplace" class="content">
-            <div id="vietnam-marketplace-buttons" style="display: none; padding: 20px;">
-                <div style="margin-bottom: 15px;">
-                    <div style="font-weight: 600; color: #333; margin-bottom: 8px; font-size: 14px;">🏙️ Город:</div>
-                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-                        <button class="marketplace-city-btn" data-city="" onclick="filterMarketplaceCity('')" style="padding: 8px 16px; border: 2px solid #d4af37; background: #d4af37; color: white; border-radius: 20px; cursor: pointer; font-size: 13px; font-weight: 600;">Все</button>
-                        <button class="marketplace-city-btn" data-city="Nha Trang" onclick="filterMarketplaceCity('Nha Trang')" style="padding: 8px 16px; border: 2px solid #ccc; background: #fff; color: #333; border-radius: 20px; cursor: pointer; font-size: 13px;">Нячанг</button>
-                        <button class="marketplace-city-btn" data-city="Da Nang" onclick="filterMarketplaceCity('Da Nang')" style="padding: 8px 16px; border: 2px solid #ccc; background: #fff; color: #333; border-radius: 20px; cursor: pointer; font-size: 13px;">Дананг</button>
-                        <button class="marketplace-city-btn" data-city="Phu Quoc" onclick="filterMarketplaceCity('Phu Quoc')" style="padding: 8px 16px; border: 2px solid #ccc; background: #fff; color: #333; border-radius: 20px; cursor: pointer; font-size: 13px;">Фукуок</button>
-                        <button class="marketplace-city-btn" data-city="Ho Chi Minh" onclick="filterMarketplaceCity('Ho Chi Minh')" style="padding: 8px 16px; border: 2px solid #ccc; background: #fff; color: #333; border-radius: 20px; cursor: pointer; font-size: 13px;">Хошимин</button>
-                    </div>
-                </div>
-                <div class="tour-grid-container" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 25px;">
-                    <div class="tour-city-btn marketplace-cat-btn" data-category="electronics" onclick="filterMarketplaceByCategory('electronics')" style="cursor: pointer; position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 4/3; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: 3px solid #d4af37;">
-                        <img src="/static/images/marketplace/electronics.jpg" style="width: 100%; height: 100%; object-fit: cover;">
-                        <div class="city-info" style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(255,255,255,0.95); color: #333; padding: 12px; text-align: center;">
-                            <div class="city-name" style="font-weight: bold; font-size: 16px;">Электроника</div>
-                            <div class="tour-count" id="marketplace-electronics-count" style="font-size: 13px; margin-top: 4px; color: #666;">0 объявлений</div>
-                        </div>
-                    </div>
-                    <div class="tour-city-btn marketplace-cat-btn" data-category="clothing" onclick="filterMarketplaceByCategory('clothing')" style="cursor: pointer; position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 4/3; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: 3px solid transparent;">
-                        <img src="/static/images/marketplace/clothes.jpg" style="width: 100%; height: 100%; object-fit: cover;">
-                        <div class="city-info" style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(255,255,255,0.95); color: #333; padding: 12px; text-align: center;">
-                            <div class="city-name" style="font-weight: bold; font-size: 16px;">Одежда</div>
-                            <div class="tour-count" id="marketplace-clothing-count" style="font-size: 13px; margin-top: 4px; color: #666;">0 объявлений</div>
-                        </div>
-                    </div>
-                    <div class="tour-city-btn marketplace-cat-btn" data-category="furniture" onclick="filterMarketplaceByCategory('furniture')" style="cursor: pointer; position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 4/3; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: 3px solid transparent;">
-                        <img src="/static/images/marketplace/furniture.jpg" style="width: 100%; height: 100%; object-fit: cover;">
-                        <div class="city-info" style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(255,255,255,0.95); color: #333; padding: 12px; text-align: center;">
-                            <div class="city-name" style="font-weight: bold; font-size: 16px;">Мебель</div>
-                            <div class="tour-count" id="marketplace-furniture-count" style="font-size: 13px; margin-top: 4px; color: #666;">0 объявлений</div>
-                        </div>
-                    </div>
-                    <div class="tour-city-btn marketplace-cat-btn" data-category="free" onclick="filterMarketplaceByCategory('free')" style="cursor: pointer; position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 4/3; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: 3px solid transparent;">
-                        <img src="/static/images/marketplace/free.jpg" style="width: 100%; height: 100%; object-fit: cover;">
-                        <div class="city-info" style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(255,255,255,0.95); color: #333; padding: 12px; text-align: center;">
-                            <div class="city-name" style="font-weight: bold; font-size: 16px;">Даром</div>
-                            <div class="tour-count" id="marketplace-free-count" style="font-size: 13px; margin-top: 4px; color: #666;">0 объявлений</div>
-                        </div>
-                    </div>
-                    <div class="tour-city-btn" onclick="switchTab('submit-marketplace'); loadMarketplaceCaptcha();" style="cursor: pointer; position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 4/3; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: 3px solid #4CAF50;">
-                        <img src="/static/images/submit_listing.jpg" style="width: 100%; height: 100%; object-fit: cover;">
-                        <div class="city-info" style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(255,255,255,0.95); color: #333; padding: 12px; text-align: center;">
-                            <div class="city-name" data-i18n="submit-btn" style="font-weight: bold; font-size: 16px;">📝 Подать</div>
-                            <div class="tour-count" data-i18n="add-listing" style="font-size: 13px; margin-top: 4px; color: #4CAF50;">Добавить объявление</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="thailand-marketplace-buttons" style="display: none; padding: 20px;">
-                <div class="tour-grid-container" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 25px;">
-                    <div class="tour-city-btn marketplace-cat-btn" data-category="electronics" onclick="filterMarketplaceByCategory('electronics')" style="cursor: pointer; position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 4/3; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: 3px solid #d4af37;">
-                        <img src="/static/images/marketplace/electronics.jpg" style="width: 100%; height: 100%; object-fit: cover;">
-                        <div class="city-info" style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(255,255,255,0.95); color: #333; padding: 12px; text-align: center;">
-                            <div class="city-name" style="font-weight: bold; font-size: 16px;">Электроника</div>
-                            <div class="tour-count" style="font-size: 13px; margin-top: 4px; color: #666;">0 объявлений</div>
-                        </div>
-                    </div>
-                    <div class="tour-city-btn marketplace-cat-btn" data-category="clothing" onclick="filterMarketplaceByCategory('clothing')" style="cursor: pointer; position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 4/3; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: 3px solid transparent;">
-                        <img src="/static/images/marketplace/clothes.jpg" style="width: 100%; height: 100%; object-fit: cover;">
-                        <div class="city-info" style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(255,255,255,0.95); color: #333; padding: 12px; text-align: center;">
-                            <div class="city-name" style="font-weight: bold; font-size: 16px;">Одежда</div>
-                            <div class="tour-count" style="font-size: 13px; margin-top: 4px; color: #666;">0 объявлений</div>
-                        </div>
-                    </div>
-                    <div class="tour-city-btn marketplace-cat-btn" data-category="furniture" onclick="filterMarketplaceByCategory('furniture')" style="cursor: pointer; position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 4/3; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: 3px solid transparent;">
-                        <img src="/static/images/marketplace/furniture.jpg" style="width: 100%; height: 100%; object-fit: cover;">
-                        <div class="city-info" style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(255,255,255,0.95); color: #333; padding: 12px; text-align: center;">
-                            <div class="city-name" style="font-weight: bold; font-size: 16px;">Мебель</div>
-                            <div class="tour-count" style="font-size: 13px; margin-top: 4px; color: #666;">0 объявлений</div>
-                        </div>
-                    </div>
-                    <div class="tour-city-btn marketplace-cat-btn" data-category="free" onclick="filterMarketplaceByCategory('free')" style="cursor: pointer; position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 4/3; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: 3px solid transparent;">
-                        <img src="/static/images/marketplace/free.jpg" style="width: 100%; height: 100%; object-fit: cover;">
-                        <div class="city-info" style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(255,255,255,0.95); color: #333; padding: 12px; text-align: center;">
-                            <div class="city-name" style="font-weight: bold; font-size: 16px;">Даром</div>
-                            <div class="tour-count" style="font-size: 13px; margin-top: 4px; color: #666;">0 объявлений</div>
-                        </div>
-                    </div>
-                    <div class="tour-city-btn" onclick="switchTab('submit-marketplace'); loadMarketplaceCaptcha();" style="cursor: pointer; position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 4/3; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: 3px solid #4CAF50;">
-                        <img src="/static/images/submit_listing.jpg" style="width: 100%; height: 100%; object-fit: cover;">
-                        <div class="city-info" style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(255,255,255,0.95); color: #333; padding: 12px; text-align: center;">
-                            <div class="city-name" data-i18n="submit-btn" style="font-weight: bold; font-size: 16px;">📝 Подать</div>
-                            <div class="tour-count" data-i18n="add-listing" style="font-size: 13px; margin-top: 4px; color: #4CAF50;">Добавить объявление</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="india-marketplace-buttons" style="display: none; padding: 20px;">
-                <div class="tour-grid-container" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 25px;">
-                    <div class="tour-city-btn marketplace-cat-btn" data-category="electronics" onclick="filterMarketplaceByCategory('electronics')" style="cursor: pointer; position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 4/3; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: 3px solid #d4af37;">
-                        <img src="/static/images/categories/marketplace/electronics.png" style="width: 100%; height: 100%; object-fit: cover;">
-                        <div style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.6); color: white; padding: 5px; text-align: center; font-size: 12px; font-weight: bold;">Электроника</div>
-                    </div>
-                    <div class="tour-city-btn marketplace-cat-btn" data-category="clothing" onclick="filterMarketplaceByCategory('clothing')" style="cursor: pointer; position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 4/3; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: 3px solid transparent;">
-                        <img src="/static/images/categories/marketplace/clothing.png" style="width: 100%; height: 100%; object-fit: cover;">
-                        <div style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.6); color: white; padding: 5px; text-align: center; font-size: 12px; font-weight: bold;">Одежда</div>
-                    </div>
-                    <div class="tour-city-btn marketplace-cat-btn" data-category="furniture" onclick="filterMarketplaceByCategory('furniture')" style="cursor: pointer; position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 4/3; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: 3px solid transparent;">
-                        <img src="/static/images/categories/marketplace/furniture.png" style="width: 100%; height: 100%; object-fit: cover;">
-                        <div style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.6); color: white; padding: 5px; text-align: center; font-size: 12px; font-weight: bold;">Мебель</div>
-                    </div>
-                    <div class="tour-city-btn marketplace-cat-btn" data-category="free" onclick="filterMarketplaceByCategory('free')" style="cursor: pointer; position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 4/3; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: 3px solid transparent;">
-                        <img src="/static/images/categories/marketplace/free.png" style="width: 100%; height: 100%; object-fit: cover;">
-                        <div style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.6); color: white; padding: 5px; text-align: center; font-size: 12px; font-weight: bold;">Даром</div>
-                    </div>
-                    <div class="tour-city-btn" onclick="switchTab('submit-marketplace'); loadMarketplaceCaptcha();" style="cursor: pointer; position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 4/3; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: 3px solid #4CAF50;">
-                        <img src="/static/images/submit_listing.jpg" style="width: 100%; height: 100%; object-fit: cover;">
-                        <div class="city-info" style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(255,255,255,0.95); color: #333; padding: 12px; text-align: center;">
-                            <div class="city-name" data-i18n="submit-btn" style="font-weight: bold; font-size: 18px;">📝 Подать</div>
-                            <div class="tour-count" data-i18n="add-listing" style="font-size: 13px; margin-top: 4px; color: #4CAF50;">Добавить объявление</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="indonesia-marketplace-buttons" style="display: none; padding: 20px;">
-                <div class="tour-grid-container" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 25px;">
-                    <div class="tour-city-btn marketplace-cat-btn" data-category="electronics" onclick="filterMarketplaceByCategory('electronics')" style="cursor: pointer; position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 4/3; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: 3px solid #d4af37;">
-                        <img src="/static/images/categories/marketplace/electronics.png" style="width: 100%; height: 100%; object-fit: cover;">
-                        <div style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.6); color: white; padding: 5px; text-align: center; font-size: 12px; font-weight: bold;">Электроника</div>
-                    </div>
-                    <div class="tour-city-btn marketplace-cat-btn" data-category="clothing" onclick="filterMarketplaceByCategory('clothing')" style="cursor: pointer; position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 4/3; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: 3px solid transparent;">
-                        <img src="/static/images/categories/marketplace/clothing.png" style="width: 100%; height: 100%; object-fit: cover;">
-                        <div style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.6); color: white; padding: 5px; text-align: center; font-size: 12px; font-weight: bold;">Одежда</div>
-                    </div>
-                    <div class="tour-city-btn marketplace-cat-btn" data-category="furniture" onclick="filterMarketplaceByCategory('furniture')" style="cursor: pointer; position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 4/3; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: 3px solid transparent;">
-                        <img src="/static/images/categories/marketplace/furniture.png" style="width: 100%; height: 100%; object-fit: cover;">
-                        <div style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.6); color: white; padding: 5px; text-align: center; font-size: 12px; font-weight: bold;">Мебель</div>
-                    </div>
-                    <div class="tour-city-btn marketplace-cat-btn" data-category="free" onclick="filterMarketplaceByCategory('free')" style="cursor: pointer; position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 4/3; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: 3px solid transparent;">
-                        <img src="/static/images/categories/marketplace/free.png" style="width: 100%; height: 100%; object-fit: cover;">
-                        <div style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.6); color: white; padding: 5px; text-align: center; font-size: 12px; font-weight: bold;">Даром</div>
-                    </div>
-                    <div class="tour-city-btn" onclick="switchTab('submit-marketplace'); loadMarketplaceCaptcha();" style="cursor: pointer; position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 4/3; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: 3px solid #4CAF50;">
-                        <img src="/static/images/submit_listing.jpg" style="width: 100%; height: 100%; object-fit: cover;">
-                        <div class="city-info" style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(255,255,255,0.95); color: #333; padding: 12px; text-align: center;">
-                            <div class="city-name" data-i18n="submit-btn" style="font-weight: bold; font-size: 18px;">📝 Подать</div>
-                            <div class="tour-count" data-i18n="add-listing" style="font-size: 13px; margin-top: 4px; color: #4CAF50;">Добавить объявление</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="listing-grid" id="marketplace-grid">
-                <div class="loading"><div class="spinner"></div></div>
-            </div>
-        </div>
-
         <!-- Визаран -->
         <div id="visas" class="content">
             <div id="vietnam-visas-buttons" style="display: none; padding: 20px;">
@@ -2985,192 +2685,7 @@
         </div>
 
         <!-- Фотосессия -->
-        <div id="news" class="content">
-            <div id="vietnam-news-buttons" style="display: none; padding: 20px;">
-                <div class="tour-grid-container" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 25px;">
-                    <div class="tour-city-btn news-city-btn" data-city="Дананг" onclick="filterPhotoshootByCity('Дананг')" style="cursor: pointer; position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 4/3; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: 3px solid #d4af37;">
-                        <img src="/static/images/photoshoot/danang.jpg?v=2" style="width: 100%; height: 100%; object-fit: cover;">
-                        <div class="city-info" style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(255,255,255,0.95); color: #333; padding: 12px; text-align: center;">
-                            <div class="city-name" style="font-weight: bold; font-size: 16px;">Дананг</div>
-                            <div class="tour-count" style="font-size: 13px; margin-top: 4px; color: #666;">0 объявлений</div>
-                        </div>
-                    </div>
-                    <div class="tour-city-btn news-city-btn" data-city="Нячанг" onclick="filterPhotoshootByCity('Нячанг')" style="cursor: pointer; position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 4/3; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: 3px solid transparent;">
-                        <img src="/static/images/photoshoot/nhatrang.jpg?v=2" style="width: 100%; height: 100%; object-fit: cover;">
-                        <div class="city-info" style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(255,255,255,0.95); color: #333; padding: 12px; text-align: center;">
-                            <div class="city-name" style="font-weight: bold; font-size: 16px;">Нячанг</div>
-                            <div class="tour-count" style="font-size: 13px; margin-top: 4px; color: #666;">0 объявлений</div>
-                        </div>
-                    </div>
-                    <div class="tour-city-btn news-city-btn" data-city="Фукуок" onclick="filterPhotoshootByCity('Фукуок')" style="cursor: pointer; position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 4/3; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: 3px solid transparent;">
-                        <img src="/static/images/photoshoot/phuquoc.jpg?v=2" style="width: 100%; height: 100%; object-fit: cover;">
-                        <div class="city-info" style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(255,255,255,0.95); color: #333; padding: 12px; text-align: center;">
-                            <div class="city-name" style="font-weight: bold; font-size: 16px;">Фукуок</div>
-                            <div class="tour-count" style="font-size: 13px; margin-top: 4px; color: #666;">0 объявлений</div>
-                        </div>
-                    </div>
-                    <div class="tour-city-btn submit-btn" onclick="switchTab('submit-photosession'); loadPhotosessionCaptcha();" style="cursor: pointer; position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 4/3; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: 3px solid #4CAF50;">
-                        <img src="/static/images/submit_listing.jpg" style="width: 100%; height: 100%; object-fit: cover;">
-                        <div class="city-info" style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(255,255,255,0.95); color: #333; padding: 12px; text-align: center;">
-                            <div class="city-name" style="font-weight: bold; font-size: 18px;">📝 Подать</div>
-                            <div class="tour-count" style="font-size: 13px; margin-top: 4px; color: #4CAF50;">Добавить фотосессию</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="thailand-news-buttons" style="display: none; padding: 20px;">
-                <div class="tour-grid-container" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 25px;">
-                    <div class="tour-city-btn news-city-btn" data-city="Бангкок" onclick="filterPhotoshootByCity('Бангкок')" style="cursor: pointer; position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 4/3; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: 3px solid #d4af37;">
-                        <img src="https://images.unsplash.com/photo-1508009603885-50cf7c579365?w=300&h=200&fit=crop" style="width: 100%; height: 100%; object-fit: cover;">
-                        <div class="city-info" style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(255,255,255,0.95); color: #333; padding: 12px; text-align: center;">
-                            <div class="city-name" style="font-weight: bold; font-size: 16px;">Бангкок</div>
-                        </div>
-                    </div>
-                    <div class="tour-city-btn news-city-btn" data-city="Пхукет" onclick="filterPhotoshootByCity('Пхукет')" style="cursor: pointer; position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 4/3; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: 3px solid transparent;">
-                        <img src="https://images.unsplash.com/photo-1589394815804-964ed0be2eb5?w=300&h=200&fit=crop" style="width: 100%; height: 100%; object-fit: cover;">
-                        <div class="city-info" style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(255,255,255,0.95); color: #333; padding: 12px; text-align: center;">
-                            <div class="city-name" style="font-weight: bold; font-size: 16px;">Пхукет</div>
-                        </div>
-                    </div>
-                    <div class="tour-city-btn news-city-btn" data-city="Самуи" onclick="filterPhotoshootByCity('Самуи')" style="cursor: pointer; position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 4/3; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: 3px solid transparent;">
-                        <img src="https://images.unsplash.com/photo-1537956965359-7573183d1f57?w=300&h=200&fit=crop" style="width: 100%; height: 100%; object-fit: cover;">
-                        <div class="city-info" style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(255,255,255,0.95); color: #333; padding: 12px; text-align: center;">
-                            <div class="city-name" style="font-weight: bold; font-size: 16px;">Самуи</div>
-                        </div>
-                    </div>
-                    <div class="tour-city-btn submit-btn" onclick="switchTab('submit-photosession'); loadPhotosessionCaptcha();" style="cursor: pointer; position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 4/3; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: 3px solid #4CAF50;">
-                        <img src="/static/images/submit_listing.jpg" style="width: 100%; height: 100%; object-fit: cover;">
-                        <div class="city-info" style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(255,255,255,0.95); color: #333; padding: 12px; text-align: center;">
-                            <div class="city-name" style="font-weight: bold; font-size: 18px;">📝 Подать</div>
-                            <div class="tour-count" style="font-size: 13px; margin-top: 4px; color: #4CAF50;">Добавить фотосессию</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="india-news-buttons" style="display: none; padding: 20px;">
-                <div class="tour-grid-container" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 25px;">
-                    <div class="tour-city-btn news-city-btn" data-city="Гоа" onclick="filterPhotoshootByCity('Гоа')" style="cursor: pointer; position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 4/3; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: 3px solid #d4af37;">
-                        <img src="https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=300&h=200&fit=crop" style="width: 100%; height: 100%; object-fit: cover;">
-                        <div class="city-info" style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(255,255,255,0.95); color: #333; padding: 12px; text-align: center;">
-                            <div class="city-name" style="font-weight: bold; font-size: 16px;">Гоа</div>
-                        </div>
-                    </div>
-                    <div class="tour-city-btn news-city-btn" data-city="Дели" onclick="filterPhotoshootByCity('Дели')" style="cursor: pointer; position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 4/3; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: 3px solid transparent;">
-                        <img src="https://images.unsplash.com/photo-1587474260584-136574528ed5?w=300&h=200&fit=crop" style="width: 100%; height: 100%; object-fit: cover;">
-                        <div class="city-info" style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(255,255,255,0.95); color: #333; padding: 12px; text-align: center;">
-                            <div class="city-name" style="font-weight: bold; font-size: 16px;">Дели</div>
-                        </div>
-                    </div>
-                    <div class="tour-city-btn news-city-btn" data-city="Мумбаи" onclick="filterPhotoshootByCity('Мумбаи')" style="cursor: pointer; position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 4/3; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: 3px solid transparent;">
-                        <img src="https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=300&h=200&fit=crop" style="width: 100%; height: 100%; object-fit: cover;">
-                        <div class="city-info" style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(255,255,255,0.95); color: #333; padding: 12px; text-align: center;">
-                            <div class="city-name" style="font-weight: bold; font-size: 16px;">Мумбаи</div>
-                        </div>
-                    </div>
-                    <div class="tour-city-btn submit-btn" onclick="switchTab('submit-photosession'); loadPhotosessionCaptcha();" style="cursor: pointer; position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 4/3; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: 3px solid #4CAF50;">
-                        <img src="/static/images/submit_listing.jpg" style="width: 100%; height: 100%; object-fit: cover;">
-                        <div class="city-info" style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(255,255,255,0.95); color: #333; padding: 12px; text-align: center;">
-                            <div class="city-name" style="font-weight: bold; font-size: 18px;">📝 Подать</div>
-                            <div class="tour-count" style="font-size: 13px; margin-top: 4px; color: #4CAF50;">Добавить фотосессию</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="indonesia-news-buttons" style="display: none; padding: 20px;">
-                <div class="tour-grid-container" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 25px;">
-                    <div class="tour-city-btn news-city-btn" data-city="Бали" onclick="filterPhotoshootByCity('Бали')" style="cursor: pointer; position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 4/3; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: 3px solid #d4af37;">
-                        <img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=300&h=200&fit=crop" style="width: 100%; height: 100%; object-fit: cover;">
-                        <div class="city-info" style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(255,255,255,0.95); color: #333; padding: 12px; text-align: center;">
-                            <div class="city-name" style="font-weight: bold; font-size: 16px;">Бали</div>
-                        </div>
-                    </div>
-                    <div class="tour-city-btn news-city-btn" data-city="Джакарта" onclick="filterPhotoshootByCity('Джакарта')" style="cursor: pointer; position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 4/3; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: 3px solid transparent;">
-                        <img src="https://images.unsplash.com/photo-1555899434-94d1368aa7af?w=300&h=200&fit=crop" style="width: 100%; height: 100%; object-fit: cover;">
-                        <div class="city-info" style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(255,255,255,0.95); color: #333; padding: 12px; text-align: center;">
-                            <div class="city-name" style="font-weight: bold; font-size: 16px;">Джакарта</div>
-                        </div>
-                    </div>
-                    <div class="tour-city-btn news-city-btn" data-city="Убуд" onclick="filterPhotoshootByCity('Убуд')" style="cursor: pointer; position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 4/3; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: 3px solid transparent;">
-                        <img src="https://images.unsplash.com/photo-1558005530-a7958896ec60?w=300&h=200&fit=crop" style="width: 100%; height: 100%; object-fit: cover;">
-                        <div class="city-info" style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(255,255,255,0.95); color: #333; padding: 12px; text-align: center;">
-                            <div class="city-name" style="font-weight: bold; font-size: 16px;">Убуд</div>
-                        </div>
-                    </div>
-                    <div class="tour-city-btn submit-btn" onclick="switchTab('submit-photosession'); loadPhotosessionCaptcha();" style="cursor: pointer; position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 4/3; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: 3px solid #4CAF50;">
-                        <img src="/static/images/submit_listing.jpg" style="width: 100%; height: 100%; object-fit: cover;">
-                        <div class="city-info" style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(255,255,255,0.95); color: #333; padding: 12px; text-align: center;">
-                            <div class="city-name" style="font-weight: bold; font-size: 18px;">📝 Подать</div>
-                            <div class="tour-count" style="font-size: 13px; margin-top: 4px; color: #4CAF50;">Добавить фотосессию</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="listing-grid" id="news-grid">
-                <div class="loading"><div class="spinner"></div></div>
-            </div>
-        </div>
-
-        <!-- Форма подачи фотосессии -->
-        <div id="submit-photoshoot" class="content" style="display: none;">
-            <div style="max-width: 600px; margin: 0 auto; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
-                <h2 style="margin: 0 0 20px 0; color: #333; text-align: center;">📸 Добавить фотосессию</h2>
-                <form onsubmit="submitPhotoshoot(event)">
-                    <div style="margin-bottom: 15px;">
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">📍 Город *</label>
-                        <select id="photoshoot-city" required style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px;">
-                            <option value="Дананг">Дананг</option>
-                            <option value="Нячанг">Нячанг</option>
-                            <option value="Фукуок">Фукуок</option>
-                        </select>
-                    </div>
-
-                    <div style="margin-bottom: 15px;">
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">📝 Название *</label>
-                        <input type="text" id="photoshoot-title" required placeholder="Фотограф в Нячанге, свадебная съёмка" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; box-sizing: border-box;">
-                    </div>
-
-                    <div style="margin-bottom: 15px;">
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">📄 Описание *</label>
-                        <textarea id="photoshoot-description" required rows="4" maxlength="500" placeholder="Опишите услуги, стиль съёмки, цены..." style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; resize: vertical; box-sizing: border-box;"></textarea>
-                    </div>
-
-                    <div style="margin-bottom: 15px;">
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">💰 Цена (VND)</label>
-                        <input type="number" id="photoshoot-price" placeholder="3000000" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; box-sizing: border-box;">
-                    </div>
-
-                    <div style="margin-bottom: 15px;">
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">📱 Telegram *</label>
-                        <input type="text" id="photoshoot-telegram" required placeholder="@username или t.me/..." style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; box-sizing: border-box;">
-                    </div>
-
-                    <div style="margin-bottom: 15px;">
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">📷 Примеры работ (до 4 шт, макс 1 МБ каждое)</label>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                            <input type="file" id="photoshoot-photo-0" accept="image/*" style="font-size: 12px;">
-                            <input type="file" id="photoshoot-photo-1" accept="image/*" style="font-size: 12px;">
-                            <input type="file" id="photoshoot-photo-2" accept="image/*" style="font-size: 12px;">
-                            <input type="file" id="photoshoot-photo-3" accept="image/*" style="font-size: 12px;">
-                        </div>
-                    </div>
-
-                    <div style="margin-bottom: 15px; padding: 15px; background: #f5f5f5; border-radius: 6px;">
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">🤖 Капча *</label>
-                        <div style="display: flex; gap: 10px; align-items: center;">
-                            <span id="photoshoot-captcha-question" style="font-size: 18px; font-weight: bold; color: #333;">Загрузка...</span>
-                            <input type="text" id="photoshoot-captcha" required placeholder="Ответ" style="width: 100px; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; text-align: center;">
-                            <button type="button" onclick="loadPhotoshootCaptcha()" style="padding: 10px; background: #eee; border: none; border-radius: 6px; cursor: pointer;">🔄</button>
-                        </div>
-                        <input type="hidden" id="photoshoot-captcha-answer">
-                    </div>
-
-                    <div id="photoshoot-submit-status" style="margin-bottom: 15px; font-size: 14px; display: none;"></div>
-
-                    <button type="submit" style="width: 100%; padding: 15px; background: #E91E63; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 16px;">📤 Отправить на модерацию</button>
-                </form>
-            </div>
-        </div>
-
+        
         <!-- Медицина -->
         <div id="medicine" class="content">
             <div id="vietnam-medicine-buttons" style="display: none; padding: 20px;">
@@ -3761,7 +3276,6 @@
                     <option value="real_estate">Недвижимость</option>
                     <option value="money_exchange">Обмен денег</option>
                     <option value="entertainment">Развлечения</option>
-                    <option value="marketplace">Барахолка</option>
                     <option value="visas">Визаран</option>
                     <option value="news">Фотосессия</option>
                     <option value="medicine">Медицина</option>
@@ -3949,80 +3463,6 @@
         </div>
 
         <!-- Модальное окно для редактирования "Барахолка" с 4 фото -->
-        <div id="marketplace-edit-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1001; align-items: center; justify-content: center; overflow-y: auto;">
-            <div style="background: white; border-radius: 12px; padding: 20px; max-width: 600px; width: 90%; margin: 20px auto; box-shadow: 0 10px 40px rgba(0,0,0,0.3);">
-                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
-                    <h3 style="margin: 0; color: #795548;">🛍️ Редактировать "Барахолка"</h3>
-                    <button onclick="closeMarketplaceEditModal()" style="background: none; border: none; font-size: 24px; cursor: pointer; color: #999;">&times;</button>
-                </div>
-                <p style="margin: 0 0 15px 0; color: #666; font-size: 13px;" id="marketplace-edit-id"></p>
-                
-                <div style="margin-bottom: 15px;">
-                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Название *</label>
-                    <input type="text" id="marketplace-edit-title" placeholder="Например: iPhone 13, диван, велосипед..." style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; box-sizing: border-box;">
-                </div>
-                
-                <div style="margin-bottom: 15px;">
-                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">📦 Категория *</label>
-                    <select id="marketplace-edit-category" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; box-sizing: border-box;">
-                        <option value="electronics">📱 Электроника</option>
-                        <option value="clothing">👗 Одежда и аксессуары</option>
-                        <option value="furniture">🛋️ Мебель и дом</option>
-                        <option value="free">🎁 Отдам бесплатно</option>
-                    </select>
-                </div>
-                
-                <div style="margin-bottom: 15px;">
-                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">🏙️ Город *</label>
-                    <select id="marketplace-edit-city" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; box-sizing: border-box;">
-                        <option value="Nha Trang">Нячанг</option>
-                        <option value="Ho Chi Minh">Хошимин</option>
-                        <option value="Da Nang">Дананг</option>
-                        <option value="Hanoi">Ханой</option>
-                        <option value="Phu Quoc">Фукуок</option>
-                    </select>
-                </div>
-                
-                <div style="margin-bottom: 15px;">
-                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">📝 Описание *</label>
-                    <textarea id="marketplace-edit-desc" rows="3" maxlength="500" placeholder="Состояние, размеры, особенности..." style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; box-sizing: border-box; resize: vertical;"></textarea>
-                </div>
-                
-                <div style="margin-bottom: 15px;">
-                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">💰 Цена (VND)</label>
-                    <input type="number" id="marketplace-edit-price" placeholder="0 = бесплатно" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; box-sizing: border-box;">
-                </div>
-                
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px;">
-                    <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">👤 Контактное лицо *</label>
-                    <input type="text" id="marketplace-edit-contact" placeholder="Ваше имя" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; box-sizing: border-box;">
-                    </div>
-                    <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #0088cc;">✈️ Telegram *</label>
-                        <input type="text" id="marketplace-edit-telegram" placeholder="@username" style="width: 100%; padding: 12px; border: 1px solid #0088cc; border-radius: 6px; font-size: 14px; box-sizing: border-box;">
-                    </div>
-                </div>
-                
-                <div style="margin-bottom: 15px;">
-                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">📷 Фото (до 4 шт)</label>
-                    <div id="marketplace-edit-photos-preview" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 10px;"></div>
-                    <div class="photo-upload-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
-                        <div class="photo-upload-wrapper" style="position: relative;"><input type="file" id="marketplace-edit-photo-0" accept="image/*" onchange="previewMarketplaceEditPhoto(0)"><span class="file-placeholder">Фото 1</span></div>
-                        <div class="photo-upload-wrapper" style="position: relative;"><input type="file" id="marketplace-edit-photo-1" accept="image/*" onchange="previewMarketplaceEditPhoto(1)"><span class="file-placeholder">Фото 2</span></div>
-                        <div class="photo-upload-wrapper" style="position: relative;"><input type="file" id="marketplace-edit-photo-2" accept="image/*" onchange="previewMarketplaceEditPhoto(2)"><span class="file-placeholder">Фото 3</span></div>
-                        <div class="photo-upload-wrapper" style="position: relative;"><input type="file" id="marketplace-edit-photo-3" accept="image/*" onchange="previewMarketplaceEditPhoto(3)"><span class="file-placeholder">Фото 4</span></div>
-                    </div>
-                </div>
-                
-                <div id="marketplace-edit-status" style="display: none; padding: 10px; border-radius: 6px; margin-bottom: 15px; font-size: 13px; font-weight: 600;"></div>
-                
-                <div style="display: flex; gap: 10px;">
-                    <button onclick="saveMarketplacePhotoEdit()" style="flex: 1; padding: 12px; background: #795548; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 14px;">💾 Сохранить</button>
-                    <button onclick="closeMarketplaceEditModal()" style="flex: 1; padding: 12px; background: #eee; color: #333; border: none; border-radius: 6px; cursor: pointer; font-size: 14px;">Отмена</button>
-                </div>
-            </div>
-        </div>
 
         <!-- Модальное окно для редактирования "Визаран" с 4 фото -->
         <div id="visas-edit-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1001; align-items: center; justify-content: center; overflow-y: auto;">
@@ -4109,81 +3549,6 @@
         </div>
 
         <!-- Модальное окно для редактирования "Фотосессия" с 4 фото -->
-        <div id="photosession-edit-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1001; align-items: center; justify-content: center; overflow-y: auto;">
-            <div style="background: white; border-radius: 12px; padding: 20px; max-width: 600px; width: 90%; margin: 20px auto; box-shadow: 0 10px 40px rgba(0,0,0,0.3);">
-                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
-                    <h3 style="margin: 0; color: #673AB7;">📸 Редактировать "Фотосессия"</h3>
-                    <button onclick="closePhotosessionEditModal()" style="background: none; border: none; font-size: 24px; cursor: pointer; color: #999;">&times;</button>
-                </div>
-                <p style="margin: 0 0 15px 0; color: #666; font-size: 13px;" id="photosession-edit-id"></p>
-                
-                <div style="margin-bottom: 15px;">
-                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Название *</label>
-                    <input type="text" id="photosession-edit-title" placeholder="Например: Свадебная фотосессия, портрет..." style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; box-sizing: border-box;">
-                </div>
-                
-                <div style="margin-bottom: 15px;">
-                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">📷 Тип съёмки</label>
-                    <select id="photosession-edit-type" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; box-sizing: border-box;">
-                        <option value="Портретная">👤 Портретная</option>
-                        <option value="Свадебная">💒 Свадебная</option>
-                        <option value="Семейная">👨‍👩‍👧 Семейная</option>
-                        <option value="Контент">📱 Контент для соцсетей</option>
-                        <option value="Коммерческая">🏢 Коммерческая</option>
-                    </select>
-                </div>
-                
-                <div style="margin-bottom: 15px;">
-                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">🏙️ Город *</label>
-                    <select id="photosession-edit-city" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; box-sizing: border-box;">
-                        <option value="Нячанг">Нячанг</option>
-                        <option value="Хошимин">Хошимин</option>
-                        <option value="Дананг">Дананг</option>
-                        <option value="Ханой">Ханой</option>
-                        <option value="Фукуок">Фукуок</option>
-                    </select>
-                </div>
-                
-                <div style="margin-bottom: 15px;">
-                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">📝 Описание *</label>
-                    <textarea id="photosession-edit-desc" rows="4" maxlength="500" placeholder="Что входит в услугу, стиль, опыт..." style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; box-sizing: border-box; resize: vertical;"></textarea>
-                </div>
-                
-                <div style="margin-bottom: 15px;">
-                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">💰 Цена (USD)</label>
-                    <input type="number" id="photosession-edit-price" placeholder="100" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; box-sizing: border-box;">
-                </div>
-                
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px;">
-                    <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">👤 Контактное лицо *</label>
-                    <input type="text" id="photosession-edit-contact" placeholder="Ваше имя" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; box-sizing: border-box;">
-                    </div>
-                    <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #0088cc;">✈️ Telegram *</label>
-                        <input type="text" id="photosession-edit-telegram" placeholder="@username" style="width: 100%; padding: 12px; border: 1px solid #0088cc; border-radius: 6px; font-size: 14px; box-sizing: border-box;">
-                    </div>
-                </div>
-                
-                <div style="margin-bottom: 15px;">
-                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">📷 Примеры работ (до 4 шт)</label>
-                    <div id="photosession-edit-photos-preview" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 10px;"></div>
-                    <div class="photo-upload-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
-                        <div class="photo-upload-wrapper" style="position: relative;"><input type="file" id="photosession-edit-photo-0" accept="image/*" onchange="previewPhotosessionEditPhoto(0)"><span class="file-placeholder">Фото 1</span></div>
-                        <div class="photo-upload-wrapper" style="position: relative;"><input type="file" id="photosession-edit-photo-1" accept="image/*" onchange="previewPhotosessionEditPhoto(1)"><span class="file-placeholder">Фото 2</span></div>
-                        <div class="photo-upload-wrapper" style="position: relative;"><input type="file" id="photosession-edit-photo-2" accept="image/*" onchange="previewPhotosessionEditPhoto(2)"><span class="file-placeholder">Фото 3</span></div>
-                        <div class="photo-upload-wrapper" style="position: relative;"><input type="file" id="photosession-edit-photo-3" accept="image/*" onchange="previewPhotosessionEditPhoto(3)"><span class="file-placeholder">Фото 4</span></div>
-                    </div>
-                </div>
-                
-                <div id="photosession-edit-status" style="display: none; padding: 10px; border-radius: 6px; margin-bottom: 15px; font-size: 13px; font-weight: 600;"></div>
-                
-                <div style="display: flex; gap: 10px;">
-                    <button onclick="savePhotosessionPhotoEdit()" style="flex: 1; padding: 12px; background: #673AB7; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 14px;">💾 Сохранить</button>
-                    <button onclick="closePhotosessionEditModal()" style="flex: 1; padding: 12px; background: #eee; color: #333; border: none; border-radius: 6px; cursor: pointer; font-size: 14px;">Отмена</button>
-                </div>
-            </div>
-        </div>
 
         <!-- Модальное окно для редактирования "Медицина" с 4 фото -->
         <div id="medicine-edit-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1001; align-items: center; justify-content: center; overflow-y: auto;">
@@ -4933,37 +4298,6 @@
                     </div>
                 </div>
                 
-                <div id="edit-marketplace-fields" style="display: none;">
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px;">
-                        <div>
-                            <label style="display: block; margin-bottom: 4px; font-weight: 600; font-size: 13px; color: #333;">📦 Категория:</label>
-                            <select id="edit-marketplace-category" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; box-sizing: border-box;">
-                                <option value="electronics">📱 Электроника</option>
-                                <option value="clothing">👗 Одежда</option>
-                                <option value="furniture">🛋️ Мебель</option>
-                                <option value="sports">⚽ Спорт</option>
-                                <option value="kids">🧸 Детские товары</option>
-                                <option value="beauty">💄 Красота</option>
-                                <option value="other">📦 Другое</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label style="display: block; margin-bottom: 4px; font-weight: 600; font-size: 13px; color: #333;">🏙️ Город:</label>
-                            <select id="edit-marketplace-city" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; box-sizing: border-box;">
-                                <option value="">Не указан</option>
-                                <option value="Nha Trang">Нячанг</option>
-                                <option value="Ho Chi Minh">Хошимин</option>
-                                <option value="Da Nang">Дананг</option>
-                                <option value="Hanoi">Ханой</option>
-                                <option value="Phu Quoc">Фукуок</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div style="margin-bottom: 12px;">
-                        <label style="display: block; margin-bottom: 4px; font-weight: 600; font-size: 13px; color: #333;">💰 Цена:</label>
-                        <input type="text" id="edit-marketplace-price" placeholder="1,000,000 VND" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; box-sizing: border-box;">
-                    </div>
-                </div>
                 
                 <div id="edit-visas-fields" style="display: none;">
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px;">
@@ -4994,35 +4328,6 @@
                     </div>
                 </div>
                 
-                <div id="edit-photosession-fields" style="display: none;">
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px;">
-                        <div>
-                            <label style="display: block; margin-bottom: 4px; font-weight: 600; font-size: 13px; color: #333;">📷 Тип съёмки:</label>
-                            <select id="edit-photosession-type" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; box-sizing: border-box;">
-                                <option value="portrait">👤 Портретная</option>
-                                <option value="wedding">💒 Свадебная</option>
-                                <option value="family">👨‍👩‍👧 Семейная</option>
-                                <option value="content">📱 Контент</option>
-                                <option value="commercial">🏢 Коммерческая</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label style="display: block; margin-bottom: 4px; font-weight: 600; font-size: 13px; color: #333;">🏙️ Город:</label>
-                            <select id="edit-photosession-city" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; box-sizing: border-box;">
-                                <option value="">Не указан</option>
-                                <option value="Nha Trang">Нячанг</option>
-                                <option value="Ho Chi Minh">Хошимин</option>
-                                <option value="Da Nang">Дананг</option>
-                                <option value="Hanoi">Ханой</option>
-                                <option value="Phu Quoc">Фукуок</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div style="margin-bottom: 12px;">
-                        <label style="display: block; margin-bottom: 4px; font-weight: 600; font-size: 13px; color: #333;">💰 Цена (USD):</label>
-                        <input type="text" id="edit-photosession-price" placeholder="100" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; box-sizing: border-box;">
-                    </div>
-                </div>
                 
                 <div id="edit-medicine-fields" style="display: none;">
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px;">
@@ -5564,7 +4869,6 @@
                                 <option value="real_estate">Недвижимость</option>
                                 <option value="money_exchange">Обмен денег</option>
                                 <option value="entertainment">Развлечения</option>
-                                <option value="marketplace">Барахолка</option>
                                 <option value="visas">Визаран</option>
                                 <option value="news">Фотосессия</option>
                                 <option value="medicine">Медицина</option>
@@ -5592,7 +4896,6 @@
                                 <option value="real_estate">Недвижимость</option>
                                 <option value="money_exchange">Обмен денег</option>
                                 <option value="entertainment">Развлечения</option>
-                                <option value="marketplace">Барахолка</option>
                                 <option value="visas">Визаран</option>
                                 <option value="news">Фотосессия</option>
                                 <option value="medicine">Медицина</option>
@@ -6038,9 +5341,7 @@
             const formHeaders = {
                 'submit-exchange': { title: '💱 ' + (tr.forms.addExchange || 'Thêm điểm đổi tiền'), desc: tr.forms.exchangeDesc || 'Thêm điểm đổi tiền. Sau khi kiểm duyệt, tin sẽ xuất hiện.' },
                 'submit-children': { title: '👶 ' + (tr.forms.addKids || 'Thêm dịch vụ trẻ em'), desc: tr.forms.kidsDesc || 'Thêm dịch vụ hoặc sản phẩm cho trẻ em.' },
-                'submit-marketplace': { title: '🛍️ ' + (tr.forms.addMarketplace || 'Đăng tin chợ đồ'), desc: tr.forms.marketplaceDesc || 'Bán hoặc trao đổi đồ dùng.' },
                 'submit-visas': { title: '🏖️ ' + (tr.forms.addVisa || 'Thêm dịch vụ visa'), desc: tr.forms.visaDesc || 'Thêm thông tin visa run.' },
-                'submit-photosession': { title: '📷 ' + (tr.forms.addPhoto || 'Đăng dịch vụ chụp ảnh'), desc: tr.forms.photoDesc || 'Thêm dịch vụ chụp ảnh.' },
                 'submit-medicine': { title: '🏥 ' + (tr.forms.addMedicine || 'Thêm dịch vụ y tế'), desc: tr.forms.medicineDesc || 'Thêm thông tin y tế, bác sĩ, phòng khám.' },
                 'submit-tour': { title: '🧳 ' + (tr.forms.addTour || 'Thêm tour du lịch'), desc: tr.forms.tourDesc || 'Đăng tour hoặc dịch vụ du lịch.' },
                 'submit-transport': { title: '🏍️ ' + (tr.forms.addTransport || 'Thêm phương tiện'), desc: tr.forms.transportDesc || 'Đăng xe máy, ô tô cho thuê hoặc bán.' },
@@ -6372,8 +5673,7 @@
             else if (tabName === 'submit-medicine') { if(typeof loadMedicineCaptcha==='function') loadMedicineCaptcha(); }
             else if (tabName === 'submit-exchange') { if(typeof loadExchangeCaptcha==='function') loadExchangeCaptcha(); }
             else if (tabName === 'submit-children') { if(typeof loadChildrenCaptcha==='function') loadChildrenCaptcha(); }
-            else if (tabName === 'submit-marketplace') { if(typeof loadMarketplaceCaptcha==='function') loadMarketplaceCaptcha(); }
-            else if (tabName === 'submit-visas') { if(typeof loadVisasCaptcha==='function') loadVisasCaptcha(); }
+                        else if (tabName === 'submit-visas') { if(typeof loadVisasCaptcha==='function') loadVisasCaptcha(); }
             else if (tabName === 'visas') { 
                 const visasCountries = ['vietnam', 'thailand', 'india', 'indonesia'];
                 visasCountries.forEach(c => {
@@ -6383,7 +5683,6 @@
                 if(typeof applyVisasFilters==='function') applyVisasFilters(); 
                 loadVisasCounts(); 
             }
-            else if (tabName === 'submit-photosession') { if(typeof loadPhotoshootCaptcha==='function') loadPhotoshootCaptcha(); }
             else if (tabName === 'realestate') { if(typeof loadRealEstateCounts==='function') loadRealEstateCounts(); if(typeof loadListings==='function') loadListings('real_estate'); }
             else if (tabName === 'transport') { if(typeof updateTransportCounts==='function') updateTransportCounts(); if(typeof loadListings==='function') loadListings('transport', currentTransportType); }
             else if (tabName === 'entertainment') { 
@@ -8117,31 +7416,9 @@
         
         // Marketplace category filter
         let currentMarketplaceCategory = '';
-        function filterMarketplaceByCategory(category) {
-            currentMarketplaceCategory = category;
-            document.querySelectorAll('.marketplace-cat-btn').forEach(btn => {
-                btn.style.border = btn.dataset.category === category ? '3px solid #d4af37' : '3px solid transparent';
-            });
-            loadListings('marketplace');
-        }
         
         // Marketplace city filter
         let currentMarketplaceCity = '';
-        function filterMarketplaceCity(city) {
-            currentMarketplaceCity = city;
-            document.querySelectorAll('.marketplace-city-btn').forEach(btn => {
-                if (btn.dataset.city === city) {
-                    btn.style.border = '2px solid #d4af37';
-                    btn.style.background = '#d4af37';
-                    btn.style.color = 'white';
-                } else {
-                    btn.style.border = '2px solid #ccc';
-                    btn.style.background = '#fff';
-                    btn.style.color = '#333';
-                }
-            });
-            loadListings('marketplace');
-        }
         
         function filterRestaurantType(type) {
             currentRestaurantType = type;
@@ -8432,21 +7709,6 @@
                 });
         }
 
-        function loadMarketplaceCounts() {
-            fetch(`/api/listings/marketplace?country=${currentCountry}`)
-                .then(r => r.json())
-                .then(data => {
-                    const categories = ['electronics', 'clothing', 'furniture', 'free'];
-                    categories.forEach(cat => {
-                        const count = data.filter(item => {
-                            const itemCat = (item.marketplace_category || item.subcategory || '').toLowerCase();
-                            return itemCat === cat || itemCat.includes(cat);
-                        }).length;
-                        const el = document.getElementById(`marketplace-${cat}-count`);
-                        if (el) el.textContent = count + ' ' + getListingsWord();
-                    });
-                });
-        }
 
         function loadRealEstateCounts() {
             fetch(`/api/city-counts/real_estate?country=${currentCountry}`)
@@ -9045,7 +8307,6 @@
                                 ` : ''}
                                 ${adminAuthenticated && category === 'marketplace' ? `
                                     <div style="position:absolute;top:8px;right:8px;display:flex;gap:6px;z-index:15;">
-                                        <button onclick="openMarketplacePhotoEdit('${item.id}', event)" style="background:rgba(76,175,80,0.9);color:white;border:none;padding:8px 12px;border-radius:6px;cursor:pointer;font-size:14px;font-weight:bold;box-shadow:0 2px 6px rgba(0,0,0,0.3);">✏️ Редактировать</button>
                                         <button onclick="openDeleteModal('${item.id}', '${category}')" style="background:rgba(255,107,107,0.9);color:white;border:none;padding:8px 12px;border-radius:6px;cursor:pointer;font-size:14px;font-weight:bold;box-shadow:0 2px 6px rgba(0,0,0,0.3);">🗑️</button>
                                     </div>
                                 ` : ''}
@@ -9057,7 +8318,6 @@
                                 ` : ''}
                                 ${adminAuthenticated && category === 'news' ? `
                                     <div style="position:absolute;top:8px;right:8px;display:flex;gap:6px;z-index:15;">
-                                        <button onclick="openPhotosessionPhotoEdit('${item.id}', event)" style="background:rgba(76,175,80,0.9);color:white;border:none;padding:8px 12px;border-radius:6px;cursor:pointer;font-size:14px;font-weight:bold;box-shadow:0 2px 6px rgba(0,0,0,0.3);">✏️ Редактировать</button>
                                         <button onclick="openDeleteModal('${item.id}', '${category}')" style="background:rgba(255,107,107,0.9);color:white;border:none;padding:8px 12px;border-radius:6px;cursor:pointer;font-size:14px;font-weight:bold;box-shadow:0 2px 6px rgba(0,0,0,0.3);">🗑️</button>
                                     </div>
                                 ` : ''}
@@ -9378,7 +8638,6 @@
         loadExchangeCounts();
         loadKidsCounts();
         loadVisasCounts();
-        loadMarketplaceCounts();
         setInterval(updateRates, 60000);
         
         const visitorId = 'user_' + Math.random().toString(36).substr(2, 9);
@@ -9654,55 +8913,6 @@
         }
 
         // === Функции для редактирования Барахолка ===
-        let currentMarketplaceEditId = null;
-        async function openMarketplacePhotoEdit(listingId, event) {
-            if (event) event.stopPropagation();
-            currentMarketplaceEditId = listingId;
-            try {
-                const response = await fetch('/api/admin/get-listing', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ password: adminPassword_val, country: currentCountry, category: 'marketplace', listing_id: listingId })
-                });
-                const data = await response.json();
-                if (data.error) { alert('Ошибка: ' + data.error); return; }
-                document.getElementById('marketplace-edit-id').textContent = 'ID: ' + listingId;
-                document.getElementById('marketplace-edit-title').value = data.title || '';
-                document.getElementById('marketplace-edit-desc').value = data.description || '';
-                document.getElementById('marketplace-edit-city').value = data.city || '';
-                document.getElementById('marketplace-edit-price').value = data.price || '';
-                document.getElementById('marketplace-edit-category').value = data.marketplace_category || 'other';
-                document.getElementById('marketplace-edit-contact').value = data.contact_name || '';
-                document.getElementById('marketplace-edit-telegram').value = data.telegram || '';
-                document.getElementById('marketplace-edit-status').style.display = 'none';
-                displayEditPhotosPreview('marketplace-edit-photos-preview', data);
-                for (let i = 0; i < 4; i++) { const el = document.getElementById('marketplace-edit-photo-' + i); if (el) el.value = ''; }
-                document.getElementById('marketplace-edit-modal').style.display = 'flex';
-            } catch (err) { console.error('Error loading marketplace listing:', err); alert('Ошибка при загрузке'); }
-        }
-        function closeMarketplaceEditModal() { document.getElementById('marketplace-edit-modal').style.display = 'none'; }
-        function previewMarketplaceEditPhoto(index) { previewEditPhotoGeneric('marketplace-edit-photo-', 'marketplace-edit-photos-preview', index); }
-        async function saveMarketplacePhotoEdit() {
-            const status = document.getElementById('marketplace-edit-status');
-            status.style.display = 'block'; status.textContent = '⏳ Сохранение...'; status.style.background = '#fff3e0'; status.style.color = '#e65100';
-            try {
-                const formData = new FormData();
-                formData.append('password', adminPassword_val); formData.append('country', currentCountry);
-                formData.append('category', 'marketplace'); formData.append('listing_id', currentMarketplaceEditId);
-                formData.append('title', document.getElementById('marketplace-edit-title').value);
-                formData.append('description', document.getElementById('marketplace-edit-desc').value);
-                formData.append('city', document.getElementById('marketplace-edit-city').value);
-                formData.append('price', document.getElementById('marketplace-edit-price').value);
-                formData.append('marketplace_category', document.getElementById('marketplace-edit-category').value);
-                formData.append('contact_name', document.getElementById('marketplace-edit-contact').value);
-                formData.append('telegram', document.getElementById('marketplace-edit-telegram').value);
-                for (let i = 0; i < 4; i++) { const file = document.getElementById('marketplace-edit-photo-' + i)?.files[0]; if (file) formData.append('photo_' + i, file); }
-                const response = await fetch('/api/admin/update-listing-with-photo', { method: 'POST', body: formData });
-                const data = await response.json();
-                if (data.success) { status.textContent = '✅ Сохранено!'; status.style.background = '#e8f5e9'; status.style.color = '#2e7d32'; setTimeout(() => { closeMarketplaceEditModal(); loadListings('marketplace'); }, 1000); }
-                else { status.textContent = '❌ ' + (data.error || 'Ошибка'); status.style.background = '#ffebee'; status.style.color = '#c62828'; }
-            } catch (err) { console.error('Error saving:', err); status.textContent = '❌ Ошибка сети'; status.style.background = '#ffebee'; status.style.color = '#c62828'; }
-        }
 
         // === Функции для редактирования Визаран ===
         let currentVisasEditId = null;
@@ -9753,72 +8963,9 @@
         }
 
         // === Функции для редактирования Фотосессия ===
-        let currentPhotosessionEditId = null;
-        async function openPhotosessionPhotoEdit(listingId, event) {
-            if (event) event.stopPropagation();
-            currentPhotosessionEditId = listingId;
-            try {
-                const response = await fetch('/api/admin/get-listing', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ password: adminPassword_val, country: currentCountry, category: 'news', listing_id: listingId }) });
-                const data = await response.json();
-                if (data.error) { alert('Ошибка: ' + data.error); return; }
-                document.getElementById('photosession-edit-id').textContent = 'ID: ' + listingId;
-                document.getElementById('photosession-edit-title').value = data.title || '';
-                document.getElementById('photosession-edit-type').value = data.photo_type || 'Портретная';
-                document.getElementById('photosession-edit-city').value = data.city || 'Нячанг';
-                document.getElementById('photosession-edit-desc').value = data.description || '';
-                document.getElementById('photosession-edit-price').value = data.price || '';
-                document.getElementById('photosession-edit-contact').value = data.contact_name || '';
-                document.getElementById('photosession-edit-telegram').value = data.telegram || '';
-                document.getElementById('photosession-edit-status').style.display = 'none';
-                displayEditPhotosPreview('photosession-edit-photos-preview', data);
-                for (let i = 0; i < 4; i++) { const el = document.getElementById('photosession-edit-photo-' + i); if (el) el.value = ''; }
-                document.getElementById('photosession-edit-modal').style.display = 'flex';
-            } catch (err) { console.error('Error loading photosession:', err); alert('Ошибка при загрузке'); }
-        }
-        function closePhotosessionEditModal() { document.getElementById('photosession-edit-modal').style.display = 'none'; }
-        async function savePhotosessionPhotoEdit() {
-            const status = document.getElementById('photosession-edit-status');
-            status.style.display = 'block'; status.textContent = '⏳ Сохранение...'; status.style.background = '#fff3e0'; status.style.color = '#e65100';
-            try {
-                const formData = new FormData();
-                formData.append('password', adminPassword_val); formData.append('country', currentCountry);
-                formData.append('category', 'news'); formData.append('listing_id', currentPhotosessionEditId);
-                formData.append('title', document.getElementById('photosession-edit-title').value);
-                formData.append('photo_type', document.getElementById('photosession-edit-type').value);
-                formData.append('city', document.getElementById('photosession-edit-city').value);
-                formData.append('description', document.getElementById('photosession-edit-desc').value);
-                formData.append('price', document.getElementById('photosession-edit-price').value);
-                formData.append('contact_name', document.getElementById('photosession-edit-contact').value);
-                formData.append('telegram', document.getElementById('photosession-edit-telegram').value);
-                for (let i = 0; i < 4; i++) { const file = document.getElementById('photosession-edit-photo-' + i)?.files[0]; if (file) formData.append('photo_' + i, file); }
-                const response = await fetch('/api/admin/update-listing-with-photo', { method: 'POST', body: formData });
-                const data = await response.json();
-                if (data.success) { status.textContent = '✅ Сохранено!'; status.style.background = '#e8f5e9'; status.style.color = '#2e7d32'; setTimeout(() => { closePhotosessionEditModal(); loadListings('news'); }, 1000); }
-                else { status.textContent = '❌ ' + (data.error || 'Ошибка'); status.style.background = '#ffebee'; status.style.color = '#c62828'; }
-            } catch (err) { console.error('Error saving:', err); status.textContent = '❌ Ошибка сети'; status.style.background = '#ffebee'; status.style.color = '#c62828'; }
-        }
         function previewPhotosessionPhoto(input) {
             const file = input.files[0];
             if (file) { const reader = new FileReader(); reader.onload = function(e) { document.getElementById('photosession-edit-photo-preview').src = e.target.result; document.getElementById('photosession-edit-photo-preview').style.display = 'block'; document.getElementById('photosession-edit-no-photo').style.display = 'none'; }; reader.readAsDataURL(file); }
-        }
-        async function savePhotosessionPhotoEdit() {
-            const status = document.getElementById('photosession-edit-status');
-            status.style.display = 'block'; status.textContent = '⏳ Сохранение...'; status.style.background = '#fff3e0'; status.style.color = '#e65100';
-            try {
-                const formData = new FormData();
-                formData.append('password', adminPassword_val); formData.append('country', currentCountry);
-                formData.append('category', 'news'); formData.append('listing_id', currentPhotosessionEditId);
-                formData.append('title', document.getElementById('photosession-edit-title').value);
-                formData.append('description', document.getElementById('photosession-edit-desc').value);
-                formData.append('city', document.getElementById('photosession-edit-city').value);
-                formData.append('photo_type', document.getElementById('photosession-edit-type').value);
-                const photoFile = document.getElementById('photosession-edit-photo').files[0];
-                if (photoFile) formData.append('photo', photoFile);
-                const response = await fetch('/api/admin/update-listing-with-photo', { method: 'POST', body: formData });
-                const data = await response.json();
-                if (data.success) { status.textContent = '✅ Сохранено!'; status.style.background = '#e8f5e9'; status.style.color = '#2e7d32'; setTimeout(() => { closePhotosessionEditModal(); loadListings('news'); }, 1000); }
-                else { status.textContent = '❌ ' + (data.error || 'Ошибка'); status.style.background = '#ffebee'; status.style.color = '#c62828'; }
-            } catch (err) { console.error('Error saving:', err); status.textContent = '❌ Ошибка сети'; status.style.background = '#ffebee'; status.style.color = '#c62828'; }
         }
 
         // === Функции для редактирования Медицина ===
@@ -10197,7 +9344,6 @@
         function previewExchangeEditPhoto(index) { previewEditPhotoGeneric('exchange-edit-photo-', 'exchange-edit-photos-preview', index); }
         function previewMarketplaceEditPhoto(index) { previewEditPhotoGeneric('marketplace-edit-photo-', 'marketplace-edit-photos-preview', index); }
         function previewVisasEditPhoto(index) { previewEditPhotoGeneric('visas-edit-photo-', 'visas-edit-photos-preview', index); }
-        function previewPhotosessionEditPhoto(index) { previewEditPhotoGeneric('photosession-edit-photo-', 'photosession-edit-photos-preview', index); }
         function previewMedicineEditPhoto(index) { previewEditPhotoGeneric('medicine-edit-photo-', 'medicine-edit-photos-preview', index); }
         
         async function saveInlineEdit(listingId, category) {
@@ -10334,14 +9480,12 @@
                     openExchangePhotoEdit(listingId);
                     return;
                 case 'marketplace':
-                    openMarketplacePhotoEdit(listingId);
                     return;
                 case 'visas':
                     openVisasPhotoEdit(listingId);
                     return;
                 case 'photosession':
                 case 'news':
-                    openPhotosessionPhotoEdit(listingId);
                     return;
                 case 'medicine':
                     openMedicinePhotoEdit(listingId);
@@ -11328,104 +10472,10 @@
                 });
         }
 
-        function loadMarketplaceCaptcha() {
-            fetch('/api/captcha')
-                .then(r => r.json())
-                .then(data => {
-                    document.getElementById('marketplace-captcha-question').textContent = data.question;
-                    document.getElementById('marketplace-captcha-token').value = data.token;
-                    const hiddenInput = document.getElementById('marketplace-captcha-answer');
-                    if (hiddenInput) hiddenInput.value = data.token;
-                });
-        }
 
-        function loadPhotoshootCaptcha() {
-            fetch('/api/captcha')
-                .then(r => r.json())
-                .then(data => {
-                    document.getElementById('photoshoot-captcha-question').textContent = data.question;
-                    document.getElementById('photoshoot-captcha-answer').value = data.token;
-                    const hiddenToken = document.getElementById('photoshoot-captcha-token');
-                    if (hiddenToken) hiddenToken.value = data.token;
-                });
-        }
 
-        async function submitPhotoshoot(e) {
-            e.preventDefault();
-            const status = document.getElementById('photoshoot-submit-status');
-            status.style.display = 'block';
-            status.textContent = '⏳ Отправка...';
-            status.style.color = '#666';
 
-            const formData = new FormData();
-            formData.append('country', 'vietnam');
-            formData.append('category', 'news');
-            formData.append('city', document.getElementById('photoshoot-city').value);
-            formData.append('title', document.getElementById('photoshoot-title').value);
-            formData.append('description', document.getElementById('photoshoot-description').value);
-            formData.append('price', document.getElementById('photoshoot-price').value || '');
-            formData.append('telegram', document.getElementById('photoshoot-telegram').value);
-            formData.append('captcha_answer', document.getElementById('photoshoot-captcha').value);
-            formData.append('captcha_token', document.getElementById('photoshoot-captcha-answer').value);
 
-            for (let i = 0; i < 4; i++) {
-                const file = document.getElementById(`photoshoot-photo-${i}`).files[0];
-                if (file) {
-                    if (file.size > 1024 * 1024) {
-                        status.textContent = '❌ Фото слишком большое (макс 1 МБ)';
-                        status.style.color = '#ff6b6b';
-                        return;
-                    }
-                    formData.append('photos', file);
-                }
-            }
-
-            try {
-                const response = await fetch('/api/submit-listing', {
-                    method: 'POST',
-                    body: formData
-                });
-                const data = await response.json();
-
-                if (data.success) {
-                    status.textContent = '✅ ' + data.message;
-                    status.style.color = '#4CAF50';
-                    e.target.reset();
-                    loadPhotoshootCaptcha();
-                } else {
-                    status.textContent = '❌ ' + (data.error || 'Ошибка');
-                    status.style.color = '#ff6b6b';
-                    loadPhotoshootCaptcha();
-                }
-            } catch (err) {
-                status.textContent = '❌ Ошибка отправки';
-                status.style.color = '#ff6b6b';
-            }
-        }
-
-        function filterPhotoshootByCity(city) {
-            // Highlight selected city
-            document.querySelectorAll('.news-city-btn').forEach(btn => {
-                btn.style.border = '3px solid transparent';
-            });
-            const selectedBtn = document.querySelector(`.news-city-btn[data-city="${city}"]`);
-            if (selectedBtn) {
-                selectedBtn.style.border = '3px solid #d4af37';
-            }
-            // Load listings filtered by city
-            loadListings('news', city);
-        }
-
-        function loadPhotosessionCaptcha() {
-            fetch('/api/captcha')
-                .then(r => r.json())
-                .then(data => {
-                    document.getElementById('photosession-captcha-question').textContent = data.question;
-                    document.getElementById('photosession-captcha-token').value = data.token;
-                    const hiddenAnswer = document.getElementById('photosession-captcha-answer');
-                    if (hiddenAnswer) hiddenAnswer.value = data.token;
-                });
-        }
 
         function loadMedicineCaptcha() {
             fetch('/api/captcha')
@@ -11702,115 +10752,7 @@
             }
         }
 
-        async function submitMarketplace(e) {
-            e.preventDefault();
-            const status = document.getElementById('marketplace-submit-status');
-            status.style.display = 'block';
-            status.textContent = '⏳ Отправка...';
-            status.style.color = '#666';
 
-            const formData = new FormData();
-            formData.append('country', currentCountry);
-            formData.append('category', 'marketplace');
-            formData.append('marketplace_category', document.getElementById('marketplace-category').value);
-            formData.append('title', document.getElementById('marketplace-title').value);
-            formData.append('city', document.getElementById('marketplace-form-city').value);
-            formData.append('description', document.getElementById('marketplace-description').value);
-            formData.append('price', document.getElementById('marketplace-price').value || '');
-            formData.append('contact_name', document.getElementById('marketplace-contact').value);
-            formData.append('telegram', document.getElementById('marketplace-form-telegram').value);
-            formData.append('captcha_answer', document.getElementById('marketplace-captcha').value);
-            formData.append('captcha_token', document.getElementById('marketplace-captcha-token').value);
-
-            for (let i = 0; i < 4; i++) {
-                const file = document.getElementById(`marketplace-photo-${i}`).files[0];
-                if (file) {
-                    if (file.size > 1024 * 1024) {
-                        status.textContent = '❌ Фото слишком большое (макс 1 МБ)';
-                        status.style.color = '#ff6b6b';
-                        return;
-                    }
-                    formData.append('photos', file);
-                }
-            }
-
-            try {
-                const response = await fetch('/api/submit-listing', {
-                    method: 'POST',
-                    body: formData
-                });
-                const data = await response.json();
-
-                if (data.success) {
-                    status.textContent = '✅ ' + data.message;
-                    status.style.color = '#4CAF50';
-                    e.target.reset();
-                    loadMarketplaceCaptcha();
-                } else {
-                    status.textContent = '❌ ' + (data.error || 'Ошибка');
-                    status.style.color = '#ff6b6b';
-                    loadMarketplaceCaptcha();
-                }
-            } catch (err) {
-                status.textContent = '❌ Ошибка отправки';
-                status.style.color = '#ff6b6b';
-            }
-        }
-
-        async function submitPhotosession(e) {
-            e.preventDefault();
-            const status = document.getElementById('photosession-submit-status');
-            status.style.display = 'block';
-            status.textContent = '⏳ Отправка...';
-            status.style.color = '#666';
-
-            const formData = new FormData();
-            formData.append('country', currentCountry);
-            formData.append('category', 'news');
-            formData.append('photo_type', document.getElementById('photosession-type').value);
-            formData.append('title', document.getElementById('photosession-title').value);
-            formData.append('city', document.getElementById('photosession-city').value);
-            formData.append('description', document.getElementById('photosession-description').value);
-            formData.append('price', document.getElementById('photosession-price').value || '');
-            formData.append('contact_name', document.getElementById('photosession-contact').value);
-            formData.append('telegram', document.getElementById('photosession-telegram').value);
-            formData.append('captcha_answer', document.getElementById('photosession-captcha').value);
-            formData.append('captcha_token', document.getElementById('photosession-captcha-token').value);
-
-            for (let i = 0; i < 4; i++) {
-                const file = document.getElementById(`photosession-photo-${i}`).files[0];
-                if (file) {
-                    if (file.size > 1024 * 1024) {
-                        status.textContent = '❌ Фото слишком большое (макс 1 МБ)';
-                        status.style.color = '#ff6b6b';
-                        return;
-                    }
-                    formData.append('photos', file);
-                }
-            }
-
-            try {
-                const response = await fetch('/api/submit-listing', {
-                    method: 'POST',
-                    body: formData
-                });
-                const data = await response.json();
-
-                if (data.success) {
-                    status.textContent = '✅ ' + data.message;
-                    status.style.color = '#4CAF50';
-                    e.target.reset();
-                    loadPhotosessionCaptcha();
-                } else {
-                    status.textContent = '❌ ' + (data.error || 'Ошибка');
-                    status.style.color = '#ff6b6b';
-                    loadPhotosessionCaptcha();
-                }
-            } catch (err) {
-                status.textContent = '❌ Ошибка отправки';
-                status.style.color = '#ff6b6b';
-            }
-        }
 
         document.getElementById('submit-kids-form').addEventListener('submit', async function(e) {
             e.preventDefault();
@@ -12810,7 +11752,6 @@
                         <option value="real_estate">Недвижимость</option>
                         <option value="money_exchange">Обмен денег</option>
                         <option value="entertainment">Развлечения</option>
-                        <option value="marketplace">Барахолка</option>
                         <option value="visas">Визаран</option>
                         <option value="news">Фотосессия</option>
                         <option value="medicine">Медицина</option>
