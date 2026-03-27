@@ -6000,6 +6000,41 @@ def _ensure_parser_started():
 _ensure_parser_started()
 
 
+def _start_chat_parser_background():
+    """Запускает chat_parser в фоновом потоке с периодическим повтором каждые 30 минут."""
+    import asyncio as _asyncio
+
+    def _run_loop():
+        while True:
+            try:
+                loop = _asyncio.new_event_loop()
+                _asyncio.set_event_loop(loop)
+                from chat_parser import parse_chats
+                loop.run_until_complete(parse_chats())
+                loop.close()
+                print("[chat_parser] Цикл завершён, следующий запуск через 30 мин.")
+            except Exception as _e:
+                print(f"[chat_parser] Ошибка: {_e}")
+            time.sleep(1800)  # 30 минут
+
+    t = threading.Thread(target=_run_loop, daemon=True, name='ChatParserLoop')
+    t.start()
+    print("[chat_parser] Фоновый парсер чатов запущен.")
+
+
+def _ensure_chat_parser_started():
+    if os.path.exists('goldantelope_user.session') and os.environ.get('TELETHON_API_ID'):
+        def _delayed():
+            time.sleep(15)
+            _start_chat_parser_background()
+        threading.Thread(target=_delayed, daemon=True, name='ChatParserLauncher').start()
+    else:
+        print("[chat_parser] Сессия или API ключи не найдены — парсер чатов не запущен.")
+
+
+_ensure_chat_parser_started()
+
+
 def _auto_setup_webhook():
     """Автоматически устанавливает webhook бота при запуске приложения."""
     import time as _time

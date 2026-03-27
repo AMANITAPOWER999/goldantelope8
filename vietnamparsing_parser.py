@@ -913,9 +913,18 @@ def save_listings(data: dict):
         tmp = LISTINGS_FILE + '.tmp'
         with open(tmp, 'w', encoding='utf-8') as f:
             json.dump(data, f, ensure_ascii=False, indent=2)
-        os.replace(tmp, LISTINGS_FILE)
+        try:
+            os.replace(tmp, LISTINGS_FILE)
+        except OSError:
+            import shutil
+            shutil.move(tmp, LISTINGS_FILE)
     except Exception as e:
         logger.error(f"Failed to save listings: {e}")
+        try:
+            with open(LISTINGS_FILE, 'w', encoding='utf-8') as f:
+                json.dump(data, f, ensure_ascii=False, indent=2)
+        except Exception as e2:
+            logger.error(f"Direct save also failed: {e2}")
 
 
 def get_existing_ids(data: dict) -> set:

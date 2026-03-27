@@ -88,16 +88,25 @@ async def parse_chats():
         print(f"❌ Не удалось подключиться: {str(e)[:100]}")
         return
     
-    listings_file = "listings_thailand.json"
+    listings_file = "listings_chat.json"
     existing = []
     if os.path.exists(listings_file):
-        with open(listings_file, 'r', encoding='utf-8') as f:
-            existing = json.load(f)
-    
-    existing_ids = {item['id'] for item in existing}
-    existing_texts = {item.get('description', '')[:150] for item in existing}
-    existing_hashes = {item.get('image_hash') for item in existing if item.get('image_hash')}
-    existing_image_urls = {item.get('image_url') for item in existing if item.get('image_url')}
+        try:
+            with open(listings_file, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+            if isinstance(data, list):
+                existing = data
+            elif isinstance(data, dict):
+                for v in data.values():
+                    if isinstance(v, list):
+                        existing.extend(v)
+        except Exception:
+            existing = []
+
+    existing_ids = {item['id'] for item in existing if isinstance(item, dict)}
+    existing_texts = {item.get('description', '')[:150] for item in existing if isinstance(item, dict)}
+    existing_hashes = {item.get('image_hash') for item in existing if isinstance(item, dict) and item.get('image_hash')}
+    existing_image_urls = {item.get('image_url') for item in existing if isinstance(item, dict) and item.get('image_url')}
     
     new_items = []
     
