@@ -790,8 +790,18 @@ def build_generic_listing(msg: dict, item_id: str, channel: str, category: str, 
     msg_id = msg.get('post_id', 0)
 
     lines = [l.strip() for l in text.strip().splitlines() if l.strip()]
-    title = lines[0][:120] if lines else 'Без названия'
+    # Если первая строка — только эмодзи, берём следующую как заголовок
+    raw_title = lines[0] if lines else 'Без названия'
+    clean_t = strip_emoji(raw_title).strip()
+    if not clean_t and len(lines) > 1:
+        raw_title = lines[1]
+        clean_t = strip_emoji(raw_title).strip()
+    title = (clean_t or raw_title)[:120]
     description = '\n'.join(lines[1:]) if len(lines) > 1 else text[:300]
+    # Если заголовок совпадает с description[0], сдвигаем description
+    desc_lines = [l.strip() for l in description.splitlines() if l.strip()]
+    if desc_lines and strip_emoji(desc_lines[0]).strip() == title:
+        description = '\n'.join(desc_lines[1:])
 
     price_display = ''
     price = 0
@@ -805,11 +815,14 @@ def build_generic_listing(msg: dict, item_id: str, channel: str, category: str, 
 
     tg_link = f'https://t.me/{channel}/{msg_id}' if msg_id else f'https://t.me/{channel}'
 
+    clean_desc = strip_emoji(description).strip()
+    clean_text = strip_emoji(text).strip()
+
     item: dict = {
         'id': item_id,
         'title': title,
-        'description': description,
-        'text': text,
+        'description': clean_desc,
+        'text': clean_text,
         'price': price,
         'price_display': price_display,
         'city': 'Вьетнам',
