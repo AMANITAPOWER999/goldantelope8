@@ -5212,6 +5212,7 @@
                         <div style="display:flex; gap:6px; margin-bottom:14px; flex-wrap:wrap;">
                             <button onclick="monSwitchTab('channels')" id="mon-tab-channels" style="padding:7px 16px; border:none; border-radius:7px; cursor:pointer; font-size:13px; font-weight:600; background:#5865f2; color:white;">📋 По каналам</button>
                             <button onclick="monSwitchTab('hf')" id="mon-tab-hf" style="padding:7px 16px; border:none; border-radius:7px; cursor:pointer; font-size:13px; font-weight:600; background:#2a2a3d; color:#aaa;">🏠 Недвижимость</button>
+                            <button onclick="monSwitchTab('bikes')" id="mon-tab-bikes" style="padding:7px 16px; border:none; border-radius:7px; cursor:pointer; font-size:13px; font-weight:600; background:#2a2a3d; color:#aaa;">🏍️ Байки</button>
                             <button onclick="monSwitchTab('chats')" id="mon-tab-chats" style="padding:7px 16px; border:none; border-radius:7px; cursor:pointer; font-size:13px; font-weight:600; background:#2a2a3d; color:#aaa;">💬 Чаты</button>
                             <input type="text" id="mon-search" placeholder="🔍 поиск по каналу..." oninput="monFilterTable()" style="margin-left:auto; padding:7px 12px; background:#1a1a2e; border:1px solid #333; border-radius:7px; color:#ddd; font-size:13px; min-width:160px;">
                         </div>
@@ -5256,6 +5257,30 @@
                                         </tr>
                                     </thead>
                                     <tbody id="mon-hf-tbody" style="color:#ccc;"></tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Таблица Байки -->
+                        <div id="mon-tab-bikes-content" style="display:none;">
+                            <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px; flex-wrap:wrap;">
+                                <div style="font-size:12px; color:#888;">Каналы-источники по байкам — Вьетнам и Таиланд</div>
+                            </div>
+                            <div style="overflow-x:auto;">
+                                <table style="width:100%; border-collapse:collapse; font-size:13px;">
+                                    <thead>
+                                        <tr style="background:#1a1a2e; color:#888;">
+                                            <th style="padding:9px 10px; text-align:left; border-bottom:1px solid #2a2a3d;">Статус</th>
+                                            <th style="padding:9px 10px; text-align:left; border-bottom:1px solid #2a2a3d;">Группа</th>
+                                            <th style="padding:9px 10px; text-align:left; border-bottom:1px solid #2a2a3d;">Канал-источник</th>
+                                            <th style="padding:9px 10px; text-align:left; border-bottom:1px solid #2a2a3d;">Назначение</th>
+                                            <th style="padding:9px 10px; text-align:left; border-bottom:1px solid #2a2a3d;">Посл. пост</th>
+                                            <th style="padding:9px 10px; text-align:center; border-bottom:1px solid #2a2a3d;">HTTP</th>
+                                            <th style="padding:9px 10px; text-align:center; border-bottom:1px solid #2a2a3d;">Мс</th>
+                                            <th style="padding:9px 10px; text-align:right; border-bottom:1px solid #2a2a3d;">Объявлений</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="mon-bikes-tbody" style="color:#ccc;"></tbody>
                                 </table>
                             </div>
                         </div>
@@ -12412,7 +12437,7 @@
 
         function monSwitchTab(tab) {
             _monCurrentTab = tab;
-            ['channels','hf','chats'].forEach(t => {
+            ['channels','hf','bikes','chats'].forEach(t => {
                 const btn = document.getElementById('mon-tab-'+t);
                 const cont = document.getElementById('mon-tab-'+t+'-content');
                 if (btn) btn.style.background = t === tab ? '#5865f2' : '#2a2a3d';
@@ -12821,6 +12846,60 @@
                         <td style="padding:7px 10px;text-align:right;font-weight:${r.cnt>0?'600':'400'};color:${r.cnt>0?'#d4af37':'#555'};">${r.cnt > 0 ? r.cnt.toLocaleString('ru') : '—'}</td>
                     </tr>`;
                 }).join('') || '<tr><td colspan="8" style="padding:20px;text-align:center;color:#444;">Нет данных</td></tr>';
+            }
+
+            // ── Байки ──
+            else if (_monCurrentTab === 'bikes') {
+                const tbody = document.getElementById('mon-bikes-tbody');
+                if (!tbody) return;
+                const hfSrcs = (data.hf_space?.source_channels) || {};
+                const channelIdx = {};
+                (lst.by_channel || []).forEach(c => { channelIdx[c.channel] = c.total; });
+                const BIKE_DEST_LABEL = {BIKE:'→ @baykivietnam', BIKE_TH:'→ @baykithailand'};
+                const bikeColors = {BIKE:'#10b981', BIKE_TH:'#f59e0b'};
+                const rows = [];
+                Object.entries(hfSrcs).filter(([grp]) => grp === 'BIKE' || grp === 'BIKE_TH').forEach(([grp, channels]) => {
+                    channels.filter(ch => !search || ch.toLowerCase().includes(search)).forEach(ch => {
+                        const cnt = channelIdx[ch.toLowerCase()] || 0;
+                        const chk = _hfCheckResults[ch.toLowerCase()] || null;
+                        rows.push({grp, ch, dest: BIKE_DEST_LABEL[grp]||'→ @baykivietnam', cnt, chk});
+                    });
+                });
+                // Если HF не вернул BIKE — покажем из BIKE_SET
+                if (!rows.length) {
+                    const bikeChannels = ['bike_nhatrang','motohub_nhatrang','NhaTrang_moto_market','RentBikeUniq','BK_rental','nha_trang_rent','RentTwentyTwo22NhaTrang'];
+                    bikeChannels.filter(ch => !search || ch.toLowerCase().includes(search)).forEach(ch => {
+                        const cnt = channelIdx[ch.toLowerCase()] || 0;
+                        const chk = _hfCheckResults[ch.toLowerCase()] || null;
+                        rows.push({grp:'BIKE', ch, dest:'→ @baykivietnam', cnt, chk});
+                    });
+                }
+                tbody.innerHTML = rows.map((r, i) => {
+                    const rowBg = i % 2 === 0 ? '#12122a' : '#0f0f1a';
+                    let statusCell = '<td style="padding:7px 10px;text-align:center;color:#444;font-size:16px;">·</td>';
+                    let httpCell = '<td style="padding:7px 10px;text-align:center;color:#444;font-size:11px;">—</td>';
+                    let msCell = '<td style="padding:7px 10px;text-align:center;color:#444;font-size:11px;">—</td>';
+                    let lastCell = '<td style="padding:7px 10px;color:#555;font-size:11px;">—</td>';
+                    if (r.chk) {
+                        statusCell = `<td style="padding:7px 10px;text-align:center;font-size:15px;">${r.chk.ok ? '✅' : '❌'}</td>`;
+                        const httpColor = r.chk.status===200 ? '#22c55e' : (r.chk.status===0 ? '#ef4444' : '#f59e0b');
+                        httpCell = `<td style="padding:7px 10px;text-align:center;font-size:11px;font-weight:600;color:${httpColor};">${r.chk.status||'err'}</td>`;
+                        const msColor = r.chk.ms < 2000 ? '#22c55e' : r.chk.ms < 5000 ? '#f59e0b' : '#ef4444';
+                        msCell = `<td style="padding:7px 10px;text-align:center;font-size:11px;color:${msColor};">${r.chk.ms}</td>`;
+                        lastCell = `<td style="padding:7px 10px;font-size:11px;color:#888;">${r.chk.last_post||'—'}</td>`;
+                    }
+                    const grpColor = bikeColors[r.grp] || '#10b981';
+                    return `<tr style="background:${rowBg};">
+                        ${statusCell}
+                        <td style="padding:7px 10px;"><span style="background:${grpColor}22;color:${grpColor};border-radius:5px;padding:2px 8px;font-size:11px;font-weight:600;">${r.grp}</span></td>
+                        <td style="padding:7px 10px;"><a href="https://t.me/${r.ch}" target="_blank" style="color:#7c9fdc;text-decoration:none;">@${r.ch}</a></td>
+                        <td style="padding:7px 10px;color:#888;font-size:12px;">${r.dest}</td>
+                        ${lastCell}
+                        ${httpCell}
+                        ${msCell}
+                        <td style="padding:7px 10px;text-align:right;font-weight:${r.cnt>0?'600':'400'};color:${r.cnt>0?'#d4af37':'#555'};">${r.cnt > 0 ? r.cnt.toLocaleString('ru') : '—'}</td>
+                    </tr>`;
+                }).join('') || '<tr><td colspan="8" style="padding:20px;text-align:center;color:#444;">Нет данных — каналы байков пока не подключены к HF Space</td></tr>';
             }
 
             // ── Чаты — обрабатывается через loadHFChatStats() ──
