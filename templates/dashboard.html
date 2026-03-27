@@ -13512,8 +13512,8 @@
 
         // Применяем сохранённую тему при загрузке
         (function(){
-            let saved = 'light';
-            try { saved = localStorage.getItem('ga_theme') || 'light'; } catch(e) {}
+            let saved = 'dark';
+            try { saved = localStorage.getItem('ga_theme') || 'dark'; } catch(e) {}
             applyTheme(saved === 'dark');
         })();
     </script>
