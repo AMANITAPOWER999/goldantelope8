@@ -2936,5 +2936,18 @@
     "image_hash": null,
     "has_media": false,
     "price": null
+  },
+  {
+    "id": "phangan_chat_32420",
+    "category": "chat",
+    "title": "Кто продаёт юсдт за наличные? Встреча лично.",
+    "description": "Кто продаёт юсдт за наличные? Встреча лично.",
+    "date": "2026-03-27T16:36:00+00:00",
+    "source_channel": "@phangan_chat",
+    "message_id": 32420,
+    "image_url": null,
+    "image_hash": null,
+    "has_media": false,
+    "price": null
   }
 ]
