@@ -1,0 +1,8 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "jKpxI7FfntYKii3gDcbLh"
+uri = "file://restaurants_by_city.txt"
+type = "text"
+title = "Рестораны по городам"
