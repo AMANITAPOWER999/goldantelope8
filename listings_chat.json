@@ -2949,5 +2949,31 @@
     "image_hash": null,
     "has_media": false,
     "price": null
+  },
+  {
+    "id": "Tailand_chat2_52027",
+    "category": "chat",
+    "title": "Тоже чатик полистайте.",
+    "description": "Тоже чатик полистайте.",
+    "date": "2026-03-27T15:49:44+00:00",
+    "source_channel": "@Tailand_chat2",
+    "message_id": 52027,
+    "image_url": null,
+    "image_hash": null,
+    "has_media": false,
+    "price": null
+  },
+  {
+    "id": "Tailand_chat2_52015",
+    "category": "chat",
+    "title": "Надимаете и задерживаете палец на названии канала откроется поиск и по наводящим словам смотрите в ч",
+    "description": "Надимаете и задерживаете палец на названии канала откроется поиск и по наводящим словам смотрите в чате инфу",
+    "date": "2026-03-27T15:25:32+00:00",
+    "source_channel": "@Tailand_chat2",
+    "message_id": 52015,
+    "image_url": null,
+    "image_hash": null,
+    "has_media": false,
+    "price": null
   }
 ]
