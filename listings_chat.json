@@ -1064,5 +1064,31 @@
     "image_hash": null,
     "has_media": false,
     "price": null
+  },
+  {
+    "id": "Pkhuket_Chatx_35980",
+    "category": "chat",
+    "title": "[@alenaprizant](tg://user?id=719256263) [`719256263`] переслал(а) сообщение. \n**Действие:** Ограниче",
+    "description": "[@alenaprizant](tg://user?id=719256263) [`719256263`] переслал(а) сообщение. \n**Действие:** Ограничен(а) 🔇 до 27 мар 2026 г., 13:39.",
+    "date": "2026-03-27T10:35:00+00:00",
+    "source_channel": "@Pkhuket_Chatx",
+    "message_id": 35980,
+    "image_url": null,
+    "image_hash": null,
+    "has_media": false,
+    "price": null
+  },
+  {
+    "id": "Pkhuket_Chatx_35967",
+    "category": "chat",
+    "title": "Кто искал современный маркет с веществами?",
+    "description": "Кто искал современный маркет с веществами?",
+    "date": "2026-03-27T10:17:01+00:00",
+    "source_channel": "@Pkhuket_Chatx",
+    "message_id": 35967,
+    "image_url": null,
+    "image_hash": null,
+    "has_media": false,
+    "price": null
   }
 ]
