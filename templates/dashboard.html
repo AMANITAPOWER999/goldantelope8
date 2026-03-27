@@ -5276,24 +5276,29 @@
                         <div id="mon-tab-chats-content" style="display:none;">
                             <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px; flex-wrap:wrap;">
                                 <div id="mon-chats-summary" style="font-size:12px; color:#888;"></div>
-                                <button onclick="loadHFChatStats()" style="margin-left:auto; padding:7px 16px; background:#1565c0; color:white; border:none; border-radius:7px; cursor:pointer; font-size:12px; font-weight:600;">↻ Обновить статистику</button>
+                                <button onclick="loadHFChatStats()" style="margin-left:auto; padding:7px 16px; background:#1565c0; color:white; border:none; border-radius:7px; cursor:pointer; font-size:12px; font-weight:600;">↻ Обновить</button>
                             </div>
-                            <!-- Сводка -->
-                            <div id="mon-chats-cards" style="display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:10px; margin-bottom:16px;"></div>
-                            <!-- Таблица по каналам -->
-                            <div style="overflow-x:auto;">
-                                <table style="width:100%; border-collapse:collapse; font-size:13px;">
-                                    <thead>
-                                        <tr style="background:#1a1a2e; color:#888;">
-                                            <th style="padding:9px 10px; text-align:left; border-bottom:1px solid #2a2a3d;">#</th>
-                                            <th style="padding:9px 10px; text-align:left; border-bottom:1px solid #2a2a3d;">Канал-источник</th>
-                                            <th style="padding:9px 10px; text-align:left; border-bottom:1px solid #2a2a3d;">Страна</th>
-                                            <th style="padding:9px 10px; text-align:right; border-bottom:1px solid #2a2a3d;">Переслано</th>
-                                            <th style="padding:9px 10px; text-align:left; border-bottom:1px solid #2a2a3d;">Назначение</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="mon-chats-tbody" style="color:#ccc;"></tbody>
-                                </table>
+                            <!-- Сводка: цифры -->
+                            <div id="mon-chats-cards" style="display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:10px; margin-bottom:16px;"></div>
+                            <!-- Статус каналов: VN / TH / Failed -->
+                            <div id="mon-chats-status" style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px;"></div>
+                            <!-- Таблица активности по каналам -->
+                            <div id="mon-chats-activity-wrap">
+                                <div style="font-size:12px; color:#666; margin-bottom:8px; font-weight:600;">📊 Активность каналов (с момента запуска парсера)</div>
+                                <div style="overflow-x:auto;">
+                                    <table style="width:100%; border-collapse:collapse; font-size:13px;">
+                                        <thead>
+                                            <tr style="background:#1a1a2e; color:#888;">
+                                                <th style="padding:9px 10px; text-align:left; border-bottom:1px solid #2a2a3d;">#</th>
+                                                <th style="padding:9px 10px; text-align:left; border-bottom:1px solid #2a2a3d;">Канал-источник</th>
+                                                <th style="padding:9px 10px; text-align:left; border-bottom:1px solid #2a2a3d;">Страна</th>
+                                                <th style="padding:9px 10px; text-align:right; border-bottom:1px solid #2a2a3d;">Переслано</th>
+                                                <th style="padding:9px 10px; text-align:left; border-bottom:1px solid #2a2a3d;">Назначение</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="mon-chats-tbody" style="color:#ccc;"></tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
 
@@ -12431,8 +12436,10 @@
         }
 
         const HF_CHAT_SPACE = 'https://poweramanita-a.hf.space';
-        const CHAT_VN_SET = new Set(['nhatrang_bg','nhatrangchat','nhatrang55','svoi_nhatrang','zhenskiy_nhatrang','nhatranglady','nhatrangsun','danang_viet','danang_women','danangchat_ask','zhenskiy_danang','danang_people','vietnam_danang1','chat_danang','danang_chats','phanthietchat111','nyachang_vietnam','onus_vietnam','viza_vietnam','dalat_vietnam','vietnam_chat1','vietnam_chats','hochiminh_saigon','hochiminhchatik','hochiminh01_bg','phu_quoc_chat','phuquoc_getmir_chat','fukuok_chat','chat_fukuok','hanoi_viet','hanoi24hhh','hanoi_chats','danang16','hanoichatvip']);
-        const CHAT_TH_SET = new Set(['phuket_chatbg','barakholka_pkhuket','chat_phuket','chats_phuket','huahinrus','rentinthai','bangkok_chat_znakomstva','bangkok_market_bg','vse_svoi_bangkok','visa_thailand_chat','thailand_4at','rent_thailand_chat','thailand_chatt1','thailandchat_inf','chat_thailand','bangkok_chatbg','chat_bangkok','bangkok_chats','pattayasale','pattayachatonline','pattayapar','chats_pattaya','phuketdating','krabichat']);
+        const CHAT_VN_SET_ARR = ['nhatrang_bg','NhaTrangchat','NhaTrang55','svoi_nhatrang','zhenskiy_nhatrang','NhaTrangLady','NhaTrangSun','Danang_Viet','danang_women','danangchat_ask','zhenskiy_danang','Danang_people','Vietnam_Danang1','chat_danang','danang_chats','phanthietchat111','Nyachang_Vietnam','onus_vietnam','Viza_Vietnam','Dalat_Vietnam','vietnam_chat1','vietnam_chats','HoChiMinh_Saigon','HoChiMinhChatik','hochiminh01_bg','phu_quoc_chat','phuquoc_getmir_chat','fukuok_chat','chat_fukuok','Hanoi_Viet','hanoi24hhh','hanoi_chats','Danang16','hanoichatvip'];
+        const CHAT_TH_SET_ARR = ['Phuket_chatBG','barakholka_pkhuket','chat_phuket','chats_phuket','huahinrus','rentinthai','bangkok_chat_znakomstva','Bangkok_market_bg','vse_svoi_bangkok','visa_thailand_chat','thailand_4at','rent_thailand_chat','thailand_chatt1','ThailandChat_INF','chat_thailand','Bangkok_chatBG','chat_bangkok','Bangkok_chats','PattayaSale','pattayachatonline','Pattayapar','chats_pattaya','phuketdating','KrabiChat'];
+        const CHAT_VN_SET = new Set(CHAT_VN_SET_ARR.map(x=>x.toLowerCase()));
+        const CHAT_TH_SET = new Set(CHAT_TH_SET_ARR.map(x=>x.toLowerCase()));
         const RE_VN_SET = new Set(['phuquoc_rent_wt','phyquocnedvigimost','Viet_Life_Phu_Quoc_rent','nhatrangapartment','tanrealtorgh','viet_life_niachang','nychang_arenda','rent_nha_trang','nyachang_nedvizhimost','nedvizimost_nhatrang','nhatrangforrent79','NhatrangRentl','arenda_v_nyachang','rent_appart_nha','Arenda_Nyachang_Zhilye','NhaTrang_rental','realestatebythesea_1','NhaTrang_Luxury','luckyhome_nhatrang','rentnhatrang','megasforrentnhatrang','viethome','Vietnam_arenda','huynhtruonq','DaNangRentAFlat','danag_viet_life_rent','Danang_House','DaNangApartmentRent','danang_arenda','arenda_v_danang','HoChiMinhRentI','hcmc_arenda','Hanoirentapartment','HanoiRentl','Hanoi_Rent','PhuquocRentl'].map(x=>x.toLowerCase()));
         const RE_TH_SET = new Set(['arenda_phukets','THAILAND_REAL_ESTATE_PHUKET','housephuket','arenda_phuket_thailand','phuket_nedvizhimost_rent','phuketsk_arenda','phuket_nedvizhimost_thailand','phuketsk_for_rent','phuket_rentas','rentalsphuketonli','rentbuyphuket','Phuket_thailand05','nedvizhimost_pattaya','arenda_pattaya','pattaya_realty_estate','HappyHomePattaya','sea_bangkok','Samui_for_you','sea_phuket','realty_in_thailand','nedvig_thailand','thailand_nedvizhimost','globe_nedvizhka_Thailand'].map(x=>x.toLowerCase()));
         const BIKE_SET = new Set(['bike_nhatrang','motohub_nhatrang','NhaTrang_moto_market','RentBikeUniq','BK_rental','nha_trang_rent','RentTwentyTwo22NhaTrang'].map(x=>x.toLowerCase()));
@@ -12448,48 +12455,102 @@
         }
 
         async function loadHFChatStats() {
-            const tbody = document.getElementById('mon-chats-tbody');
-            const cards = document.getElementById('mon-chats-cards');
+            const tbody   = document.getElementById('mon-chats-tbody');
+            const cards   = document.getElementById('mon-chats-cards');
+            const status  = document.getElementById('mon-chats-status');
             const summary = document.getElementById('mon-chats-summary');
             if (!tbody) return;
-            tbody.innerHTML = '<tr><td colspan="5" style="padding:20px;text-align:center;color:#888;">⏳ Загрузка статистики HF Space... (может занять до 30 сек если Space спит)</td></tr>';
-            if (summary) summary.textContent = 'Подключаемся к HF Space...';
+
+            tbody.innerHTML = '<tr><td colspan="5" style="padding:20px;text-align:center;color:#888;">⏳ Загружаю данные с HF Space...</td></tr>';
+            if (summary) summary.textContent = 'Подключаемся...';
+            if (cards)  cards.innerHTML  = '';
+            if (status) status.innerHTML = '';
+
             try {
                 const r = await fetch('/api/hf-stats', {signal: AbortSignal.timeout(40000)});
                 const d = await r.json();
                 if (!r.ok) {
                     const errMsg = d.message || ('HTTP ' + r.status);
-                    if (tbody) tbody.innerHTML = `<tr><td colspan="5" style="padding:20px;text-align:center;color:#f88;font-size:13px;">⏸ ${errMsg}</td></tr>`;
+                    tbody.innerHTML = `<tr><td colspan="5" style="padding:20px;text-align:center;color:#f88;font-size:13px;">⏸ ${errMsg}</td></tr>`;
                     if (summary) summary.textContent = '';
                     return;
                 }
 
-                // Summary cards
+                // ── Сводные карточки ──
                 if (cards) {
+                    const running = d.running || d.status === 'running';
                     cards.innerHTML = [
-                        {label:'Всего переслано', val: (d.forwarded||0).toLocaleString('ru'), color:'#d4af37'},
-                        {label:'Фото', val: (d.photos||0).toLocaleString('ru'), color:'#4caf50'},
-                        {label:'Альбомы', val: (d.albums||0).toLocaleString('ru'), color:'#2196f3'},
-                        {label:'Дедупликация', val: (d.dedup||0).toLocaleString('ru'), color:'#ff9800'},
-                        {label:'Ошибки', val: (d.errors||0).toLocaleString('ru'), color:'#f44336'},
-                        {label:'Посл. пересылка', val: d.last_forward||'—', color:'#888'},
+                        {label:'Статус парсера',    val: running ? '🟢 Работает' : '🔴 Перезапуск', color: running ? '#4caf50' : '#f44336'},
+                        {label:'Всего переслано',   val: (d.forwarded||0).toLocaleString('ru'),  color:'#d4af37'},
+                        {label:'Фото',              val: (d.photos||0).toLocaleString('ru'),      color:'#4caf50'},
+                        {label:'Альбомов',          val: (d.albums||0).toLocaleString('ru'),      color:'#2196f3'},
+                        {label:'Дедупликация',      val: (d.dedup||0).toLocaleString('ru'),       color:'#ff9800'},
+                        {label:'Ошибок',            val: (d.errors||0).toLocaleString('ru'),      color: (d.errors||0) > 0 ? '#f44336' : '#4caf50'},
+                        {label:'Последний фовард',  val: d.last_forward||'—',                      color:'#888'},
+                        {label:'Запущен',           val: (d.started_at||'—').replace(' UTC',''),  color:'#666'},
                     ].map(c=>`<div style="background:#1a1a2e;border-radius:8px;padding:12px;border:1px solid #2a2a3d;">
-                        <div style="font-size:11px;color:#666;margin-bottom:4px;">${c.label}</div>
-                        <div style="font-size:18px;font-weight:700;color:${c.color};">${c.val}</div>
+                        <div style="font-size:10px;color:#555;margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px;">${c.label}</div>
+                        <div style="font-size:15px;font-weight:700;color:${c.color};">${c.val}</div>
                     </div>`).join('');
                 }
 
-                // Per-channel table
-                const perCh = d.top_channels || {};
+                // ── Блоки статуса каналов VN / TH ──
+                const failedChat = (d.failed && d.failed.CHAT) ? d.failed.CHAT.map(x=>x.toLowerCase()) : [];
+                const connChat   = d.connected && d.connected.CHAT ? d.connected.CHAT : 0;
+
+                function makeChannelBlock(title, flag, channels, failedList, dest) {
+                    const items = [...channels].sort();
+                    const html = items.map(ch => {
+                        const isFailed = failedList.includes(ch.toLowerCase());
+                        return `<div style="display:flex;align-items:center;gap:6px;padding:3px 0;border-bottom:1px solid #1a1a2e;">
+                            <span style="width:8px;height:8px;border-radius:50%;background:${isFailed?'#f44336':'#4caf50'};flex-shrink:0;"></span>
+                            <a href="https://t.me/${ch}" target="_blank" style="color:${isFailed?'#f88':'#ccc'};text-decoration:none;font-size:12px;${isFailed?'text-decoration:line-through;opacity:.6;':''}">@${ch}</a>
+                            ${isFailed ? '<span style="font-size:10px;color:#f66;margin-left:auto;">недоступен</span>' : ''}
+                        </div>`;
+                    }).join('');
+                    const okCount = items.length - failedList.filter(f=>items.map(x=>x.toLowerCase()).includes(f)).length;
+                    return `<div style="background:#1a1a2e;border-radius:8px;padding:12px;border:1px solid #2a2a3d;">
+                        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+                            <span style="font-size:18px;">${flag}</span>
+                            <span style="font-weight:700;color:#ddd;">${title}</span>
+                            <span style="margin-left:auto;font-size:11px;color:#4caf50;font-weight:600;">${okCount}/${items.length} 🟢</span>
+                        </div>
+                        <div style="font-size:11px;color:#555;margin-bottom:6px;">→ <span style="color:#d4af37;">${dest}</span></div>
+                        <div style="max-height:220px;overflow-y:auto;">${html}</div>
+                    </div>`;
+                }
+
+                if (status) {
+                    status.innerHTML =
+                        makeChannelBlock('Чаты Вьетнама', '🇻🇳', CHAT_VN_SET_ARR, failedChat, '@chatiparsing') +
+                        makeChannelBlock('Чаты Таиланда', '🇹🇭', CHAT_TH_SET_ARR, failedChat, '@chatiparsing');
+
+                    // Блок недоступных если есть
+                    if (failedChat.length) {
+                        status.innerHTML += `<div style="grid-column:1/-1;background:#2a1a1a;border-radius:8px;padding:12px;border:1px solid #5a2a2a;">
+                            <div style="font-size:12px;font-weight:700;color:#f88;margin-bottom:8px;">⚠️ Не удалось подключить (${failedChat.length} каналов)</div>
+                            <div style="display:flex;flex-wrap:wrap;gap:8px;">
+                                ${failedChat.map(ch=>`<a href="https://t.me/${ch}" target="_blank" style="background:#3a1a1a;padding:4px 10px;border-radius:12px;color:#f88;font-size:12px;text-decoration:none;">@${ch}</a>`).join('')}
+                            </div>
+                        </div>`;
+                    }
+                }
+
+                // ── Таблица активности ──
+                const perCh = d.top_channels || d.per_channel || {};
                 const rows = Object.entries(perCh)
                     .filter(([ch]) => CHAT_VN_SET.has(ch.toLowerCase()) || CHAT_TH_SET.has(ch.toLowerCase()))
                     .sort((a,b)=>b[1]-a[1]);
+
                 if (!rows.length) {
-                    tbody.innerHTML = '<tr><td colspan="5" style="padding:20px;text-align:center;color:#555;">Нет данных от HF Space</td></tr>';
+                    tbody.innerHTML = `<tr><td colspan="5" style="padding:20px;text-align:center;color:#444;font-size:13px;">
+                        Активность пока не накоплена — парсер только что запустился.<br>
+                        <span style="font-size:11px;color:#333;">Данные появятся по мере поступления новых сообщений в чатах.</span>
+                    </td></tr>`;
                 } else {
                     tbody.innerHTML = rows.map(([ch, cnt], i) => {
                         const meta = getChannelMeta(ch);
-                        const bar = Math.round((cnt / (rows[0][1]||1)) * 80);
+                        const bar  = Math.round((cnt / (rows[0][1]||1)) * 80);
                         return `<tr style="border-bottom:1px solid #1a1a2e;">
                             <td style="padding:8px 10px;color:#555;">${i+1}</td>
                             <td style="padding:8px 10px;">
@@ -12504,12 +12565,15 @@
                         </tr>`;
                     }).join('');
                 }
-                if (summary) summary.textContent = `HF Space: ${d.status||'?'} | пользователь: ${d.user||'—'} | запущен: ${d.started_at||'—'}`;
+
+                if (summary) summary.textContent =
+                    `HF Space | пользователь: ${d.user||'—'} | чатов подключено: ${typeof connChat==='number'?connChat:Object.keys(perCh).length} | запущен: ${(d.started_at||'—').replace(' UTC','')}`;
+
             } catch(e) {
                 const msg = e.message?.includes('timeout') || e.name === 'TimeoutError'
-                    ? '⏸ HF Space не отвечает — возможно спит. Нажмите «↻ Обновить» через 1-2 минуты.'
+                    ? '⏸ HF Space не отвечает. Нажмите «↻ Обновить» через 1-2 минуты.'
                     : `Ошибка: ${e.message}`;
-                if (tbody) tbody.innerHTML = `<tr><td colspan="5" style="padding:20px;text-align:center;color:#f88;font-size:13px;">${msg}</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="5" style="padding:20px;text-align:center;color:#f88;font-size:13px;">${msg}</td></tr>`;
                 if (summary) summary.textContent = '';
             }
         }
