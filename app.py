@@ -3013,6 +3013,59 @@ def _prewarm_restaurant_file_paths():
 
 threading.Thread(target=_prewarm_restaurant_file_paths, daemon=True).start()
 
+
+def _prewarm_restaurant_disk_photos():
+    """Фоновый прогрев: скачивает фото всех ресторанов на диск один раз.
+    После этого /tg_img/ отдаёт с диска без обращений к CDN."""
+    import time as _t
+    _t.sleep(20)  # подождать пока Flask поднимется
+    try:
+        vn_data = json.load(open('listings_vietnam.json', 'r', encoding='utf-8'))
+        rests = vn_data.get('restaurants', [])
+    except Exception:
+        return
+    cached_dir = _TG_DISK_CACHE_DIR
+    downloaded = 0; skipped = 0; failed = 0
+    hdrs = {'User-Agent': 'TelegramBot (like TwitterBot)', 'Accept': 'text/html'}
+    for r in rests:
+        msg_ids = r.get('photo_msg_ids') or []
+        if not msg_ids:
+            continue
+        mid = msg_ids[0]
+        disk_path = os.path.join(cached_dir, f'restoranvietnam_{mid}.jpg')
+        if os.path.exists(disk_path) and os.path.getsize(disk_path) > 500:
+            skipped += 1
+            continue
+        try:
+            page = requests.get(f'https://t.me/restoranvietnam/{mid}', headers=hdrs, timeout=10)
+            if page.status_code != 200:
+                failed += 1
+                continue
+            m = re.search(r'<meta property="og:image" content="([^"]+)"', page.text)
+            if not m:
+                m = re.search(r'<meta name="twitter:image" content="([^"]+)"', page.text)
+            if not m:
+                failed += 1
+                continue
+            cdn_url = m.group(1).replace('&amp;', '&')
+            img = requests.get(cdn_url, timeout=15)
+            if img.status_code == 200 and len(img.content) > 500:
+                tmp = disk_path + '.tmp'
+                with open(tmp, 'wb') as f:
+                    f.write(img.content)
+                os.replace(tmp, disk_path)
+                downloaded += 1
+            else:
+                failed += 1
+        except Exception as ex:
+            failed += 1
+            logger.debug(f'disk prewarm {mid}: {ex}')
+        _t.sleep(0.3)  # пауза между запросами
+    logger.info(f'[disk_prewarm] Ресторанов: {downloaded} скачано, {skipped} уже есть, {failed} ошибок')
+
+
+threading.Thread(target=_prewarm_restaurant_disk_photos, daemon=True, name='DiskPhotoPrewarm').start()
+
 @app.route('/tg_file/<path:file_id>')
 def tg_file_proxy(file_id):
     """Get direct Telegram file via Bot API (admin) and stream to browser. No CDN."""
@@ -3054,61 +3107,63 @@ def tg_file_proxy(file_id):
     return Response(status=404)
 
 
+_TG_DISK_CACHE_DIR = 'tg_photo_cache'
+os.makedirs(_TG_DISK_CACHE_DIR, exist_ok=True)
+
 @app.route('/tg_img/<channel>/<int:post_id>')
 def tg_photo_proxy(channel, post_id):
-    """Fetch CDN image from Telegram og:image and stream it directly to the browser."""
-    cache_key = f'{channel}_{post_id}'
-    now = time.time()
+    """Отдаёт фото из Telegram канала. Байты кэшируются на диск — CDN нужен только
+    при первом запросе, после чего всё идёт с нашего сервера."""
+    safe_ch = re.sub(r'[^a-zA-Z0-9_]', '', channel)
+    disk_path = os.path.join(_TG_DISK_CACHE_DIR, f'{safe_ch}_{post_id}.jpg')
 
-    cdn_url = None
-    with _tg_photo_cache_lock:
-        entry = _tg_photo_cache.get(cache_key)
-        if entry and (now - entry.get('ts', 0)) < _TG_PHOTO_CACHE_TTL:
-            cdn_url = entry.get('url')
-            if not cdn_url:
-                return Response(status=404)
-
-    if not cdn_url:
+    # 1. Диск-кэш: если файл уже скачан — отдаём сразу, без CDN
+    if os.path.exists(disk_path) and os.path.getsize(disk_path) > 500:
         try:
-            headers = {
-                'User-Agent': 'TelegramBot (like TwitterBot)',
-                'Accept': 'text/html'
-            }
-            r = requests.get(f'https://t.me/{channel}/{post_id}', headers=headers, timeout=10)
+            with open(disk_path, 'rb') as f:
+                data = f.read()
+            return Response(data, status=200, headers={
+                'Content-Type': 'image/jpeg',
+                'Cache-Control': 'public, max-age=2592000',  # 30 дней
+            })
+        except Exception:
+            pass
+
+    img_data = None
+
+    # 2. og:image (один раз через CDN) — скачиваем и сохраняем байты на диск навсегда
+    if not img_data:
+        try:
+            hdrs = {'User-Agent': 'TelegramBot (like TwitterBot)', 'Accept': 'text/html'}
+            r = requests.get(f'https://t.me/{channel}/{post_id}', headers=hdrs, timeout=10)
             if r.status_code == 200:
                 m = re.search(r'<meta property="og:image" content="([^"]+)"', r.text)
                 if not m:
                     m = re.search(r'<meta name="twitter:image" content="([^"]+)"', r.text)
                 if m:
                     cdn_url = m.group(1).replace('&amp;', '&')
-                    with _tg_photo_cache_lock:
-                        _tg_photo_cache[cache_key] = {'url': cdn_url, 'ts': now}
-                        if len(_tg_photo_cache) % 10 == 0:
-                            _save_tg_photo_cache(_tg_photo_cache)
+                    img_r = requests.get(cdn_url, timeout=15)
+                    if img_r.status_code == 200 and len(img_r.content) > 500:
+                        img_data = img_r.content
         except Exception as e:
-            logger.warning(f'tg_photo_proxy error for {channel}/{post_id}: {e}')
+            logger.warning(f'tg_photo_proxy og:image error {channel}/{post_id}: {e}')
 
-        if not cdn_url:
-            with _tg_photo_cache_lock:
-                _tg_photo_cache[cache_key] = {'url': None, 'ts': now}
-            return Response(status=404)
+    if not img_data:
+        return Response(status=404)
 
+    # 4. Сохраняем на диск (атомарно)
     try:
-        img_resp = requests.get(cdn_url, timeout=10, stream=True)
-        if img_resp.status_code == 200:
-            content_type = img_resp.headers.get('Content-Type', 'image/jpeg')
-            return Response(
-                img_resp.content,
-                status=200,
-                headers={
-                    'Content-Type': content_type,
-                    'Cache-Control': 'public, max-age=72000',
-                }
-            )
+        tmp = disk_path + '.tmp'
+        with open(tmp, 'wb') as f:
+            f.write(img_data)
+        os.replace(tmp, disk_path)
     except Exception as e:
-        logger.warning(f'tg_photo_proxy stream error for {channel}/{post_id}: {e}')
+        logger.warning(f'tg_photo_proxy disk save error: {e}')
 
-    return Response(status=404)
+    return Response(img_data, status=200, headers={
+        'Content-Type': 'image/jpeg',
+        'Cache-Control': 'public, max-age=2592000',  # 30 дней
+    })
 
 # ============ УПРАВЛЕНИЕ ГОРОДАМИ ============
 
