@@ -5211,7 +5211,7 @@
                         <!-- Табы: По стране / По каналу -->
                         <div style="display:flex; gap:6px; margin-bottom:14px; flex-wrap:wrap;">
                             <button onclick="monSwitchTab('channels')" id="mon-tab-channels" style="padding:7px 16px; border:none; border-radius:7px; cursor:pointer; font-size:13px; font-weight:600; background:#5865f2; color:white;">📋 По каналам</button>
-                            <button onclick="monSwitchTab('hf')" id="mon-tab-hf" style="padding:7px 16px; border:none; border-radius:7px; cursor:pointer; font-size:13px; font-weight:600; background:#2a2a3d; color:#aaa;">🌐 HF источники</button>
+                            <button onclick="monSwitchTab('hf')" id="mon-tab-hf" style="padding:7px 16px; border:none; border-radius:7px; cursor:pointer; font-size:13px; font-weight:600; background:#2a2a3d; color:#aaa;">🏠 Недвижимость</button>
                             <button onclick="monSwitchTab('chats')" id="mon-tab-chats" style="padding:7px 16px; border:none; border-radius:7px; cursor:pointer; font-size:13px; font-weight:600; background:#2a2a3d; color:#aaa;">💬 Чаты</button>
                             <input type="text" id="mon-search" placeholder="🔍 поиск по каналу..." oninput="monFilterTable()" style="margin-left:auto; padding:7px 12px; background:#1a1a2e; border:1px solid #333; border-radius:7px; color:#ddd; font-size:13px; min-width:160px;">
                         </div>
@@ -5235,7 +5235,7 @@
                             </div>
                         </div>
 
-                        <!-- Таблица HF источников -->
+                        <!-- Таблица Недвижимость -->
                         <div id="mon-tab-hf-content" style="display:none;">
                             <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px; flex-wrap:wrap;">
                                 <div id="mon-hf-check-summary" style="font-size:12px; color:#888;"></div>
@@ -12784,10 +12784,10 @@
                 const hfSrcs = (data.hf_space?.source_channels) || {};
                 const channelIdx = {};
                 (lst.by_channel || []).forEach(c => { channelIdx[c.channel] = c.total; });
-                const DEST_LABEL = {THAI:'→ @thailandparsing', VIET:'→ @vietnamparsing', BIKE:'→ @visaranvietnam'};
-                const grpColors = {THAI:'#f59e0b', VIET:'#22c55e', BIKE:'#3b82f6'};
+                const DEST_LABEL = {THAI:'→ @thailandparsing', VIET:'→ @vietnamparsing'};
+                const grpColors = {THAI:'#f59e0b', VIET:'#22c55e'};
                 const rows = [];
-                Object.entries(hfSrcs).forEach(([grp, channels]) => {
+                Object.entries(hfSrcs).filter(([grp]) => grp === 'THAI' || grp === 'VIET').forEach(([grp, channels]) => {
                     channels.filter(ch => !search || ch.toLowerCase().includes(search)).forEach(ch => {
                         const cnt = channelIdx[ch.toLowerCase()] || 0;
                         const chk = _hfCheckResults[ch.toLowerCase()] || null;
