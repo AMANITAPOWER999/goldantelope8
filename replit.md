@@ -54,3 +54,9 @@ Goldantelope ASIA is an automated content parser for Telegram channels and group
 - **Bunny.net CDN**: For hosting and serving real photos extracted from Telegram.
 - **Flask**: Python web framework for the frontend dashboard and API.
 - **JSON Files**: Used as the primary data storage mechanism for listings.
+
+### Replit Environment Setup
+- **Workflow**: "Start application" runs `python main.py` on port 5000 (webview output type).
+- **Package Manager**: pip (Python 3.11). Key packages: flask, flask-compress, gunicorn, requests, pillow, python-dotenv, telethon, python-telegram-bot.
+- **Deployment**: Configured as `autoscale` using gunicorn with command `gunicorn --bind=0.0.0.0:5000 --reuse-port --timeout=120 main:app`.
+- **Host**: Flask runs on `0.0.0.0:5000` in dev mode; gunicorn binds to same in production.
