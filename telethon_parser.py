@@ -20,15 +20,24 @@ DEST = {
 }
 
 CHAT_VN_CHANNELS = [
-    'vietnam_chatt', 'vungtau_chat', 'dalat_forum', 'danang_forum',
-    'danang_expats', 'danang_woman', 'danang_chatik', 'kamran_chat',
-    'kuinen_chat', 'nhatrang_chatik', 'nhatrang_expats', 'phanthiet_chat',
-    'fukuok_chatik', 'hochiminh_chat', 'hanoi_chat'
+    'nhatrang_bg', 'NhaTrangchat', 'NhaTrang55', 'svoi_nhatrang',
+    'zhenskiy_nhatrang', 'NhaTrangLady', 'NhaTrangSun',
+    'Danang_Viet', 'danang_women', 'danangchat_ask', 'zhenskiy_danang',
+    'Danang_people', 'Vietnam_Danang1', 'chat_danang', 'danang_chats',
+    'phanthietchat111', 'Nyachang_Vietnam', 'onus_vietnam', 'Viza_Vietnam',
+    'Dalat_Vietnam', 'vietnam_chat1', 'vietnam_chats',
+    'HoChiMinh_Saigon', 'HoChiMinhChatik', 'hochiminh01_bg',
+    'phu_quoc_chat', 'phuquoc_getmir_chat', 'fukuok_chat', 'chat_fukuok',
+    'hanoichatvip',
 ]
 
 CHAT_TH_CHANNELS = [
-    'thailand_chat', 'bangkok_chat', 'phuket_chat', 'pattaya_chat',
-    'chiang_mai_chat', 'hua_hin_chat', 'krabi_chat'
+    'Phuket_chatBG', 'barakholka_pkhuket', 'chat_phuket', 'chats_phuket',
+    'huahinrus', 'rentinthai', 'bangkok_chat_znakomstva', 'Bangkok_market_bg',
+    'vse_svoi_bangkok', 'visa_thailand_chat', 'thailand_4at', 'rent_thailand_chat',
+    'thailand_chatt1', 'ThailandChat_INF', 'chat_thailand', 'Bangkok_chatBG',
+    'chat_bangkok', 'Bangkok_chats', 'PattayaSale',
+    'pattayachatonline', 'Pattayapar', 'chats_pattaya', 'phuketdating', 'KrabiChat',
 ]
 
 CHANNELS = {
@@ -278,12 +287,31 @@ async def _run_client(sess):
         STATS['failed'][grp] = fail
         _log(f'[{grp}] → @{DEST[grp]}: {len(ok)}/{len(names)} OK, {len(fail)} не удалось')
 
-    STATS['connected']['CHAT_VN'] = chat_vn_names
-    STATS['failed']['CHAT_VN'] = []
-    STATS['connected']['CHAT_TH'] = chat_th_names
-    STATS['failed']['CHAT_TH'] = []
-    _log(f'[CHAT_VN] → @{DEST["CHAT_VN"]}: {len(chat_vn_names)} чатов')
-    _log(f'[CHAT_TH] → @{DEST["CHAT_TH"]}: {len(chat_th_names)} чатов')
+    # Entity resolution для CHAT каналов (как THAI/VIET/BIKE)
+    all_chat_ents = []
+    for grp_name, chat_names in [('CHAT_VN', CHAT_VN_CHANNELS), ('CHAT_TH', CHAT_TH_CHANNELS)]:
+        ok, fail = [], []
+        for n in chat_names:
+            key = n.lower()
+            if key in dialogs_map:
+                all_chat_ents.append(dialogs_map[key])
+                ok.append(n)
+            else:
+                try:
+                    ent = await asyncio.wait_for(client.get_input_entity(n), timeout=10)
+                    all_chat_ents.append(ent)
+                    ok.append(n)
+                    await asyncio.sleep(0.3)
+                except asyncio.TimeoutError:
+                    fail.append(n)
+                except FloodWaitError as fw:
+                    await asyncio.sleep(min(fw.seconds, 30))
+                    fail.append(n)
+                except Exception:
+                    fail.append(n)
+        STATS['connected'][grp_name] = ok
+        STATS['failed'][grp_name] = fail
+        _log(f'[{grp_name}] → @{DEST[grp_name]}: {len(ok)}/{len(chat_names)} OK, {len(fail)} не удалось')
 
     total_ok = sum(len(v) for v in STATS['connected'].values())
     _log(f'Итого {total_ok} каналов. Слушаю новые сообщения...')
@@ -367,39 +395,16 @@ async def _run_client(sess):
             STATS['errors'] += 1
             log.warning(f'Ошибка альбома: {ex}')
 
-    @client.on(events.NewMessage(chats=chat_vn_names))
-    async def handle_chat_vn(e):
-        try:
-            chat = await e.get_chat()
-            un = (getattr(chat, 'username', None) or '').lower()
-        except Exception:
-            return
-        if un not in chat_vn_set or e.media:
-            return
-        t = clean_text(e.raw_text or e.text or '')
-        if not t or len(t) < 3:
-            return
-        if len(t) > 300:
-            t = t[:297] + '...'
-        try:
-            await client.send_message(DEST['CHAT_VN'], f'{t}\n\nhttps://t.me/{un}/{e.id}', parse_mode=None)
-            STATS['forwarded'] += 1
-            STATS['last_forward'] = time.strftime('%H:%M:%S UTC', time.gmtime())
-            STATS['per_channel'][un] = STATS['per_channel'].get(un, 0) + 1
-            _log(f'CHAT-VN @{un} → @{DEST["CHAT_VN"]}')
-        except FloodWaitError as fw:
-            await asyncio.sleep(fw.seconds + 5)
-        except Exception as ex:
-            STATS['errors'] += 1
+    all_chat_set = chat_vn_set | chat_th_set
 
-    @client.on(events.NewMessage(chats=chat_th_names))
-    async def handle_chat_th(e):
+    @client.on(events.NewMessage(chats=all_chat_ents if all_chat_ents else list(CHAT_VN_CHANNELS) + list(CHAT_TH_CHANNELS)))
+    async def handle_chat(e):
         try:
             chat = await e.get_chat()
             un = (getattr(chat, 'username', None) or '').lower()
         except Exception:
             return
-        if un not in chat_th_set or e.media:
+        if un not in all_chat_set or e.media:
             return
         t = clean_text(e.raw_text or e.text or '')
         if not t or len(t) < 3:
@@ -407,11 +412,13 @@ async def _run_client(sess):
         if len(t) > 300:
             t = t[:297] + '...'
         try:
-            await client.send_message(DEST['CHAT_TH'], f'{t}\n\nhttps://t.me/{un}/{e.id}', parse_mode=None)
+            src = f'https://t.me/{un}/{e.id}'
+            await client.send_message(DEST['CHAT_VN'], f'{t}\n\n{src}', parse_mode=None)
             STATS['forwarded'] += 1
             STATS['last_forward'] = time.strftime('%H:%M:%S UTC', time.gmtime())
             STATS['per_channel'][un] = STATS['per_channel'].get(un, 0) + 1
-            _log(f'CHAT-TH @{un} → @{DEST["CHAT_TH"]}')
+            country = 'VN' if un in chat_vn_set else 'TH'
+            _log(f'CHAT-{country} @{un} → @{DEST["CHAT_VN"]}')
         except FloodWaitError as fw:
             await asyncio.sleep(fw.seconds + 5)
         except Exception as ex:
