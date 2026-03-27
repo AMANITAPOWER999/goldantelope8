@@ -1740,5 +1740,57 @@
     "image_hash": null,
     "has_media": false,
     "price": null
+  },
+  {
+    "id": "bangkok_chat_znakomstva_130360",
+    "category": "chat",
+    "title": "Сейчас жара, 37-38 градусов, с воскресенья обещают дождь, температура 30-32",
+    "description": "Сейчас жара, 37-38 градусов, с воскресенья обещают дождь, температура 30-32",
+    "date": "2026-03-27T12:35:10+00:00",
+    "source_channel": "@bangkok_chat_znakomstva",
+    "message_id": 130360,
+    "image_url": null,
+    "image_hash": null,
+    "has_media": false,
+    "price": null
+  },
+  {
+    "id": "bangkok_chat_znakomstva_130359",
+    "category": "chat",
+    "title": "подскажите хороший недорогой массаж примерно в центре бангкока, куда стоит сходить в первый раз",
+    "description": "подскажите хороший недорогой массаж примерно в центре бангкока, куда стоит сходить в первый раз",
+    "date": "2026-03-27T12:13:53+00:00",
+    "source_channel": "@bangkok_chat_znakomstva",
+    "message_id": 130359,
+    "image_url": null,
+    "image_hash": null,
+    "has_media": false,
+    "price": null
+  },
+  {
+    "id": "bangkok_chat_znakomstva_130357",
+    "category": "chat",
+    "title": "Скажите, есть ли смысл в Бангкоке при транзите задержаться на 3 дня? Как сейчас там с погодой?",
+    "description": "Скажите, есть ли смысл в Бангкоке при транзите задержаться на 3 дня? Как сейчас там с погодой?",
+    "date": "2026-03-27T12:07:16+00:00",
+    "source_channel": "@bangkok_chat_znakomstva",
+    "message_id": 130357,
+    "image_url": null,
+    "image_hash": null,
+    "has_media": false,
+    "price": null
+  },
+  {
+    "id": "bangkok_chat_znakomstva_130356",
+    "category": "chat",
+    "title": "Если кому-то актуальна тема «старые доллары», в Бангкоке в большинстве обменников отказались брать с",
+    "description": "Если кому-то актуальна тема «старые доллары», в Бангкоке в большинстве обменников отказались брать старые доллары.\nВ двух ТЦ и на Као сан роуд\n\nУдалось обменять в одном обменнике рядом с пирсом Phra Arthit на Ram Butty Aly",
+    "date": "2026-03-27T11:56:09+00:00",
+    "source_channel": "@bangkok_chat_znakomstva",
+    "message_id": 130356,
+    "image_url": null,
+    "image_hash": null,
+    "has_media": false,
+    "price": null
   }
 ]
