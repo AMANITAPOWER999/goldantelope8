@@ -1213,7 +1213,7 @@
         <div class="tabs">
             <button class="tab" data-tab="entertainment" onclick="switchTab('entertainment')"><img src="/static/icons/entertainment.jpg" alt="Развлечения"><span>Развлечения</span></button>
             <button class="tab" data-tab="restaurants" onclick="switchTab('restaurants')"><img src="/static/images/icons/restaurants.jpg" alt="Рестораны"><span>Рестораны</span></button>
-            <button class="tab" data-tab="tours" onclick="switchTab('tours')"><img src="/static/images/icons/tours.jpg" alt="Экскурсии"><span>Экскурсии</span></button>
+            <button class="tab" data-tab="tours" onclick="switchTab('tours')"><img src="/static/images/icons/tours.jpg" data-light-src="/static/images/icons/tours.jpg" data-dark-src="/static/images/icons/tours_dark.jpg" alt="Экскурсии"><span>Экскурсии</span></button>
             <button class="tab" data-tab="transport" onclick="switchTab('transport')"><img src="/static/icons/transport.png" alt="Транспорт"><span>Транспорт</span></button>
             <button class="tab active" data-tab="realestate" onclick="switchTab('realestate')"><img src="/static/icons/realestate.png" alt="Недвижимость"><span>Недвижимость</span></button>
             <button class="tab" data-tab="exchange" onclick="switchTab('exchange')"><img src="/static/icons/exchange.png" alt="Обмен"><span>Обмен денег</span></button>
@@ -13449,6 +13449,10 @@
         const LOGO_DARK  = '/static/images/logo_dark.png';
 
         function applyTheme(dark) {
+            // Switch themed icons
+            document.querySelectorAll("img[data-dark-src]").forEach(function(img) {
+                img.src = dark ? img.dataset.darkSrc : img.dataset.lightSrc;
+            });
             const html = document.documentElement;
             const logo = document.getElementById('site-logo');
             const btn  = document.getElementById('theme-toggle-btn');
