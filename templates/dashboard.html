@@ -1009,6 +1009,44 @@
         html.dark .content {
             background: #0f0f1a !important;
         }
+        /* Карточки объявлений (listing-card) — тёмный фон + белый текст */
+        html.dark .listing-card {
+            background: #1a1a2e !important;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.5) !important;
+        }
+        html.dark .listing-card h3,
+        html.dark .listing-card h3 a {
+            color: #5aabff !important;
+        }
+        html.dark .listing-card,
+        html.dark .listing-card * {
+            color: #ccc !important;
+        }
+        /* Блок даты (#f5f5f5) */
+        html.dark .listing-card [style*="background:#f5f5f5"],
+        html.dark .listing-card [style*="background: #f5f5f5"] {
+            background: #252540 !important;
+        }
+        /* Блок контакта (#fff3e0) */
+        html.dark .listing-card [style*="background:#fff3e0"],
+        html.dark .listing-card [style*="background: #fff3e0"] {
+            background: #2a1f10 !important;
+        }
+        /* Разделитель внутри карточки */
+        html.dark .listing-card [style*="border-top:1px solid #eee"],
+        html.dark .listing-card [style*="border-top: 1px solid #eee"] {
+            border-color: #2a2a3d !important;
+        }
+        /* Цена в карточке — остаётся золотой */
+        html.dark .listing-card [style*="color:#d4af37"],
+        html.dark .listing-card [style*="color: #d4af37"] {
+            color: #d4af37 !important;
+        }
+        /* Контакт оранжевый — делаем светлее */
+        html.dark .listing-card [style*="color:#e65100"],
+        html.dark .listing-card [style*="color: #e65100"] {
+            color: #ffb347 !important;
+        }
         html.dark .country-selector {
             border-color: #2a2a3d;
         }
