@@ -5165,73 +5165,83 @@
                     <!-- ══════════════════════════════════════════════ -->
                     <!-- МОНИТОРИНГ ПАРСЕРОВ -->
                     <!-- ══════════════════════════════════════════════ -->
-                    <div style="background: #0f0f1a; border-radius: 14px; padding: 22px; margin-bottom: 22px; border: 1px solid #2a2a3d;">
-                        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:18px; flex-wrap:wrap; gap:10px;">
-                            <h3 style="margin:0; color:#e8e8ff; font-size:17px;">📡 Мониторинг парсеров</h3>
-                            <div style="display:flex; gap:8px; align-items:center;">
-                                <span id="mon-last-update" style="font-size:11px; color:#666;"></span>
-                                <button onclick="loadMonitoringStats()" id="mon-refresh-btn" style="padding:7px 16px; background:#5865f2; color:white; border:none; border-radius:7px; cursor:pointer; font-size:13px; font-weight:600;">↻ Обновить</button>
-                                <button onclick="fetchEmptyChannels()" id="mon-fetch-empty-btn" style="padding:7px 16px; background:#16a34a; color:white; border:none; border-radius:7px; cursor:pointer; font-size:13px; font-weight:600;" title="Скачать последние ~50 постов из каналов с нулём объявлений">📥 Заполнить пустые</button>
-                                <label style="display:flex;align-items:center;gap:5px;color:#aaa;font-size:12px;cursor:pointer;">
-                                    <input type="checkbox" id="mon-auto-refresh" onchange="toggleMonAutoRefresh(this.checked)" style="cursor:pointer;"> авто 30с
+                    <div style="background:#fff; border-radius:14px; padding:0; margin-bottom:22px; border:1px solid #e8d5a3; box-shadow:0 2px 12px rgba(212,175,55,.1); overflow:hidden;">
+
+                        <!-- ── Шапка пульта ── -->
+                        <div style="background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%); padding:16px 22px; display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+                            <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:200px;">
+                                <span style="font-size:22px;">📡</span>
+                                <div>
+                                    <div style="font-size:16px;font-weight:700;color:#fff;">Мониторинг парсеров</div>
+                                    <div style="font-size:11px;color:#888;" id="mon-last-update">обновление...</div>
+                                </div>
+                            </div>
+                            <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+                                <button onclick="loadMonitoringStats()" id="mon-refresh-btn" style="padding:8px 18px;background:#d4af37;color:#1a1a2e;border:none;border-radius:8px;cursor:pointer;font-size:13px;font-weight:700;">↻ Обновить</button>
+                                <button onclick="fetchEmptyChannels()" id="mon-fetch-empty-btn" style="padding:8px 18px;background:#16a34a;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;" title="Скачать последние ~50 постов из каналов с нулём объявлений">📥 Заполнить пустые</button>
+                                <label style="display:flex;align-items:center;gap:6px;color:#aaa;font-size:12px;cursor:pointer;padding:7px 12px;background:#ffffff18;border-radius:8px;border:1px solid #ffffff22;">
+                                    <input type="checkbox" id="mon-auto-refresh" onchange="toggleMonAutoRefresh(this.checked)" style="cursor:pointer;accent-color:#d4af37;"> авто 30с
                                 </label>
                             </div>
                         </div>
 
-                        <!-- Карточки статусов -->
-                        <div id="mon-status-cards" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(200px,1fr)); gap:12px; margin-bottom:20px;">
-                            <div class="mon-card" id="mon-card-hf" style="background:#1a1a2e; border-radius:10px; padding:14px; border:1px solid #2a2a3d;">
-                                <div style="font-size:11px; color:#888; margin-bottom:5px;">HuggingFace Space</div>
-                                <div style="font-size:20px; font-weight:700; color:#fff;" id="mon-hf-status">—</div>
-                                <div style="font-size:11px; color:#666; margin-top:4px;" id="mon-hf-detail">глобальный парсер</div>
+                        <!-- ── Статус-карточки ── -->
+                        <div id="mon-status-cards" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(200px,1fr)); gap:0; border-bottom:1px solid #f0e8d0;">
+                            <div class="mon-card" id="mon-card-hf" style="padding:16px 20px; border-right:1px solid #f0e8d0; border-left:4px solid #ccc;">
+                                <div style="font-size:10px;color:#999;text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px;">HuggingFace Space</div>
+                                <div style="font-size:18px;font-weight:700;color:#333;" id="mon-hf-status">—</div>
+                                <div style="font-size:11px;color:#aaa;margin-top:2px;" id="mon-hf-detail">глобальный парсер</div>
                             </div>
-                            <div class="mon-card" id="mon-card-tf" style="background:#1a1a2e; border-radius:10px; padding:14px; border:1px solid #2a2a3d;">
-                                <div style="font-size:11px; color:#888; margin-bottom:5px;">Telethon Forwarder</div>
-                                <div style="font-size:20px; font-weight:700; color:#fff;" id="mon-tf-status">—</div>
-                                <div style="font-size:11px; color:#666; margin-top:4px;" id="mon-tf-detail">локальный форвардер</div>
+                            <div class="mon-card" id="mon-card-tf" style="padding:16px 20px; border-right:1px solid #f0e8d0; border-left:4px solid #ccc;">
+                                <div style="font-size:10px;color:#999;text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px;">Telethon Forwarder</div>
+                                <div style="font-size:18px;font-weight:700;color:#333;" id="mon-tf-status">—</div>
+                                <div style="font-size:11px;color:#aaa;margin-top:2px;" id="mon-tf-detail">локальный форвардер</div>
                             </div>
-                            <div class="mon-card" id="mon-card-vp" style="background:#1a1a2e; border-radius:10px; padding:14px; border:1px solid #2a2a3d;">
-                                <div style="font-size:11px; color:#888; margin-bottom:5px;">Vietnam Parser</div>
-                                <div style="font-size:20px; font-weight:700; color:#fff;" id="mon-vp-status">—</div>
-                                <div style="font-size:11px; color:#666; margin-top:4px;" id="mon-vp-detail">опрос каналов</div>
+                            <div class="mon-card" id="mon-card-vp" style="padding:16px 20px; border-right:1px solid #f0e8d0; border-left:4px solid #ccc;">
+                                <div style="font-size:10px;color:#999;text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px;">Vietnam Parser</div>
+                                <div style="font-size:18px;font-weight:700;color:#333;" id="mon-vp-status">—</div>
+                                <div style="font-size:11px;color:#aaa;margin-top:2px;" id="mon-vp-detail">опрос каналов</div>
                             </div>
-                            <div class="mon-card" style="background:#1a1a2e; border-radius:10px; padding:14px; border:1px solid #2a2a3d;">
-                                <div style="font-size:11px; color:#888; margin-bottom:5px;">Всего объявлений</div>
-                                <div style="font-size:20px; font-weight:700; color:#d4af37;" id="mon-total-count">—</div>
-                                <div style="font-size:11px; color:#666; margin-top:4px;" id="mon-total-detail">все страны</div>
+                            <div class="mon-card" style="padding:16px 20px; border-left:4px solid #d4af37;">
+                                <div style="font-size:10px;color:#999;text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px;">Всего объявлений</div>
+                                <div style="font-size:18px;font-weight:700;color:#d4af37;" id="mon-total-count">—</div>
+                                <div style="font-size:11px;color:#aaa;margin-top:2px;" id="mon-total-detail">🇻🇳 — · 🇹🇭 —</div>
                             </div>
                         </div>
 
-                        <!-- Telethon группы подключений -->
-                        <div id="mon-tf-groups" style="display:none; margin-bottom:20px;">
-                            <div style="font-size:13px; font-weight:600; color:#aaa; margin-bottom:10px;">🔗 Подключения Telethon форвардера:</div>
-                            <div id="mon-tf-groups-list" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(220px,1fr)); gap:8px;"></div>
+                        <!-- ── Telethon группы подключений ── -->
+                        <div id="mon-tf-groups" style="display:none; padding:16px 22px 0; border-bottom:1px solid #f0e8d0;">
+                            <div style="font-size:12px;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;">🔗 Подключения Telethon форвардера</div>
+                            <div id="mon-tf-groups-list" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(220px,1fr)); gap:8px; margin-bottom:16px;"></div>
                         </div>
 
-                        <!-- Табы: По стране / По каналу -->
-                        <div style="display:flex; gap:6px; margin-bottom:14px; flex-wrap:wrap;">
-                            <button onclick="monSwitchTab('channels')" id="mon-tab-channels" style="padding:7px 16px; border:none; border-radius:7px; cursor:pointer; font-size:13px; font-weight:600; background:#5865f2; color:white;">📋 По каналам</button>
-                            <button onclick="monSwitchTab('hf')" id="mon-tab-hf" style="padding:7px 16px; border:none; border-radius:7px; cursor:pointer; font-size:13px; font-weight:600; background:#2a2a3d; color:#aaa;">🏠 Недвижимость</button>
-                            <button onclick="monSwitchTab('bikes')" id="mon-tab-bikes" style="padding:7px 16px; border:none; border-radius:7px; cursor:pointer; font-size:13px; font-weight:600; background:#2a2a3d; color:#aaa;">🏍️ Байки</button>
-                            <button onclick="monSwitchTab('chats')" id="mon-tab-chats" style="padding:7px 16px; border:none; border-radius:7px; cursor:pointer; font-size:13px; font-weight:600; background:#2a2a3d; color:#aaa;">💬 Чаты</button>
-                            <input type="text" id="mon-search" placeholder="🔍 поиск по каналу..." oninput="monFilterTable()" style="margin-left:auto; padding:7px 12px; background:#1a1a2e; border:1px solid #333; border-radius:7px; color:#ddd; font-size:13px; min-width:160px;">
+                        <!-- ── Навигация по вкладкам + поиск ── -->
+                        <div style="padding:12px 22px; background:#fafaf8; border-bottom:1px solid #f0e8d0; display:flex; gap:6px; flex-wrap:wrap; align-items:center;">
+                            <button onclick="monSwitchTab('channels')" id="mon-tab-channels" style="padding:7px 16px;border:none;border-radius:7px;cursor:pointer;font-size:13px;font-weight:600;background:#d4af37;color:#1a1a2e;">📋 По каналам</button>
+                            <button onclick="monSwitchTab('hf')" id="mon-tab-hf" style="padding:7px 16px;border:none;border-radius:7px;cursor:pointer;font-size:13px;font-weight:600;background:#eee;color:#666;">🏠 Недвижимость</button>
+                            <button onclick="monSwitchTab('bikes')" id="mon-tab-bikes" style="padding:7px 16px;border:none;border-radius:7px;cursor:pointer;font-size:13px;font-weight:600;background:#eee;color:#666;">🏍️ Байки</button>
+                            <button onclick="monSwitchTab('chats')" id="mon-tab-chats" style="padding:7px 16px;border:none;border-radius:7px;cursor:pointer;font-size:13px;font-weight:600;background:#eee;color:#666;">💬 Чаты</button>
+                            <input type="text" id="mon-search" placeholder="🔍 поиск по каналу..." oninput="monFilterTable()" style="margin-left:auto;padding:7px 12px;background:#fff;border:1px solid #ddd;border-radius:7px;color:#333;font-size:13px;min-width:160px;">
                         </div>
+
+                        <!-- ── Контент вкладок ── -->
+                        <div style="padding:20px 22px;">
 
                         <!-- Таблица по каналам -->
                         <div id="mon-tab-channels-content">
                             <div style="overflow-x:auto;">
                                 <table id="mon-channels-table" style="width:100%; border-collapse:collapse; font-size:13px;">
                                     <thead>
-                                        <tr style="background:#1a1a2e; color:#888;">
-                                            <th style="padding:9px 10px; text-align:left; font-weight:600; border-bottom:1px solid #2a2a3d;">#</th>
-                                            <th style="padding:9px 10px; text-align:left; font-weight:600; border-bottom:1px solid #2a2a3d;">Канал</th>
-                                            <th style="padding:9px 10px; text-align:left; font-weight:600; border-bottom:1px solid #2a2a3d;">Страны</th>
-                                            <th style="padding:9px 10px; text-align:left; font-weight:600; border-bottom:1px solid #2a2a3d;">Категория</th>
-                                            <th style="padding:9px 10px; text-align:right; font-weight:600; border-bottom:1px solid #2a2a3d;">Объявлений</th>
-                                            <th style="padding:9px 10px; text-align:left; font-weight:600; border-bottom:1px solid #2a2a3d;">Источник</th>
+                                        <tr style="background:#f5f0e8; color:#666;">
+                                            <th style="padding:9px 10px; text-align:left; font-weight:600; border-bottom:2px solid #e8d5a3;">#</th>
+                                            <th style="padding:9px 10px; text-align:left; font-weight:600; border-bottom:2px solid #e8d5a3;">Канал</th>
+                                            <th style="padding:9px 10px; text-align:left; font-weight:600; border-bottom:2px solid #e8d5a3;">Страна</th>
+                                            <th style="padding:9px 10px; text-align:left; font-weight:600; border-bottom:2px solid #e8d5a3;">Категория</th>
+                                            <th style="padding:9px 10px; text-align:right; font-weight:600; border-bottom:2px solid #e8d5a3;">Объявлений</th>
+                                            <th style="padding:9px 10px; text-align:left; font-weight:600; border-bottom:2px solid #e8d5a3;">Источник</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="mon-channels-tbody" style="color:#ccc;"></tbody>
+                                    <tbody id="mon-channels-tbody" style="color:#333;"></tbody>
                                 </table>
                             </div>
                         </div>
@@ -5266,26 +5276,27 @@
                             <div id="mon-chats-status" style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px;"></div>
                             <!-- Таблица активности по каналам -->
                             <div id="mon-chats-activity-wrap">
-                                <div style="font-size:12px; color:#666; margin-bottom:8px; font-weight:600;">📊 Активность каналов (с момента запуска парсера)</div>
+                                <div style="font-size:12px; color:#888; margin-bottom:8px; font-weight:600; text-transform:uppercase; letter-spacing:.5px;">📊 Активность каналов (с момента запуска парсера)</div>
                                 <div style="overflow-x:auto;">
                                     <table style="width:100%; border-collapse:collapse; font-size:13px;">
                                         <thead>
-                                            <tr style="background:#1a1a2e; color:#888;">
-                                                <th style="padding:9px 10px; text-align:left; border-bottom:1px solid #2a2a3d;">#</th>
-                                                <th style="padding:9px 10px; text-align:left; border-bottom:1px solid #2a2a3d;">Канал-источник</th>
-                                                <th style="padding:9px 10px; text-align:left; border-bottom:1px solid #2a2a3d;">Страна</th>
-                                                <th style="padding:9px 10px; text-align:right; border-bottom:1px solid #2a2a3d;">Переслано</th>
-                                                <th style="padding:9px 10px; text-align:left; border-bottom:1px solid #2a2a3d;">Назначение</th>
+                                            <tr style="background:#f5f0e8; color:#666;">
+                                                <th style="padding:9px 10px; text-align:left; border-bottom:2px solid #e8d5a3;">#</th>
+                                                <th style="padding:9px 10px; text-align:left; border-bottom:2px solid #e8d5a3;">Канал-источник</th>
+                                                <th style="padding:9px 10px; text-align:left; border-bottom:2px solid #e8d5a3;">Страна</th>
+                                                <th style="padding:9px 10px; text-align:right; border-bottom:2px solid #e8d5a3;">Переслано</th>
+                                                <th style="padding:9px 10px; text-align:left; border-bottom:2px solid #e8d5a3;">Назначение</th>
                                             </tr>
                                         </thead>
-                                        <tbody id="mon-chats-tbody" style="color:#ccc;"></tbody>
+                                        <tbody id="mon-chats-tbody" style="color:#333;"></tbody>
                                     </table>
                                 </div>
                             </div>
                         </div>
 
-                        <div id="mon-loading" style="text-align:center; color:#555; padding:30px; font-size:14px;">Нажмите "Обновить" для загрузки статистики</div>
-                    </div>
+                        <div id="mon-loading" style="text-align:center; color:#999; padding:30px; font-size:14px;">Нажмите «↻ Обновить» для загрузки статистики</div>
+                        </div><!-- /content padding -->
+                    </div><!-- /мониторинг -->
 
                     <!-- Модерация объявлений -->
                     <div style="background: white; border-radius: 12px; padding: 20px; border: 1px solid #ddd; margin-bottom: 20px;">
@@ -12409,20 +12420,22 @@
             const failed = failedList.map(x => x.toLowerCase());
             const html = items.map(ch => {
                 const isFailed = failed.includes(ch.toLowerCase());
-                return `<div style="display:flex;align-items:center;gap:6px;padding:3px 0;border-bottom:1px solid #1a1a2e;">
-                    <span style="width:8px;height:8px;border-radius:50%;background:${isFailed?'#f44336':'#4caf50'};flex-shrink:0;"></span>
-                    <a href="https://t.me/${ch}" target="_blank" style="color:${isFailed?'#f88':'#ccc'};text-decoration:none;font-size:12px;${isFailed?'text-decoration:line-through;opacity:.6;':''}">@${ch}</a>
-                    ${isFailed ? '<span style="font-size:10px;color:#f66;margin-left:auto;">недоступен</span>' : ''}
+                return `<div style="display:flex;align-items:center;gap:6px;padding:4px 0;border-bottom:1px solid #f0e8d0;">
+                    <span style="width:7px;height:7px;border-radius:50%;background:${isFailed?'#dc2626':'#16a34a'};flex-shrink:0;"></span>
+                    <a href="https://t.me/${ch}" target="_blank" style="color:${isFailed?'#dc2626':'#1a73e8'};text-decoration:none;font-size:12px;${isFailed?'text-decoration:line-through;opacity:.5;':''}">@${ch}</a>
+                    ${isFailed ? '<span style="font-size:10px;color:#dc2626;margin-left:auto;">недоступен</span>' : ''}
                 </div>`;
             }).join('');
             const okCount = items.filter(ch => !failed.includes(ch.toLowerCase())).length;
-            return `<div style="background:#1a1a2e;border-radius:8px;padding:12px;border:1px solid #2a2a3d;">
-                <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+            const pct = items.length ? Math.round(okCount/items.length*100) : 100;
+            const pctColor = pct >= 80 ? '#16a34a' : pct >= 50 ? '#d97706' : '#dc2626';
+            return `<div style="background:#f8f9fa;border-radius:10px;padding:14px;border:1px solid #e9ecef;border-top:3px solid ${pctColor};">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
                     <span style="font-size:18px;">${flag}</span>
-                    <span style="font-weight:700;color:#ddd;">${title}</span>
-                    <span style="margin-left:auto;font-size:11px;color:#4caf50;font-weight:600;">${okCount}/${items.length} 🟢</span>
+                    <span style="font-weight:700;color:#333;font-size:14px;">${title}</span>
+                    <span style="margin-left:auto;font-size:12px;color:${pctColor};font-weight:700;">${okCount}/${items.length} 🟢</span>
                 </div>
-                <div style="font-size:11px;color:#555;margin-bottom:6px;">→ <span style="color:#d4af37;">${dest}</span></div>
+                <div style="font-size:11px;color:#aaa;margin-bottom:10px;">→ <span style="color:#b8860b;font-weight:600;">${dest}</span></div>
                 <div style="max-height:260px;overflow-y:auto;">${html}</div>
             </div>`;
         }
@@ -12432,8 +12445,8 @@
             ['channels','hf','bikes','chats'].forEach(t => {
                 const btn = document.getElementById('mon-tab-'+t);
                 const cont = document.getElementById('mon-tab-'+t+'-content');
-                if (btn) btn.style.background = t === tab ? '#5865f2' : '#2a2a3d';
-                if (btn) btn.style.color = t === tab ? 'white' : '#aaa';
+                if (btn) btn.style.background = t === tab ? '#d4af37' : '#eee';
+                if (btn) btn.style.color = t === tab ? '#1a1a2e' : '#666';
                 if (cont) cont.style.display = t === tab ? 'block' : 'none';
             });
             if (_monData) renderMonTables(_monData);
@@ -12485,17 +12498,17 @@
                 if (cards) {
                     const running = d.running || d.status === 'running';
                     cards.innerHTML = [
-                        {label:'Статус парсера',    val: running ? '🟢 Работает' : '🔴 Перезапуск', color: running ? '#4caf50' : '#f44336'},
-                        {label:'Всего переслано',   val: (d.forwarded||0).toLocaleString('ru'),  color:'#d4af37'},
-                        {label:'Фото',              val: (d.photos||0).toLocaleString('ru'),      color:'#4caf50'},
-                        {label:'Альбомов',          val: (d.albums||0).toLocaleString('ru'),      color:'#2196f3'},
-                        {label:'Дедупликация',      val: (d.dedup||0).toLocaleString('ru'),       color:'#ff9800'},
-                        {label:'Ошибок',            val: (d.errors||0).toLocaleString('ru'),      color: (d.errors||0) > 0 ? '#f44336' : '#4caf50'},
-                        {label:'Последний фовард',  val: d.last_forward||'—',                      color:'#888'},
-                        {label:'Запущен',           val: (d.started_at||'—').replace(' UTC',''),  color:'#666'},
-                    ].map(c=>`<div style="background:#1a1a2e;border-radius:8px;padding:12px;border:1px solid #2a2a3d;">
-                        <div style="font-size:10px;color:#555;margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px;">${c.label}</div>
-                        <div style="font-size:15px;font-weight:700;color:${c.color};">${c.val}</div>
+                        {label:'Статус парсера',    val: running ? '🟢 Работает' : '🔴 Перезапуск', color: running ? '#16a34a' : '#dc2626'},
+                        {label:'Всего переслано',   val: (d.forwarded||0).toLocaleString('ru'),  color:'#b8860b'},
+                        {label:'Фото',              val: (d.photos||0).toLocaleString('ru'),      color:'#16a34a'},
+                        {label:'Альбомов',          val: (d.albums||0).toLocaleString('ru'),      color:'#1a73e8'},
+                        {label:'Дедупликация',      val: (d.dedup||0).toLocaleString('ru'),       color:'#d97706'},
+                        {label:'Ошибок',            val: (d.errors||0).toLocaleString('ru'),      color: (d.errors||0) > 0 ? '#dc2626' : '#16a34a'},
+                        {label:'Последний фовард',  val: d.last_forward||'—',                      color:'#666'},
+                        {label:'Запущен',           val: (d.started_at||'—').replace(' UTC',''),  color:'#999'},
+                    ].map(c=>`<div style="background:#f8f9fa;border-radius:8px;padding:12px;border:1px solid #e9ecef;">
+                        <div style="font-size:10px;color:#999;margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px;">${c.label}</div>
+                        <div style="font-size:14px;font-weight:700;color:${c.color};">${c.val}</div>
                     </div>`).join('');
                 }
 
@@ -12504,25 +12517,7 @@
                 const connChat   = d.connected && d.connected.CHAT ? d.connected.CHAT : 0;
 
                 function makeChannelBlock(title, flag, channels, failedList, dest) {
-                    const items = [...channels].sort();
-                    const html = items.map(ch => {
-                        const isFailed = failedList.includes(ch.toLowerCase());
-                        return `<div style="display:flex;align-items:center;gap:6px;padding:3px 0;border-bottom:1px solid #1a1a2e;">
-                            <span style="width:8px;height:8px;border-radius:50%;background:${isFailed?'#f44336':'#4caf50'};flex-shrink:0;"></span>
-                            <a href="https://t.me/${ch}" target="_blank" style="color:${isFailed?'#f88':'#ccc'};text-decoration:none;font-size:12px;${isFailed?'text-decoration:line-through;opacity:.6;':''}">@${ch}</a>
-                            ${isFailed ? '<span style="font-size:10px;color:#f66;margin-left:auto;">недоступен</span>' : ''}
-                        </div>`;
-                    }).join('');
-                    const okCount = items.length - failedList.filter(f=>items.map(x=>x.toLowerCase()).includes(f)).length;
-                    return `<div style="background:#1a1a2e;border-radius:8px;padding:12px;border:1px solid #2a2a3d;">
-                        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
-                            <span style="font-size:18px;">${flag}</span>
-                            <span style="font-weight:700;color:#ddd;">${title}</span>
-                            <span style="margin-left:auto;font-size:11px;color:#4caf50;font-weight:600;">${okCount}/${items.length} 🟢</span>
-                        </div>
-                        <div style="font-size:11px;color:#555;margin-bottom:6px;">→ <span style="color:#d4af37;">${dest}</span></div>
-                        <div style="max-height:220px;overflow-y:auto;">${html}</div>
-                    </div>`;
+                    return makeMonBlock(title, flag, channels, failedList, dest);
                 }
 
                 if (status) {
@@ -12556,17 +12551,18 @@
                     tbody.innerHTML = rows.map(([ch, cnt], i) => {
                         const meta = getChannelMeta(ch);
                         const bar  = Math.round((cnt / (rows[0][1]||1)) * 80);
-                        return `<tr style="border-bottom:1px solid #1a1a2e;">
-                            <td style="padding:8px 10px;color:#555;">${i+1}</td>
+                        const rowBg = i % 2 === 0 ? '#fff' : '#fafaf8';
+                        return `<tr style="border-bottom:1px solid #f0e8d0;background:${rowBg};">
+                            <td style="padding:8px 10px;color:#bbb;font-size:11px;">${i+1}</td>
                             <td style="padding:8px 10px;">
-                                <a href="https://t.me/${ch}" target="_blank" style="color:#0088cc;text-decoration:none;font-weight:600;">@${ch}</a>
-                                <div style="margin-top:3px;background:#2a2a3d;border-radius:3px;height:4px;width:100%;max-width:200px;">
+                                <a href="https://t.me/${ch}" target="_blank" style="color:#1a73e8;text-decoration:none;font-weight:600;">@${ch}</a>
+                                <div style="margin-top:3px;background:#f0e8d0;border-radius:3px;height:4px;width:100%;max-width:200px;">
                                     <div style="background:#d4af37;border-radius:3px;height:4px;width:${bar}%;"></div>
                                 </div>
                             </td>
                             <td style="padding:8px 10px;font-size:12px;">${meta.country}</td>
-                            <td style="padding:8px 10px;text-align:right;font-weight:700;color:#d4af37;">${cnt.toLocaleString('ru')}</td>
-                            <td style="padding:8px 10px;font-size:12px;color:#4caf50;">${meta.dest}</td>
+                            <td style="padding:8px 10px;text-align:right;font-weight:700;color:#b8860b;">${cnt.toLocaleString('ru')}</td>
+                            <td style="padding:8px 10px;font-size:12px;color:#16a34a;">${meta.dest}</td>
                         </tr>`;
                     }).join('');
                 }
@@ -12720,17 +12716,17 @@
                 tfGroupsEl.style.display = 'block';
                 tfGroupsList.innerHTML = Object.entries(tf.groups).map(([grp, info]) => {
                     const pct = info.total ? Math.round(info.connected/info.total*100) : 0;
-                    const barColor = pct >= 80 ? '#23c55e' : pct >= 50 ? '#f59e0b' : '#ef4444';
-                    return `<div style="background:#12122a;border-radius:8px;padding:12px;border:1px solid #2a2a3d;">
+                    const barColor = pct >= 80 ? '#16a34a' : pct >= 50 ? '#d97706' : '#dc2626';
+                    return `<div style="background:#f8f9fa;border-radius:8px;padding:12px;border:1px solid #e9ecef;border-left:3px solid ${barColor};">
                         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-                            <span style="font-weight:600;color:#ddd;font-size:12px;">${grp}</span>
-                            <span style="font-size:11px;color:#888;">→ ${info.dest||''}</span>
+                            <span style="font-weight:700;color:#333;font-size:12px;">${grp}</span>
+                            <span style="font-size:11px;color:#999;">→ ${info.dest||''}</span>
                         </div>
-                        <div style="background:#1a1a2e;border-radius:4px;height:6px;margin-bottom:6px;overflow:hidden;">
+                        <div style="background:#e9ecef;border-radius:4px;height:5px;margin-bottom:6px;overflow:hidden;">
                             <div style="width:${pct}%;height:100%;background:${barColor};border-radius:4px;"></div>
                         </div>
-                        <div style="display:flex;justify-content:space-between;font-size:11px;color:#666;">
-                            <span style="color:${barColor}">✅ ${info.connected}/${info.total}</span>
+                        <div style="display:flex;justify-content:space-between;font-size:11px;color:#777;">
+                            <span style="color:${barColor};font-weight:600;">✅ ${info.connected}/${info.total}</span>
                             <span>📤 ${info.forwarded_messages||0} сообщ</span>
                         </div>
                     </div>`;
@@ -12755,7 +12751,7 @@
             const totalEl = document.getElementById('mon-total-count');
             if (totalEl) totalEl.textContent = grand.toLocaleString('ru');
             const totalDet = document.getElementById('mon-total-detail');
-            if (totalDet) totalDet.textContent = Object.entries(totals).map(([c,n])=>`${COUNTRY_FLAGS[c]||c} ${n}`).join(' · ');
+            if (totalDet) totalDet.textContent = Object.entries(totals).filter(([,n])=>n>0).map(([c,n])=>`${COUNTRY_FLAGS[c]||c} ${n.toLocaleString('ru')}`).join(' · ') || '—';
         }
 
         function renderMonTables(data) {
@@ -12782,16 +12778,16 @@
                     const isTF = tfSrcs.has(ch.channel.toLowerCase());
                     const srcTags = [isHF?'<span style="background:#5865f222;color:#5865f2;border:1px solid #5865f244;border-radius:4px;padding:1px 5px;font-size:10px;">HF</span>':'', isTF?'<span style="background:#23c55e22;color:#23c55e;border:1px solid #23c55e44;border-radius:4px;padding:1px 5px;font-size:10px;">TF</span>':''].filter(Boolean).join(' ');
                     const catName = CATEGORY_NAMES[ch.top_category] || ch.top_category || '—';
-                    const rowBg = i % 2 === 0 ? '#12122a' : '#0f0f1a';
-                    return `<tr style="background:${rowBg};">
-                        <td style="padding:7px 10px;color:#555;font-size:11px;">${i+1}</td>
-                        <td style="padding:7px 10px;"><a href="https://t.me/${ch.channel}" target="_blank" style="color:#7c9fdc;text-decoration:none;font-weight:500;">@${ch.channel}</a></td>
-                        <td style="padding:7px 10px;font-size:12px;">${ch.countries.split(',').map(c=>COUNTRY_FLAGS[c.trim()]||c).join(' ')}</td>
-                        <td style="padding:7px 10px;font-size:12px;color:#aaa;">${catName}</td>
-                        <td style="padding:7px 10px;text-align:right;font-weight:600;color:#d4af37;">${ch.total.toLocaleString('ru')}</td>
-                        <td style="padding:7px 10px;">${srcTags || '<span style="color:#444;font-size:11px;">—</span>'}</td>
+                    const rowBg = i % 2 === 0 ? '#fff' : '#fafaf8';
+                    return `<tr style="background:${rowBg};border-bottom:1px solid #f0e8d0;">
+                        <td style="padding:7px 10px;color:#bbb;font-size:11px;">${i+1}</td>
+                        <td style="padding:7px 10px;"><a href="https://t.me/${ch.channel}" target="_blank" style="color:#1a73e8;text-decoration:none;font-weight:500;">@${ch.channel}</a></td>
+                        <td style="padding:7px 10px;font-size:13px;">${ch.countries.split(',').map(c=>COUNTRY_FLAGS[c.trim()]||c).join(' ')}</td>
+                        <td style="padding:7px 10px;font-size:12px;color:#888;">${catName}</td>
+                        <td style="padding:7px 10px;text-align:right;font-weight:700;color:#b8860b;">${ch.total.toLocaleString('ru')}</td>
+                        <td style="padding:7px 10px;">${srcTags || '<span style="color:#ccc;font-size:11px;">—</span>'}</td>
                     </tr>`;
-                }).join('') || '<tr><td colspan="6" style="padding:20px;text-align:center;color:#444;">Ничего не найдено</td></tr>';
+                }).join('') || '<tr><td colspan="6" style="padding:20px;text-align:center;color:#bbb;">Ничего не найдено</td></tr>';
             }
 
             // ── Недвижимость ──
