@@ -1,0 +1,168 @@
+🌴 Нячанг (Nha Trang)
+Абсолютное большинство заведений из этого списка находится здесь. Это популярные туристические места Нячанга: европейская, русская/СНГ кухня, морепродукты и буфеты.
+
+🥩 Мясо, Пивоварни и Европейская/СНГ кухня
+[id=463] ZAVOD restaurant (знаменитый русский ресторан-клуб)
+
+[id=475] Ала Тоо Чайхана Halal Food (среднеазиатская кухня)
+
+[id=483] Кактус Богосов
+
+[id=499] Луизиана (Brewery Louisiane — пивоварня на пляже)
+
+[id=507] Маленькая Армения Ресторан
+
+[id=157] Cafe Culture
+
+[id=185] Egoist Mediterranean Restaurant
+
+[id=197] Fork n Lekker Garden Cafe
+
+[id=447] UNO Lounge Cafe
+
+[id=491] Ламанча (испанская кухня)
+
+🦀 Морепродукты и Буфеты (Seafood & Buffets)
+[id=72] All Seasons Buffet Da
+
+[id=153] CUI seafood restaurant
+
+[id=173] Coral buffet restaurant
+
+[id=265] Lala seafood
+
+[id=277] Luong Son Cang Restaurant (рыбацкая крепость)
+
+[id=329] Nhà Hàng Cá Bay View Biển
+
+[id=341] Nhà Hàng The Coral Anh s
+
+[id=353] Nhà hàng Vịnh Xanh
+
+[id=357] Nhà hàng hải sản JJ Seafood
+
+[id=395] Sea High restaurant
+
+[id=399] Shrimp Garden Buffet Restaurant
+
+☕ Кафе, Азия и Вегетарианство
+[id=241] K HOUSE Restaurant (корейский)
+
+[id=487] Кивами (Kiwami — популярный японский суши-бар)
+
+[id=527] Сэйлинг Клаб (Sailing Club — главный пляжный клуб Нячанга)
+
+[id=871] Bốn Mùa Park (парк «Четыре сезона» на пляже)
+
+[id=138] An Lam Bistro
+
+[id=161] Ciao Vietnam
+
+[id=165] Cilantro
+
+[id=189] Family Secret
+
+[id=205] Golden Bamboo Restaurant
+
+[id=249] La Velvet restaurant
+
+[id=293] MissBamboo Brewhouse Restaurant
+
+[id=301] Mắm Restaurant
+
+[id=305] Mộc Mộc Restaurant
+
+[id=345] Nhà Hàng The local
+
+[id=349] Nhà hàng Veteran
+
+[id=379] SET CAFE
+
+[id=387] Same Same But Different Restaurant
+
+[id=415] Sunshine Bar Restaurant
+
+[id=419] Sweet Secret
+
+[id=427] Tathik Restaurant
+
+[id=431] The Cloud
+
+[id=455] Vietnamese Flavor Rice Pot Restaurant
+
+[id=467] More by Sheraton
+
+[id=471] man restaurant
+
+[id=495] Ливин (LIVIN Collective — крафт и барбекю)
+
+[id=503] Максис кофейня и ресторан
+
+[id=511] НомНом Ресторан и Кафе
+
+[id=531] Тайм Хаус Бистро
+
+[id=535] Ясшода (Yasoda — индийская вегетарианская кухня)
+
+🌊 Дананг (Da Nang)
+Заведения, расположенные вдоль пляжей Ми Кхе (My Khe) и Сон Тра.
+
+[id=84] Brilliant Restaurant (на крыше Brilliant Hotel с видом на реку Хан)
+
+[id=104] Bé Nhỏ (популярный локальный сифуд)
+
+[id=875] CAJUN Boil
+
+[id=887] Citron (премиум-ресторан в InterContinental Danang)
+
+[id=891] Cơm Nhà Vui
+
+[id=903] Esco Beach (пляжный бар и ресторан)
+
+[id=907] Golden Meat House (премиум стейк-хаус)
+
+[id=915] Hùng 68 Restaurant
+
+[id=919] Hải Sản Biển Mặn
+
+[id=923] Hải Sản Bình Dân
+
+[id=935] JUMARC
+
+[id=939] La Cabaña
+
+[id=943] La Plage
+
+[id=947] Lang Chai SeaFood
+
+[id=951] Le Comptoir (французская кухня)
+
+[id=963] LoCo Restaurant
+
+[id=967] Lounge Beach Bar
+
+[id=979] MAD PLATTER Bar
+
+[id=987] Madame Son
+
+[id=1011] Nazaare
+
+[id=1015] Nhà Bếp Xưa Restaurant
+
+🔥 Муйне / Фантьет (Mui Ne / Phan Thiet)
+[id=543] Cay Bang (знаменитый огромный сифуд-ресторан на берегу)
+
+[id=547] Cham Garden (скрытый ресторан в тропическом саду)
+
+[id=551] Linh Nam
+
+🌆 Хошимин / Сайгон (Ho Chi Minh City)
+[id=591] Bia Craft (сеть крафтового пива)
+
+[id=599] Bun Cha 145 (Бун Ча на улице Буй Вьен)
+
+[id=603] Bun Thit Nuong Kieu Bao
+
+[id=619] Den Long Home Cooked
+
+[id=627] Dim Tu Tac (известная сеть ресторанов димсамов)
