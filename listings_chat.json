@@ -1610,5 +1610,44 @@
     "image_hash": "9101b0410d1e54626cc8b0a198010dee",
     "has_media": true,
     "price": null
+  },
+  {
+    "id": "Pkhuket_Chatx_35985",
+    "category": "chat",
+    "title": "Нада  2 чел, на подработку на завтра, оплата 3-4 тысч",
+    "description": "Нада  2 чел, на подработку на завтра, оплата 3-4 тысч",
+    "date": "2026-03-27T12:09:15+00:00",
+    "source_channel": "@Pkhuket_Chatx",
+    "message_id": 35985,
+    "image_url": null,
+    "image_hash": null,
+    "has_media": false,
+    "price": null
+  },
+  {
+    "id": "Pkhuket_Chatx_35984",
+    "category": "chat",
+    "title": "Нада  2 чел, на подработку на завтра, оплата 3-4 тысч",
+    "description": "Нада  2 чел, на подработку на завтра, оплата 3-4 тысч",
+    "date": "2026-03-27T12:09:04+00:00",
+    "source_channel": "@Pkhuket_Chatx",
+    "message_id": 35984,
+    "image_url": null,
+    "image_hash": null,
+    "has_media": false,
+    "price": null
+  },
+  {
+    "id": "Pkhuket_Chatx_35983",
+    "category": "chat",
+    "title": "Проведём время вместе?",
+    "description": "Проведём время вместе?",
+    "date": "2026-03-27T12:03:39+00:00",
+    "source_channel": "@Pkhuket_Chatx",
+    "message_id": 35983,
+    "image_url": null,
+    "image_hash": null,
+    "has_media": false,
+    "price": null
   }
 ]
