@@ -425,6 +425,23 @@ def clean_html_text(html_str: str) -> str:
     return hlib.unescape(text).strip()
 
 
+def fetch_tg_post_text(tg_url: str) -> str:
+    """Получает полный текст поста Telegram через ?embed=1 когда парсер получил только ссылку."""
+    try:
+        embed_url = tg_url.rstrip('/') + '?embed=1&mode=tme'
+        r = requests.get(embed_url, timeout=10, headers={
+            'User-Agent': 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
+        })
+        if r.status_code != 200:
+            return ''
+        m = re.search(r'class="tgme_widget_message_text[^"]*"[^>]*>(.*?)</div>', r.text, re.DOTALL)
+        if m:
+            return clean_html_text(m.group(1))
+    except Exception as e:
+        logger.debug(f'fetch_tg_post_text {tg_url}: {e}')
+    return ''
+
+
 def scrape_channel_page(before_id: int = None) -> list:
     url = f"https://t.me/s/{SOURCE_CHANNEL}"
     if before_id:
@@ -523,6 +540,15 @@ def build_listing_item(msg: dict, item_id: str) -> dict | None:
     if is_spam(text):
         return None
     blocked = is_blocked_source(text)
+
+    # Если текст это только t.me ссылка — подгружаем реальный текст поста через embed
+    _tg_link_only = re.match(r'^https?://t\.me/[\w/]+$', text.strip())
+    if _tg_link_only or len(text.strip()) < 15:
+        fetched = fetch_tg_post_text(text.strip())
+        if fetched and len(fetched) >= 15:
+            orig_link = text.strip()
+            text = fetched + (f'\n\n{orig_link}' if orig_link.startswith('http') else '')
+            logger.info(f'[embed_enrich] {item_id}: enriched {len(fetched)} chars from {orig_link[:60]}')
 
     price_vnd, price_display = extract_price(text)
     city = detect_city(text)
@@ -1465,12 +1491,67 @@ def run_monitoring_loop():
         time.sleep(POLL_INTERVAL)
 
 
+def repair_link_only_listings():
+    """Находит объявления у которых description = только t.me ссылка,
+    подгружает реальный текст через ?embed=1 и сохраняет обратно в JSON."""
+    data = load_listings()
+    repaired = 0
+    skipped = 0
+
+    for section in ('real_estate',):
+        for item in data.get(section, []):
+            desc = (item.get('description') or '').strip()
+            tg_link = (item.get('telegram_link') or '').strip()
+
+            # Проверяем: description это только t.me URL или очень короткое
+            is_link_only = bool(re.match(r'^https?://t\.me/[\w/]+$', desc))
+            is_short = len(desc) < 20
+
+            if not (is_link_only or is_short):
+                continue
+
+            target_url = tg_link or (desc if desc.startswith('http') else None)
+            if not target_url:
+                continue
+
+            fetched = fetch_tg_post_text(target_url)
+            if not fetched or len(fetched) < 15:
+                skipped += 1
+                continue
+
+            new_desc = fetched + (f'\n\n{target_url}' if target_url else '')
+            item['description'] = new_desc
+            item['text'] = new_desc
+            item['title'] = extract_title(fetched)
+            if not item.get('city') or item['city'] in ('', 'Другое'):
+                item['city'] = detect_city(fetched) or item.get('city', '')
+                item['city_ru'] = item['city']
+            if not item.get('price'):
+                pv, pd = extract_price(fetched)
+                if pv:
+                    item['price'] = pv
+                    item['price_display'] = pd or ''
+            repaired += 1
+            time.sleep(0.2)
+
+    if repaired:
+        save_listings(data)
+        logger.info(f'[repair] Обогащено {repaired} объявлений с пустым описанием ({skipped} не удалось)')
+    else:
+        logger.info(f'[repair] Нет объявлений для обогащения ({skipped} пропущено)')
+
+
 def start_parser_in_background():
     if _parser_state['running']:
         logger.info("Parser already running.")
         return
 
     def worker():
+        # Сначала чиним уже сохранённые объявления с пустыми описаниями
+        try:
+            repair_link_only_listings()
+        except Exception as e:
+            logger.warning(f'[repair] Ошибка: {e}')
         run_initial_fetch()
         run_monitoring_loop()
 
