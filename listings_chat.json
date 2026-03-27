@@ -1168,5 +1168,70 @@
     "image_hash": null,
     "has_media": false,
     "price": null
+  },
+  {
+    "id": "vmestenaphukete_276990",
+    "category": "chat",
+    "title": "Вещевой рынок напомните на патонге такой хороший?)",
+    "description": "Вещевой рынок напомните на патонге такой хороший?)",
+    "date": "2026-03-27T11:12:06+00:00",
+    "source_channel": "@vmestenaphukete",
+    "message_id": 276990,
+    "image_url": null,
+    "image_hash": null,
+    "has_media": false,
+    "price": null
+  },
+  {
+    "id": "vmestenaphukete_276989",
+    "category": "chat",
+    "title": "Лишние баты подруге хочу поменять на рубли",
+    "description": "Лишние баты подруге хочу поменять на рубли",
+    "date": "2026-03-27T11:11:25+00:00",
+    "source_channel": "@vmestenaphukete",
+    "message_id": 276989,
+    "image_url": null,
+    "image_hash": null,
+    "has_media": false,
+    "price": null
+  },
+  {
+    "id": "vmestenaphukete_276988",
+    "category": "chat",
+    "title": "в зависимости то что отдаете",
+    "description": "в зависимости то что отдаете",
+    "date": "2026-03-27T11:10:38+00:00",
+    "source_channel": "@vmestenaphukete",
+    "message_id": 276988,
+    "image_url": null,
+    "image_hash": null,
+    "has_media": false,
+    "price": null
+  },
+  {
+    "id": "vmestenaphukete_276987",
+    "category": "chat",
+    "title": "Вчера там побывали, очень понравился",
+    "description": "Вчера там побывали, очень понравился",
+    "date": "2026-03-27T11:10:08+00:00",
+    "source_channel": "@vmestenaphukete",
+    "message_id": 276987,
+    "image_url": null,
+    "image_hash": null,
+    "has_media": false,
+    "price": null
+  },
+  {
+    "id": "vmestenaphukete_276986",
+    "category": "chat",
+    "title": "Подскажите, пожалуйста, какой на сегодня актуальный курс бата к рублю?",
+    "description": "Подскажите, пожалуйста, какой на сегодня актуальный курс бата к рублю?",
+    "date": "2026-03-27T11:09:30+00:00",
+    "source_channel": "@vmestenaphukete",
+    "message_id": 276986,
+    "image_url": null,
+    "image_hash": null,
+    "has_media": false,
+    "price": null
   }
 ]

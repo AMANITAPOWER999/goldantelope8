@@ -1,0 +1,136 @@
+Для того чтобы составить точный список по городам, я проанализировал названия заведений и ваши примечания. Вьетнамская география ресторанов довольно обширна, но большинство из вашего списка сосредоточено в ключевых туристических центрах.
+
+Вот распределение ресторанов по городам:
+
+Ханой (Hanoi)
+Столица Вьетнама, где находятся исторические места и знаменитая «Обама-булочная».
+
+[id=112] Bun Cha Huong Lien (где обедал Обама)
+
+[id=116] Cau Go Vietnamese (вид на озеро Хоан Кием)
+
+[id=120] Essence Restaurant
+
+[id=689] Temple Of Literature Restaurant
+
+[id=749] White Marble Wine Bar (также филиал в Хойане)
+
+Хошимин / Сайгон (Ho Chi Minh City)
+Мегаполис с самым большим количеством модных руфтопов и современных концепций.
+
+[id=369] Quan Bui Modern Vietnamese
+
+[id=377] / [id=705] Ресторан The Log
+
+[id=413] Temple Club
+
+[id=417] / [id=701] The Deck Saigon (на реке Сайгон)
+
+[id=421] The Lunch Lady (знаменитый суп по расписанию)
+
+[id=465] Au Lac Do Brazil
+
+[id=517] El Gaucho Argentinian Steakhouse
+
+[id=545] Hooked Saigon
+
+[id=565] Kem Bach Dang (мороженое)
+
+[id=581] Maison Marou Saigon (шоколад)
+
+[id=585] Market 39
+
+[id=621] Pho Le
+
+[id=637] Saigon Cooking Class
+
+[id=641] Saigon Oi
+
+[id=657] Secret Garden
+
+[id=665] Social Club Restaurant
+
+[id=673] Sorae Japanese Fusion
+
+[id=677] Sushi Hokkaido Sachi
+
+[id=713] The Rooftop
+
+[id=753] Winking Seal Beer Company
+
+[id=757] Xu Restaurant Lounge
+
+Дананг (Da Nang)
+Здесь сосредоточены стейк-хаусы и рыбные рестораны (Hải Sản).
+
+[id=92] Butcher Steak
+
+[id=245] La Cala Gusto Italiano
+
+[id=333] Nhà Hàng Hải Sản Phố Việt
+
+[id=553] Hyatt Regency
+
+[id=983] MAMA MASALA INDIAN CUISINE
+
+[id=995] My Casa
+
+[id=999] My Hanh Seafood
+
+[id=1023] Nhà Hàng 27 Seafood
+
+[id=1035] Nhà Hàng Si Dining
+
+Нячанг (Nha Trang)
+Курортная зона с большим количеством буфетов и BBQ.
+
+[id=10] / [id=64] The Kitchen
+
+[id=142] Bairam Cafe
+
+[id=149] Bảo Ngọc
+
+[id=169] Cookbook Cafe
+
+[id=201] Galangal
+
+[id=213] Grill Garden 2 BBQ Buffet
+
+[id=217] Halal Ресторан Восточный Уют
+
+[id=281] Làng Ngon (ресторан-деревня)
+
+[id=313] Ngoc Trai Seafood
+
+[id=525] Grill Garden
+
+[id=1059] Phuoc Thai Restaurant
+
+Хойан (Hoi An)
+Город фонариков, известный своей уникальной кухней.
+
+[id=128] Madam Khanh (Королева бань ми)
+
+[id=597] Morning Glory
+
+[id=613] Nu Eatery
+
+[id=629] Red Lantern
+
+Фукуок (Phu Quoc)
+Островные морепродукты и ночные рынки.
+
+[id=361] Phu Quoc Night Market
+
+[id=365] Phu Quoc Prison Restaurant
+
+[id=389] Sea Fire Salt
+
+[id=653] Sea Shack (на песке)
+
+Далат (Da Lat)
+Горный курорт с уютными кофейнями.
+
+[id=22] / [id=52] Goc Ha Thanh
+
+[id=461] Artist Alley
