@@ -2,12 +2,11 @@
   "vietnam": {
     "web": [],
     "mobile": [
-      "/static/images/banners/vietnam_1769232199_ChatGPT_Image_24_._2026_._12_10_37.png",
       "/static/images/banners/vietnam_1767254417_ChatGPT_Image_1_._2026_._14_59_56.png",
-      "/static/images/banners/vietnam_1767253425_ChatGPT_Image_1_._2026_._14_43_20.png",
       "/static/images/banners/vietnam_1767255067_ChatGPT_Image_1_._2026_._15_10_38.png",
       "/static/images/banners/vietnam_1767252790_ChatGPT_Image_1_._2026_._14_32_13.png",
-      "/static/images/banners/vietnam_1767253874_ChatGPT_Image_1_._2026_._14_50_33.png"
+      "/static/images/banners/vietnam_1767253874_ChatGPT_Image_1_._2026_._14_50_33.png",
+      "/static/images/banners/vietnam_mobile_1774611269_IMG_2601.png"
     ]
   },
   "thailand": {

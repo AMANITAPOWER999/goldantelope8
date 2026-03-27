@@ -802,6 +802,9 @@ def build_generic_listing(msg: dict, item_id: str, channel: str, category: str, 
     desc_lines = [l.strip() for l in description.splitlines() if l.strip()]
     if desc_lines and strip_emoji(desc_lines[0]).strip() == title:
         description = '\n'.join(desc_lines[1:])
+    # Если description — только t.me ссылка (пересланный пост), убираем
+    if re.match(r'^https?://t\.me/[\w/]+$', description.strip()):
+        description = '\n'.join(lines[1:]).replace(description.strip(), '').strip()
 
     price_display = ''
     price = 0
@@ -879,8 +882,9 @@ def process_extra_channel_update(update: dict, channel: str, category: str, subc
     if override_photos:
         photos = override_photos
     else:
-        url = _extract_largest_photo_url(post)
-        photos = [url] if url else []
+        # Используем стабильные t.me ссылки вместо CDN (CDN-ссылки от Bot API истекают)
+        has_photo = bool(post.get('photo'))
+        photos = [f'https://t.me/{channel}/{msg_id}'] if has_photo else []
 
     item_id = f"{channel}_{msg_id}"
     msg_data = {
@@ -931,12 +935,9 @@ def scrape_extra_channel_page(channel: str, before_id: int | None = None) -> lis
             date_tag = wrap.find('time')
             date_str = date_tag.get('datetime', '') if date_tag else ''
 
-            photos = []
-            for img in wrap.find_all('a', class_='tgme_widget_message_photo_wrap'):
-                style = img.get('style', '')
-                m = re.search(r"url\('([^']+)'\)", style)
-                if m:
-                    photos.append(m.group(1))
+            photo_count = len(wrap.find_all('a', class_='tgme_widget_message_photo_wrap'))
+            # Используем прямые t.me ссылки вместо CDN (CDN-ссылки истекают быстро)
+            photos = [f'https://t.me/{channel}/{post_id + i}' for i in range(photo_count)] if photo_count else []
 
             results.append({
                 'post_id': post_id,
@@ -1544,6 +1545,40 @@ def run_monitoring_loop():
         time.sleep(POLL_INTERVAL)
 
 
+def repair_transport_images():
+    """Конвертирует устаревшие CDN (telesco.pe) ссылки транспорта в прямые t.me ссылки."""
+    data = load_listings()
+    transport = data.get('transport', [])
+    updated = 0
+    for item in transport:
+        mid = item.get('message_id')
+        channel = item.get('source_group') or item.get('contact_name') or ''
+        if not mid or not channel:
+            continue
+        changed = False
+        if 'telesco.pe' in (item.get('image_url') or ''):
+            item['image_url'] = f'https://t.me/{channel}/{mid}'
+            changed = True
+        imgs = item.get('all_images') or []
+        new_imgs = []
+        for i, u in enumerate(imgs):
+            if 'telesco.pe' in str(u):
+                new_imgs.append(f'https://t.me/{channel}/{mid + i}')
+                changed = True
+            else:
+                new_imgs.append(u)
+        if new_imgs != imgs:
+            item['all_images'] = new_imgs
+            item['photos'] = new_imgs
+        if changed:
+            updated += 1
+    if updated:
+        save_listings(data)
+        logger.info(f'[transport_repair] Конвертировано {updated} CDN → t.me ссылок.')
+    else:
+        logger.info('[transport_repair] CDN ссылок не найдено.')
+
+
 def repair_link_only_listings():
     """Находит объявления у которых description = только t.me ссылка,
     подгружает реальный текст через ?embed=1 и сохраняет обратно в JSON."""
@@ -1605,6 +1640,11 @@ def start_parser_in_background():
             repair_link_only_listings()
         except Exception as e:
             logger.warning(f'[repair] Ошибка: {e}')
+        # Обновляем устаревшие CDN-фото транспорта
+        try:
+            repair_transport_images()
+        except Exception as e:
+            logger.warning(f'[transport_repair] Ошибка: {e}')
         run_initial_fetch()
         run_monitoring_loop()
 

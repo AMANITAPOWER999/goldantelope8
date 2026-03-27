@@ -3185,8 +3185,19 @@ def tg_photo_proxy(channel, post_id):
             file_id = _msg_to_file_id.get((ch_key, post_id))
         if file_id:
             img_data = _bot_api_download(file_id, bot_token)
-        else:
-            logger.debug(f'tg_photo_proxy: нет file_id для {channel}/{post_id}')
+
+    # 3. Запасной путь: скрапим свежий CDN URL из публичного viewer t.me/s/channel
+    if not img_data:
+        try:
+            from vietnamparsing_parser import _scrape_cdn_photos_for_post
+            cdn_urls = _scrape_cdn_photos_for_post(channel, post_id)
+            if cdn_urls:
+                resp = requests.get(cdn_urls[0], timeout=15)
+                if resp.status_code == 200 and len(resp.content) > 500:
+                    img_data = resp.content
+                    logger.debug(f'tg_photo_proxy: CDN fallback OK {channel}/{post_id}')
+        except Exception as e:
+            logger.debug(f'tg_photo_proxy CDN fallback error {channel}/{post_id}: {e}')
 
     if not img_data:
         return Response(status=404)
