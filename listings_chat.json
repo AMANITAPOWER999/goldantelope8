@@ -1818,5 +1818,31 @@
     "image_hash": null,
     "has_media": false,
     "price": null
+  },
+  {
+    "id": "vmestenaphukete_277023",
+    "category": "chat",
+    "title": "Здравствуйте \n\nОбратитесь к  МЕНЕДЖЕРУ [WhatsApp](https://phuket-tropic-tours.ru/taplink/tt) или [Te",
+    "description": "Здравствуйте \n\nОбратитесь к  МЕНЕДЖЕРУ [WhatsApp](https://phuket-tropic-tours.ru/taplink/tt) или [Telegram](https://t.me/TropicTours) или [MAX](https://max.ru/u/f9LHodD0cOJxSUr5Qw3XvCREWqjjdT-ZJC2YaapcZcxMwToTZDYiELHH00U) — он поможет подобрать идеальную экскурсию именно для вас! Или загляните на [САЙТ ТРОПИК ТУР.](https://phuket-tropic-tours.ru/taplink/ptt) ",
+    "date": "2026-03-27T12:47:07+00:00",
+    "source_channel": "@vmestenaphukete",
+    "message_id": 277023,
+    "image_url": null,
+    "image_hash": null,
+    "has_media": true,
+    "price": null
+  },
+  {
+    "id": "vmestenaphukete_277020",
+    "category": "chat",
+    "title": "Обязательно только Патонг. Там вы прочувствуете всю жизнь в Тайланде. И обязательно острова Пхи-Пхи.",
+    "description": "Обязательно только Патонг. Там вы прочувствуете всю жизнь в Тайланде. И обязательно острова Пхи-Пхи. Или на 3-4 дня съездить там пожить, или экскурсию с Пхукета брать.",
+    "date": "2026-03-27T12:42:08+00:00",
+    "source_channel": "@vmestenaphukete",
+    "message_id": 277020,
+    "image_url": null,
+    "image_hash": null,
+    "has_media": false,
+    "price": null
   }
 ]

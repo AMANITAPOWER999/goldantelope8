@@ -479,7 +479,19 @@ def build_listing_from_scraped(msg: dict) -> dict | None:
     photos = msg.get('images', [])
     if not photos:
         return None  # skip listings without photos
-    telegram_link = f'https://t.me/{SOURCE_CHANNEL}/{post_id}'
+
+    # Extract real source channel link from text
+    src_m = re.search(r'(https?://t\.me/[A-Za-z0-9_]+/\d+)', text)
+    telegram_link = src_m.group(1) if src_m else f'https://t.me/{SOURCE_CHANNEL}/{post_id}'
+
+    # Convert photos to use real source channel via /tg_img/ proxy
+    def _to_proxy(url: str) -> str:
+        m = re.search(r't\.me/([A-Za-z0-9_]+)/(\d+)', url)
+        if m:
+            return f'/tg_img/{m.group(1)}/{m.group(2)}'
+        return url
+
+    proxy_photos = [_to_proxy(p) for p in photos]
 
     return {
         'id': item_id,
@@ -492,9 +504,9 @@ def build_listing_from_scraped(msg: dict) -> dict | None:
         'listing_type': listing_type,
         'contact': source,
         'telegram_link': telegram_link,
-        'photos': photos,
-        'image_url': photos[0] if photos else '',
-        'all_images': photos,
+        'photos': proxy_photos,
+        'image_url': proxy_photos[0] if proxy_photos else '',
+        'all_images': proxy_photos,
         'date': msg.get('date', datetime.now(timezone.utc).isoformat()),
         'source': 'telegram',
         'channel': SOURCE_CHANNEL,
@@ -637,21 +649,38 @@ def scan_new_thailand_by_id(existing_ids: set, data: dict, probe_ahead: int = 40
     if not raw_posts:
         return 0
 
+    def _real_img_url(text: str, fallback_pid: int) -> str:
+        """Extract real source channel/post_id from text and return /tg_img/ proxy URL."""
+        m = re.search(r't\.me/([A-Za-z0-9_]+)/(\d+)', text or '')
+        if m:
+            return f'https://t.me/{m.group(1)}/{m.group(2)}'
+        return f'https://t.me/{SOURCE_CHANNEL}/{fallback_pid}'
+
     # Group: main post (has text) collects album photos (no text) that follow it
     grouped = []
     current_main = None
+    current_real_url = None
     for p in raw_posts:
         if p['text']:
             if current_main:
                 grouped.append(current_main)
-            # Store t.me URL instead of CDN (proxy always returns fresh CDN)
+            real_url = _real_img_url(p['text'], p['post_id'])
+            current_real_url = real_url
             current_main = {'post_id': p['post_id'], 'text': p['text'],
                             'date': datetime.now(timezone.utc).isoformat(),
-                            'images': [f'https://t.me/{SOURCE_CHANNEL}/{p["post_id"]}'] if p['image'] else []}
+                            'images': [real_url] if p['image'] else []}
         else:
             if current_main and p['image']:
-                # Album photo: store t.me URL for album post ID
-                current_main['images'].append(f'https://t.me/{SOURCE_CHANNEL}/{p["post_id"]}')
+                # Album photo: append next post_id from same real channel
+                if current_real_url:
+                    m = re.search(r't\.me/([A-Za-z0-9_]+)/(\d+)', current_real_url)
+                    if m:
+                        album_url = f'https://t.me/{m.group(1)}/{p["post_id"]}'
+                        current_main['images'].append(album_url)
+                    else:
+                        current_main['images'].append(f'https://t.me/{SOURCE_CHANNEL}/{p["post_id"]}')
+                else:
+                    current_main['images'].append(f'https://t.me/{SOURCE_CHANNEL}/{p["post_id"]}')
     if current_main:
         grouped.append(current_main)
 

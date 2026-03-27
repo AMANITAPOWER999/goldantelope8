@@ -3199,6 +3199,23 @@ def tg_photo_proxy(channel, post_id):
         except Exception as e:
             logger.debug(f'tg_photo_proxy CDN fallback error {channel}/{post_id}: {e}')
 
+    # 4. og:image fallback — скрапим og:image с одиночного поста (работает для публичных каналов)
+    if not img_data:
+        try:
+            og_headers = {'User-Agent': 'TelegramBot (like TwitterBot)'}
+            og_resp = requests.get(f'https://t.me/{channel}/{post_id}', headers=og_headers, timeout=10)
+            if og_resp.status_code == 200:
+                import re as _re
+                img_m = _re.search(r'<meta property="og:image" content="([^"]+)"', og_resp.text)
+                if img_m:
+                    cdn_url = img_m.group(1)
+                    cdn_resp = requests.get(cdn_url, timeout=15)
+                    if cdn_resp.status_code == 200 and len(cdn_resp.content) > 500:
+                        img_data = cdn_resp.content
+                        logger.debug(f'tg_photo_proxy: og:image fallback OK {channel}/{post_id}')
+        except Exception as e:
+            logger.debug(f'tg_photo_proxy og:image fallback error {channel}/{post_id}: {e}')
+
     if not img_data:
         return Response(status=404)
 
