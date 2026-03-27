@@ -12776,6 +12776,43 @@
             return {country:'—', dest:'—'};
         }
 
+        function _renderChatTable(perCh, tbody, summary, totalOverride) {
+            const rows = Object.entries(perCh).sort((a,b)=>b[1]-a[1]);
+            const maxVal = rows[0]?.[1] || 1;
+            if (!rows.length) {
+                tbody.innerHTML = `<tr><td colspan="5" style="padding:20px;text-align:center;color:#666;font-size:13px;">
+                    Активность пока не накоплена — парсер собирает данные.<br>
+                    <span style="font-size:11px;color:#444;">Данные появятся после первого прохода по каналам (~2-5 мин).</span>
+                </td></tr>`;
+            } else {
+                tbody.innerHTML = rows.map(([ch, cnt], i) => {
+                    const chClean = ch.replace(/^@/,'');
+                    const isVN = CHAT_VN_SET.has(chClean.toLowerCase());
+                    const isTH = CHAT_TH_SET.has(chClean.toLowerCase());
+                    const country = isVN ? '🇻🇳 Вьетнам' : isTH ? '🇹🇭 Таиланд' : '—';
+                    const dest = (isVN || isTH) ? '@chatiparsing' : '—';
+                    const bar = Math.round((cnt / maxVal) * 80);
+                    const rowBg = i % 2 === 0 ? '#0f0f1a' : '#0a0a16';
+                    return `<tr style="border-bottom:1px solid #1a1a2e;background:${rowBg};">
+                        <td style="padding:8px 10px;color:#555;font-size:11px;">${i+1}</td>
+                        <td style="padding:8px 10px;">
+                            <a href="https://t.me/${chClean}" target="_blank" style="color:#0088cc;text-decoration:none;font-weight:600;">@${chClean}</a>
+                            <div style="margin-top:3px;background:#1a1a2e;border-radius:3px;height:4px;width:100%;max-width:200px;">
+                                <div style="background:#d4af37;border-radius:3px;height:4px;width:${bar}%;"></div>
+                            </div>
+                        </td>
+                        <td style="padding:8px 10px;font-size:12px;">${country}</td>
+                        <td style="padding:8px 10px;text-align:right;font-weight:700;color:#d4af37;">${cnt.toLocaleString('ru')}</td>
+                        <td style="padding:8px 10px;font-size:12px;color:#4caf50;">${dest}</td>
+                    </tr>`;
+                }).join('');
+            }
+            if (summary) {
+                const total = totalOverride ?? rows.reduce((s,[,c])=>s+c, 0);
+                summary.textContent = `Локальный парсер | каналов активных: ${rows.length} | всего сообщений: ${total.toLocaleString('ru')}`;
+            }
+        }
+
         async function loadHFChatStats() {
             const tbody   = document.getElementById('mon-chats-tbody');
             const cards   = document.getElementById('mon-chats-cards');
@@ -12783,106 +12820,85 @@
             const summary = document.getElementById('mon-chats-summary');
             if (!tbody) return;
 
-            tbody.innerHTML = '<tr><td colspan="5" style="padding:20px;text-align:center;color:#888;">⏳ Загружаю данные с HF Space...</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="5" style="padding:20px;text-align:center;color:#888;">⏳ Загружаю статистику чатов...</td></tr>';
             if (summary) summary.textContent = 'Подключаемся...';
             if (cards)  cards.innerHTML  = '';
             if (status) status.innerHTML = '';
 
+            // ── Шаг 1: Быстрая локальная статистика из listings_chat.json ──
+            try {
+                const lr = await fetch('/api/chat-stats', {signal: AbortSignal.timeout(5000)});
+                const ld = await lr.json();
+                if (lr.ok && ld.status === 'ok' && ld.channels && ld.channels.length > 0) {
+                    // Конвертируем в {channel: count}
+                    const perCh = {};
+                    ld.channels.forEach(({channel, count}) => { perCh[channel] = count; });
+                    _renderChatTable(perCh, tbody, summary, ld.total);
+                    // Обновляем сводную карточку
+                    if (cards) {
+                        cards.innerHTML = [
+                            {label:'Всего сообщений',  val: ld.total.toLocaleString('ru'),       color:'#d4af37'},
+                            {label:'Активных каналов', val: ld.channels.length,                  color:'#16a34a'},
+                            {label:'ТОП канал',        val: '@'+(ld.channels[0]?.channel||'—'),  color:'#0088cc'},
+                            {label:'Макс. сообщений',  val: (ld.channels[0]?.count||0).toLocaleString('ru'), color:'#b8860b'},
+                        ].map(c=>`<div style="background:#1a1a2e;border-radius:8px;padding:12px;border:1px solid #2a2a3d;">
+                            <div style="font-size:10px;color:#666;margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px;">${c.label}</div>
+                            <div style="font-size:14px;font-weight:700;color:${c.color};">${c.val}</div>
+                        </div>`).join('');
+                    }
+                } else if (ld.status === 'no_data') {
+                    tbody.innerHTML = `<tr><td colspan="5" style="padding:20px;text-align:center;color:#666;font-size:13px;">
+                        ⏳ Парсер чатов запущен и собирает первые данные...<br>
+                        <span style="font-size:11px;color:#444;">Первые сообщения появятся через несколько минут. Нажмите «↻ Обновить».</span>
+                    </td></tr>`;
+                    if (summary) summary.textContent = 'Ожидание данных от парсера чатов';
+                }
+            } catch(e) {
+                // локальный запрос не удался, продолжаем
+            }
+
+            // ── Шаг 2: Блоки каналов VN/TH (статичные — из кода) ──
+            if (status) {
+                status.innerHTML =
+                    makeMonBlock('Чаты Вьетнама', '🇻🇳', CHAT_VN_SET_ARR, [], '@chatiparsing') +
+                    makeMonBlock('Чаты Таиланда', '🇹🇭', CHAT_TH_SET_ARR, [], '@chatiparsing');
+            }
+
+            // ── Шаг 3: HF Space (необязательно, долго) ──
             try {
                 const r = await fetch('/api/hf-stats', {signal: AbortSignal.timeout(40000)});
                 const d = await r.json();
-                if (!r.ok) {
-                    const errMsg = d.message || ('HTTP ' + r.status);
-                    tbody.innerHTML = `<tr><td colspan="5" style="padding:20px;text-align:center;color:#f88;font-size:13px;">⏸ ${errMsg}</td></tr>`;
-                    if (summary) summary.textContent = '';
-                    return;
-                }
+                if (!r.ok) return;
 
-                // ── Сводные карточки ──
-                if (cards) {
+                // Если HF вернул chat_per_channel — показываем его поверх локальных данных
+                const hfPerCh = d.chat_per_channel || {};
+                if (Object.keys(hfPerCh).length > 0 && cards) {
                     const running = d.running || d.status === 'running';
                     cards.innerHTML = [
-                        {label:'Статус парсера',    val: running ? '🟢 Работает' : '🔴 Перезапуск', color: running ? '#16a34a' : '#dc2626'},
-                        {label:'Всего переслано',   val: (d.forwarded||0).toLocaleString('ru'),  color:'#b8860b'},
-                        {label:'Фото',              val: (d.photos||0).toLocaleString('ru'),      color:'#16a34a'},
-                        {label:'Альбомов',          val: (d.albums||0).toLocaleString('ru'),      color:'#1a73e8'},
-                        {label:'Дедупликация',      val: (d.dedup||0).toLocaleString('ru'),       color:'#d97706'},
-                        {label:'Ошибок',            val: (d.errors||0).toLocaleString('ru'),      color: (d.errors||0) > 0 ? '#dc2626' : '#16a34a'},
-                        {label:'Последний фовард',  val: d.last_forward||'—',                      color:'#666'},
-                        {label:'Запущен',           val: (d.started_at||'—').replace(' UTC',''),  color:'#999'},
+                        {label:'Статус HF парсера',  val: running ? '🟢 Работает' : '🔴 Перезапуск', color: running ? '#16a34a' : '#dc2626'},
+                        {label:'Всего переслано',    val: (d.forwarded||0).toLocaleString('ru'),  color:'#b8860b'},
+                        {label:'Фото',               val: (d.photos||0).toLocaleString('ru'),      color:'#16a34a'},
+                        {label:'Дедупликация',       val: (d.dedup||0).toLocaleString('ru'),       color:'#d97706'},
+                        {label:'Ошибок',             val: (d.errors||0).toLocaleString('ru'),      color:(d.errors||0)>0?'#dc2626':'#16a34a'},
+                        {label:'Запущен',            val: (d.started_at||'—').replace(' UTC',''),  color:'#999'},
                     ].map(c=>`<div style="background:#1a1a2e;border-radius:8px;padding:12px;border:1px solid #2a2a3d;">
                         <div style="font-size:10px;color:#666;margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px;">${c.label}</div>
                         <div style="font-size:14px;font-weight:700;color:${c.color};">${c.val}</div>
                     </div>`).join('');
+                    _renderChatTable(hfPerCh, tbody, summary);
                 }
 
-                // ── Блоки статуса каналов VN / TH ──
                 const failedChat = (d.failed && d.failed.CHAT) ? d.failed.CHAT.map(x=>x.toLowerCase()) : [];
-                const connChat   = d.connected && d.connected.CHAT ? d.connected.CHAT : 0;
-
-                function makeChannelBlock(title, flag, channels, failedList, dest) {
-                    return makeMonBlock(title, flag, channels, failedList, dest);
+                if (failedChat.length && status) {
+                    status.innerHTML += `<div style="grid-column:1/-1;background:#2a1a1a;border-radius:8px;padding:12px;border:1px solid #5a2a2a;">
+                        <div style="font-size:12px;font-weight:700;color:#f88;margin-bottom:8px;">⚠️ Не удалось подключить (${failedChat.length} каналов)</div>
+                        <div style="display:flex;flex-wrap:wrap;gap:8px;">
+                            ${failedChat.map(ch=>`<a href="https://t.me/${ch}" target="_blank" style="background:#3a1a1a;padding:4px 10px;border-radius:12px;color:#f88;font-size:12px;text-decoration:none;">@${ch}</a>`).join('')}
+                        </div>
+                    </div>`;
                 }
-
-                if (status) {
-                    status.innerHTML =
-                        makeChannelBlock('Чаты Вьетнама', '🇻🇳', CHAT_VN_SET_ARR, failedChat, '@chatiparsing') +
-                        makeChannelBlock('Чаты Таиланда', '🇹🇭', CHAT_TH_SET_ARR, failedChat, '@chatiparsing');
-
-                    // Блок недоступных если есть
-                    if (failedChat.length) {
-                        status.innerHTML += `<div style="grid-column:1/-1;background:#2a1a1a;border-radius:8px;padding:12px;border:1px solid #5a2a2a;">
-                            <div style="font-size:12px;font-weight:700;color:#f88;margin-bottom:8px;">⚠️ Не удалось подключить (${failedChat.length} каналов)</div>
-                            <div style="display:flex;flex-wrap:wrap;gap:8px;">
-                                ${failedChat.map(ch=>`<a href="https://t.me/${ch}" target="_blank" style="background:#3a1a1a;padding:4px 10px;border-radius:12px;color:#f88;font-size:12px;text-decoration:none;">@${ch}</a>`).join('')}
-                            </div>
-                        </div>`;
-                    }
-                }
-
-                // ── Таблица активности ──
-                // chat_per_channel — локальный парсер (все CHAT-каналы), top_channels — HF Space (только ТОП-15)
-                const perCh = d.chat_per_channel || d.per_channel || {};
-                const rows = Object.entries(perCh)
-                    .filter(([ch]) => CHAT_VN_SET.has(ch.toLowerCase()) || CHAT_TH_SET.has(ch.toLowerCase()))
-                    .sort((a,b)=>b[1]-a[1]);
-
-                if (!rows.length) {
-                    tbody.innerHTML = `<tr><td colspan="5" style="padding:20px;text-align:center;color:#666;font-size:13px;">
-                        Активность пока не накоплена — парсер только что запустился.<br>
-                        <span style="font-size:11px;color:#444;">Данные появятся по мере поступления новых сообщений в чатах.</span>
-                    </td></tr>`;
-                } else {
-                    tbody.innerHTML = rows.map(([ch, cnt], i) => {
-                        const meta = getChannelMeta(ch);
-                        const bar  = Math.round((cnt / (rows[0][1]||1)) * 80);
-                        const rowBg = i % 2 === 0 ? '#0f0f1a' : '#0a0a16';
-                        return `<tr style="border-bottom:1px solid #1a1a2e;background:${rowBg};">
-                            <td style="padding:8px 10px;color:#555;font-size:11px;">${i+1}</td>
-                            <td style="padding:8px 10px;">
-                                <a href="https://t.me/${ch}" target="_blank" style="color:#0088cc;text-decoration:none;font-weight:600;">@${ch}</a>
-                                <div style="margin-top:3px;background:#1a1a2e;border-radius:3px;height:4px;width:100%;max-width:200px;">
-                                    <div style="background:#d4af37;border-radius:3px;height:4px;width:${bar}%;"></div>
-                                </div>
-                            </td>
-                            <td style="padding:8px 10px;font-size:12px;">${meta.country}</td>
-                            <td style="padding:8px 10px;text-align:right;font-weight:700;color:#d4af37;">${cnt.toLocaleString('ru')}</td>
-                            <td style="padding:8px 10px;font-size:12px;color:#4caf50;">${meta.dest}</td>
-                        </tr>`;
-                    }).join('');
-                }
-
-                const chatSrc = d.chat_per_channel ? 'Локальный парсер' : 'HF Space';
-                const chatStarted = d.chat_started_at || d.started_at || '—';
-                if (summary) summary.textContent =
-                    `${chatSrc} | чатов подключено: ${typeof connChat==='number'?connChat:Object.keys(perCh).length} | активных: ${rows.length} | запущен: ${chatStarted.replace(' UTC','')}`;
-
             } catch(e) {
-                const msg = e.message?.includes('timeout') || e.name === 'TimeoutError'
-                    ? '⏸ HF Space не отвечает. Нажмите «↻ Обновить» через 1-2 минуты.'
-                    : `Ошибка: ${e.message}`;
-                tbody.innerHTML = `<tr><td colspan="5" style="padding:20px;text-align:center;color:#f88;font-size:13px;">${msg}</td></tr>`;
-                if (summary) summary.textContent = '';
+                // HF Space недоступен — не страшно, локальные данные уже показаны
             }
         }
 

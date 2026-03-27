@@ -6023,6 +6023,10 @@ def _start_chat_parser_background():
 
 
 def _ensure_chat_parser_started():
+    # Не дублировать — проверяем, не запущен ли уже
+    for t in threading.enumerate():
+        if t.name in ('ChatParserLoop', 'ChatParserLauncher'):
+            return
     if os.path.exists('goldantelope_user.session') and os.environ.get('TELETHON_API_ID'):
         def _delayed():
             time.sleep(15)
@@ -6079,6 +6083,33 @@ threading.Thread(target=_auto_setup_webhook, daemon=True, name='WebhookSetup').s
 #         logger.error(f'Ошибка запуска Telethon forwarder: {e}')
 # threading.Thread(target=_start_telethon_forwarder, daemon=True, name='TelethonForwarder').start()
 logger.info('Telethon background forwarder отключён (используйте /api/admin/telethon-forward)')
+
+
+@app.route('/api/chat-stats')
+def chat_stats_local():
+    """Статистика по каналам из локального listings_chat.json"""
+    try:
+        listings_file = 'listings_chat.json'
+        if not os.path.exists(listings_file):
+            return jsonify({'total': 0, 'per_channel': {}, 'channels': [], 'status': 'no_data'})
+        with open(listings_file, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        if not isinstance(data, list):
+            return jsonify({'total': 0, 'per_channel': {}, 'channels': [], 'status': 'no_data'})
+        from collections import Counter
+        per_channel = dict(Counter(
+            item.get('source_channel', '?').lstrip('@') for item in data if isinstance(item, dict)
+        ))
+        # Сортируем по кол-ву (убыв.)
+        sorted_ch = sorted(per_channel.items(), key=lambda x: x[1], reverse=True)
+        return jsonify({
+            'total': len(data),
+            'per_channel': per_channel,
+            'channels': [{'channel': ch, 'count': cnt} for ch, cnt in sorted_ch],
+            'status': 'ok'
+        })
+    except Exception as e:
+        return jsonify({'error': str(e), 'status': 'error'}), 500
 
 
 @app.route('/api/hf-stats')

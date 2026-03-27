@@ -172,6 +172,10 @@ async def parse_chats():
             channel_count = len([i for i in new_items if i['source_channel'] == f'@{channel}'])
             if channel_count > 0:
                 print(f"✓ @{channel}: +{channel_count}")
+                # Сохраняем инкрементально после каждого канала
+                all_items = existing + new_items
+                with open(listings_file, 'w', encoding='utf-8') as f:
+                    json.dump(all_items, f, ensure_ascii=False, indent=2)
         except Exception as e:
             error_msg = str(e)[:50]
             if 'database is locked' not in error_msg:
@@ -179,11 +183,12 @@ async def parse_chats():
         
         await asyncio.sleep(120)  # 2 минуты задержка между каналами (менее агрессивно)
     
-    if new_items:
+    total_new = len(new_items)
+    if total_new:
         all_items = existing + new_items
         with open(listings_file, 'w', encoding='utf-8') as f:
             json.dump(all_items, f, ensure_ascii=False, indent=2)
-        print(f"💬 Добавлено {len(new_items)} новых сообщений")
+        print(f"💬 Цикл завершён: добавлено {total_new} новых сообщений")
         if total_skipped > 0:
             print(f"🚫 Отклонено англоязычных: {total_skipped}")
     else:
