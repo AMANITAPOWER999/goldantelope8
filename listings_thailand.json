@@ -6288,6 +6288,88 @@
   "transport": [],
   "real_estate": [
     {
+      "id": "thailand_24230",
+      "title": "Объявление о недвижимости",
+      "description": "https://t.me/sea_bangkok/387935",
+      "text": "https://t.me/sea_bangkok/387935",
+      "price": 0,
+      "price_display": "",
+      "city": "Бангкок",
+      "listing_type": "rent",
+      "contact": "@sea_bangkok",
+      "telegram_link": "https://t.me/sea_bangkok/387935",
+      "photos": [
+        "/tg_img/sea_bangkok/387935",
+        "/tg_img/sea_bangkok/24231"
+      ],
+      "image_url": "/tg_img/sea_bangkok/387935",
+      "all_images": [
+        "/tg_img/sea_bangkok/387935",
+        "/tg_img/sea_bangkok/24231"
+      ],
+      "date": "2026-03-28T07:25:48.906874+00:00",
+      "source": "telegram",
+      "channel": "thailandparsing"
+    },
+    {
+      "id": "thailand_24222",
+      "title": "СДАМ Виллу 2 спальни ПХукет Банг Тао Новая Вилла! Компания NAMTALAY TRAVEL AND REAL ESTATE Предлагает в Аренду Вилла 2 С",
+      "description": "СДАМ Виллу 2 спальни ПХукет Банг Тао Новая Вилла! Компания NAMTALAY TRAVEL AND REAL ESTATE Предлагает в Аренду Вилла 2 Спальни Банг Тао 2 Bedroom, 2 Bathroom 120 квадратов Бассейн Барбекю Стиральная машинка Качественная бытовая техника Вилла полностью укомплектована Локация Виллы: Другие варианты квартир и фото можно посмотреть у нас в группе:\n\nhttps://t.me/phuket_rentas/205977",
+      "text": "СДАМ Виллу 2 спальни ПХукет Банг Тао Новая Вилла! Компания NAMTALAY TRAVEL AND REAL ESTATE Предлагает в Аренду Вилла 2 Спальни Банг Тао 2 Bedroom, 2 Bathroom 120 квадратов Бассейн Барбекю Стиральная машинка Качественная бытовая техника Вилла полностью укомплектована Локация Виллы: Другие варианты квартир и фото можно посмотреть у нас в группе:\n\nhttps://t.me/phuket_rentas/205977",
+      "price": 0,
+      "price_display": "",
+      "city": "Пхукет",
+      "listing_type": "rent",
+      "contact": "@phuket_rentas",
+      "telegram_link": "https://t.me/phuket_rentas/205977",
+      "photos": [
+        "/tg_img/phuket_rentas/205977",
+        "/tg_img/phuket_rentas/24223",
+        "/tg_img/phuket_rentas/24224",
+        "/tg_img/phuket_rentas/24225",
+        "/tg_img/phuket_rentas/24226",
+        "/tg_img/phuket_rentas/24227",
+        "/tg_img/phuket_rentas/24228",
+        "/tg_img/phuket_rentas/24229"
+      ],
+      "image_url": "/tg_img/phuket_rentas/205977",
+      "all_images": [
+        "/tg_img/phuket_rentas/205977",
+        "/tg_img/phuket_rentas/24223",
+        "/tg_img/phuket_rentas/24224",
+        "/tg_img/phuket_rentas/24225",
+        "/tg_img/phuket_rentas/24226",
+        "/tg_img/phuket_rentas/24227",
+        "/tg_img/phuket_rentas/24228",
+        "/tg_img/phuket_rentas/24229"
+      ],
+      "date": "2026-03-28T07:25:48.906761+00:00",
+      "source": "telegram",
+      "channel": "thailandparsing"
+    },
+    {
+      "id": "thailand_24221",
+      "title": "С 17 апреля доступна в аренду видовая, просторная 1 бэдрум 78кв.м на 9 этаже Star Beach Condotel. Пратамнак. Шикарный па",
+      "description": "С 17 апреля доступна в аренду видовая, просторная 1 бэдрум 78кв.м на 9 этаже Star Beach Condotel. Пратамнак. Шикарный панорамный вид на море! В квартире есть все необходимое для проживания и отдыха. Большая кровать с дорогим матрасом, смарт ТВ, WiFi, оборудованная кухня. Удобная локация- все рядом пляж, кафе, магазины, рынок.\n\nhttps://t.me/pattaya_realty_estate/776297",
+      "text": "С 17 апреля доступна в аренду видовая, просторная 1 бэдрум 78кв.м на 9 этаже Star Beach Condotel. Пратамнак. Шикарный панорамный вид на море! В квартире есть все необходимое для проживания и отдыха. Большая кровать с дорогим матрасом, смарт ТВ, WiFi, оборудованная кухня. Удобная локация- все рядом пляж, кафе, магазины, рынок.\n\nhttps://t.me/pattaya_realty_estate/776297",
+      "price": 0,
+      "price_display": "",
+      "city": "Паттайя",
+      "listing_type": "rent",
+      "contact": "@pattaya_realty_estate",
+      "telegram_link": "https://t.me/pattaya_realty_estate/776297",
+      "photos": [
+        "/tg_img/pattaya_realty_estate/776297"
+      ],
+      "image_url": "/tg_img/pattaya_realty_estate/776297",
+      "all_images": [
+        "/tg_img/pattaya_realty_estate/776297"
+      ],
+      "date": "2026-03-28T07:25:48.906673+00:00",
+      "source": "telegram",
+      "channel": "thailandparsing"
+    },
+    {
       "id": "thailand_24220",
       "title": "Ребят, кто продаёт юсдт за наличные? Встреча лично",
       "description": "Ребят, кто продаёт юсдт за наличные? Встреча лично\n\nhttps://t.me/thailand_real_estate_phuket/19642",
