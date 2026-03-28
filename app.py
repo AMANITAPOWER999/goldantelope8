@@ -6376,6 +6376,39 @@ logger.info('Telethon background forwarder отключён (используй�
 
 _chatiparsing_cache = {'data': [], 'ts': 0}
 
+CHAT_HISTORY_FILE = 'chat_history.json'
+_CHAT_HISTORY_MAX = 100
+
+def _load_chat_history():
+    try:
+        with open(CHAT_HISTORY_FILE, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    except:
+        return []
+
+def _save_chat_history(messages):
+    try:
+        seen = set()
+        unique = []
+        for m in messages:
+            key = (m.get('description', '') or '')[:80] + '|' + (m.get('date', '') or '')
+            if key not in seen:
+                seen.add(key)
+                unique.append(m)
+        unique.sort(key=lambda x: x.get('date', '') or '', reverse=True)
+        unique = unique[:_CHAT_HISTORY_MAX]
+        with open(CHAT_HISTORY_FILE, 'w', encoding='utf-8') as f:
+            json.dump(unique, f, ensure_ascii=False)
+    except Exception as e:
+        print(f'[chat_history] save error: {e}')
+
+try:
+    _chatiparsing_cache['data'] = _load_chat_history()
+    if _chatiparsing_cache['data']:
+        print(f'[chat_history] Загружено {len(_chatiparsing_cache["data"])} сообщений из истории')
+except:
+    pass
+
 _SPAM_WORDS = [
     'казино', 'casino', 'покер', 'poker', 'ставки', 'betting', 'bet365',
     'слот', 'slot', 'джекпот', 'jackpot', 'рулетк', 'roulette', 'букмекер',
@@ -6464,7 +6497,10 @@ def _bg_chatiparsing_poller():
                 })
             result = [m for m in result if not _is_spam(m.get('text', '') or m.get('description', ''))]
             result.sort(key=lambda x: x['date'])
-            _chatiparsing_cache['data'] = result
+            old_history = _load_chat_history()
+            merged = old_history + result
+            _save_chat_history(merged)
+            _chatiparsing_cache['data'] = _load_chat_history()
             _chatiparsing_cache['ts'] = _t.time()
         except Exception as e:
             print(f'[chatiparsing bg] error: {e}')
