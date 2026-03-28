@@ -1524,6 +1524,19 @@ def get_listings(category):
             print(f'chatiparsing merge error: {e}')
         filtered = [m for m in filtered if not _is_spam(m.get('description', '') or m.get('title', ''))]
 
+    _TH_ONLY_CHANNELS = {
+        'rent_thailand_chat', 'rentinthai', 'chat_phuket', 'chats_phuket',
+        'phuket_chatbg', 'barakholka_pkhuket', 'huahinrus',
+        'bangkok_chat_znakomstva', 'bangkok_market_bg', 'vse_svoi_bangkok',
+        'visa_thailand_chat', 'thailand_4at', 'thailand_chatt1',
+        'thailandchat_inf', 'chat_thailand', 'bangkok_chatbg',
+        'chat_bangkok', 'bangkok_chats', 'pattayasale',
+        'pattayachatonline', 'pattayapar', 'chats_pattaya',
+        'phuketdating', 'krabichat',
+    }
+    if country == 'vietnam' and category == 'chat':
+        filtered = [m for m in filtered if (m.get('source_channel', '') or '').replace('@', '').lower() not in _TH_ONLY_CHANNELS]
+
     # Сортировка по дате - новые сверху
     filtered.sort(key=lambda x: x.get('date', x.get('added_at', '1970-01-01')) or '1970-01-01', reverse=True)
     
