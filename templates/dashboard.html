@@ -7912,18 +7912,21 @@
             const slider = document.getElementById(`slider-${listingId}`);
             if (!slider) return;
             
-            const imgs = slider.querySelectorAll('img');
+            const allImgs = Array.from(slider.querySelectorAll('img'));
+            const imgs = allImgs.filter(img => !img.dataset.broken);
             const dots = slider.querySelectorAll('.slider-dot');
-            let activeIdx = Array.from(imgs).findIndex(img => img.classList.contains('active'));
+            if (imgs.length <= 1) return;
+            
+            let activeIdx = imgs.findIndex(img => img.classList.contains('active'));
+            if (activeIdx < 0) activeIdx = 0;
             
             imgs[activeIdx].classList.remove('active');
-            dots[activeIdx].classList.remove('active');
+            if (dots[activeIdx]) dots[activeIdx].classList.remove('active');
             
             activeIdx = (activeIdx + direction + imgs.length) % imgs.length;
             
             imgs[activeIdx].classList.add('active');
             if (dots[activeIdx]) dots[activeIdx].classList.add('active');
-            // Load lazy image on demand
             const target = imgs[activeIdx];
             if (target && target.dataset.src && (!target.src || target.src.includes('data:image/gif'))) {
                 target.src = target.dataset.src;
@@ -8386,7 +8389,7 @@
                                     if (img.includes('github.com') && !img.includes('raw.githubusercontent.com')) {
                                         finalImg = img.replace('github.com', 'raw.githubusercontent.com').replace('/blob/', '/');
                                     }
-                                    return `<img src="${finalImg}" data-src="${finalImg}" class="${idx === 0 ? 'active' : ''}" data-idx="${idx}" onerror="this.onerror=null;this.src='/static/images/placeholder.jpg';this.classList.add('active');" loading="eager">`;
+                                    return `<img src="${finalImg}" data-src="${finalImg}" class="${idx === 0 ? 'active' : ''}" data-idx="${idx}" onerror="this.onerror=null;this.style.display='none';this.classList.remove('active');this.dataset.broken='1';(function(el){var p=el.closest('.card-slider');if(!p)return;if(el.classList.contains('was-first')||el.dataset.idx==='0'){var nxt=Array.from(p.querySelectorAll('img')).find(function(i){return !i.dataset.broken&&i!==el});if(nxt){nxt.classList.add('active');}}})(this);" loading="eager">`;
                                 }).join('')}
                                 ${images.length > 1 ? `
                                     <button class="slider-nav prev" onclick="changeListingImage('${item.id}', -1, event)">‹</button>

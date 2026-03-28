@@ -951,8 +951,16 @@ def _enrich_tg_images(items):
             base_pid = msg_ids[0]
             if need_replace:
                 item['image_url'] = f'/tg_img/restoranvietnam/{base_pid}'
-            # Количество фото из поля photo_count (вычислено по разнице ID постов)
-            n_photos = item.get('photo_count') or 4
+            # Реальное количество фото из кэш-файла (после первого скрапа) или оценка из photo_count
+            count_path = os.path.join(_TG_DISK_CACHE_DIR, f'restoranvietnam_{base_pid}_grp_count.txt')
+            if os.path.exists(count_path):
+                try:
+                    with open(count_path) as _cf:
+                        n_photos = int(_cf.read().strip())
+                except Exception:
+                    n_photos = item.get('photo_count') or 4
+            else:
+                n_photos = item.get('photo_count') or 4
             n_photos = min(max(int(n_photos), 1), 4)
             # Все фото через групповой прокси (один запрос к t.me/s/ = все CDN URL)
             grp_urls = [f'/tg_img_grp/restoranvietnam/{base_pid}/{i}' for i in range(n_photos)]
@@ -3249,6 +3257,14 @@ def tg_photo_group_proxy(channel, post_id, idx):
                 os.replace(tmp, cache_path)
         except Exception:
             pass
+
+    # Сохраняем реальное количество фото
+    count_path = os.path.join(_TG_DISK_CACHE_DIR, f'{safe_ch}_{post_id}_grp_count.txt')
+    try:
+        with open(count_path, 'w') as f:
+            f.write(str(len(cdn_urls)))
+    except Exception:
+        pass
 
     if idx >= len(cdn_urls):
         return Response(status=404)
