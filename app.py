@@ -4133,6 +4133,10 @@ def run_bot():
         bot_token = os.environ.get('telegram_bot_token')
         channel_id = os.environ.get('telegram_channel_id')
         
+        if not api_id or not api_hash or not bot_token:
+            print("[run_bot] TELEGRAM_API_ID / TELEGRAM_API_HASH / telegram_bot_token не заданы — бот отключён")
+            return
+        
         client = TelegramClient('bot_session', int(api_id), api_hash)
         
         async def monitor():
