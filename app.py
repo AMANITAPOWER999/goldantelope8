@@ -1470,7 +1470,7 @@ def get_listings(category):
         try:
             import time as _time
             now = _time.time()
-            if now - _chatiparsing_cache['ts'] > 10 or not _chatiparsing_cache['data']:
+            if now - _chatiparsing_cache['ts'] > 5 or not _chatiparsing_cache['data']:
                 from bs4 import BeautifulSoup
                 import re as _re
                 resp = requests.get('https://t.me/s/chatiparsing', timeout=8,
@@ -6344,12 +6344,56 @@ logger.info('Telethon background forwarder отключён (используй�
 
 _chatiparsing_cache = {'data': [], 'ts': 0}
 
+def _bg_chatiparsing_poller():
+    """Фоновый поллер chatiparsing — обновляет кэш каждые 5 сек"""
+    import time as _t
+    from bs4 import BeautifulSoup
+    while True:
+        try:
+            resp = requests.get('https://t.me/s/chatiparsing', timeout=8,
+                                headers={'User-Agent': 'Mozilla/5.0'})
+            soup = BeautifulSoup(resp.text, 'html.parser')
+            result = []
+            for wrap in soup.find_all('div', class_='tgme_widget_message_wrap'):
+                text_el = wrap.find('div', class_='tgme_widget_message_text')
+                date_el = wrap.find('time')
+                link_el = wrap.find('a', class_='tgme_widget_message_date')
+                if not text_el:
+                    continue
+                raw_text = text_el.get_text('\n', strip=True)
+                tg_links = re.findall(r'https://t\.me/([\w_]+)/(\d+)', raw_text)
+                src_channel = tg_links[-1][0] if tg_links else ''
+                src_link = f'https://t.me/{tg_links[-1][0]}/{tg_links[-1][1]}' if tg_links else ''
+                display = re.sub(r'https://t\.me/\S+', '', raw_text).strip()
+                result.append({
+                    'text': display,
+                    'description': display,
+                    'title': display[:60],
+                    'src_channel': src_channel,
+                    'source_channel': f'@{src_channel}' if src_channel else '',
+                    'src_link': src_link,
+                    'tg_link': src_link,
+                    'msg_link': link_el.get('href', '') if link_el else '',
+                    'date': date_el.get('datetime', '') if date_el else '',
+                    'category': 'chat',
+                })
+            result.sort(key=lambda x: x['date'])
+            _chatiparsing_cache['data'] = result
+            _chatiparsing_cache['ts'] = _t.time()
+        except Exception as e:
+            print(f'[chatiparsing bg] error: {e}')
+        _t.sleep(5)
+
+import threading
+threading.Thread(target=_bg_chatiparsing_poller, daemon=True, name='ChatiparsingPoller').start()
+logger.info('Chatiparsing background poller started (every 5s)')
+
 @app.route('/api/chatiparsing/feed')
 def chatiparsing_feed():
     """Живая лента из канала chatiparsing (кэш 60 с)"""
     import time as _time
     now = _time.time()
-    if now - _chatiparsing_cache['ts'] < 30 and _chatiparsing_cache['data']:
+    if now - _chatiparsing_cache['ts'] < 5 and _chatiparsing_cache['data']:
         return jsonify(_chatiparsing_cache['data'])
     try:
         from bs4 import BeautifulSoup
