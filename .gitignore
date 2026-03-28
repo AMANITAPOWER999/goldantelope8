@@ -53,3 +53,12 @@ Thumbs.db
 # Logs
 *.log
 .replit
+
+# Telegram photo cache (runtime cache, not versioned)
+tg_photo_cache/
+# Session files
+goldantelope_user.session
+goldantelope_user.session-journal
+*.session
+*.session-journal
+post_log.txt
