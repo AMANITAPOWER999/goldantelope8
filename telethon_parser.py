@@ -50,6 +50,7 @@ ENTERTAIN_CHANNELS = [
 
 MED_CHANNELS = [
     'viet_med', 'viet_medicine', 'viethandentalrus', 'VietnamDentist', 'doctor_viet',
+    'Medicine_Vietnam', 'mediacenter_vietsovpetro_school', 'vietmedic', 'health_med_viet',
 ]
 
 CHANNELS = {
