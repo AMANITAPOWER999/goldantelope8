@@ -1504,6 +1504,7 @@ def get_listings(category):
                     filtered.append(item)
         except Exception as e:
             print(f'chatiparsing merge error: {e}')
+        filtered = [m for m in filtered if not _is_spam(m.get('description', '') or m.get('title', ''))]
 
     # Сортировка по дате - новые сверху
     filtered.sort(key=lambda x: x.get('date', x.get('added_at', '1970-01-01')) or '1970-01-01', reverse=True)
@@ -6344,6 +6345,39 @@ logger.info('Telethon background forwarder отключён (используй�
 
 _chatiparsing_cache = {'data': [], 'ts': 0}
 
+_SPAM_WORDS = [
+    'казино', 'casino', 'покер', 'poker', 'ставки', 'betting', 'bet365',
+    'слот', 'slot', 'джекпот', 'jackpot', 'рулетк', 'roulette', 'букмекер',
+    'порно', 'porn', 'xxx', 'секс видео', 'sex video', 'onlyfans', 'эскорт', 'escort',
+    'интим', 'intimate', 'проститу', 'prostitu', 'массаж 18', 'happy ending',
+    'anal', 'blowjob', 'минет', 'шлюх', 'досуг для взрослых',
+    'купить usdt', 'buy usdt', 'продам usdt', 'sell usdt',
+    'купить крипт', 'buy crypto', 'обмен крипт', 'crypto exchange',
+    'обмен usdt', 'p2p обмен', 'p2p exchange', 'купить btc', 'buy btc',
+    'продам btc', 'sell btc', 'купить биткоин', 'buy bitcoin',
+    'обнал', 'отмыв', 'дроп', 'drop card', 'кардинг', 'carding',
+    'закладк', 'кладмен', 'наркот', 'drug', 'weed', 'cocaine', 'heroin',
+    'мефедрон', 'mephedrone', 'амфетамин', 'amphetamine', 'марихуан', 'marijuana',
+    'купить гашиш', 'mdma', 'экстази', 'ecstasy',
+    'фейк паспорт', 'fake passport', 'fake id', 'поддельн',
+    'схема заработк', 'лёгкий заработок', 'easy money', 'quick money',
+    'пирамид', 'pyramid', 'понци', 'ponzi', 'mlm схем',
+    'взлом', 'hack', 'ddos', 'брут', 'brute',
+    'пробив', 'деанон', 'doxxing',
+    'оружи', 'weapon', 'gun', 'пистолет', 'автомат',
+    'telegram бот заработ', 'заработок в телеграм',
+    'i want anal', 'looking for sex', 'ищу секс',
+]
+
+def _is_spam(text):
+    if not text:
+        return False
+    t = text.lower()
+    for word in _SPAM_WORDS:
+        if word in t:
+            return True
+    return False
+
 def _bg_chatiparsing_poller():
     """Фоновый поллер chatiparsing — обновляет кэш каждые 5 сек"""
     import time as _t
@@ -6377,6 +6411,7 @@ def _bg_chatiparsing_poller():
                     'date': date_el.get('datetime', '') if date_el else '',
                     'category': 'chat',
                 })
+            result = [m for m in result if not _is_spam(m.get('text', '') or m.get('description', ''))]
             result.sort(key=lambda x: x['date'])
             _chatiparsing_cache['data'] = result
             _chatiparsing_cache['ts'] = _t.time()
