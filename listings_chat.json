@@ -5068,5 +5068,57 @@
     "image_hash": null,
     "has_media": false,
     "price": null
+  },
+  {
+    "id": "phuket_chat1_580911",
+    "category": "chat",
+    "title": "Всем привет) ну как дела у вас там?🤓 я скучаю уже 💔🫠",
+    "description": "Всем привет) ну как дела у вас там?🤓 я скучаю уже 💔🫠",
+    "date": "2026-03-28T06:57:14+00:00",
+    "source_channel": "@phuket_chat1",
+    "message_id": 580911,
+    "image_url": null,
+    "image_hash": null,
+    "has_media": false,
+    "price": null
+  },
+  {
+    "id": "phuket_chat1_580910",
+    "category": "chat",
+    "title": "Самое вкусное из этого вода сегодня🤣",
+    "description": "Самое вкусное из этого вода сегодня🤣",
+    "date": "2026-03-28T06:57:09+00:00",
+    "source_channel": "@phuket_chat1",
+    "message_id": 580910,
+    "image_url": null,
+    "image_hash": null,
+    "has_media": false,
+    "price": null
+  },
+  {
+    "id": "phuket_chat1_580909",
+    "category": "chat",
+    "title": "Манишь меня, манишь…)",
+    "description": "Манишь меня, манишь…)",
+    "date": "2026-03-28T06:56:28+00:00",
+    "source_channel": "@phuket_chat1",
+    "message_id": 580909,
+    "image_url": null,
+    "image_hash": null,
+    "has_media": false,
+    "price": null
+  },
+  {
+    "id": "bangkok_chat_znakomstva_130417",
+    "category": "chat",
+    "title": "Тоже присоединяюсь к вопросам.",
+    "description": "Тоже присоединяюсь к вопросам.",
+    "date": "2026-03-28T07:06:23+00:00",
+    "source_channel": "@bangkok_chat_znakomstva",
+    "message_id": 130417,
+    "image_url": null,
+    "image_hash": null,
+    "has_media": false,
+    "price": null
   }
 ]
