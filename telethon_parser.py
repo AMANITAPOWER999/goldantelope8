@@ -45,6 +45,7 @@ ENTERTAIN_CHANNELS = [
     'nhatrang_tusa_afisha', 'vietnam_vn', 'Nhatrangvseobovsem', 'nyachangafisha',
     'nhatrang_afisha', 'introconcertvn', 'afisha_nhatrang', 'T2TNhaTrangevents',
     'nachang_tusa', 'drinkparty666', 'nyachang_ru',
+    'danangnew', 'ads_danang', 'danang_tysa', 'danang_afisha',
 ]
 
 MED_CHANNELS = [
@@ -72,7 +73,8 @@ CHANNELS = {
     ],
     'BIKE': [
         'bike_nhatrang', 'motohub_nhatrang', 'NhaTrang_moto_market', 'RentBikeUniq',
-        'BK_rental', 'nha_trang_rent', 'RentTwentyTwo22NhaTrang'
+        'BK_rental', 'nha_trang_rent', 'RentTwentyTwo22NhaTrang',
+        'danang_bike_rent', 'bikerental1', 'viet_sovet'
     ],
 }
 

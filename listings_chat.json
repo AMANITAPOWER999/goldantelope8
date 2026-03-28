@@ -4951,5 +4951,18 @@
     "image_hash": null,
     "has_media": false,
     "price": null
+  },
+  {
+    "id": "svoi_thai_chat_48491",
+    "category": "chat",
+    "title": "Подскажите как пройти от аэропорта до пляжа, чтоб не обходить полосу, вообще реально так ?",
+    "description": "Подскажите как пройти от аэропорта до пляжа, чтоб не обходить полосу, вообще реально так ?",
+    "date": "2026-03-28T06:41:06+00:00",
+    "source_channel": "@svoi_thai_chat",
+    "message_id": 48491,
+    "image_url": null,
+    "image_hash": null,
+    "has_media": false,
+    "price": null
   }
 ]
