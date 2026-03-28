@@ -6309,7 +6309,7 @@ def chatiparsing_feed():
     """Живая лента из канала chatiparsing (кэш 60 с)"""
     import time as _time
     now = _time.time()
-    if now - _chatiparsing_cache['ts'] < 60 and _chatiparsing_cache['data']:
+    if now - _chatiparsing_cache['ts'] < 30 and _chatiparsing_cache['data']:
         return jsonify(_chatiparsing_cache['data'])
     try:
         from bs4 import BeautifulSoup

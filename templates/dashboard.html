@@ -6428,10 +6428,17 @@
             await loadVnChatFeed(channel);
         }
 
-        async function loadChatiparsing() {
+        async function loadChatiparsing(silent) {
             const feed = document.getElementById('chatiparsing-feed');
             if (!feed) return;
-            feed.innerHTML = '<div style="text-align:center;padding:20px;color:#bbb;font-size:13px;">⏳ Загрузка...</div>';
+            if (!silent) feed.innerHTML = '<div style="text-align:center;padding:20px;color:#bbb;font-size:13px;">⏳ Загрузка...</div>';
+            if (!window._chatiparsingInterval) {
+                window._chatiparsingInterval = setInterval(() => {
+                    if (document.getElementById('chat') && document.getElementById('chat').classList.contains('active')) {
+                        loadChatiparsing(true);
+                    }
+                }, 30000);
+            }
             try {
                 const r = await fetch('/api/chatiparsing/feed');
                 const items = await r.json();
