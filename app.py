@@ -948,27 +948,19 @@ def _enrich_tg_images(items):
                 msg_ids = [int(m.group(1))]
                 item['photo_msg_ids'] = msg_ids  # сохраняем для JS
         if msg_ids and is_restaurant:
+            base_pid = msg_ids[0]
             if need_replace:
-                item['image_url'] = f'/tg_img/restoranvietnam/{msg_ids[0]}'
-            for i, mid in enumerate(msg_ids[1:4], start=2):
-                key = f'image_url_{i}'
-                cur = item.get(key, '') or ''
-                if not cur or 'telesco.pe' in cur:
-                    item[key] = f'/tg_img/restoranvietnam/{mid}'
-            # Обновляем all_images — заменяем telesco.pe на прокси
-            all_imgs = item.get('all_images') or []
-            if all_imgs and any('telesco.pe' in (u or '') for u in all_imgs):
-                proxy_imgs = [f'/tg_img/restoranvietnam/{msg_ids[0]}']
-                for mid in msg_ids[1:]:
-                    proxy_imgs.append(f'/tg_img/restoranvietnam/{mid}')
-                item['all_images'] = proxy_imgs
-            elif not all_imgs:
-                item['all_images'] = [f'/tg_img/restoranvietnam/{msg_ids[0]}']
-            # Также images и photos
+                item['image_url'] = f'/tg_img/restoranvietnam/{base_pid}'
+            # Количество фото из поля photo_count (вычислено по разнице ID постов)
+            n_photos = item.get('photo_count') or 4
+            n_photos = min(max(int(n_photos), 1), 4)
+            # Все фото через групповой прокси (один запрос к t.me/s/ = все CDN URL)
+            grp_urls = [f'/tg_img_grp/restoranvietnam/{base_pid}/{i}' for i in range(n_photos)]
+            item['all_images'] = grp_urls
+            item['photo_msg_ids'] = [base_pid]  # для совместимости JS
+            item['photo_album_urls'] = grp_urls  # явный список для JS
             for key in ('images', 'photos'):
-                imgs = item.get(key) or []
-                if imgs and any('telesco.pe' in (u or '') for u in imgs):
-                    item[key] = [f'/tg_img/restoranvietnam/{msg_ids[0]}']
+                item[key] = grp_urls
             continue
 
         # Остальные: используем tg_file_ids как запасной вариант
@@ -3211,6 +3203,76 @@ def tg_photo_proxy(channel, post_id):
         'Content-Type': 'image/jpeg',
         'Cache-Control': 'public, max-age=2592000',
     })
+
+@app.route('/tg_img_grp/<channel>/<int:post_id>/<int:idx>')
+def tg_photo_group_proxy(channel, post_id, idx):
+    """Возвращает idx-й снимок из медиагруппы поста.
+    Скрапит все CDN URL поста за один запрос, кэширует каждый на диск."""
+    safe_ch = re.sub(r'[^a-zA-Z0-9_]', '', channel)
+    disk_path = os.path.join(_TG_DISK_CACHE_DIR, f'{safe_ch}_{post_id}_grp_{idx}.jpg')
+
+    if os.path.exists(disk_path) and os.path.getsize(disk_path) > 500:
+        try:
+            with open(disk_path, 'rb') as f:
+                data = f.read()
+            return Response(data, status=200, headers={
+                'Content-Type': 'image/jpeg',
+                'Cache-Control': 'public, max-age=2592000',
+            })
+        except Exception:
+            pass
+
+    # Скрапим все CDN URLs группы за один запрос
+    try:
+        from vietnamparsing_parser import _scrape_cdn_photos_for_post
+        cdn_urls = _scrape_cdn_photos_for_post(channel, post_id)
+    except Exception:
+        cdn_urls = []
+
+    if not cdn_urls:
+        # Fallback: og:image для главного фото
+        if idx == 0:
+            return tg_photo_proxy(channel, post_id)
+        return Response(status=404)
+
+    # Сохраняем все фото группы на диск
+    for i, cdn_url in enumerate(cdn_urls):
+        cache_path = os.path.join(_TG_DISK_CACHE_DIR, f'{safe_ch}_{post_id}_grp_{i}.jpg')
+        if os.path.exists(cache_path) and os.path.getsize(cache_path) > 500:
+            continue
+        try:
+            resp = requests.get(cdn_url, timeout=15)
+            if resp.status_code == 200 and len(resp.content) > 500:
+                tmp = cache_path + '.tmp'
+                with open(tmp, 'wb') as f:
+                    f.write(resp.content)
+                os.replace(tmp, cache_path)
+        except Exception:
+            pass
+
+    if idx >= len(cdn_urls):
+        return Response(status=404)
+
+    if os.path.exists(disk_path) and os.path.getsize(disk_path) > 500:
+        with open(disk_path, 'rb') as f:
+            data = f.read()
+        return Response(data, status=200, headers={
+            'Content-Type': 'image/jpeg',
+            'Cache-Control': 'public, max-age=2592000',
+        })
+
+    # Последний вариант: отдать CDN URL напрямую
+    try:
+        resp = requests.get(cdn_urls[idx], timeout=15)
+        if resp.status_code == 200 and len(resp.content) > 500:
+            return Response(resp.content, status=200, headers={
+                'Content-Type': 'image/jpeg',
+                'Cache-Control': 'public, max-age=86400',
+            })
+    except Exception:
+        pass
+    return Response(status=404)
+
 
 # ============ УПРАВЛЕНИЕ ГОРОДАМИ ============
 
