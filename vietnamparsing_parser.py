@@ -23,7 +23,7 @@ EXTRA_CHANNELS = {
     'baykivietnam':       ('transport', 'bikes'),
     'baraholkainvietnam':   ('marketplace', None),
     'hsjsbkskbs':           ('marketplace', None),  # same supergroup
-    'razvlecheniyavietnam': ('entertainment', None),
+    # 'razvlecheniyavietnam': ('entertainment', None),  # временно отключено
     'restoranvietnam':      ('restaurants', None),
     'obmenvietnam':         ('chat', None),
 }
