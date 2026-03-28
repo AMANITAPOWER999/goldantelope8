@@ -6302,6 +6302,52 @@ threading.Thread(target=_auto_setup_webhook, daemon=True, name='WebhookSetup').s
 logger.info('Telethon background forwarder отключён (используйте /api/admin/telethon-forward)')
 
 
+_chatiparsing_cache = {'data': [], 'ts': 0}
+
+@app.route('/api/chatiparsing/feed')
+def chatiparsing_feed():
+    """Живая лента из канала chatiparsing (кэш 60 с)"""
+    import time as _time
+    now = _time.time()
+    if now - _chatiparsing_cache['ts'] < 60 and _chatiparsing_cache['data']:
+        return jsonify(_chatiparsing_cache['data'])
+    try:
+        from bs4 import BeautifulSoup
+        import re as _re
+        resp = requests.get(
+            'https://t.me/s/chatiparsing', timeout=12,
+            headers={'User-Agent': 'Mozilla/5.0'}
+        )
+        soup = BeautifulSoup(resp.text, 'html.parser')
+        result = []
+        for wrap in soup.find_all('div', class_='tgme_widget_message_wrap'):
+            text_el = wrap.find('div', class_='tgme_widget_message_text')
+            date_el = wrap.find('time')
+            link_el = wrap.find('a', class_='tgme_widget_message_date')
+            if not text_el:
+                continue
+            raw_text = text_el.get_text('\n', strip=True)
+            # Вытаскиваем ссылку на источник (последняя t.me-ссылка в тексте)
+            tg_links = _re.findall(r'https://t\.me/([\w_]+)/(\d+)', raw_text)
+            src_channel = tg_links[-1][0] if tg_links else ''
+            src_link = f'https://t.me/{tg_links[-1][0]}/{tg_links[-1][1]}' if tg_links else ''
+            # Убираем ссылку из текста отображения
+            display = _re.sub(r'https://t\.me/\S+', '', raw_text).strip()
+            result.append({
+                'text': display,
+                'src_channel': src_channel,
+                'src_link': src_link,
+                'msg_link': link_el.get('href', '') if link_el else '',
+                'date': date_el.get('datetime', '') if date_el else '',
+            })
+        result.sort(key=lambda x: x['date'])
+        _chatiparsing_cache['data'] = result
+        _chatiparsing_cache['ts'] = now
+        return jsonify(result)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
 @app.route('/api/chat-stats')
 def chat_stats_local():
     """Статистика по каналам из локального listings_chat.json"""
