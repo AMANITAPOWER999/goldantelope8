@@ -1037,9 +1037,27 @@ def get_listings(category):
     else:
         filtered = [x for x in listings if not x.get('hidden', False)]
     
+    if category == 'entertainment':
+        _ENT_KEYWORDS = [
+            'вечеринк', 'party', 'клуб', 'club', 'ночной клуб', 'night club',
+            'мероприят', 'event', 'выступлен', 'perform', 'концерт', 'concert',
+            'open air', 'опен эйр', 'фестиваль', 'festival', 'шоу', 'show',
+            'диджей', 'dj ', 'музык', 'music', 'танц', 'dance',
+            'бар ', 'bar ', 'караоке', 'karaoke', 'дискотек', 'disco',
+            'stand up', 'стендап', 'комеди', 'comedy', 'квиз', 'quiz',
+            'кино', 'cinema', 'театр', 'theater', 'theatre',
+            'развлечен', 'entertain', 'афиша', 'poster',
+            'живая музыка', 'live music', 'выставк', 'exhibition',
+            'ярмарк', 'fair', 'маркет', 'market',
+            'пляжн', 'beach party', 'pool party',
+        ]
+        filtered = [x for x in filtered if any(
+            kw in (x.get('description', '') or x.get('title', '') or '').lower()
+            for kw in _ENT_KEYWORDS
+        )]
+
     subcategory = request.args.get('subcategory')
     if subcategory:
-        # Для marketplace используем поле marketplace_category
         if category == 'marketplace':
             filtered = [x for x in filtered if x.get('marketplace_category') == subcategory]
         else:
