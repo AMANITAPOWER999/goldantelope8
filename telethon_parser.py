@@ -17,6 +17,8 @@ DEST = {
     'BIKE': 'baykivietnam',
     'CHAT_VN': 'chatiparsing',
     'CHAT_TH': 'chatiparsing',
+    'ENTERTAIN': 'razvlecheniyavietnam',
+    'MED': 'medvietnam',
 }
 
 CHAT_VN_CHANNELS = [
@@ -37,6 +39,16 @@ CHAT_TH_CHANNELS = [
     'vse_svoi_bangkok', 'visa_thailand_chat', 'thailand_4at', 'rent_thailand_chat',
     'thailand_chatt1', 'chat_bangkok', 'Bangkok_chats', 'PattayaSale',
     'pattayachatonline', 'Pattayapar', 'chats_pattaya', 'phuketdating', 'KrabiChat',
+]
+
+ENTERTAIN_CHANNELS = [
+    'nhatrang_tusa_afisha', 'vietnam_vn', 'Nhatrangvseobovsem', 'nyachangafisha',
+    'nhatrang_afisha', 'introconcertvn', 'afisha_nhatrang', 'T2TNhaTrangevents',
+    'nachang_tusa', 'drinkparty666', 'nyachang_ru',
+]
+
+MED_CHANNELS = [
+    'viet_med', 'viet_medicine', 'viethandentalrus', 'VietnamDentist', 'doctor_viet',
 ]
 
 CHANNELS = {
@@ -312,6 +324,56 @@ async def _run_client(sess):
         STATS['failed'][grp_name] = fail
         _log(f'[{grp_name}] → @{DEST[grp_name]}: {len(ok)}/{len(chat_names)} OK, {len(fail)} не удалось')
 
+    # Entity resolution для ENTERTAIN каналов
+    all_entertain_ents = []
+    entertain_ok, entertain_fail = [], []
+    for n in ENTERTAIN_CHANNELS:
+        key = n.lower()
+        if key in dialogs_map:
+            all_entertain_ents.append(dialogs_map[key])
+            entertain_ok.append(n)
+        else:
+            try:
+                ent = await asyncio.wait_for(client.get_input_entity(n), timeout=10)
+                all_entertain_ents.append(ent)
+                entertain_ok.append(n)
+                await asyncio.sleep(0.3)
+            except asyncio.TimeoutError:
+                entertain_fail.append(n)
+            except FloodWaitError as fw:
+                await asyncio.sleep(min(fw.seconds, 30))
+                entertain_fail.append(n)
+            except Exception:
+                entertain_fail.append(n)
+    STATS['connected']['ENTERTAIN'] = entertain_ok
+    STATS['failed']['ENTERTAIN'] = entertain_fail
+    _log(f'[ENTERTAIN] → @{DEST["ENTERTAIN"]}: {len(entertain_ok)}/{len(ENTERTAIN_CHANNELS)} OK, {len(entertain_fail)} не удалось')
+
+    # Entity resolution для MED каналов
+    all_med_ents = []
+    med_ok, med_fail = [], []
+    for n in MED_CHANNELS:
+        key = n.lower()
+        if key in dialogs_map:
+            all_med_ents.append(dialogs_map[key])
+            med_ok.append(n)
+        else:
+            try:
+                ent = await asyncio.wait_for(client.get_input_entity(n), timeout=10)
+                all_med_ents.append(ent)
+                med_ok.append(n)
+                await asyncio.sleep(0.3)
+            except asyncio.TimeoutError:
+                med_fail.append(n)
+            except FloodWaitError as fw:
+                await asyncio.sleep(min(fw.seconds, 30))
+                med_fail.append(n)
+            except Exception:
+                med_fail.append(n)
+    STATS['connected']['MED'] = med_ok
+    STATS['failed']['MED'] = med_fail
+    _log(f'[MED] → @{DEST["MED"]}: {len(med_ok)}/{len(MED_CHANNELS)} OK, {len(med_fail)} не удалось')
+
     total_ok = sum(len(v) for v in STATS['connected'].values())
     _log(f'Итого {total_ok} каналов. Слушаю новые сообщения...')
 
@@ -395,6 +457,66 @@ async def _run_client(sess):
             log.warning(f'Ошибка альбома: {ex}')
 
     all_chat_set = chat_vn_set | chat_th_set
+    entertain_set = {c.lower() for c in entertain_ok}
+    med_set = {c.lower() for c in med_ok}
+
+    @client.on(events.NewMessage(chats=all_entertain_ents if all_entertain_ents else ENTERTAIN_CHANNELS))
+    async def handle_entertain(e):
+        try:
+            chat = await e.get_chat()
+            un = (getattr(chat, 'username', None) or '').lower()
+        except Exception:
+            return
+        if un not in entertain_set:
+            return
+        t = clean_text(e.raw_text or e.text or '')
+        if not t or len(t) < 3:
+            return
+        if len(t) > 2000:
+            t = t[:1997] + '...'
+        try:
+            src = f'https://t.me/{un}/{e.id}'
+            if e.media:
+                await client.send_message(DEST['ENTERTAIN'], t or '.', file=e.media, parse_mode=None)
+            else:
+                await client.send_message(DEST['ENTERTAIN'], f'{t}\n\n{src}', parse_mode=None)
+            STATS['forwarded'] += 1
+            STATS['last_forward'] = time.strftime('%H:%M:%S UTC', time.gmtime())
+            STATS['per_channel'][un] = STATS['per_channel'].get(un, 0) + 1
+            _log(f'ENTERTAIN @{un} → @{DEST["ENTERTAIN"]}')
+        except FloodWaitError as fw:
+            await asyncio.sleep(fw.seconds + 5)
+        except Exception as ex:
+            STATS['errors'] += 1
+
+    @client.on(events.NewMessage(chats=all_med_ents if all_med_ents else MED_CHANNELS))
+    async def handle_med(e):
+        try:
+            chat = await e.get_chat()
+            un = (getattr(chat, 'username', None) or '').lower()
+        except Exception:
+            return
+        if un not in med_set:
+            return
+        t = clean_text(e.raw_text or e.text or '')
+        if not t or len(t) < 3:
+            return
+        if len(t) > 2000:
+            t = t[:1997] + '...'
+        try:
+            src = f'https://t.me/{un}/{e.id}'
+            if e.media:
+                await client.send_message(DEST['MED'], t or '.', file=e.media, parse_mode=None)
+            else:
+                await client.send_message(DEST['MED'], f'{t}\n\n{src}', parse_mode=None)
+            STATS['forwarded'] += 1
+            STATS['last_forward'] = time.strftime('%H:%M:%S UTC', time.gmtime())
+            STATS['per_channel'][un] = STATS['per_channel'].get(un, 0) + 1
+            _log(f'MED @{un} → @{DEST["MED"]}')
+        except FloodWaitError as fw:
+            await asyncio.sleep(fw.seconds + 5)
+        except Exception as ex:
+            STATS['errors'] += 1
 
     @client.on(events.NewMessage(chats=all_chat_ents if all_chat_ents else list(CHAT_VN_CHANNELS) + list(CHAT_TH_CHANNELS)))
     async def handle_chat(e):
