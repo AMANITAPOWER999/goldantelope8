@@ -6367,7 +6367,23 @@ _SPAM_WORDS = [
     'оружи', 'weapon', 'gun', 'пистолет', 'автомат',
     'telegram бот заработ', 'заработок в телеграм',
     'i want anal', 'looking for sex', 'ищу секс',
+    'реклама', 'pеклама', 'peклама', 'рeклама', 'peкламa',
+    'р е к л а м а', 'реклам',
 ]
+
+import re as _re
+_LATIN_RE = _re.compile(r'[a-zA-Z]')
+_CYRILLIC_RE = _re.compile(r'[а-яА-ЯёЁ]')
+
+def _is_mostly_english(text):
+    if not text:
+        return False
+    latin_count = len(_LATIN_RE.findall(text))
+    cyrillic_count = len(_CYRILLIC_RE.findall(text))
+    total_letters = latin_count + cyrillic_count
+    if total_letters < 10:
+        return False
+    return latin_count > cyrillic_count * 3
 
 def _is_spam(text):
     if not text:
@@ -6376,6 +6392,8 @@ def _is_spam(text):
     for word in _SPAM_WORDS:
         if word in t:
             return True
+    if _is_mostly_english(text):
+        return True
     return False
 
 def _bg_chatiparsing_poller():
