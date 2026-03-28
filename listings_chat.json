@@ -5016,5 +5016,57 @@
     "image_hash": null,
     "has_media": false,
     "price": null
+  },
+  {
+    "id": "vmestenaphukete_277516",
+    "category": "chat",
+    "title": "Добрый день \nКафе Гейша https://maps.app.goo.gl/QwEozpu1RjpCNKPj7?g_st=ic\n\nВот еще рекомендация http",
+    "description": "Добрый день \nКафе Гейша https://maps.app.goo.gl/QwEozpu1RjpCNKPj7?g_st=ic\n\nВот еще рекомендация https://t.me/vmestenaphukete/271124",
+    "date": "2026-03-28T07:08:39+00:00",
+    "source_channel": "@vmestenaphukete",
+    "message_id": 277516,
+    "image_url": null,
+    "image_hash": null,
+    "has_media": true,
+    "price": null
+  },
+  {
+    "id": "vmestenaphukete_277511",
+    "category": "chat",
+    "title": "✨ ОСТРОВА КРАБИ + ЗАКАТ | Комфорт+ ✨\n⠀\n🏝 Проведи день, который запомнится надолго!\nКристально чистая",
+    "description": "✨ ОСТРОВА КРАБИ + ЗАКАТ | Комфорт+ ✨\n⠀\n🏝 Проведи день, который запомнится надолго!\nКристально чистая вода, белоснежные пляжи, пышные джунгли и великолепный закат над Андаманским морем 🌅\n⠀\n💎 В программе:\n• Острова Нака Яй, Пакбия, Хонг и Lao Lading\n• Снорклинг, смотровая площадка, прогулка по песчаной косе 🏖\n• Обед с тайским сет-меню 🍜\n• Закат в море и незабываемые фото на память! 📸\n⠀\n🌊 Маленькие группы, Wi-Fi на борту, полотенца включены.\n🍦 Вино и мороженое — комплиментом при возвращении на пирс.\nВсё продумано до мелочей для вашего комфорта!\n⠀",
+    "date": "2026-03-28T07:00:18+00:00",
+    "source_channel": "@vmestenaphukete",
+    "message_id": 277511,
+    "image_url": null,
+    "image_hash": "253106fd8afdbcba3b24009c8212c974",
+    "has_media": true,
+    "price": null
+  },
+  {
+    "id": "vmestenaphukete_277510",
+    "category": "chat",
+    "title": "Посоветуйте на такси до какой точки ехать чтобы сфоткаться с самолётами рядом с аэропортом?",
+    "description": "Посоветуйте на такси до какой точки ехать чтобы сфоткаться с самолётами рядом с аэропортом?",
+    "date": "2026-03-28T06:57:48+00:00",
+    "source_channel": "@vmestenaphukete",
+    "message_id": 277510,
+    "image_url": null,
+    "image_hash": null,
+    "has_media": false,
+    "price": null
+  },
+  {
+    "id": "vmestenaphukete_277509",
+    "category": "chat",
+    "title": "Добрый день. Где на кароне поесть суши",
+    "description": "Добрый день. Где на кароне поесть суши",
+    "date": "2026-03-28T06:57:45+00:00",
+    "source_channel": "@vmestenaphukete",
+    "message_id": 277509,
+    "image_url": null,
+    "image_hash": null,
+    "has_media": false,
+    "price": null
   }
 ]
