@@ -1,0 +1,773 @@
+Spaces:
+poweramanita
+/
+goldantelopeasia_bot 
+
+like
+0
+
+App
+Files
+Community
+Settings
+Logs
+
+build
+container
+
+Logs Endpoint
+
+
+
+===== Application Startup at 2026-03-28 10:06:23 =====
+
+[start] Session restored from SESSION_BASE64
+[start] Starting Telegram forwarder...
+[start] Forwarder started (PID: 9)
+[start] Starting Flask app on port 7860...
+INFO:__main__:Telethon background forwarder отключён (используйте /api/admin/telethon-forward)
+INFO:__main__:[file_id_index] Проиндексировано 0 пар msg_id→file_id
+INFO:telethon.crypto.aes:cryptg detected, it will be used for encryption
+INFO:app:TELETHON_SESSION не задана — авторизуйтесь через /tg-auth
+Ошибка авторизации: int() argument must be a string, a bytes-like object or a real number, not 'NoneType'
+ * Serving Flask app 'app'
+ * Debug mode: off
+INFO:werkzeug:WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:7860
+ * Running on http://10.111.162.5:7860
+INFO:werkzeug:Press CTRL+C to quit
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:06:36] "GET /favicon.ico HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:06:38] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:06:39] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:06:40] "GET /static/icons/entertainment.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:06:40] "GET /static/images/logo.png HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:06:40] "GET /static/images/icons/restaurants.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:06:42] "GET /api/city-counts/news?country=vietnam HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:06:42] "GET /api/city-counts/real_estate?country=vietnam HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:06:43] "GET /api/city-counts/restaurants?country=vietnam HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:06:43] "GET /api/city-counts/real_estate?country=vietnam HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:06:43] "GET /api/listings/exchange?country=vietnam&city=Хошимин HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:06:43] "GET /api/listings/exchange?country=vietnam&city=Дананг HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:06:43] "GET /api/city-counts/entertainment?country=vietnam HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:06:43] "GET /api/listings/exchange?country=vietnam&city=Фукуок HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:06:43] "GET /api/banners HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:06:43] "GET /api/city-counts/tours?country=vietnam HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:06:43] "GET /api/listings/exchange?country=vietnam&city=Нячанг HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:06:43] "GET /api/medicine-type-counts?country=vietnam HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:06:43] "GET /api/kids-type-counts?country=vietnam HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:06:43] "GET /api/listings/visas?country=vietnam HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:06:43] "GET /api/ping?uid=user_j5l5fp5r7 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:06:43] "GET /static/icons/visas_new.png HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:06:43] "GET /static/icons/exchange_new.png HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:06:43] "GET /api/listings/real_estate?country=vietnam&realestate_city=nhatrang&limit=50&offset=0&_t=1774692399324 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:06:43] "GET /static/icons/chat_new.png HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:06:43] "GET /api/realestate-groups?country=vietnam HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:06:43] "GET /api/weather?city=Ho%20Chi%20Minh HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:06:49] "GET /static/icons/entertainment_dark.png HTTP/1.1" 200 -
+INFO:telethon.network.mtprotosender:Connecting to 91.108.56.132:443/TcpFull...
+INFO:telethon.network.mtprotosender:Connection to 91.108.56.132:443/TcpFull complete!
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:06:52] "GET /static/images/icons/restaurants_dark.png HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:06:53] "GET /static/icons/kids_new2.png HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:06:54] "GET /static/icons/medicine_new2.png HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:06:55] "GET /static/icons/transport_dark.png HTTP/1.1" 200 -
+WARNING:__main__:[disk_prewarm] Нет TELEGRAM_BOT_TOKEN, прогрев пропущен
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:06:59] "GET /static/icons/realestate_dark.png HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:07:04] "GET /static/images/icons/tours_dark.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:07:06] "GET /static/images/realestate_nhatrang.jpg?v=20260119 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:07:08] "GET /static/images/realestate_danang.jpg?v=20260119 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:07:08] "GET /static/images/realestate_hochiminh.jpg?v=20260119 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:07:09] "GET /static/images/realestate_hanoi.jpg?v=20260119 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:07:10] "GET /static/images/logo_dark.png HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:07:10] "GET /static/images/restaurants/nyachang.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:07:10] "GET /static/images/restaurants/hochiminh.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:07:11] "GET /static/images/restaurants/danang.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:07:11] "GET /static/images/restaurants/hanoi.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:07:12] "GET /api/ping?uid=user_j5l5fp5r7 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:07:12] "GET /static/images/restaurants/phuquoc.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:07:12] "GET /static/images/restaurants/phanthiet.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:07:12] "GET /static/images/restaurants/kamran.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:07:13] "GET /static/images/restaurants/dalat.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:07:13] "GET /static/images/restaurants/hoian.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:07:14] "GET /static/images/submit_listing.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:07:14] "GET /static/images/tours/nyachang.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:07:14] "GET /static/images/tours/hochiminh.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:07:15] "GET /static/images/tours/hanoi.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:07:15] "GET /static/images/tours/phuquoc.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:07:15] "GET /static/images/tours/phanthiet.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:07:16] "GET /static/images/tours/muine.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:07:16] "GET /static/images/tours/danang.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:07:16] "GET /static/images/tours/kamran.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:07:17] "GET /static/images/tours/dalat.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:07:17] "GET /static/images/transport/bikes.jpg HTTP/1.1" 200 -
+ERROR:telethon.network.connection.connection:Unexpected exception in the send loop
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/asyncio/queues.py", line 158, in get
+    await getter
+GeneratorExit
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/telethon/network/connection/connection.py", line 322, in _send_loop
+    self._send(await self._send_queue.get())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/asyncio/queues.py", line 160, in get
+    getter.cancel()  # Just in case getter is not done yet.
+    ^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/asyncio/base_events.py", line 762, in call_soon
+    self._check_closed()
+  File "/usr/local/lib/python3.11/asyncio/base_events.py", line 520, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
+Exception ignored in: <coroutine object Connection._send_loop at 0x7fce2ad8b140>
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/threading.py", line 597, in set
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:07:18] "GET /static/images/transport/yachts.jpg HTTP/1.1" 200 -
+    with self._cond:
+RuntimeError: coroutine ignored GeneratorExit
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task cancelling name='Task-3' coro=<Connection._send_loop() running at /usr/local/lib/python3.11/site-packages/telethon/network/connection/connection.py:332> wait_for=<Future cancelled>>
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-4' coro=<Connection._recv_loop() done, defined at /usr/local/lib/python3.11/site-packages/telethon/network/connection/connection.py:334> wait_for=<Future pending cb=[Task.task_wakeup()]>>
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-5' coro=<MTProtoSender._send_loop() done, defined at /usr/local/lib/python3.11/site-packages/telethon/network/mtprotosender.py:452> wait_for=<Future finished result=None>>
+ERROR:telethon.network.mtprotosender:Unhandled error while receiving data
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/asyncio/queues.py", line 158, in get
+    await getter
+GeneratorExit
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/telethon/network/mtprotosender.py", line 513, in _recv_loop
+    body = await self._connection.recv()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/telethon/network/connection/connection.py", line 308, in recv
+    result, err = await self._recv_queue.get()
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/asyncio/queues.py", line 160, in get
+    getter.cancel()  # Just in case getter is not done yet.
+    ^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/asyncio/base_events.py", line 762, in call_soon
+    self._check_closed()
+  File "/usr/local/lib/python3.11/asyncio/base_events.py", line 520, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
+Exception ignored in: <coroutine object MTProtoSender._recv_loop at 0x7fcdff003340>
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/telethon/network/mtprotosender.py", line 530, in _recv_loop
+    self._start_reconnect(e)
+  File "/usr/local/lib/python3.11/site-packages/telethon/network/mtprotosender.py", line 436, in _start_reconnect
+    helpers.get_running_loop().create_task(self._reconnect(error))
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/telethon/helpers.py", line 432, in get_running_loop
+    return asyncio.get_event_loop_policy().get_event_loop()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/asyncio/events.py", line 681, in get_event_loop
+    raise RuntimeError('There is no current event loop in thread %r.'
+RuntimeError: There is no current event loop in thread 'Dummy-108'.
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-6' coro=<MTProtoSender._recv_loop() done, defined at /usr/local/lib/python3.11/site-packages/telethon/network/mtprotosender.py:503> wait_for=<Future cancelled>>
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:07:18] "GET /static/images/transport/cars.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:07:18] "GET /static/images/transport/bicycles.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:07:18] "GET /static/images/realestate_phuquoc.jpg?v=20260119 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:07:19] "GET /static/images/realestate_dalat.jpg?v=20260119 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:07:19] "GET /static/images/categories/exchange/nhatrang.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:07:20] "GET /static/images/categories/exchange/danang.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:07:20] "GET /static/images/categories/exchange/saigon.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:07:20] "GET /static/images/categories/exchange/phuquoc.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:07:21] "GET /static/images/entertainment/nyachang.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:07:21] "GET /static/images/entertainment/hochiminh.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:07:21] "GET /static/images/entertainment/phuquoc.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:07:21] "GET /static/images/entertainment/danang.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:07:22] "GET /static/images/visas/cambodia.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:07:22] "GET /static/images/visas/laos.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:07:23] "GET /static/images/medicine/questions.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:07:23] "GET /static/images/medicine/clinics.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:07:23] "GET /static/images/medicine/directions.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:07:24] "GET /static/images/medicine/insurance.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:07:24] "GET /static/images/kids/events.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:07:24] "GET /static/images/kids/nannies.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:07:25] "GET /static/images/kids/schools.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:07:25] "GET /static/images/kids/products.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:07:25] "GET /static/images/banners/india_1767258371_ChatGPT_Image_1_._2026_._16_05_27.png HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:07:26] "GET /static/images/banners/indonesia_1767258646_ChatGPT_Image_1_._2026_._16_10_17.png HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:07:26] "GET /static/images/banners/vietnam_mobile_1774611269_IMG_2601.png HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:07:27] "GET /static/images/banners/vietnam_1767254417_ChatGPT_Image_1_._2026_._14_59_56.png HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:07:40] "GET /favicon.ico HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:07:42] "GET /api/weather?city=Ho%20Chi%20Minh HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:07:42] "GET /api/ping?uid=user_j5l5fp5r7 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:07:55] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:07:55] "GET /static/images/logo.png HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:07:55] "GET /static/icons/entertainment.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:07:55] "GET /static/icons/chat_new.png HTTP/1.1" 304 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:07:55] "GET /static/icons/transport.png HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:07:55] "GET /static/icons/visas_new.png HTTP/1.1" 304 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:07:55] "GET /static/images/icons/restaurants.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:07:55] "GET /static/icons/realestate.png HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:07:55] "GET /static/images/icons/tours.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:07:55] "GET /static/icons/exchange_new.png HTTP/1.1" 304 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:07:55] "GET /static/icons/kids_new2.png HTTP/1.1" 304 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:07:55] "GET /static/images/restaurants/hochiminh.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:07:55] "GET /static/icons/medicine_new2.png HTTP/1.1" 304 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:07:55] "GET /static/images/restaurants/danang.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:07:55] "GET /static/images/restaurants/hanoi.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:07:55] "GET /static/images/restaurants/phuquoc.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:07:55] "GET /static/images/restaurants/dalat.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:07:55] "GET /static/images/restaurants/hoian.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:07:55] "GET /static/images/restaurants/phanthiet.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:07:55] "GET /static/images/restaurants/nyachang.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:07:55] "GET /static/images/submit_listing.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:07:55] "GET /static/images/restaurants/kamran.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:07:55] "GET /static/images/tours/nyachang.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:07:55] "GET /static/images/tours/hanoi.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:07:55] "GET /static/images/realestate_phuquoc.jpg?v=20260119 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:07:55] "GET /static/images/tours/hochiminh.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:07:55] "GET /static/images/tours/phanthiet.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:07:55] "GET /static/images/tours/muine.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:07:55] "GET /static/images/categories/exchange/nhatrang.jpg HTTP/1.1" 304 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:07:55] "GET /static/images/realestate_dalat.jpg?v=20260119 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:07:55] "GET /static/images/categories/exchange/danang.jpg HTTP/1.1" 304 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:07:55] "GET /static/images/tours/kamran.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:07:55] "GET /static/images/entertainment/hochiminh.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:07:55] "GET /static/images/categories/exchange/phuquoc.jpg HTTP/1.1" 304 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:07:55] "GET /static/images/transport/bikes.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:07:55] "GET /static/images/tours/danang.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:07:55] "GET /static/images/tours/phuquoc.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:07:55] "GET /static/images/transport/yachts.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:07:55] "GET /static/images/medicine/directions.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:07:55] "GET /static/images/medicine/clinics.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:07:55] "GET /static/images/realestate_danang.jpg?v=20260119 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:07:55] "GET /static/images/visas/cambodia.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:07:55] "GET /static/images/tours/dalat.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:07:55] "GET /static/images/medicine/questions.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:07:55] "GET /static/images/entertainment/phuquoc.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:07:55] "GET /static/images/kids/events.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:07:55] "GET /static/images/categories/exchange/saigon.jpg HTTP/1.1" 304 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:07:55] "GET /static/images/realestate_nhatrang.jpg?v=20260119 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:07:55] "GET /static/images/entertainment/danang.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:07:55] "GET /static/images/transport/cars.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:07:55] "GET /static/images/entertainment/nyachang.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:07:55] "GET /static/images/visas/laos.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:07:55] "GET /static/images/realestate_hochiminh.jpg?v=20260119 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:07:55] "GET /static/images/kids/products.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:07:55] "GET /static/images/transport/bicycles.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:07:55] "GET /static/images/kids/schools.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:07:55] "GET /api/city-counts/tours?country=vietnam HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:07:55] "GET /static/images/realestate_hanoi.jpg?v=20260119 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:07:55] "GET /api/city-counts/entertainment?country=vietnam HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:07:55] "GET /api/city-counts/real_estate?country=vietnam HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:07:55] "GET /static/images/medicine/insurance.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:07:55] "GET /api/city-counts/restaurants?country=vietnam HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:07:55] "GET /static/images/kids/nannies.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:07:55] "GET /api/city-counts/real_estate?country=vietnam HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:07:55] "GET /api/banners HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:07:55] "GET /api/weather?city=Ho%20Chi%20Minh HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:07:55] "GET /api/listings/exchange?country=vietnam&city=Нячанг HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:07:55] "GET /api/city-counts/news?country=vietnam HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:07:55] "GET /api/listings/exchange?country=vietnam&city=Хошимин HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:07:55] "GET /api/listings/exchange?country=vietnam&city=Фукуок HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:07:55] "GET /api/kids-type-counts?country=vietnam HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:07:55] "GET /api/ping?uid=user_mew6mcj9l HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:07:55] "GET /api/medicine-type-counts?country=vietnam HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:07:55] "GET /api/listings/exchange?country=vietnam&city=Дананг HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:07:55] "GET /static/icons/transport_dark.png HTTP/1.1" 304 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:07:55] "GET /api/listings/real_estate?country=vietnam&realestate_city=nhatrang&limit=50&offset=0&_t=1774692473931 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:07:55] "GET /api/listings/visas?country=vietnam HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:07:55] "GET /static/icons/entertainment_dark.png HTTP/1.1" 304 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:07:56] "GET /static/icons/realestate_dark.png HTTP/1.1" 304 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:07:56] "GET /static/images/icons/tours_dark.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:07:56] "GET /api/realestate-groups?country=vietnam HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:07:56] "GET /static/images/logo_dark.png HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:07:56] "GET /static/images/icons/restaurants_dark.png HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:07:58] "GET /static/images/banners/india_1767258371_ChatGPT_Image_1_._2026_._16_05_27.png HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:07:58] "GET /static/images/banners/vietnam_mobile_1774611269_IMG_2601.png HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:07:58] "GET /static/images/banners/indonesia_1767258646_ChatGPT_Image_1_._2026_._16_10_17.png HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:07:58] "GET /static/images/banners/vietnam_1767254417_ChatGPT_Image_1_._2026_._14_59_56.png HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:08:04] "GET /favicon.ico HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:08:24] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:25] "GET /static/icons/entertainment.jpg HTTP/1.1" 304 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:08:25] "GET /static/images/logo.png HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:08:25] "GET /static/icons/transport.png HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:08:25] "GET /static/icons/chat_new.png HTTP/1.1" 304 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:08:25] "GET /static/icons/realestate.png HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:25] "GET /static/images/icons/restaurants.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:25] "GET /static/icons/exchange_new.png HTTP/1.1" 304 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:08:25] "GET /static/icons/kids_new2.png HTTP/1.1" 304 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:25] "GET /static/images/icons/tours.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:25] "GET /static/images/restaurants/nyachang.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:25] "GET /static/icons/medicine_new2.png HTTP/1.1" 304 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:08:25] "GET /static/images/restaurants/hochiminh.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:08:25] "GET /static/images/restaurants/danang.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:08:25] "GET /static/icons/visas_new.png HTTP/1.1" 304 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:08:25] "GET /static/images/restaurants/hanoi.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:08:25] "GET /static/images/restaurants/phuquoc.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:25] "GET /static/images/restaurants/kamran.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:08:25] "GET /static/images/restaurants/hoian.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:25] "GET /static/images/restaurants/phanthiet.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:25] "GET /static/images/tours/nyachang.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:08:25] "GET /static/images/submit_listing.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:25] "GET /static/images/tours/hochiminh.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:08:25] "GET /static/images/tours/hanoi.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:08:25] "GET /static/images/restaurants/dalat.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:08:25] "GET /static/images/tours/phuquoc.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:08:25] "GET /static/images/tours/phanthiet.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:25] "GET /static/images/tours/muine.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:25] "GET /static/images/tours/danang.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:08:25] "GET /static/images/tours/dalat.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:08:25] "GET /static/images/transport/bikes.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:08:25] "GET /static/images/tours/kamran.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:25] "GET /static/images/transport/cars.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:25] "GET /static/images/transport/yachts.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:08:25] "GET /static/images/realestate_nhatrang.jpg?v=20260119 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:08:25] "GET /static/images/transport/bicycles.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:08:25] "GET /static/images/realestate_hochiminh.jpg?v=20260119 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:25] "GET /static/images/realestate_danang.jpg?v=20260119 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:08:25] "GET /static/images/categories/exchange/nhatrang.jpg HTTP/1.1" 304 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:08:25] "GET /static/images/realestate_dalat.jpg?v=20260119 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:25] "GET /static/images/categories/exchange/saigon.jpg HTTP/1.1" 304 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:08:25] "GET /static/images/realestate_phuquoc.jpg?v=20260119 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:25] "GET /static/images/categories/exchange/danang.jpg HTTP/1.1" 304 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:08:25] "GET /static/images/categories/exchange/phuquoc.jpg HTTP/1.1" 304 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:25] "GET /static/images/realestate_hanoi.jpg?v=20260119 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:08:25] "GET /static/images/entertainment/phuquoc.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:25] "GET /static/images/entertainment/hochiminh.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:08:25] "GET /static/images/entertainment/nyachang.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:08:25] "GET /static/images/visas/cambodia.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:08:25] "GET /static/images/medicine/questions.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:25] "GET /static/images/medicine/clinics.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:08:25] "GET /static/images/visas/laos.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:25] "GET /static/images/medicine/directions.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:08:25] "GET /static/images/medicine/insurance.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:08:25] "GET /static/images/kids/events.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:25] "GET /static/images/entertainment/danang.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:08:25] "GET /api/city-counts/tours?country=vietnam HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:25] "GET /static/images/kids/products.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:25] "GET /static/images/kids/schools.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:25] "GET /api/city-counts/real_estate?country=vietnam HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:08:25] "GET /api/weather?city=Ho%20Chi%20Minh HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:25] "GET /api/banners HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:08:25] "GET /api/city-counts/restaurants?country=vietnam HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:08:25] "GET /api/listings/exchange?country=vietnam&city=Дананг HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:08:25] "GET /api/city-counts/entertainment?country=vietnam HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:08:25] "GET /static/images/kids/nannies.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:25] "GET /api/listings/exchange?country=vietnam&city=Нячанг HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:08:25] "GET /api/medicine-type-counts?country=vietnam HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:25] "GET /api/city-counts/real_estate?country=vietnam HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:08:25] "GET /api/city-counts/news?country=vietnam HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:08:25] "GET /api/listings/exchange?country=vietnam&city=Хошимин HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:08:25] "GET /api/kids-type-counts?country=vietnam HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:25] "GET /api/listings/visas?country=vietnam HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:25] "GET /api/ping?uid=user_u4kzx3fhz HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:08:25] "GET /static/icons/realestate_dark.png HTTP/1.1" 304 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:08:25] "GET /static/icons/entertainment_dark.png HTTP/1.1" 304 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:08:25] "GET /api/listings/real_estate?country=vietnam&realestate_city=nhatrang&limit=50&offset=0&_t=1774692503577 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:25] "GET /static/images/icons/restaurants_dark.png HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:08:25] "GET /static/images/icons/tours_dark.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:25] "GET /static/icons/transport_dark.png HTTP/1.1" 304 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:08:25] "GET /api/realestate-groups?country=vietnam HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:25] "GET /api/listings/exchange?country=vietnam&city=Фукуок HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:08:25] "GET /static/images/logo_dark.png HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:27] "GET /static/images/banners/india_1767258371_ChatGPT_Image_1_._2026_._16_05_27.png HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:08:27] "GET /static/images/banners/indonesia_1767258646_ChatGPT_Image_1_._2026_._16_10_17.png HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:08:27] "GET /static/images/banners/vietnam_1767254417_ChatGPT_Image_1_._2026_._14_59_56.png HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:08:27] "GET /static/images/banners/vietnam_mobile_1774611269_IMG_2601.png HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:37] "GET /favicon.ico HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:08:48] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:49] "GET /static/images/logo.png HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:49] "GET /static/icons/entertainment.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:08:49] "GET /static/icons/chat_new.png HTTP/1.1" 304 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:08:49] "GET /static/icons/transport.png HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:08:49] "GET /static/images/icons/restaurants.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:49] "GET /static/icons/realestate.png HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:49] "GET /static/icons/medicine_new2.png HTTP/1.1" 304 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:08:49] "GET /static/icons/kids_new2.png HTTP/1.1" 304 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:49] "GET /static/icons/exchange_new.png HTTP/1.1" 304 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:49] "GET /static/images/restaurants/nyachang.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:08:49] "GET /static/images/icons/tours.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:08:49] "GET /static/icons/visas_new.png HTTP/1.1" 304 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:08:49] "GET /static/images/restaurants/hanoi.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:49] "GET /static/images/restaurants/phuquoc.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:08:49] "GET /static/images/restaurants/danang.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:08:49] "GET /static/images/restaurants/hochiminh.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:08:49] "GET /static/images/submit_listing.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:49] "GET /static/images/tours/nyachang.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:49] "GET /static/images/restaurants/phanthiet.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:49] "GET /static/images/tours/hanoi.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:08:49] "GET /static/images/tours/hochiminh.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:08:49] "GET /static/images/restaurants/kamran.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:49] "GET /static/images/tours/muine.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:08:49] "GET /static/images/tours/phuquoc.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:08:49] "GET /static/images/restaurants/dalat.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:08:49] "GET /static/images/restaurants/hoian.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:49] "GET /static/images/tours/phanthiet.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:08:49] "GET /static/images/tours/kamran.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:49] "GET /static/images/transport/bikes.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:08:49] "GET /static/images/tours/dalat.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:08:49] "GET /static/images/tours/danang.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:08:49] "GET /static/images/transport/yachts.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:49] "GET /static/images/transport/cars.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:08:49] "GET /static/images/transport/bicycles.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:08:49] "GET /static/images/realestate_nhatrang.jpg?v=20260119 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:08:49] "GET /static/images/categories/exchange/nhatrang.jpg HTTP/1.1" 304 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:49] "GET /static/images/realestate_hochiminh.jpg?v=20260119 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:08:49] "GET /static/images/realestate_phuquoc.jpg?v=20260119 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:49] "GET /static/images/realestate_danang.jpg?v=20260119 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:08:49] "GET /static/images/realestate_hanoi.jpg?v=20260119 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:08:49] "GET /static/images/categories/exchange/phuquoc.jpg HTTP/1.1" 304 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:49] "GET /static/images/realestate_dalat.jpg?v=20260119 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:08:49] "GET /static/images/entertainment/nyachang.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:49] "GET /static/images/categories/exchange/saigon.jpg HTTP/1.1" 304 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:49] "GET /static/images/entertainment/hochiminh.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:08:49] "GET /static/images/categories/exchange/danang.jpg HTTP/1.1" 304 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:49] "GET /static/images/entertainment/phuquoc.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:08:49] "GET /static/images/entertainment/danang.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:08:49] "GET /static/images/medicine/clinics.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:08:49] "GET /static/images/kids/events.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:49] "GET /static/images/medicine/directions.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:08:49] "GET /static/images/medicine/insurance.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:49] "GET /static/images/medicine/questions.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:08:49] "GET /static/images/visas/cambodia.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:08:49] "GET /static/images/visas/laos.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:49] "GET /static/images/kids/nannies.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:49] "GET /static/images/kids/schools.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:08:49] "GET /static/images/kids/products.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:49] "GET /api/banners HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:08:49] "GET /api/city-counts/restaurants?country=vietnam HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:08:49] "GET /api/city-counts/tours?country=vietnam HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:08:49] "GET /api/city-counts/entertainment?country=vietnam HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:49] "GET /api/city-counts/real_estate?country=vietnam HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:49] "GET /api/city-counts/news?country=vietnam HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:08:49] "GET /api/weather?city=Ho%20Chi%20Minh HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:08:49] "GET /api/city-counts/real_estate?country=vietnam HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:08:49] "GET /api/medicine-type-counts?country=vietnam HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:49] "GET /api/listings/exchange?country=vietnam&city=Нячанг HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:49] "GET /api/listings/exchange?country=vietnam&city=Хошимин HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:08:49] "GET /api/listings/exchange?country=vietnam&city=Дананг HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:08:49] "GET /api/listings/exchange?country=vietnam&city=Фукуок HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:08:49] "GET /api/kids-type-counts?country=vietnam HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:49] "GET /api/listings/visas?country=vietnam HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:49] "GET /api/ping?uid=user_ii1c1h2qj HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:08:49] "GET /static/icons/entertainment_dark.png HTTP/1.1" 304 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:08:49] "GET /api/listings/real_estate?country=vietnam&realestate_city=nhatrang&limit=50&offset=0&_t=1774692527585 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:08:49] "GET /static/icons/realestate_dark.png HTTP/1.1" 304 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:49] "GET /static/icons/transport_dark.png HTTP/1.1" 304 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:08:49] "GET /static/images/icons/tours_dark.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:49] "GET /static/images/icons/restaurants_dark.png HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:08:49] "GET /api/realestate-groups?country=vietnam HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:08:49] "GET /static/images/logo_dark.png HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:56] "GET /static/images/banners/india_1767258371_ChatGPT_Image_1_._2026_._16_05_27.png HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:08:56] "GET /static/images/banners/indonesia_1767258646_ChatGPT_Image_1_._2026_._16_10_17.png HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:08:56] "GET /static/images/banners/vietnam_mobile_1774611269_IMG_2601.png HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:08:59] "GET /static/images/banners/vietnam_1767254417_ChatGPT_Image_1_._2026_._14_59_56.png HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:00] "GET /favicon.ico HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:04] "GET /static/images/submit_listing.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:04] "GET /api/listings/restaurants?country=thailand&limit=50&offset=0&_t=1774692542427 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:04] "GET /api/realestate-groups?country=thailand HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:09:04] "GET /api/listings/real_estate?country=thailand&realestate_city=&limit=50&offset=0&_t=1774692542427 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:04] "GET /api/city-counts/restaurants?country=thailand HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:04] "GET /api/city-counts/entertainment?country=thailand HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:04] "GET /api/city-counts/real_estate?country=thailand HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:04] "GET /api/city-counts/tours?country=thailand HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:04] "GET /api/weather?city=Bangkok HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:07] "GET /api/weather?city=Ho%20Chi%20Minh HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:07] "GET /api/realestate-groups?country=vietnam HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:07] "GET /api/city-counts/entertainment?country=vietnam HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:07] "GET /api/city-counts/restaurants?country=vietnam HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:09:07] "GET /api/city-counts/tours?country=vietnam HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:07] "GET /api/city-counts/news?country=vietnam HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:07] "GET /api/city-counts/real_estate?country=vietnam HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:07] "GET /api/medicine-type-counts?country=vietnam HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:07] "GET /api/listings/restaurants?country=vietnam&limit=50&offset=0&_t=1774692545504 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:07] "GET /tg_img_grp/restoranvietnam/1269/2 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:07] "GET /tg_img_grp/restoranvietnam/1269/1 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:07] "GET /tg_img_grp/restoranvietnam/1269/3 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:07] "GET /tg_img_grp/restoranvietnam/1265/1 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:07] "GET /tg_img_grp/restoranvietnam/1257/3 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:07] "GET /tg_img_grp/restoranvietnam/1261/3 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:07] "GET /tg_img_grp/restoranvietnam/1261/2 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:07] "GET /tg_img_grp/restoranvietnam/1257/2 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:09:07] "GET /tg_img_grp/restoranvietnam/1261/1 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:07] "GET /tg_img_grp/restoranvietnam/1253/1 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:07] "GET /tg_img_grp/restoranvietnam/1249/2 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:07] "GET /tg_img_grp/restoranvietnam/1253/2 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:07] "GET /tg_img_grp/restoranvietnam/1265/3 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:07] "GET /tg_img_grp/restoranvietnam/1249/1 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:07] "GET /tg_img_grp/restoranvietnam/1265/2 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:07] "GET /tg_img_grp/restoranvietnam/1253/3 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:07] "GET /tg_img_grp/restoranvietnam/1257/1 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:07] "GET /tg_img_grp/restoranvietnam/1245/2 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:07] "GET /tg_img_grp/restoranvietnam/1249/3 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:07] "GET /tg_img_grp/restoranvietnam/1245/3 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:09:07] "GET /tg_img_grp/restoranvietnam/1245/1 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:09:07] "GET /tg_img_grp/restoranvietnam/1241/2 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:07] "GET /tg_img_grp/restoranvietnam/1241/1 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:07] "GET /tg_img_grp/restoranvietnam/1241/3 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:07] "GET /tg_img_grp/restoranvietnam/1237/1 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:07] "GET /tg_img_grp/restoranvietnam/1237/2 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:09:07] "GET /tg_img_grp/restoranvietnam/1237/3 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:07] "GET /tg_img_grp/restoranvietnam/1233/1 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:07] "GET /tg_img_grp/restoranvietnam/1229/1 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:07] "GET /tg_img_grp/restoranvietnam/1233/2 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:09:07] "GET /tg_img_grp/restoranvietnam/1225/1 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:07] "GET /tg_img_grp/restoranvietnam/1233/3 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:07] "GET /tg_img_grp/restoranvietnam/1229/2 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:07] "GET /tg_img_grp/restoranvietnam/1221/1 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:07] "GET /tg_img_grp/restoranvietnam/1225/2 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:09:07] "GET /tg_img_grp/restoranvietnam/1221/2 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:07] "GET /tg_img_grp/restoranvietnam/1225/3 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:07] "GET /tg_img_grp/restoranvietnam/1229/3 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:07] "GET /tg_img_grp/restoranvietnam/1217/1 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:07] "GET /tg_img_grp/restoranvietnam/1221/3 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:07] "GET /tg_img_grp/restoranvietnam/1217/2 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:07] "GET /tg_img_grp/restoranvietnam/1213/1 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:09:07] "GET /tg_img_grp/restoranvietnam/1217/3 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:07] "GET /tg_img_grp/restoranvietnam/1213/3 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:07] "GET /tg_img_grp/restoranvietnam/1213/2 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1209/3 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1205/2 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1209/2 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1209/1 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1205/3 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1201/3 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1201/2 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1199/1 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1195/1 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1201/1 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1195/2 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1199/2 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1205/1 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1199/3 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1195/3 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1191/1 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1187/1 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1187/2 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1191/3 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1183/3 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1191/2 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1179/3 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1175/1 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1183/1 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1187/3 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1175/3 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1179/2 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1179/1 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1167/2 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1183/2 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1171/1 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1171/2 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1167/3 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1167/1 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1163/1 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1151/1 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1171/3 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1159/3 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1159/1 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1151/2 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1151/3 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1147/2 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1155/3 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1163/3 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1155/2 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1175/2 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1159/2 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1155/1 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1147/1 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1147/3 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1163/2 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1143/2 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1143/3 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1143/1 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1135/2 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1131/2 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1135/3 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1131/3 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1131/1 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1127/3 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1127/2 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1127/1 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1087/2 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:09:08] "GET /static/images/placeholder.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1087/1 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1083/1 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1107/3 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1099/1 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1123/2 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1111/2 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1095/1 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1111/1 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1107/1 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1095/2 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1091/1 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1107/2 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1103/3 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1099/3 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1139/1 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1075/3 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1119/2 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1099/2 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1087/3 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1123/1 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1079/3 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1075/1 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1119/3 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1115/2 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1115/1 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1079/2 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1103/2 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1083/3 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1075/2 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1091/2 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1103/1 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1139/2 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1135/1 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1079/1 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1091/3 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1083/2 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1095/3 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1119/1 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1111/3 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1115/3 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1123/3 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:09:08] "GET /tg_img_grp/restoranvietnam/1139/3 HTTP/1.1" 404 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:09:08] "GET /static/images/placeholder.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:09:09] "GET /tg_img_grp/restoranvietnam/1265/0 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:09] "GET /tg_img_grp/restoranvietnam/1257/0 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:09:09] "GET /tg_img_grp/restoranvietnam/1253/0 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:09] "GET /tg_img_grp/restoranvietnam/1261/0 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:09] "GET /tg_img_grp/restoranvietnam/1237/0 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:09] "GET /tg_img_grp/restoranvietnam/1241/0 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:09] "GET /tg_img_grp/restoranvietnam/1199/0 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:09:09] "GET /tg_img_grp/restoranvietnam/1249/0 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:09:09] "GET /tg_img_grp/restoranvietnam/1229/0 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:09] "GET /tg_img_grp/restoranvietnam/1233/0 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:09] "GET /tg_img_grp/restoranvietnam/1213/0 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:09] "GET /tg_img_grp/restoranvietnam/1183/0 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:09] "GET /tg_img_grp/restoranvietnam/1205/0 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:09] "GET /tg_img_grp/restoranvietnam/1163/0 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:09:09] "GET /tg_img_grp/restoranvietnam/1209/0 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:09:09] "GET /tg_img_grp/restoranvietnam/1191/0 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:09:09] "GET /tg_img_grp/restoranvietnam/1187/0 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:09] "GET /tg_img_grp/restoranvietnam/1155/0 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:09:09] "GET /tg_img_grp/restoranvietnam/1151/0 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:09] "GET /tg_img_grp/restoranvietnam/1217/0 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:09:09] "GET /tg_img_grp/restoranvietnam/1171/0 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:09] "GET /tg_img_grp/restoranvietnam/1159/0 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:09:09] "GET /tg_img_grp/restoranvietnam/1269/0 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:09] "GET /tg_img_grp/restoranvietnam/1115/0 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:09] "GET /tg_img_grp/restoranvietnam/1167/0 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:09] "GET /tg_img_grp/restoranvietnam/1225/0 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:09:09] "GET /tg_img_grp/restoranvietnam/1201/0 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:09] "GET /tg_img_grp/restoranvietnam/1119/0 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:09] "GET /tg_img_grp/restoranvietnam/1131/0 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:09] "GET /tg_img_grp/restoranvietnam/1221/0 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:09] "GET /tg_img_grp/restoranvietnam/1107/0 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:09] "GET /tg_img_grp/restoranvietnam/1083/0 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:09] "GET /tg_img_grp/restoranvietnam/1175/0 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:09:09] "GET /tg_img_grp/restoranvietnam/1147/0 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:09] "GET /tg_img_grp/restoranvietnam/1091/0 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:09] "GET /tg_img_grp/restoranvietnam/1099/0 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:09] "GET /tg_img_grp/restoranvietnam/1139/0 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:09:09] "GET /tg_img_grp/restoranvietnam/1179/0 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:09:09] "GET /tg_img_grp/restoranvietnam/1103/0 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:09] "GET /tg_img_grp/restoranvietnam/1123/0 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:09] "GET /tg_img_grp/restoranvietnam/1075/0 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:09:09] "GET /tg_img_grp/restoranvietnam/1135/0 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:09:09] "GET /tg_img_grp/restoranvietnam/1095/0 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:09] "GET /tg_img_grp/restoranvietnam/1111/0 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:09] "GET /tg_img_grp/restoranvietnam/1079/0 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:09:09] "GET /tg_img_grp/restoranvietnam/1127/0 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:09] "GET /tg_img_grp/restoranvietnam/1143/0 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:09] "GET /tg_img_grp/restoranvietnam/1245/0 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:09] "GET /tg_img_grp/restoranvietnam/1087/0 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:10] "GET /tg_img_grp/restoranvietnam/1195/0 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:15] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:16] "GET /static/icons/entertainment.jpg HTTP/1.1" 304 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:16] "GET /static/images/logo.png HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:16] "GET /static/icons/transport.png HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:16] "GET /static/images/icons/restaurants.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:09:16] "GET /static/icons/realestate.png HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:16] "GET /static/icons/exchange_new.png HTTP/1.1" 304 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:16] "GET /static/icons/visas_new.png HTTP/1.1" 304 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:16] "GET /static/images/icons/tours.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:16] "GET /static/icons/medicine_new2.png HTTP/1.1" 304 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:16] "GET /static/images/restaurants/hochiminh.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:16] "GET /static/images/restaurants/nyachang.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:16] "GET /static/images/restaurants/phuquoc.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:09:16] "GET /static/images/restaurants/hanoi.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:16] "GET /static/images/restaurants/kamran.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:16] "GET /static/images/restaurants/phanthiet.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:09:16] "GET /static/images/submit_listing.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:16] "GET /static/images/restaurants/danang.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:16] "GET /static/images/tours/nyachang.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:16] "GET /static/images/restaurants/hoian.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:16] "GET /static/icons/chat_new.png HTTP/1.1" 304 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:16] "GET /static/images/tours/hanoi.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:16] "GET /static/images/tours/hochiminh.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:09:16] "GET /static/icons/kids_new2.png HTTP/1.1" 304 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:16] "GET /static/images/tours/phanthiet.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:16] "GET /static/images/restaurants/dalat.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:09:16] "GET /static/images/tours/phuquoc.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:16] "GET /static/images/tours/muine.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:16] "GET /static/images/tours/danang.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:16] "GET /static/images/tours/kamran.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:09:16] "GET /static/images/tours/dalat.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:16] "GET /static/images/transport/bikes.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:16] "GET /static/images/transport/cars.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:09:16] "GET /static/images/realestate_nhatrang.jpg?v=20260119 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:16] "GET /static/images/transport/yachts.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:16] "GET /static/images/transport/bicycles.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:16] "GET /static/images/realestate_hochiminh.jpg?v=20260119 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:16] "GET /static/images/realestate_danang.jpg?v=20260119 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:16] "GET /static/images/realestate_hanoi.jpg?v=20260119 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:16] "GET /static/images/realestate_phuquoc.jpg?v=20260119 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:16] "GET /static/images/categories/exchange/nhatrang.jpg HTTP/1.1" 304 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:16] "GET /static/images/categories/exchange/danang.jpg HTTP/1.1" 304 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:16] "GET /static/images/categories/exchange/phuquoc.jpg HTTP/1.1" 304 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:09:16] "GET /static/images/realestate_dalat.jpg?v=20260119 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:16] "GET /static/images/categories/exchange/saigon.jpg HTTP/1.1" 304 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:09:16] "GET /static/images/entertainment/nyachang.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:16] "GET /static/images/entertainment/phuquoc.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:16] "GET /static/images/entertainment/hochiminh.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:16] "GET /static/images/entertainment/danang.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:09:16] "GET /static/images/visas/laos.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:16] "GET /static/images/visas/cambodia.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:16] "GET /static/images/medicine/directions.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:16] "GET /static/images/medicine/questions.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:16] "GET /static/images/medicine/insurance.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:16] "GET /static/images/medicine/clinics.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:09:16] "GET /static/images/kids/events.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:16] "GET /static/images/kids/schools.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:16] "GET /static/images/kids/nannies.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:16] "GET /static/images/kids/products.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:16] "GET /api/city-counts/entertainment?country=vietnam HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:09:16] "GET /api/banners HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:16] "GET /api/city-counts/restaurants?country=vietnam HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:16] "GET /api/city-counts/tours?country=vietnam HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:16] "GET /api/city-counts/real_estate?country=vietnam HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:16] "GET /api/medicine-type-counts?country=vietnam HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:09:16] "GET /api/weather?city=Ho%20Chi%20Minh HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:16] "GET /api/city-counts/real_estate?country=vietnam HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:16] "GET /api/city-counts/news?country=vietnam HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:16] "GET /api/listings/exchange?country=vietnam&city=Нячанг HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:16] "GET /api/listings/exchange?country=vietnam&city=Дананг HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:09:16] "GET /api/listings/exchange?country=vietnam&city=Фукуок HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:16] "GET /api/listings/exchange?country=vietnam&city=Хошимин HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:16] "GET /api/kids-type-counts?country=vietnam HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:16] "GET /api/ping?uid=user_vlw7q14t6 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:16] "GET /api/listings/visas?country=vietnam HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:09:16] "GET /static/icons/entertainment_dark.png HTTP/1.1" 304 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:16] "GET /static/icons/transport_dark.png HTTP/1.1" 304 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:16] "GET /static/icons/realestate_dark.png HTTP/1.1" 304 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:16] "GET /static/images/icons/restaurants_dark.png HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:09:16] "GET /static/images/icons/tours_dark.jpg HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:16] "GET /api/listings/real_estate?country=vietnam&realestate_city=nhatrang&limit=50&offset=0&_t=1774692554389 HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:16] "GET /api/realestate-groups?country=vietnam HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:16] "GET /static/images/logo_dark.png HTTP/1.1" 200 -
+INFO:werkzeug:10.16.44.147 - - [28/Mar/2026 10:09:18] "GET /static/images/banners/india_1767258371_ChatGPT_Image_1_._2026_._16_05_27.png HTTP/1.1" 200 -
+INFO:werkzeug:10.16.16.138 - - [28/Mar/2026 10:09:18] "GET /static/images/banners/vietnam_mobile_1774611269_IMG_2601.png HTTP/1.1" 200 -
+INFO:werkzeug:10.16.43.246 - - [28/Mar/2026 10:09:18] "GET /static/images/banners/vietnam_1767254417_ChatGPT_Image_1_._2026_._14_59_56.png HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:18] "GET /static/images/banners/indonesia_1767258646_ChatGPT_Image_1_._2026_._16_10_17.png HTTP/1.1" 200 -
+INFO:werkzeug:10.16.29.151 - - [28/Mar/2026 10:09:23] "GET /favicon.ico HTTP/1.1" 200 -
