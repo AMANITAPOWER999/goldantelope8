@@ -934,7 +934,19 @@ def _enrich_tg_images(items):
 
         # Рестораны: фото берём из публичного канала @restoranvietnam по ID поста
         msg_ids = item.get('photo_msg_ids') or []
-        if msg_ids and item.get('source', item.get('category')) in ('restoranvietnam', 'restaurants'):
+        # Auto-populate photo_msg_ids from telegram_link for old restaurant items
+        is_restaurant = (
+            item.get('category') == 'restaurants'
+            or item.get('source_group') == 'restoranvietnam'
+            or 'restoranvietnam' in (item.get('source', '') or '')
+            or item.get('source', item.get('category')) in ('restoranvietnam', 'restaurants')
+        )
+        if not msg_ids and is_restaurant:
+            tg_link = item.get('telegram_link', '') or ''
+            m = re.search(r't\.me/restoranvietnam/(\d+)', tg_link)
+            if m:
+                msg_ids = [int(m.group(1))]
+        if msg_ids and is_restaurant:
             if need_replace:
                 item['image_url'] = f'/tg_img/restoranvietnam/{msg_ids[0]}'
             for i, mid in enumerate(msg_ids[1:4], start=2):
