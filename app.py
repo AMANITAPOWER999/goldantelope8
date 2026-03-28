@@ -6369,6 +6369,8 @@ _SPAM_WORDS = [
     'i want anal', 'looking for sex', 'ищу секс',
     'реклама', 'pеклама', 'peклама', 'рeклама', 'peкламa',
     'р е к л а м а', 'реклам',
+    'крипта', 'криптовалют', 'crypto', 'cryptocurrency',
+    'usd', 'usdt', 'usdc', 'tether', 'busd',
 ]
 
 import re as _re
