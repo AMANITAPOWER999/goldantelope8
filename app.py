@@ -3226,6 +3226,41 @@ def _build_msg_to_file_id_index():
 threading.Thread(target=_build_msg_to_file_id_index, daemon=True, name='FileIdIndexer').start()
 
 
+def _auto_setup_bot_webhook():
+    """Автоматически регистрирует webhook бота при запуске."""
+    import time as _time
+    _time.sleep(5)
+    try:
+        bot_token = os.environ.get('TELEGRAM_BOT_TOKEN', '')
+        if not bot_token:
+            logger.info('[bot_webhook] TELEGRAM_BOT_TOKEN не задан — webhook не настраивается')
+            return
+        domains = os.environ.get('REPLIT_DOMAINS', '')
+        domain = domains.split(',')[0].strip() if domains else ''
+        if not domain:
+            logger.info('[bot_webhook] REPLIT_DOMAINS не задан — webhook не настраивается')
+            return
+        webhook_url = f'https://{domain}/bot/webhook'
+        r = requests.post(
+            f'https://api.telegram.org/bot{bot_token}/setWebhook',
+            data={'url': webhook_url, 'allowed_updates': '["message","channel_post"]'},
+            timeout=10
+        )
+        result = r.json()
+        if result.get('ok'):
+            logger.info(f'[bot_webhook] Webhook успешно зарегистрирован: {webhook_url}')
+            from telegram_bot import set_bot_commands
+            set_bot_commands()
+            logger.info('[bot_webhook] Команды бота обновлены')
+        else:
+            logger.warning(f'[bot_webhook] Ошибка регистрации webhook: {result}')
+    except Exception as e:
+        logger.warning(f'[bot_webhook] Исключение при настройке webhook: {e}')
+
+
+threading.Thread(target=_auto_setup_bot_webhook, daemon=True, name='BotWebhookSetup').start()
+
+
 def _bot_api_download(file_id: str, bot_token: str) -> bytes | None:
     """Скачивает файл через Bot API напрямую с api.telegram.org (без CDN)."""
     try:
