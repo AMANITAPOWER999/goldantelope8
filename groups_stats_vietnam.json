@@ -8,7 +8,8 @@
       "participants": 0,
       "online": 0,
       "region": "nhatrang",
-      "listings": 43
+      "listings": 43,
+      "city": "dalat"
     },
     {
       "channel": "@dalat_forum",
@@ -17,7 +18,8 @@
       "participants": 2016,
       "online": 567,
       "region": "dalat",
-      "listings": 92
+      "listings": 92,
+      "city": "dalat"
     },
     {
       "channel": "@dalat_ru",
@@ -26,7 +28,8 @@
       "participants": 0,
       "online": 0,
       "region": "other",
-      "listings": 32
+      "listings": 32,
+      "city": "dalat"
     },
     {
       "channel": "@danang_afisha",
@@ -35,7 +38,8 @@
       "participants": 0,
       "online": 0,
       "region": "other",
-      "listings": 59
+      "listings": 59,
+      "city": "dalat"
     },
     {
       "channel": "@danang_chatik",
@@ -44,7 +48,8 @@
       "participants": 1136,
       "online": 362,
       "region": "danang",
-      "listings": 52
+      "listings": 52,
+      "city": "dalat"
     },
     {
       "channel": "@danang_expats",
@@ -53,7 +58,8 @@
       "participants": 1461,
       "online": 447,
       "region": "danang",
-      "listings": 200
+      "listings": 200,
+      "city": "dalat"
     },
     {
       "channel": "@danang_food",
@@ -62,7 +68,8 @@
       "participants": 0,
       "online": 0,
       "region": "danang",
-      "listings": 86
+      "listings": 86,
+      "city": "dalat"
     },
     {
       "channel": "@danang_forum",
@@ -71,7 +78,8 @@
       "participants": 11568,
       "online": 3480,
       "region": "danang",
-      "listings": 96
+      "listings": 96,
+      "city": "dalat"
     },
     {
       "channel": "@danang_mart",
@@ -80,7 +88,8 @@
       "participants": 0,
       "online": 0,
       "region": "danang",
-      "listings": 41
+      "listings": 41,
+      "city": "dalat"
     },
     {
       "channel": "@danang_nedvijimost",
@@ -89,7 +98,8 @@
       "participants": 0,
       "online": 0,
       "region": "danang",
-      "listings": 16
+      "listings": 16,
+      "city": "dalat"
     },
     {
       "channel": "@danang_tysa",
@@ -98,7 +108,8 @@
       "participants": 0,
       "online": 0,
       "region": "other",
-      "listings": 61
+      "listings": 61,
+      "city": "dalat"
     },
     {
       "channel": "@danang_woman",
@@ -107,7 +118,8 @@
       "participants": 2525,
       "online": 865,
       "region": "danang",
-      "listings": 62
+      "listings": 62,
+      "city": "dalat"
     },
     {
       "channel": "@danang_znakomstva",
@@ -116,7 +128,8 @@
       "participants": 0,
       "online": 0,
       "region": "other",
-      "listings": 30
+      "listings": 30,
+      "city": "dalat"
     },
     {
       "channel": "@eda_hanoi",
@@ -125,7 +138,8 @@
       "participants": 0,
       "online": 0,
       "region": "other",
-      "listings": 82
+      "listings": 82,
+      "city": "dalat"
     },
     {
       "channel": "@eda_saigon",
@@ -134,7 +148,8 @@
       "participants": 0,
       "online": 0,
       "region": "other",
-      "listings": 88
+      "listings": 88,
+      "city": "dalat"
     },
     {
       "channel": "@food_muine",
@@ -143,7 +158,8 @@
       "participants": 0,
       "online": 0,
       "region": "muine",
-      "listings": 57
+      "listings": 57,
+      "city": "dalat"
     },
     {
       "channel": "@food_nhatrang",
@@ -152,7 +168,8 @@
       "participants": 0,
       "online": 0,
       "region": "nhatrang",
-      "listings": 80
+      "listings": 80,
+      "city": "dalat"
     },
     {
       "channel": "@fukuok_chatik",
@@ -161,7 +178,8 @@
       "participants": 4320,
       "online": 995,
       "region": "fukuok",
-      "listings": 78
+      "listings": 78,
+      "city": "dalat"
     },
     {
       "channel": "@fukuok_nedvijimost",
@@ -170,7 +188,8 @@
       "participants": 0,
       "online": 0,
       "region": "fukuok",
-      "listings": 72
+      "listings": 72,
+      "city": "dalat"
     },
     {
       "channel": "@fukuok_ponaehali",
@@ -179,7 +198,8 @@
       "participants": 0,
       "online": 0,
       "region": "other",
-      "listings": 1
+      "listings": 1,
+      "city": "dalat"
     },
     {
       "channel": "@fukuok_tusa",
@@ -188,7 +208,8 @@
       "participants": 0,
       "online": 0,
       "region": "other",
-      "listings": 48
+      "listings": 48,
+      "city": "dalat"
     },
     {
       "channel": "@halong_chat",
@@ -197,7 +218,8 @@
       "participants": 0,
       "online": 0,
       "region": "other",
-      "listings": 93
+      "listings": 93,
+      "city": "dalat"
     },
     {
       "channel": "@hanoi_360",
@@ -206,7 +228,8 @@
       "participants": 0,
       "online": 0,
       "region": "hanoi",
-      "listings": 66
+      "listings": 66,
+      "city": "dalat"
     },
     {
       "channel": "@hanoi_afisha",
@@ -215,7 +238,8 @@
       "participants": 0,
       "online": 0,
       "region": "other",
-      "listings": 16
+      "listings": 16,
+      "city": "dalat"
     },
     {
       "channel": "@hanoi_chatik",
@@ -224,7 +248,8 @@
       "participants": 0,
       "online": 0,
       "region": "other",
-      "listings": 84
+      "listings": 84,
+      "city": "dalat"
     },
     {
       "channel": "@hanoi_forum",
@@ -233,7 +258,8 @@
       "participants": 0,
       "online": 0,
       "region": "other",
-      "listings": 85
+      "listings": 85,
+      "city": "dalat"
     },
     {
       "channel": "@hanoi_woman",
@@ -242,7 +268,8 @@
       "participants": 0,
       "online": 0,
       "region": "other",
-      "listings": 96
+      "listings": 96,
+      "city": "dalat"
     },
     {
       "channel": "@hochiminh_chat",
@@ -251,7 +278,8 @@
       "participants": 5502,
       "online": 1395,
       "region": "hochiminh",
-      "listings": 85
+      "listings": 85,
+      "city": "dalat"
     },
     {
       "channel": "@hoian_chat",
@@ -260,7 +288,8 @@
       "participants": 0,
       "online": 0,
       "region": "other",
-      "listings": 70
+      "listings": 70,
+      "city": "dalat"
     },
     {
       "channel": "@hoshimin_afisha",
@@ -269,7 +298,8 @@
       "participants": 0,
       "online": 0,
       "region": "other",
-      "listings": 72
+      "listings": 72,
+      "city": "dalat"
     },
     {
       "channel": "@hoshiminh_woman",
@@ -278,7 +308,8 @@
       "participants": 0,
       "online": 0,
       "region": "other",
-      "listings": 80
+      "listings": 80,
+      "city": "dalat"
     },
     {
       "channel": "@hoyan_chat",
@@ -287,7 +318,8 @@
       "participants": 0,
       "online": 0,
       "region": "other",
-      "listings": 31
+      "listings": 31,
+      "city": "dalat"
     },
     {
       "channel": "@hue_chat",
@@ -296,7 +328,8 @@
       "participants": 0,
       "online": 0,
       "region": "other",
-      "listings": 92
+      "listings": 92,
+      "city": "dalat"
     },
     {
       "channel": "@kamran_chat",
@@ -305,7 +338,8 @@
       "participants": 153,
       "online": 41,
       "region": "kamran",
-      "listings": 98
+      "listings": 98,
+      "city": "dalat"
     },
     {
       "channel": "@kuinen_chat",
@@ -314,7 +348,8 @@
       "participants": 500,
       "online": 96,
       "region": "kuinen",
-      "listings": 96
+      "listings": 96,
+      "city": "dalat"
     },
     {
       "channel": "@muine_afisha",
@@ -323,7 +358,8 @@
       "participants": 0,
       "online": 0,
       "region": "other",
-      "listings": 2
+      "listings": 2,
+      "city": "dalat"
     },
     {
       "channel": "@muine_afisha_chat",
@@ -332,7 +368,8 @@
       "participants": 0,
       "online": 0,
       "region": "other",
-      "listings": 90
+      "listings": 90,
+      "city": "dalat"
     },
     {
       "channel": "@muine_woman",
@@ -341,7 +378,8 @@
       "participants": 0,
       "online": 0,
       "region": "other",
-      "listings": 76
+      "listings": 76,
+      "city": "dalat"
     },
     {
       "channel": "@muinechat",
@@ -350,7 +388,8 @@
       "participants": 0,
       "online": 0,
       "region": "other",
-      "listings": 70
+      "listings": 70,
+      "city": "dalat"
     },
     {
       "channel": "@nhatrang_chatik",
@@ -359,7 +398,8 @@
       "participants": 7880,
       "online": 2325,
       "region": "nhatrang",
-      "listings": 98
+      "listings": 98,
+      "city": "dalat"
     },
     {
       "channel": "@nhatrang_expats",
@@ -368,7 +408,8 @@
       "participants": 3229,
       "online": 930,
       "region": "nhatrang",
-      "listings": 97
+      "listings": 97,
+      "city": "dalat"
     },
     {
       "channel": "@nhatrang_moto",
@@ -377,7 +418,8 @@
       "participants": 0,
       "online": 0,
       "region": "nhatrang",
-      "listings": 196
+      "listings": 196,
+      "city": "dalat"
     },
     {
       "channel": "@nhatrang_ponaehali",
@@ -386,7 +428,8 @@
       "participants": 0,
       "online": 0,
       "region": "other",
-      "listings": 5
+      "listings": 5,
+      "city": "dalat"
     },
     {
       "channel": "@nhatrang_znakomstva",
@@ -395,7 +438,8 @@
       "participants": 0,
       "online": 0,
       "region": "other",
-      "listings": 12
+      "listings": 12,
+      "city": "dalat"
     },
     {
       "channel": "@niachang_arenda",
@@ -404,7 +448,8 @@
       "participants": 0,
       "online": 0,
       "region": "nhatrang",
-      "listings": 19
+      "listings": 19,
+      "city": "dalat"
     },
     {
       "channel": "@niachang_chat",
@@ -413,7 +458,8 @@
       "participants": 0,
       "online": 0,
       "region": "other",
-      "listings": 37
+      "listings": 37,
+      "city": "dalat"
     },
     {
       "channel": "@niachang_deti",
@@ -422,7 +468,8 @@
       "participants": 0,
       "online": 0,
       "region": "other",
-      "listings": 88
+      "listings": 88,
+      "city": "dalat"
     },
     {
       "channel": "@nyachang_chatik",
@@ -431,7 +478,8 @@
       "participants": 0,
       "online": 0,
       "region": "other",
-      "listings": 61
+      "listings": 61,
+      "city": "dalat"
     },
     {
       "channel": "@nyachang_ru",
@@ -440,7 +488,8 @@
       "participants": 0,
       "online": 0,
       "region": "other",
-      "listings": 67
+      "listings": 67,
+      "city": "dalat"
     },
     {
       "channel": "@nyachang_znakomstva",
@@ -449,7 +498,8 @@
       "participants": 0,
       "online": 0,
       "region": "other",
-      "listings": 65
+      "listings": 65,
+      "city": "dalat"
     },
     {
       "channel": "@otdam_niachang",
@@ -458,7 +508,8 @@
       "participants": 0,
       "online": 0,
       "region": "other",
-      "listings": 62
+      "listings": 62,
+      "city": "dalat"
     },
     {
       "channel": "@phanthiet_chat",
@@ -467,7 +518,8 @@
       "participants": 350,
       "online": 59,
       "region": "phanthiet",
-      "listings": 92
+      "listings": 92,
+      "city": "dalat"
     },
     {
       "channel": "@phuquoc_food",
@@ -476,7 +528,8 @@
       "participants": 0,
       "online": 0,
       "region": "phuquoc",
-      "listings": 36
+      "listings": 36,
+      "city": "dalat"
     },
     {
       "channel": "@phuquoc_locals",
@@ -485,7 +538,8 @@
       "participants": 0,
       "online": 0,
       "region": "other",
-      "listings": 98
+      "listings": 98,
+      "city": "dalat"
     },
     {
       "channel": "@phuquoc_market",
@@ -494,7 +548,8 @@
       "participants": 0,
       "online": 0,
       "region": "other",
-      "listings": 43
+      "listings": 43,
+      "city": "dalat"
     },
     {
       "channel": "@phuquoc_woman",
@@ -503,7 +558,8 @@
       "participants": 0,
       "online": 0,
       "region": "other",
-      "listings": 70
+      "listings": 70,
+      "city": "dalat"
     },
     {
       "channel": "@saigon_360",
@@ -512,7 +568,8 @@
       "participants": 0,
       "online": 0,
       "region": "hochiminh",
-      "listings": 48
+      "listings": 48,
+      "city": "dalat"
     },
     {
       "channel": "@saigon_sport",
@@ -521,7 +578,8 @@
       "participants": 0,
       "online": 0,
       "region": "other",
-      "listings": 93
+      "listings": 93,
+      "city": "dalat"
     },
     {
       "channel": "@saigon_tusa",
@@ -530,7 +588,8 @@
       "participants": 0,
       "online": 0,
       "region": "hochiminh",
-      "listings": 174
+      "listings": 174,
+      "city": "dalat"
     },
     {
       "channel": "@vietnam_chatt",
@@ -539,7 +598,8 @@
       "participants": 14244,
       "online": 4006,
       "region": "hochiminh",
-      "listings": 94
+      "listings": 94,
+      "city": "dalat"
     },
     {
       "channel": "@vietnam_deti",
@@ -548,7 +608,8 @@
       "participants": 0,
       "online": 0,
       "region": "nationwide",
-      "listings": 50
+      "listings": 50,
+      "city": "dalat"
     },
     {
       "channel": "@vietnam_food",
@@ -557,7 +618,8 @@
       "participants": 0,
       "online": 0,
       "region": "nationwide",
-      "listings": 45
+      "listings": 45,
+      "city": "dalat"
     },
     {
       "channel": "@vietnam_forum",
@@ -566,7 +628,8 @@
       "participants": 0,
       "online": 0,
       "region": "nationwide",
-      "listings": 148
+      "listings": 148,
+      "city": "dalat"
     },
     {
       "channel": "@vietnam_man",
@@ -575,7 +638,8 @@
       "participants": 0,
       "online": 0,
       "region": "other",
-      "listings": 174
+      "listings": 174,
+      "city": "dalat"
     },
     {
       "channel": "@vietnam_medicina",
@@ -584,7 +648,8 @@
       "participants": 0,
       "online": 0,
       "region": "nationwide",
-      "listings": 93
+      "listings": 93,
+      "city": "dalat"
     },
     {
       "channel": "@vietnam_obmen",
@@ -593,7 +658,8 @@
       "participants": 0,
       "online": 0,
       "region": "nationwide",
-      "listings": 77
+      "listings": 77,
+      "city": "dalat"
     },
     {
       "channel": "@vietnam_pitomci",
@@ -602,7 +668,8 @@
       "participants": 0,
       "online": 0,
       "region": "other",
-      "listings": 94
+      "listings": 94,
+      "city": "dalat"
     },
     {
       "channel": "@vietnam_poputchiki",
@@ -611,7 +678,8 @@
       "participants": 0,
       "online": 0,
       "region": "nationwide",
-      "listings": 178
+      "listings": 178,
+      "city": "dalat"
     },
     {
       "channel": "@vietnam_rabota",
@@ -620,7 +688,8 @@
       "participants": 0,
       "online": 0,
       "region": "other",
-      "listings": 74
+      "listings": 74,
+      "city": "dalat"
     },
     {
       "channel": "@vietnam_rent",
@@ -629,7 +698,8 @@
       "participants": 0,
       "online": 0,
       "region": "nationwide",
-      "listings": 25
+      "listings": 25,
+      "city": "dalat"
     },
     {
       "channel": "@vietnam_ru",
@@ -638,7 +708,8 @@
       "participants": 0,
       "online": 0,
       "region": "other",
-      "listings": 80
+      "listings": 80,
+      "city": "dalat"
     },
     {
       "channel": "@vietnam_viza",
@@ -647,7 +718,8 @@
       "participants": 0,
       "online": 0,
       "region": "nationwide",
-      "listings": 96
+      "listings": 96,
+      "city": "dalat"
     },
     {
       "channel": "@vietnam_vizaran",
@@ -656,7 +728,8 @@
       "participants": 0,
       "online": 0,
       "region": "nationwide",
-      "listings": 66
+      "listings": 66,
+      "city": "dalat"
     },
     {
       "channel": "@vietnam_woman",
@@ -665,7 +738,8 @@
       "participants": 0,
       "online": 0,
       "region": "other",
-      "listings": 166
+      "listings": 166,
+      "city": "dalat"
     },
     {
       "channel": "@vungtau_360",
@@ -674,7 +748,8 @@
       "participants": 0,
       "online": 0,
       "region": "other",
-      "listings": 44
+      "listings": 44,
+      "city": "dalat"
     },
     {
       "channel": "@vungtau_chat",
@@ -683,7 +758,8 @@
       "participants": 509,
       "online": 79,
       "region": "vungtau",
-      "listings": 100
+      "listings": 100,
+      "city": "dalat"
     },
     {
       "channel": "@znakomstva_vietnam",
@@ -692,7 +768,8 @@
       "participants": 0,
       "online": 0,
       "region": "other",
-      "listings": 92
+      "listings": 92,
+      "city": "dalat"
     }
   ]
 }
