@@ -3100,7 +3100,9 @@
                         <span style="font-size: 22px;">🇹🇭</span>
                         <span style="font-weight: 700; font-size: 16px; color: #5a3e00;">Чаты Таиланда</span>
                         <span style="font-size: 12px; color: #7a5800; margin-left: auto; background: rgba(255,255,255,0.4); padding: 3px 10px; border-radius: 12px;" id="th-chat-active-label"></span>
+                        <button id="th-chat-collapse-btn" onclick="toggleThChatCollapse()" style="background:rgba(255,255,255,0.35);border:none;border-radius:8px;padding:4px 12px;cursor:pointer;font-size:13px;font-weight:600;color:#5a3e00;margin-left:8px;transition:all .15s;">Показать ▼</button>
                     </div>
+                    <div id="th-chat-body" style="display:none;">
                     <div style="padding: 14px 16px 10px; display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px;">
                         <button class="th-chat-btn" data-channel="" onclick="switchThChat('')"
                             style="display:flex;align-items:center;gap:7px;padding:10px 12px;border-radius:10px;border:2px solid #d4af37;background:#d4af37;color:#5a3e00;font-size:13px;font-weight:700;cursor:pointer;transition:all .15s;">
@@ -3190,6 +3192,7 @@
                             style="display:flex;align-items:center;gap:7px;padding:10px 12px;border-radius:10px;border:1.5px solid #e0e0e0;background:#fafafa;color:#444;font-size:13px;cursor:pointer;transition:all .15s;">
                             🐚 <span>Краби</span>
                         </button>
+                    </div>
                     </div>
                     <div style="border-top: 1px solid #f0f0f0; padding: 12px 16px;">
                         <div id="th-chat-feed" style="max-height: 920px; overflow-y: auto; display: flex; flex-direction: column; gap: 7px;">
@@ -6418,6 +6421,20 @@
                 }).join('');
             } catch(e) {
                 feed.innerHTML = '<div style="text-align:center;padding:20px;color:#f44;font-size:13px;">Ошибка загрузки</div>';
+            }
+        }
+
+        let _thChatCollapsed = true;
+        function toggleThChatCollapse() {
+            _thChatCollapsed = !_thChatCollapsed;
+            const body = document.getElementById('th-chat-body');
+            const btn = document.getElementById('th-chat-collapse-btn');
+            if (_thChatCollapsed) {
+                body.style.display = 'none';
+                btn.textContent = 'Показать ▼';
+            } else {
+                body.style.display = '';
+                btn.textContent = 'Скрыть ▲';
             }
         }
 
