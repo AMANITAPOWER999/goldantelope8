@@ -971,6 +971,43 @@ def _enrich_tg_images(items):
                 item[key] = grp_urls
             continue
 
+        # Real estate: convert expired telesco.pe CDN URLs to /tg_img/ proxy
+        item_id = item.get('id', '') or ''
+        tg_link = item.get('telegram_link', '') or ''
+        m_vn = re.search(r't\.me/(vietnamparsing)/(\d+)', tg_link)
+        if not m_vn:
+            m_vn = re.match(r'(vietnamparsing)_(\d+)', item_id)
+        m_th = re.search(r't\.me/(thailandparsing)/(\d+)', tg_link)
+        if not m_th:
+            m_th = re.match(r'(thailandparsing)_(\d+)', item_id)
+        m_chan = m_vn or m_th
+        if m_chan:
+            chan = m_chan.group(1)
+            base_pid = int(m_chan.group(2))
+            def _fix_telesco(urls, chan, base_pid):
+                fixed = []
+                for i, u in enumerate(urls):
+                    if u and ('telesco.pe' in u or 'cdn' in str(u)):
+                        fixed.append(f'/tg_img/{chan}/{base_pid + i}')
+                    elif u and isinstance(u, str) and u.startswith('/tg_img/'):
+                        fixed.append(u)
+                    elif u and isinstance(u, str) and re.match(r'^https://t\.me/([^/]+)/(\d+)$', u):
+                        tm = re.match(r'^https://t\.me/([^/]+)/(\d+)$', u)
+                        fixed.append(f'/tg_img/{tm.group(1)}/{tm.group(2)}')
+                    else:
+                        fixed.append(u)
+                return fixed
+            for key in ('photos', 'all_images', 'images'):
+                lst = item.get(key)
+                if isinstance(lst, list) and lst:
+                    item[key] = _fix_telesco(lst, chan, base_pid)
+            iu = item.get('image_url', '') or ''
+            if iu and ('telesco.pe' in iu or 'cdn' in iu.lower()):
+                item['image_url'] = f'/tg_img/{chan}/{base_pid}'
+            elif iu and re.match(r'^https://t\.me/([^/]+)/(\d+)$', iu):
+                tm = re.match(r'^https://t\.me/([^/]+)/(\d+)$', iu)
+                item['image_url'] = f'/tg_img/{tm.group(1)}/{tm.group(2)}'
+
         # Остальные: используем tg_file_ids как запасной вариант
         fids = item.get('tg_file_ids') or []
         if fids and need_replace:
