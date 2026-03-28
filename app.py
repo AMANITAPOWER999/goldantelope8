@@ -3249,9 +3249,6 @@ def _auto_setup_bot_webhook():
         result = r.json()
         if result.get('ok'):
             logger.info(f'[bot_webhook] Webhook успешно зарегистрирован: {webhook_url}')
-            from telegram_bot import set_bot_commands
-            set_bot_commands()
-            logger.info('[bot_webhook] Команды бота обновлены')
         else:
             logger.warning(f'[bot_webhook] Ошибка регистрации webhook: {result}')
     except Exception as e:
