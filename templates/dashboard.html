@@ -8157,8 +8157,12 @@
                                 return url;
                             }).filter(Boolean);
                         } else {
-                            // Restaurants: use tg_file_ids via bot API proxy (direct Telegram)
-                            if (category === 'restaurants' && Array.isArray(item.tg_file_ids) && item.tg_file_ids.length > 0) {
+                            // Restaurants: prefer photo_album_urls (group proxy), fallback to tg_file_ids / photo_msg_ids
+                            if (category === 'restaurants' && Array.isArray(item.photo_album_urls) && item.photo_album_urls.length > 0) {
+                                images = item.photo_album_urls;
+                            } else if (category === 'restaurants' && Array.isArray(item.all_images) && item.all_images.length > 0 && item.all_images[0].startsWith('/')) {
+                                images = item.all_images;
+                            } else if (category === 'restaurants' && Array.isArray(item.tg_file_ids) && item.tg_file_ids.length > 0) {
                                 images = item.tg_file_ids.map(fid => `/tg_file/${encodeURIComponent(fid)}`);
                             } else if (category === 'restaurants' && Array.isArray(item.photo_msg_ids) && item.photo_msg_ids.length > 0) {
                                 images = item.photo_msg_ids.map(mid => `/tg_img/restoranvietnam/${mid}`);
