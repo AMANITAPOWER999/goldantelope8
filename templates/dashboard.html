@@ -6355,10 +6355,17 @@
             'pattayachatonline','pattayapar','chats_pattaya','phuketdating','krabichat'
         ]);
 
-        async function loadThChatFeed(channel) {
+        async function loadThChatFeed(channel, silent) {
             const feed = document.getElementById('th-chat-feed');
             if (!feed) return;
-            feed.innerHTML = '<div style="text-align:center;padding:20px;color:#bbb;font-size:13px;">⏳ Загрузка...</div>';
+            if (!silent) feed.innerHTML = '<div style="text-align:center;padding:20px;color:#bbb;font-size:13px;">⏳ Загрузка...</div>';
+            if (!window._thChatInterval) {
+                window._thChatInterval = setInterval(() => {
+                    if (document.getElementById('chat') && document.getElementById('chat').classList.contains('active') && currentCountry === 'thailand') {
+                        loadThChatFeed(_activeThChat || '', true);
+                    }
+                }, 5000);
+            }
             try {
                 let url = `/api/listings/chat?country=thailand&limit=200`;
                 if (channel) url += `&source_channel=${encodeURIComponent(channel)}`;
@@ -6463,10 +6470,17 @@
             }
         }
 
-        async function loadVnChatFeed(channel) {
+        async function loadVnChatFeed(channel, silent) {
             const feed = document.getElementById('vn-chat-feed');
             if (!feed) return;
-            feed.innerHTML = '<div style="text-align:center;padding:20px;color:#bbb;font-size:13px;">⏳ Загрузка...</div>';
+            if (!silent) feed.innerHTML = '<div style="text-align:center;padding:20px;color:#bbb;font-size:13px;">⏳ Загрузка...</div>';
+            if (!window._vnChatInterval) {
+                window._vnChatInterval = setInterval(() => {
+                    if (document.getElementById('chat') && document.getElementById('chat').classList.contains('active') && currentCountry !== 'thailand') {
+                        loadVnChatFeed(_activeVnChat || '', true);
+                    }
+                }, 5000);
+            }
             try {
                 let url = `/api/listings/chat?country=vietnam&limit=60`;
                 if (channel) url += `&source_channel=${encodeURIComponent(channel)}`;
