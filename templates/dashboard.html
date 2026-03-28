@@ -8264,7 +8264,7 @@
                         let images = [...new Set([..._p2, ..._a2])];
                         if (category === 'real_estate' || category === 'realestate') {
                             images = images.filter(url => url && typeof url === 'string' &&
-                                (/^https:\/\/t\.me\/(vietnamparsing|thailandparsing)\/\d+$/.test(url) || url.includes('telesco.pe')));
+                                (/^https:\/\/t\.me\/(vietnamparsing|thailandparsing)\/\d+$/.test(url) || url.includes('telesco.pe') || url.startsWith('/tg_img/')));
                             images = images.map(url => {
                                 const tmeMatch = url.match(/^https:\/\/t\.me\/([^\/]+)\/(\d+)$/);
                                 if (tmeMatch) return `/tg_img/${tmeMatch[1]}/${tmeMatch[2]}`;
