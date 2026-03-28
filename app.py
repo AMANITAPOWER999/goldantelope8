@@ -1465,6 +1465,46 @@ def get_listings(category):
         _enrich_tg_images(filtered)
         return jsonify(filtered)
     
+    # Для категории chat — подмешиваем живые данные из chatiparsing
+    if category == 'chat':
+        try:
+            import time as _time
+            now = _time.time()
+            if now - _chatiparsing_cache['ts'] > 10 or not _chatiparsing_cache['data']:
+                from bs4 import BeautifulSoup
+                import re as _re
+                resp = requests.get('https://t.me/s/chatiparsing', timeout=8,
+                                    headers={'User-Agent': 'Mozilla/5.0'})
+                soup = BeautifulSoup(resp.text, 'html.parser')
+                live = []
+                for wrap in soup.find_all('div', class_='tgme_widget_message_wrap'):
+                    text_el = wrap.find('div', class_='tgme_widget_message_text')
+                    date_el = wrap.find('time')
+                    if not text_el:
+                        continue
+                    raw = text_el.get_text('\n', strip=True)
+                    tg_links = re.findall(r'https://t\.me/([\w_]+)/(\d+)', raw)
+                    src_ch = tg_links[-1][0] if tg_links else ''
+                    src_link = f'https://t.me/{tg_links[-1][0]}/{tg_links[-1][1]}' if tg_links else ''
+                    display = re.sub(r'https://t\.me/\S+', '', raw).strip()
+                    live.append({
+                        'description': display,
+                        'title': display[:60],
+                        'source_channel': f'@{src_ch}' if src_ch else '',
+                        'tg_link': src_link,
+                        'date': date_el.get('datetime', '') if date_el else '',
+                        'category': 'chat',
+                    })
+                _chatiparsing_cache['data'] = live
+                _chatiparsing_cache['ts'] = now
+            live_items = _chatiparsing_cache.get('data', [])
+            existing_descs = set((x.get('description','') or '')[:50] for x in filtered)
+            for item in live_items:
+                if (item.get('description','') or '')[:50] not in existing_descs:
+                    filtered.append(item)
+        except Exception as e:
+            print(f'chatiparsing merge error: {e}')
+
     # Сортировка по дате - новые сверху
     filtered.sort(key=lambda x: x.get('date', x.get('added_at', '1970-01-01')) or '1970-01-01', reverse=True)
     
