@@ -6385,19 +6385,32 @@
                 const sorted = items.slice().sort((a, b) => {
                     const da = a.date ? new Date(a.date) : 0;
                     const db = b.date ? new Date(b.date) : 0;
-                    return da - db;
+                    return db - da;
                 });
-                feed.innerHTML = sorted.slice(-60).map(item => {
+                const isDark = document.documentElement.classList.contains('dark');
+                feed.innerHTML = sorted.slice(0, 60).map(item => {
                     const src = (item.source_channel || '').replace('@','');
                     const link = item.tg_link || (src && item.message_id ? `https://t.me/${src}/${item.message_id}` : null);
-                    const dateStr = item.date ? new Date(item.date).toLocaleString('ru-RU', {day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}) : '';
+                    let dateStr = '';
+                    if (item.date) {
+                        const d = new Date(item.date);
+                        const dd = String(d.getDate()).padStart(2,'0');
+                        const mm = String(d.getMonth()+1).padStart(2,'0');
+                        const hh = String(d.getHours()).padStart(2,'0');
+                        const mi = String(d.getMinutes()).padStart(2,'0');
+                        dateStr = `${dd}.${mm}, ${hh}:${mi}`;
+                    }
                     const text = (item.description || item.title || '').substring(0, 300);
-                    return `<div style="background:#f8f9fa;border-radius:8px;padding:10px 13px;border-left:3px solid #d4af37;">
+                    const bg = isDark ? '#1e2035' : '#f8f9fa';
+                    const border = isDark ? '#2a2a3d' : '#e8e8e8';
+                    const txtColor = isDark ? '#d0d0e0' : '#333';
+                    const timeColor = isDark ? '#d4af37' : '#888';
+                    return `<div style="background:${bg};border-radius:8px;padding:10px 13px;border:1px solid ${border};border-left:3px solid #d4af37;">
                         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;">
                             <a href="https://t.me/${src}" target="_blank" style="color:#0088cc;font-size:12px;font-weight:600;text-decoration:none;">@${src}</a>
-                            <span style="background:#f0f0f0;color:#777;font-size:11px;padding:2px 7px;border-radius:10px;">${dateStr}</span>
+                            <span style="color:${timeColor};font-size:12px;font-weight:600;">${dateStr}</span>
                         </div>
-                        <div style="color:#333;font-size:13px;line-height:1.5;white-space:pre-wrap;">${text}</div>
+                        <div style="color:${txtColor};font-size:13px;line-height:1.5;white-space:pre-wrap;">${text}</div>
                         ${link ? `<a href="${link}" target="_blank" style="display:inline-block;margin-top:6px;font-size:11px;color:#0088cc;text-decoration:none;">→ открыть в Telegram</a>` : ''}
                     </div>`;
                 }).join('');
@@ -6490,23 +6503,36 @@
                     feed.innerHTML = '<div style="text-align:center;padding:30px;color:#bbb;font-size:13px;">Сообщений пока нет — парсер только начал работу</div>';
                     return;
                 }
-                // Сортируем: старые сверху, новые снизу
+                // Сортируем: новые сверху, старые вниз
                 const sorted = items.slice().sort((a, b) => {
                     const da = a.date ? new Date(a.date) : 0;
                     const db = b.date ? new Date(b.date) : 0;
-                    return da - db;
+                    return db - da;
                 });
-                feed.innerHTML = sorted.slice(-60).map(item => {
+                const isDark = document.documentElement.classList.contains('dark');
+                feed.innerHTML = sorted.slice(0, 60).map(item => {
                     const src = (item.source_channel || '').replace('@','');
                     const link = item.tg_link || (src && item.message_id ? `https://t.me/${src}/${item.message_id}` : null);
-                    const dateStr = item.date ? new Date(item.date).toLocaleString('ru-RU', {day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}) : '';
+                    let dateStr = '';
+                    if (item.date) {
+                        const d = new Date(item.date);
+                        const dd = String(d.getDate()).padStart(2,'0');
+                        const mm = String(d.getMonth()+1).padStart(2,'0');
+                        const hh = String(d.getHours()).padStart(2,'0');
+                        const mi = String(d.getMinutes()).padStart(2,'0');
+                        dateStr = `${dd}.${mm}, ${hh}:${mi}`;
+                    }
                     const text = (item.description || item.title || '').substring(0, 300);
-                    return `<div style="background:#f8f9fa;border-radius:8px;padding:10px 13px;border-left:3px solid #d4af37;">
+                    const bg = isDark ? '#1e2035' : '#f8f9fa';
+                    const border = isDark ? '#2a2a3d' : '#e8e8e8';
+                    const txtColor = isDark ? '#d0d0e0' : '#333';
+                    const timeColor = isDark ? '#d4af37' : '#888';
+                    return `<div style="background:${bg};border-radius:8px;padding:10px 13px;border:1px solid ${border};border-left:3px solid #d4af37;">
                         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;">
                             <a href="https://t.me/${src}" target="_blank" style="color:#0088cc;font-size:12px;font-weight:600;text-decoration:none;">@${src}</a>
-                            <span style="background:#f0f0f0;color:#777;font-size:11px;padding:2px 7px;border-radius:10px;">${dateStr}</span>
+                            <span style="color:${timeColor};font-size:12px;font-weight:600;">${dateStr}</span>
                         </div>
-                        <div style="color:#333;font-size:13px;line-height:1.5;white-space:pre-wrap;">${text}</div>
+                        <div style="color:${txtColor};font-size:13px;line-height:1.5;white-space:pre-wrap;">${text}</div>
                         ${link ? `<a href="${link}" target="_blank" style="display:inline-block;margin-top:6px;font-size:11px;color:#0088cc;text-decoration:none;">→ открыть в Telegram</a>` : ''}
                     </div>`;
                 }).join('');
