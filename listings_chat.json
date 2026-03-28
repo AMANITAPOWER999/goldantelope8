@@ -5133,5 +5133,18 @@
     "image_hash": null,
     "has_media": true,
     "price": null
+  },
+  {
+    "id": "Pkhuket_Chatx_36033",
+    "category": "chat",
+    "title": "Добрый день никто из Хабаровска не летит на Пхукет ?\nЕсли есть кто ближайшие дни рейсы пишите в ЛС",
+    "description": "Добрый день никто из Хабаровска не летит на Пхукет ?\nЕсли есть кто ближайшие дни рейсы пишите в ЛС",
+    "date": "2026-03-28T07:22:44+00:00",
+    "source_channel": "@Pkhuket_Chatx",
+    "message_id": 36033,
+    "image_url": null,
+    "image_hash": null,
+    "has_media": false,
+    "price": null
   }
 ]
