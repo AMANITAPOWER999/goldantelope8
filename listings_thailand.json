@@ -6288,6 +6288,110 @@
   "transport": [],
   "real_estate": [
     {
+      "id": "thailand_25272",
+      "title": "Объявление о недвижимости",
+      "description": "https://t.me/sea_phuket/326729",
+      "text": "https://t.me/sea_phuket/326729",
+      "price": 0,
+      "price_display": "",
+      "city": "Пхукет",
+      "listing_type": "rent",
+      "contact": "@sea_phuket",
+      "telegram_link": "https://t.me/sea_phuket/326729",
+      "photos": [
+        "/tg_img/sea_phuket/326729",
+        "/tg_img/sea_phuket/25273",
+        "/tg_img/sea_phuket/25274"
+      ],
+      "image_url": "/tg_img/sea_phuket/326729",
+      "all_images": [
+        "/tg_img/sea_phuket/326729",
+        "/tg_img/sea_phuket/25273",
+        "/tg_img/sea_phuket/25274"
+      ],
+      "date": "2026-03-28T18:35:44.280551+00:00",
+      "source": "telegram",
+      "channel": "thailandparsing"
+    },
+    {
+      "id": "thailand_25265",
+      "title": "Лот The Title Residencies Naiyang Stylish Condo Near Naiyang Beach Уютная квартира с 1 спальней площадью 39 м², располож",
+      "description": "Лот The Title Residencies Naiyang Stylish Condo Near Naiyang Beach Уютная квартира с 1 спальней площадью 39 м², расположенная в современном комплексе всего в нескольких минутах ходьбы от пляжа Найянг. В квартире светлая гостиная с кухонным уголком, отдельная спальня, ванная комната и балкон с видом на зелёные насаждения или бассейн. В комплексе: несколько бассейнов (включая на крыше), фитнес-зал, сауна, охрана 24/7, парковка и благоустроенные зелёные зоны для прогулок. Отличное расположение рядо",
+      "text": "Лот The Title Residencies Naiyang Stylish Condo Near Naiyang Beach Уютная квартира с 1 спальней площадью 39 м², расположенная в современном комплексе всего в нескольких минутах ходьбы от пляжа Найянг. В квартире светлая гостиная с кухонным уголком, отдельная спальня, ванная комната и балкон с видом на зелёные насаждения или бассейн. В комплексе: несколько бассейнов (включая на крыше), фитнес-зал, сауна, охрана 24/7, парковка и благоустроенные зелёные зоны для прогулок. Отличное расположение рядом с пляжем, кафе, магазинами и всего в 5 минутах езды от аэропорта. Свободна Апрель - Май по специальной цене 20 000 ТНВ/мес Красивая и зеленая территория Рядом кафе, спа и массаж Охрана 247, паркинг Кондиционеры Оборудованная кухня TV Раскладной диван Тренажерный зал 6 бассейнов Сауна Пляж Найянг 5 мин пешком Напишите нам и мы подберём лучшие варианты для Вас: PhuLand KsenY_Land kirill_phuketland +79175703060 Live. Phuket Land Max Отзывы наших клиентов Не просто отдых - Ваше идеальное путешествие с Phuket Land!\n\nh",
+      "price": 0,
+      "price_display": "",
+      "city": "Пхукет",
+      "listing_type": "rent",
+      "contact": "@thailandparsing",
+      "telegram_link": "https://t.me/thailandparsing/25265",
+      "photos": [
+        "/tg_img/thailandparsing/25265",
+        "/tg_img/thailandparsing/25266",
+        "/tg_img/thailandparsing/25267",
+        "/tg_img/thailandparsing/25268",
+        "/tg_img/thailandparsing/25269",
+        "/tg_img/thailandparsing/25270",
+        "/tg_img/thailandparsing/25271"
+      ],
+      "image_url": "/tg_img/thailandparsing/25265",
+      "all_images": [
+        "/tg_img/thailandparsing/25265",
+        "/tg_img/thailandparsing/25266",
+        "/tg_img/thailandparsing/25267",
+        "/tg_img/thailandparsing/25268",
+        "/tg_img/thailandparsing/25269",
+        "/tg_img/thailandparsing/25270",
+        "/tg_img/thailandparsing/25271"
+      ],
+      "date": "2026-03-28T18:35:44.280351+00:00",
+      "source": "telegram",
+      "channel": "thailandparsing"
+    },
+    {
+      "id": "thailand_25264",
+      "title": "Свежая нейросеть, которая разденет любую су4ку Любые твои прихоти здесь Пробуй genonerobot",
+      "description": "Свежая нейросеть, которая разденет любую су4ку Любые твои прихоти здесь Пробуй genonerobot\n\nhttps://t.me/thailand_real_estate_phuket/19681",
+      "text": "Свежая нейросеть, которая разденет любую су4ку Любые твои прихоти здесь Пробуй genonerobot\n\nhttps://t.me/thailand_real_estate_phuket/19681",
+      "price": 0,
+      "price_display": "",
+      "city": "Пхукет",
+      "listing_type": "rent",
+      "contact": "@thailand_real_estate_phuket",
+      "telegram_link": "https://t.me/thailand_real_estate_phuket/19681",
+      "photos": [
+        "/tg_img/thailand_real_estate_phuket/19681"
+      ],
+      "image_url": "/tg_img/thailand_real_estate_phuket/19681",
+      "all_images": [
+        "/tg_img/thailand_real_estate_phuket/19681"
+      ],
+      "date": "2026-03-28T18:35:44.280298+00:00",
+      "source": "telegram",
+      "channel": "thailandparsing"
+    },
+    {
+      "id": "thailand_25263",
+      "title": "Нужны работники на складе макулатуры, от 4500р за день. Пишите поговорим",
+      "description": "Нужны работники на складе макулатуры, от 4500р за день. Пишите поговорим\n\nhttps://t.me/phuket_nedvizhimost_rent/770695",
+      "text": "Нужны работники на складе макулатуры, от 4500р за день. Пишите поговорим\n\nhttps://t.me/phuket_nedvizhimost_rent/770695",
+      "price": 0,
+      "price_display": "",
+      "city": "Пхукет",
+      "listing_type": "rent",
+      "contact": "@phuket_nedvizhimost_rent",
+      "telegram_link": "https://t.me/phuket_nedvizhimost_rent/770695",
+      "photos": [
+        "/tg_img/phuket_nedvizhimost_rent/770695"
+      ],
+      "image_url": "/tg_img/phuket_nedvizhimost_rent/770695",
+      "all_images": [
+        "/tg_img/phuket_nedvizhimost_rent/770695"
+      ],
+      "date": "2026-03-28T18:29:59.523167+00:00",
+      "source": "telegram",
+      "channel": "thailandparsing"
+    },
+    {
       "id": "thailand_25262",
       "title": "B cвязи c pacшиpeниeм ищy пapтнёpoв для coтpyдничecтвa Дoxoд oт 6% в дeнь Oфициaльныe биpжи Bіtgеt и Bуbіt Бeз кapт и пp",
       "description": "B cвязи c pacшиpeниeм ищy пapтнёpoв для coтpyдничecтвa Дoxoд oт 6% в дeнь Oфициaльныe биpжи Bіtgеt и Bуbіt Бeз кapт и пpeдoплaт Пepвый peзyльтaт чepeз 30 минyт Пишитe в личныe cooбщeния зa подpoбнocтями\n\nhttps://t.me/globe_nedvizhka_thailand/609043",
