@@ -12,7 +12,9 @@ API_HASH = 'd2588f09dfbc5103ef77ef21c07dbf8b'
 DEST = {
     'VIET': 'vietnamparsing',
     'THAI': 'thailandparsing',
-    'BIKE': 'visaranvietnam',
+    'BIKE': 'baykivietnam',
+    'ENTERTAIN': 'razvlecheniyavietnam',
+    'MED': 'medvietnam',
 }
 
 SOURCES = {
@@ -36,6 +38,16 @@ SOURCES = {
     'BIKE': [
         'bike_nhatrang','motohub_nhatrang','NhaTrang_moto_market','RentBikeUniq',
         'BK_rental','nha_trang_rent','RentTwentyTwo22NhaTrang',
+        'danang_bike_rent','bikerental1','viet_sovet',
+    ],
+    'ENTERTAIN': [
+        'nhatrang_tusa_afisha','vietnam_vn','Nhatrangvseobovsem','nyachangafisha',
+        'nhatrang_afisha','introconcertvn','afisha_nhatrang','T2TNhaTrangevents',
+        'nachang_tusa','drinkparty666','nyachang_ru',
+        'danangnew','ads_danang','danang_tysa','danang_afisha',
+    ],
+    'MED': [
+        'viet_med','viet_medicine','viethandentalrus','VietnamDentist','doctor_viet',
     ],
 }
 
