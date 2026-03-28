@@ -2877,37 +2877,43 @@ def get_thailand_channels():
 @app.route('/bot/webhook', methods=['POST'])
 def bot_webhook():
     from telegram_bot import handle_start, handle_app, send_message
-    
+
     data = request.json
     if not data:
         return jsonify({'ok': True})
-    
-    message = data.get('message', {})
+
+    message = data.get('message', {}) or data.get('channel_post', {})
     chat_id = message.get('chat', {}).get('id')
-    text = message.get('text', '')
+    text = (message.get('text', '') or '').split('@')[0].strip()
     user = message.get('from', {})
-    user_name = user.get('first_name', 'друг')
-    
+    user_name = user.get('first_name', '') or 'друг'
+
     if not chat_id:
         return jsonify({'ok': True})
-    
+
     if text == '/start':
         handle_start(chat_id, user_name)
     elif text == '/app':
         handle_app(chat_id)
     elif text == '/help':
-        send_message(chat_id, '🦌 <b>Goldantelope ASIA</b>\n\n/start - Главное меню\n/app - Открыть приложение\n/thailand - Тайланд\n/vietnam - Вьетнам')
+        send_message(chat_id, '🦌 <b>Goldantelope ASIA</b>\n\n/start — Главное меню\n/app — Открыть приложение\n/thailand — Тайланд\n/vietnam — Вьетнам\n/help — Помощь')
     elif text == '/thailand':
-        send_message(chat_id, '🇹🇭 <b>Тайланд</b>\n\n70+ каналов:\n- Пхукет\n- Паттайя\n- Бангкок\n- Самуи\n\nНажмите /app чтобы открыть!')
+        from telegram_bot import get_webapp_url
+        webapp_url = get_webapp_url()
+        keyboard = {"inline_keyboard": [[{"text": "🇹🇭 Открыть Тайланд", "url": f"{webapp_url}/?country=thailand"}]]}
+        send_message(chat_id, '🇹🇭 <b>Тайланд</b>\n\n70+ каналов:\n• Пхукет\n• Паттайя\n• Бангкок\n• Самуи\n\nВыберите жильё, транспорт, рестораны и многое другое!', keyboard)
     elif text == '/vietnam':
-        send_message(chat_id, '🇻🇳 <b>Вьетнам</b>\n\nКаналы скоро будут добавлены!\n\nНажмите /app чтобы открыть!')
+        from telegram_bot import get_webapp_url
+        webapp_url = get_webapp_url()
+        keyboard = {"inline_keyboard": [[{"text": "🇻🇳 Открыть Вьетнам", "url": f"{webapp_url}/?country=vietnam"}]]}
+        send_message(chat_id, '🇻🇳 <b>Вьетнам</b>\n\n5,800+ объявлений:\n• Нячанг\n• Дананг\n• Хошимин\n• Ханой\n• Фукуок\n\nАренда, рестораны, туры и многое другое!', keyboard)
     elif text == '/auth':
-        send_message(chat_id, '🔐 <b>Авторизация Telethon</b>\n\nКод был отправлен в приложение Telegram на номер +84342893121.\n\nНайдите сообщение от "Telegram" с 5-значным кодом и отправьте его сюда!')
+        send_message(chat_id, '🔐 <b>Авторизация Telethon</b>\n\nОтправьте 5-значный код подтверждения из приложения Telegram.')
     elif text and text.isdigit() and len(text) == 5:
         with open('pending_code.txt', 'w') as f:
             f.write(text)
         send_message(chat_id, f'✅ Код {text} получен! Пробую авторизацию...')
-    
+
     return jsonify({'ok': True})
 
 @app.route('/bot/setup', methods=['POST'])
