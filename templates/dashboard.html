@@ -5813,10 +5813,11 @@
                         if (images.length === 0 && item.photo_url) images.push(item.photo_url);
                     }
                     const cacheBuster = Date.now();
-                    images = images.filter(url => url && typeof url === 'string' && url.startsWith('http'));
+                    images = images.filter(url => url && typeof url === 'string' && (url.startsWith('http') || url.startsWith('/')));
                     images = images.map(url => {
                         const tmeMatch = url.match(/^https:\/\/t\.me\/([^\/]+)\/(\d+)$/);
                         if (tmeMatch) return `/tg_img/${tmeMatch[1]}/${tmeMatch[2]}`;
+                        if (url.startsWith('/tg_img/') || url.startsWith('/tg_file/')) return url;
                         if (url.includes('telesco.pe') || url.includes('api.telegram.org')) return url;
                         return url + (url.includes('?') ? '&' : '?') + '_t=' + cacheBuster;
                     });

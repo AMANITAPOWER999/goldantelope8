@@ -946,6 +946,7 @@ def _enrich_tg_images(items):
             m = re.search(r't\.me/restoranvietnam/(\d+)', tg_link)
             if m:
                 msg_ids = [int(m.group(1))]
+                item['photo_msg_ids'] = msg_ids  # сохраняем для JS
         if msg_ids and is_restaurant:
             if need_replace:
                 item['image_url'] = f'/tg_img/restoranvietnam/{msg_ids[0]}'
@@ -954,6 +955,20 @@ def _enrich_tg_images(items):
                 cur = item.get(key, '') or ''
                 if not cur or 'telesco.pe' in cur:
                     item[key] = f'/tg_img/restoranvietnam/{mid}'
+            # Обновляем all_images — заменяем telesco.pe на прокси
+            all_imgs = item.get('all_images') or []
+            if all_imgs and any('telesco.pe' in (u or '') for u in all_imgs):
+                proxy_imgs = [f'/tg_img/restoranvietnam/{msg_ids[0]}']
+                for mid in msg_ids[1:]:
+                    proxy_imgs.append(f'/tg_img/restoranvietnam/{mid}')
+                item['all_images'] = proxy_imgs
+            elif not all_imgs:
+                item['all_images'] = [f'/tg_img/restoranvietnam/{msg_ids[0]}']
+            # Также images и photos
+            for key in ('images', 'photos'):
+                imgs = item.get(key) or []
+                if imgs and any('telesco.pe' in (u or '') for u in imgs):
+                    item[key] = [f'/tg_img/restoranvietnam/{msg_ids[0]}']
             continue
 
         # Остальные: используем tg_file_ids как запасной вариант
