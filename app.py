@@ -930,7 +930,7 @@ def _enrich_tg_images(items):
     Для остальных: tg_file_ids → image_url как есть."""
     for item in items:
         url = item.get('image_url', '') or ''
-        need_replace = not url or 'telesco.pe' in url or ('cdn' in url.lower() and 'bunny' not in url.lower())
+        need_replace = not url or 'telesco.pe' in url
 
         # Рестораны: фото берём из публичного канала @restoranvietnam по ID поста
         msg_ids = item.get('photo_msg_ids') or []
@@ -1482,24 +1482,6 @@ import shutil
 from werkzeug.utils import secure_filename
 import requests
 
-BUNNY_STORAGE_ZONE = os.environ.get('BUNNY_CDN_STORAGE_ZONE', 'storage.bunnycdn.com')
-BUNNY_STORAGE_NAME = os.environ.get('BUNNY_CDN_STORAGE_NAME', 'goldantelope')
-BUNNY_API_KEY = os.environ.get('BUNNY_CDN_API_KEY', 'c88e0b0b-d63c-4a45-8b3d1819830a-c07a-4ddb')
-
-def upload_to_bunny(local_path, filename):
-    url = f"https://{BUNNY_STORAGE_ZONE}/{BUNNY_STORAGE_NAME}/{filename}"
-    headers = {
-        "AccessKey": BUNNY_API_KEY,
-        "Content-Type": "application/octet-stream",
-    }
-    try:
-        with open(local_path, "rb") as f:
-            response = requests.put(url, data=f, headers=headers)
-            return response.status_code == 201
-    except Exception as e:
-        print(f"BunnyCDN Upload Error: {e}")
-        return False
-
 BANNER_CONFIG_FILE = "banner_config.json"
 UPLOAD_FOLDER = 'static/images/banners'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
@@ -1557,10 +1539,6 @@ def admin_upload_banner():
         filename = secure_filename(f"{country}_{banner_type}_{int(time.time())}_{file.filename}")
         file_path = os.path.join(UPLOAD_FOLDER, filename)
         file.save(file_path)
-        
-        # Загружаем в BunnyCDN
-        upload_to_bunny(file_path, filename)
-        
         url = f'/static/images/banners/{filename}'
         config = load_banner_config()
         if country not in config:
@@ -2898,32 +2876,6 @@ def remove_channel():
         return jsonify({'success': True, 'message': f'Канал @{channel} удален'})
     
     return jsonify({'error': 'Channel not found'}), 404
-
-@app.route('/api/bunny-image/<path:image_path>')
-def bunny_image_proxy(image_path):
-    """Прокси для загрузки изображений из BunnyCDN Storage"""
-    import urllib.parse
-    
-    storage_zone = os.environ.get('BUNNY_CDN_STORAGE_ZONE', 'storage.bunnycdn.com')
-    storage_name = os.environ.get('BUNNY_CDN_STORAGE_NAME', 'goldantelope')
-    api_key = os.environ.get('BUNNY_CDN_API_KEY', '')
-    
-    # Decode the path and fetch from storage
-    decoded_path = urllib.parse.unquote(image_path)
-    url = f'https://{storage_zone}/{storage_name}/{decoded_path}'
-    
-    try:
-        r = requests.get(url, headers={'AccessKey': api_key}, timeout=30)
-        if r.status_code == 200:
-            content_type = r.headers.get('Content-Type', 'image/jpeg')
-            return Response(r.content, mimetype=content_type, headers={
-                'Cache-Control': 'public, max-age=86400'
-            })
-        else:
-            return Response('Image not found', status=404)
-    except Exception as e:
-        print(f"Error fetching image: {e}")
-        return Response('Error fetching image', status=500)
 
 # ============ TELEGRAM PHOTO PROXY ============
 

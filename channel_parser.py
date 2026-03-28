@@ -3,36 +3,12 @@ import json
 import re
 import asyncio
 import requests
-import hashlib
 from datetime import datetime, timedelta
 from telethon import TelegramClient
 from telethon.tl.functions.channels import GetFullChannelRequest
 
 API_ID = int(os.environ.get('TELETHON_API_ID', 0))
 API_HASH = os.environ.get('TELETHON_API_HASH', '')
-
-BUNNY_STORAGE_ZONE = os.environ.get('BUNNY_STORAGE_ZONE', '')
-BUNNY_ACCESS_KEY = os.environ.get('BUNNY_ACCESS_KEY', '')
-BUNNY_CDN_URL = os.environ.get('BUNNY_CDN_URL', '')
-
-def upload_to_bunny(file_bytes, filename):
-    if not BUNNY_STORAGE_ZONE or not BUNNY_ACCESS_KEY:
-        return None
-    try:
-        file_hash = hashlib.md5(file_bytes).hexdigest()[:8]
-        ext = filename.split('.')[-1] if '.' in filename else 'jpg'
-        remote_path = f"listings/{file_hash}_{filename}"
-        url = f"https://storage.bunnycdn.com/{BUNNY_STORAGE_ZONE}/{remote_path}"
-        headers = {"AccessKey": BUNNY_ACCESS_KEY, "Content-Type": "application/octet-stream"}
-        response = requests.put(url, headers=headers, data=file_bytes, timeout=30)
-        if response.status_code == 201:
-            cdn_url = f"https://{BUNNY_STORAGE_ZONE}.b-cdn.net/{remote_path}"
-            if BUNNY_CDN_URL and 'b-cdn.net' in BUNNY_CDN_URL:
-                cdn_url = f"{BUNNY_CDN_URL.rstrip('/')}/{remote_path}"
-            return cdn_url
-    except:
-        pass
-    return None
 
 def classify_message(text, channel_category):
     text_lower = text.lower()

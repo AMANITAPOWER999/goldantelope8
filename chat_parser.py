@@ -1,17 +1,11 @@
 import os
 import json
 import asyncio
-import hashlib
-import requests
 from datetime import datetime
 from telethon import TelegramClient
 
 API_ID = int(os.environ.get('TELETHON_API_ID', 0))
 API_HASH = os.environ.get('TELETHON_API_HASH', '')
-
-BUNNY_STORAGE_ZONE = os.environ.get('BUNNY_STORAGE_ZONE', '')
-BUNNY_ACCESS_KEY = os.environ.get('BUNNY_ACCESS_KEY', '')
-BUNNY_CDN_URL = os.environ.get('BUNNY_CDN_URL', '')
 
 CHAT_CHANNELS = [
     "phuket_ru", "Pkhuket_Chatx", "vmestenaphukete", "phuket_chat1",
@@ -47,24 +41,6 @@ def is_spam(text):
     ]
     text_lower = text.lower()
     return any(keyword in text_lower for keyword in spam_keywords)
-
-def upload_to_bunny(file_bytes, filename):
-    if not BUNNY_STORAGE_ZONE or not BUNNY_ACCESS_KEY:
-        return None
-    try:
-        file_hash = hashlib.md5(file_bytes).hexdigest()[:8]
-        remote_path = f"listings/{file_hash}_{filename}"
-        url = f"https://storage.bunnycdn.com/{BUNNY_STORAGE_ZONE}/{remote_path}"
-        headers = {"AccessKey": BUNNY_ACCESS_KEY, "Content-Type": "application/octet-stream"}
-        response = requests.put(url, headers=headers, data=file_bytes, timeout=30)
-        if response.status_code == 201:
-            cdn_url = f"https://{BUNNY_STORAGE_ZONE}.b-cdn.net/{remote_path}"
-            if BUNNY_CDN_URL and 'b-cdn.net' in BUNNY_CDN_URL:
-                cdn_url = f"{BUNNY_CDN_URL.rstrip('/')}/{remote_path}"
-            return cdn_url
-    except:
-        pass
-    return None
 
 async def connect_with_retry(max_retries=3):
     """Подключение с retry логикой (для обхода database is locked)"""
@@ -105,8 +81,6 @@ async def parse_chats():
 
     existing_ids = {item['id'] for item in existing if isinstance(item, dict)}
     existing_texts = {item.get('description', '')[:150] for item in existing if isinstance(item, dict)}
-    existing_hashes = {item.get('image_hash') for item in existing if isinstance(item, dict) and item.get('image_hash')}
-    existing_image_urls = {item.get('image_url') for item in existing if isinstance(item, dict) and item.get('image_url')}
     
     new_items = []
     
@@ -134,26 +108,6 @@ async def parse_chats():
                 if msg.text[:150] in existing_texts:
                     continue
                 
-                image_url = None
-                image_hash = None
-                if msg.media and hasattr(msg.media, 'photo'):
-                    try:
-                        photo_bytes = await client.download_media(msg.media, bytes)
-                        if photo_bytes:
-                            image_hash = hashlib.md5(photo_bytes).hexdigest()
-                            # Пропустить если фото по хешу уже есть
-                            if image_hash in existing_hashes:
-                                continue
-                            filename = f"{channel}_{msg.id}.jpg"
-                            image_url = upload_to_bunny(photo_bytes, filename)
-                            # Пропустить если URL фото уже в системе
-                            if image_url and image_url in existing_image_urls:
-                                continue
-                            if image_url:
-                                print(f"   📷 {filename}")
-                    except:
-                        pass
-                
                 item = {
                     'id': item_id,
                     'category': 'chat',
@@ -162,8 +116,6 @@ async def parse_chats():
                     'date': msg.date.isoformat(),
                     'source_channel': f"@{channel}",
                     'message_id': msg.id,
-                    'image_url': image_url,
-                    'image_hash': image_hash,
                     'has_media': bool(msg.media),
                     'price': None
                 }
