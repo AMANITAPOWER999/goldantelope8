@@ -5,11 +5,12 @@
         "user_l4bmiotql_1774778260819",
         "test_user_1",
         "test_user_2",
-        "user_2rau0bla2_1774778265568"
+        "user_2rau0bla2_1774778265568",
+        "user_uka68a8xb_1774778778375"
       ],
-      "page_views": 5,
+      "page_views": 88,
       "countries": {
-        "vietnam": 4,
+        "vietnam": 87,
         "thailand": 1
       },
       "categories": {
@@ -17,19 +18,20 @@
         "transport": 1
       },
       "hours": {
-        "09": 5
+        "09": 6,
+        "10": 82
       },
       "referrers": {},
       "devices": {
-        "mobile": 0,
-        "desktop": 5
+        "mobile": 1,
+        "desktop": 87
       }
     }
   },
   "visitors": {
     "user_l4bmiotql_1774778260819": {
       "first_seen": "2026-03-29",
-      "visits": 2,
+      "visits": 84,
       "last_seen": "2026-03-29"
     },
     "test_user_1": {
@@ -43,6 +45,11 @@
       "last_seen": "2026-03-29"
     },
     "user_2rau0bla2_1774778265568": {
+      "first_seen": "2026-03-29",
+      "visits": 1,
+      "last_seen": "2026-03-29"
+    },
+    "user_uka68a8xb_1774778778375": {
       "first_seen": "2026-03-29",
       "visits": 1,
       "last_seen": "2026-03-29"
