@@ -5974,6 +5974,26 @@
                             <a href="${tgContactLink || '#'}" target="_blank" onclick="event.stopPropagation()" style="background:${tgContactLink ? '#0088cc' : '#ccc'};color:white;padding:10px;border-radius:6px;text-align:center;text-decoration:none;font-weight:600;font-size:13px;">✈️ Telegram</a>
                         </div>
                     </div>`;
+            } else if (category === 'transport') {
+                let tgUsername = item.telegram || channelName || '';
+                let tgContactLink = tgUsername ? `https://t.me/${tgUsername.replace('@','').replace('https://t.me/','')}` : tgLink;
+                contactsHtml = `
+                    <div style="margin-top:auto;padding-top:12px;border-top:1px solid #eee;">
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;">
+                            <div style="background:#f5f5f5;padding:8px;border-radius:6px;text-align:center;">
+                                <div style="font-size:11px;color:#888;">📅 ${(translations[currentLang]||translations['ru']).common.date}</div>
+                                <div style="font-size:13px;font-weight:600;color:#333;">${dateStr || '-'}</div>
+                            </div>
+                            <div style="background:#fff3e0;padding:8px;border-radius:6px;text-align:center;">
+                                <div style="font-size:11px;color:#888;">👤 ${(translations[currentLang]||translations['ru']).common.contact}</div>
+                                <div style="font-size:12px;font-weight:600;color:#e65100;">${item.contact_name || item.contact || channelName || '-'}</div>
+                            </div>
+                        </div>
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+                            <a href="${tgLink || '#'}" target="_blank" onclick="event.stopPropagation()" style="background:${tgLink ? '#0088cc' : '#ccc'};color:white;padding:10px;border-radius:6px;text-align:center;text-decoration:none;font-weight:600;font-size:13px;">✈️ Первоисточник</a>
+                            <a href="${tgContactLink || '#'}" target="_blank" onclick="event.stopPropagation()" style="background:${tgContactLink ? '#0088cc' : '#ccc'};color:white;padding:10px;border-radius:6px;text-align:center;text-decoration:none;font-weight:600;font-size:13px;">📢 ${item.contact || channelName || 'Канал'}</a>
+                        </div>
+                    </div>`;
             }
             
             let titleHtml = (category === 'restaurants' && tgLink)
