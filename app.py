@@ -327,12 +327,88 @@ def translate_text():
 
     return jsonify({'translations': results})
 
+ANALYTICS_FILE = 'analytics.json'
+analytics_lock = threading.Lock()
+
+def load_analytics():
+    try:
+        if os.path.exists(ANALYTICS_FILE):
+            with open(ANALYTICS_FILE, 'r', encoding='utf-8') as f:
+                return json.load(f)
+    except:
+        pass
+    return {'daily': {}, 'visitors': {}}
+
+def save_analytics(data):
+    with analytics_lock:
+        with open(ANALYTICS_FILE, 'w', encoding='utf-8') as f:
+            json.dump(data, f, ensure_ascii=False, indent=2)
+
+def track_visit(user_id, country=None, category=None, referrer=None, is_mobile=False):
+    try:
+        analytics = load_analytics()
+        today = datetime.now().strftime('%Y-%m-%d')
+        hour = datetime.now().strftime('%H')
+
+        if today not in analytics['daily']:
+            analytics['daily'][today] = {
+                'unique_visitors': [],
+                'page_views': 0,
+                'countries': {},
+                'categories': {},
+                'hours': {},
+                'referrers': {},
+                'devices': {'mobile': 0, 'desktop': 0}
+            }
+
+        day = analytics['daily'][today]
+        day['page_views'] += 1
+
+        if user_id and user_id not in day['unique_visitors']:
+            day['unique_visitors'].append(user_id)
+
+        if country:
+            day['countries'][country] = day['countries'].get(country, 0) + 1
+        if category:
+            day['categories'][category] = day['categories'].get(category, 0) + 1
+
+        day['hours'][hour] = day['hours'].get(hour, 0) + 1
+
+        if referrer:
+            day['referrers'][referrer] = day['referrers'].get(referrer, 0) + 1
+
+        if is_mobile:
+            day['devices']['mobile'] += 1
+        else:
+            day['devices']['desktop'] += 1
+
+        if user_id:
+            if user_id not in analytics['visitors']:
+                analytics['visitors'][user_id] = {'first_seen': today, 'visits': 0, 'last_seen': today}
+            analytics['visitors'][user_id]['visits'] += 1
+            analytics['visitors'][user_id]['last_seen'] = today
+
+        old_days = sorted(analytics['daily'].keys())
+        if len(old_days) > 90:
+            for d in old_days[:-90]:
+                del analytics['daily'][d]
+
+        save_analytics(analytics)
+    except Exception as e:
+        logger.error(f"Analytics track error: {e}")
+
 @app.route('/api/ping')
 def ping():
     user_id = request.args.get('uid', request.remote_addr)
     online_users[user_id] = time.time()
     now = time.time()
     active = sum(1 for t in online_users.values() if now - t < ONLINE_TIMEOUT)
+    country = request.args.get('country', '')
+    category = request.args.get('category', '')
+    referrer = request.args.get('ref', '')
+    ua = request.headers.get('User-Agent', '').lower()
+    is_mobile = any(m in ua for m in ['mobile', 'android', 'iphone', 'ipad'])
+    threading.Thread(target=track_visit, args=(user_id, country, category, referrer, is_mobile), daemon=True).start()
     return jsonify({'online': active})
 
 @app.route('/api/online')
@@ -340,6 +416,66 @@ def get_online():
     now = time.time()
     active = sum(1 for t in online_users.values() if now - t < ONLINE_TIMEOUT)
     return jsonify({'online': active})
+
+@app.route('/api/analytics')
+def get_analytics():
+    analytics = load_analytics()
+    today = datetime.now().strftime('%Y-%m-%d')
+    now = datetime.now()
+
+    days_7 = [(now - timedelta(days=i)).strftime('%Y-%m-%d') for i in range(7)]
+    days_30 = [(now - timedelta(days=i)).strftime('%Y-%m-%d') for i in range(30)]
+
+    def aggregate(days_list):
+        total_views = 0
+        all_visitors = set()
+        countries = {}
+        categories = {}
+        hours = {}
+        devices = {'mobile': 0, 'desktop': 0}
+        daily_chart = []
+
+        for d in sorted(days_list):
+            day_data = analytics['daily'].get(d, {})
+            views = day_data.get('page_views', 0)
+            visitors = day_data.get('unique_visitors', [])
+            total_views += views
+            all_visitors.update(visitors)
+            for k, v in day_data.get('countries', {}).items():
+                countries[k] = countries.get(k, 0) + v
+            for k, v in day_data.get('categories', {}).items():
+                categories[k] = categories.get(k, 0) + v
+            for k, v in day_data.get('hours', {}).items():
+                hours[k] = hours.get(k, 0) + v
+            dev = day_data.get('devices', {})
+            devices['mobile'] += dev.get('mobile', 0)
+            devices['desktop'] += dev.get('desktop', 0)
+            daily_chart.append({'date': d, 'views': views, 'visitors': len(visitors)})
+
+        return {
+            'total_views': total_views,
+            'unique_visitors': len(all_visitors),
+            'countries': dict(sorted(countries.items(), key=lambda x: -x[1])),
+            'categories': dict(sorted(categories.items(), key=lambda x: -x[1])),
+            'peak_hours': dict(sorted(hours.items(), key=lambda x: -x[1])[:5]),
+            'devices': devices,
+            'daily_chart': daily_chart
+        }
+
+    today_data = analytics['daily'].get(today, {})
+
+    return jsonify({
+        'today': {
+            'views': today_data.get('page_views', 0),
+            'visitors': len(today_data.get('unique_visitors', [])),
+            'countries': today_data.get('countries', {}),
+            'categories': today_data.get('categories', {}),
+            'devices': today_data.get('devices', {'mobile': 0, 'desktop': 0})
+        },
+        'week': aggregate(days_7),
+        'month': aggregate(days_30),
+        'total_all_time_visitors': len(analytics.get('visitors', {}))
+    })
 
 weather_cache = {}
 WEATHER_CACHE_TTL = 3600

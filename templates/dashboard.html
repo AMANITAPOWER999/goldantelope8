@@ -4804,6 +4804,66 @@
                 <div id="admin-tools" style="display: none;">
 
                     <!-- ══════════════════════════════════════════════ -->
+                    <!-- АНАЛИТИКА ПОСЕЩЕНИЙ -->
+                    <!-- ══════════════════════════════════════════════ -->
+                    <div style="background:#0f0f1a; border-radius:14px; padding:0; margin-bottom:22px; border:1px solid #2a2a3d; box-shadow:0 2px 20px rgba(0,0,0,.4); overflow:hidden;">
+                        <div style="background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%); padding:16px 22px; display:flex; align-items:center; gap:12px;">
+                            <span style="font-size:22px;">📊</span>
+                            <div style="flex:1;">
+                                <div style="font-size:16px;font-weight:700;color:#fff;">Аналитика посещений</div>
+                                <div style="font-size:11px;color:#888;" id="analytics-update">загрузка...</div>
+                            </div>
+                            <div style="display:flex;gap:8px;">
+                                <button onclick="switchAnalyticsPeriod('today')" class="analytics-period-btn active" data-period="today" style="padding:6px 14px;background:#d4af37;color:#1a1a2e;border:none;border-radius:6px;cursor:pointer;font-size:12px;font-weight:700;">Сегодня</button>
+                                <button onclick="switchAnalyticsPeriod('week')" class="analytics-period-btn" data-period="week" style="padding:6px 14px;background:#ffffff18;color:#aaa;border:1px solid #ffffff22;border-radius:6px;cursor:pointer;font-size:12px;font-weight:600;">7 дней</button>
+                                <button onclick="switchAnalyticsPeriod('month')" class="analytics-period-btn" data-period="month" style="padding:6px 14px;background:#ffffff18;color:#aaa;border:1px solid #ffffff22;border-radius:6px;cursor:pointer;font-size:12px;font-weight:600;">30 дней</button>
+                                <button onclick="loadAnalytics()" style="padding:6px 14px;background:#16a34a;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:12px;font-weight:600;">↻</button>
+                            </div>
+                        </div>
+
+                        <div style="padding:18px 22px;">
+                            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px;" id="analytics-cards">
+                                <div style="background:#1a1a2e;border-radius:10px;padding:16px;text-align:center;border:1px solid #2a2a3d;">
+                                    <div style="font-size:11px;color:#888;margin-bottom:6px;">Просмотры</div>
+                                    <div style="font-size:28px;font-weight:800;color:#d4af37;" id="a-views">0</div>
+                                </div>
+                                <div style="background:#1a1a2e;border-radius:10px;padding:16px;text-align:center;border:1px solid #2a2a3d;">
+                                    <div style="font-size:11px;color:#888;margin-bottom:6px;">Уникальные</div>
+                                    <div style="font-size:28px;font-weight:800;color:#4ade80;" id="a-visitors">0</div>
+                                </div>
+                                <div style="background:#1a1a2e;border-radius:10px;padding:16px;text-align:center;border:1px solid #2a2a3d;">
+                                    <div style="font-size:11px;color:#888;margin-bottom:6px;">Мобильные</div>
+                                    <div style="font-size:28px;font-weight:800;color:#38bdf8;" id="a-mobile">0</div>
+                                </div>
+                                <div style="background:#1a1a2e;border-radius:10px;padding:16px;text-align:center;border:1px solid #2a2a3d;">
+                                    <div style="font-size:11px;color:#888;margin-bottom:6px;">Десктоп</div>
+                                    <div style="font-size:28px;font-weight:800;color:#a78bfa;" id="a-desktop">0</div>
+                                </div>
+                            </div>
+
+                            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px;">
+                                <div style="background:#1a1a2e;border-radius:10px;padding:16px;border:1px solid #2a2a3d;">
+                                    <div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:10px;">Страны</div>
+                                    <div id="a-countries" style="font-size:13px;color:#ccc;"></div>
+                                </div>
+                                <div style="background:#1a1a2e;border-radius:10px;padding:16px;border:1px solid #2a2a3d;">
+                                    <div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:10px;">Категории</div>
+                                    <div id="a-categories" style="font-size:13px;color:#ccc;"></div>
+                                </div>
+                            </div>
+
+                            <div style="background:#1a1a2e;border-radius:10px;padding:16px;border:1px solid #2a2a3d;">
+                                <div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:10px;">График посещений</div>
+                                <div id="a-chart" style="display:flex;align-items:flex-end;gap:4px;height:120px;"></div>
+                            </div>
+
+                            <div style="margin-top:14px;text-align:center;">
+                                <span style="font-size:12px;color:#666;">Всего посетителей за всё время: <b style="color:#d4af37;" id="a-total-all">0</b></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ══════════════════════════════════════════════ -->
                     <!-- МОНИТОРИНГ ПАРСЕРОВ -->
                     <!-- ══════════════════════════════════════════════ -->
                     <div style="background:#0f0f1a; border-radius:14px; padding:0; margin-bottom:22px; border:1px solid #2a2a3d; box-shadow:0 2px 20px rgba(0,0,0,.4); overflow:hidden;">
@@ -8941,9 +9001,13 @@
         loadVisasCounts();
         setInterval(updateRates, 60000);
         
-        const visitorId = 'user_' + Math.random().toString(36).substr(2, 9);
+        const visitorId = localStorage.getItem('ga_uid') || ('user_' + Math.random().toString(36).substr(2, 9) + '_' + Date.now());
+        localStorage.setItem('ga_uid', visitorId);
         function pingOnline() {
-            fetch(`/api/ping?uid=${visitorId}`)
+            const params = new URLSearchParams({uid: visitorId});
+            if (typeof currentCountry !== 'undefined' && currentCountry) params.set('country', currentCountry);
+            if (typeof currentCategory !== 'undefined' && currentCategory) params.set('category', currentCategory);
+            fetch(`/api/ping?${params}`)
                 .then(r => r.json())
                 .then(data => {
                     document.getElementById('online-count').textContent = data.online || 0;
@@ -11773,6 +11837,98 @@
             }
         }
 
+        let analyticsData = null;
+        let analyticsPeriod = 'today';
+
+        async function loadAnalytics() {
+            try {
+                const r = await fetch('/api/analytics');
+                analyticsData = await r.json();
+                document.getElementById('analytics-update').textContent = 'обновлено: ' + new Date().toLocaleTimeString('ru-RU');
+                renderAnalytics();
+            } catch(e) {
+                document.getElementById('analytics-update').textContent = 'ошибка загрузки';
+            }
+        }
+
+        function switchAnalyticsPeriod(period) {
+            analyticsPeriod = period;
+            document.querySelectorAll('.analytics-period-btn').forEach(b => {
+                if (b.dataset.period === period) {
+                    b.style.background = '#d4af37'; b.style.color = '#1a1a2e'; b.style.border = 'none';
+                } else {
+                    b.style.background = '#ffffff18'; b.style.color = '#aaa'; b.style.border = '1px solid #ffffff22';
+                }
+            });
+            renderAnalytics();
+        }
+
+        function renderAnalytics() {
+            if (!analyticsData) return;
+            let d;
+            if (analyticsPeriod === 'today') {
+                d = {
+                    total_views: analyticsData.today.views,
+                    unique_visitors: analyticsData.today.visitors,
+                    countries: analyticsData.today.countries,
+                    categories: analyticsData.today.categories,
+                    devices: analyticsData.today.devices,
+                    daily_chart: [{date: new Date().toISOString().slice(0,10), views: analyticsData.today.views, visitors: analyticsData.today.visitors}]
+                };
+            } else {
+                d = analyticsData[analyticsPeriod];
+            }
+
+            document.getElementById('a-views').textContent = d.total_views || 0;
+            document.getElementById('a-visitors').textContent = d.unique_visitors || 0;
+            document.getElementById('a-mobile').textContent = (d.devices||{}).mobile || 0;
+            document.getElementById('a-desktop').textContent = (d.devices||{}).desktop || 0;
+            document.getElementById('a-total-all').textContent = analyticsData.total_all_time_visitors || 0;
+
+            const countryNames = {vietnam:'Вьетнам', thailand:'Тайланд', india:'Индия', indonesia:'Индонезия'};
+            const countriesEl = document.getElementById('a-countries');
+            const countries = d.countries || {};
+            if (Object.keys(countries).length === 0) {
+                countriesEl.innerHTML = '<div style="color:#666;">Нет данных</div>';
+            } else {
+                countriesEl.innerHTML = Object.entries(countries).map(([k,v]) =>
+                    `<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #2a2a3d;">
+                        <span>${countryNames[k] || k}</span><span style="color:#d4af37;font-weight:700;">${v}</span>
+                    </div>`
+                ).join('');
+            }
+
+            const catNames = {real_estate:'Недвижимость', transport:'Транспорт', restaurants:'Рестораны', entertainment:'Развлечения', tours:'Экскурсии', visas:'Визаран', kids:'Дети', medicine:'Медицина', money_exchange:'Обмен', marketplace:'Все чаты'};
+            const catsEl = document.getElementById('a-categories');
+            const cats = d.categories || {};
+            if (Object.keys(cats).length === 0) {
+                catsEl.innerHTML = '<div style="color:#666;">Нет данных</div>';
+            } else {
+                catsEl.innerHTML = Object.entries(cats).map(([k,v]) =>
+                    `<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #2a2a3d;">
+                        <span>${catNames[k] || k}</span><span style="color:#4ade80;font-weight:700;">${v}</span>
+                    </div>`
+                ).join('');
+            }
+
+            const chartEl = document.getElementById('a-chart');
+            const chart = d.daily_chart || [];
+            if (chart.length <= 1) {
+                chartEl.innerHTML = '<div style="color:#666;text-align:center;width:100%;padding:40px 0;">Данные появятся через день</div>';
+            } else {
+                const maxV = Math.max(...chart.map(c => c.views), 1);
+                chartEl.innerHTML = chart.map(c => {
+                    const h = Math.max(4, (c.views / maxV) * 100);
+                    const dateLabel = c.date.slice(5);
+                    return `<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;">
+                        <div style="font-size:10px;color:#d4af37;">${c.views}</div>
+                        <div style="width:100%;max-width:40px;height:${h}px;background:linear-gradient(to top,#d4af37,#f5d76e);border-radius:4px 4px 0 0;"></div>
+                        <div style="font-size:9px;color:#666;">${dateLabel}</div>
+                    </div>`;
+                }).join('');
+            }
+        }
+
         async function loadMonitoringStats() {
             const btn = document.getElementById('mon-refresh-btn');
             const loading = document.getElementById('mon-loading');
@@ -11995,6 +12151,7 @@
                     adminTools.style.display = 'block';
                     adminPassword.disabled = true;
                     document.querySelector('button[onclick="adminAuth()"]').disabled = true;
+                    loadAnalytics();
                     
                     // Переключаем на страну админа (кроме супер-админа)
                     if (adminCountry && adminCountry !== 'all' && currentCountry !== adminCountry) {
