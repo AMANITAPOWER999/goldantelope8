@@ -8,9 +8,9 @@
         "user_2rau0bla2_1774778265568",
         "user_uka68a8xb_1774778778375"
       ],
-      "page_views": 88,
+      "page_views": 145,
       "countries": {
-        "vietnam": 87,
+        "vietnam": 144,
         "thailand": 1
       },
       "categories": {
@@ -19,19 +19,19 @@
       },
       "hours": {
         "09": 6,
-        "10": 82
+        "10": 139
       },
       "referrers": {},
       "devices": {
-        "mobile": 1,
-        "desktop": 87
+        "mobile": 24,
+        "desktop": 121
       }
     }
   },
   "visitors": {
     "user_l4bmiotql_1774778260819": {
       "first_seen": "2026-03-29",
-      "visits": 84,
+      "visits": 118,
       "last_seen": "2026-03-29"
     },
     "test_user_1": {
@@ -51,7 +51,7 @@
     },
     "user_uka68a8xb_1774778778375": {
       "first_seen": "2026-03-29",
-      "visits": 1,
+      "visits": 24,
       "last_seen": "2026-03-29"
     }
   }
