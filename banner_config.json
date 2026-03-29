@@ -2,9 +2,13 @@
   "vietnam": {
     "web": [],
     "mobile": [
+      "/static/images/banners/vietnam_mobile_1774774003_IMG_2638.png",
       "/static/images/banners/vietnam_mobile_1774773620_IMG_2636.png",
       "/static/images/banners/vietnam_mobile_1774773629_IMG_2635.png",
-      "/static/images/banners/vietnam_mobile_1774773642_IMG_2634.jpeg"
+      "/static/images/banners/vietnam_mobile_1774774519_IMG_2643.png",
+      "/static/images/banners/vietnam_mobile_1774774929_IMG_2647.png",
+      "/static/images/banners/vietnam_mobile_1774775038_IMG_2649.png",
+      "/static/images/banners/vietnam_mobile_1774775549_IMG_2652.png"
     ]
   },
   "thailand": {
