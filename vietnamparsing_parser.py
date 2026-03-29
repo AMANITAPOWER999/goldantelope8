@@ -28,6 +28,21 @@ EXTRA_CHANNELS = {
     'obmenvietnam':         ('chat', None),
 }
 
+TH_EXTRA_CHANNELS = {
+    'arenda_thailandd':          ('transport', 'bikes'),
+    'thailand_market':           ('transport', 'bikes'),
+    'rental_service_thailand':   ('transport', 'bikes'),
+    'samui_arenda2':             ('transport', 'bikes'),
+    'motorrenta':                ('transport', 'bikes'),
+    'nashi_phuket_auto':         ('transport', 'bikes'),
+    'thailand_drive':            ('transport', 'bikes'),
+    'PKHUKET_BAYKOV':            ('transport', 'bikes'),
+    'Pattaya_Arenda_ru':         ('transport', 'bikes'),
+    'pattaya_happy_auto':        ('transport', 'bikes'),
+    'pattaya_arenda':            ('transport', 'bikes'),
+    'pattayamoto':               ('transport', 'bikes'),
+}
+
 LISTINGS_FILE = 'listings_vietnam.json'
 INITIAL_FETCH_LIMIT = 200
 POLL_INTERVAL = 60
@@ -1194,6 +1209,23 @@ def run_initial_fetch():
         except Exception as e_ex:
             logger.warning(f"[{ch}] history fetch error: {e_ex}")
 
+    # Fetch history from TH extra channels (transport Thailand)
+    from thailandparsing_parser import (
+        load_listings as th_load_init, save_listings as th_save_init,
+        get_existing_ids as th_get_ids_init,
+    )
+    for ch, (cat, subcat) in TH_EXTRA_CHANNELS.items():
+        try:
+            th_ex_data = th_load_init()
+            th_ex_ids = th_get_ids_init(th_ex_data)
+            n = fetch_extra_channel_history(ch, cat, subcat, th_ex_data, th_ex_ids, max_pages=2)
+            if n > 0:
+                th_save_init(th_ex_data)
+                count += n
+                logger.info(f"Fetched {n} TH [{cat}] items from @{ch}")
+        except Exception as e_th_ex:
+            logger.warning(f"[TH {ch}] history fetch error: {e_th_ex}")
+
     _parser_state['total_parsed'] = count
     _parser_state['new_today'] = count
     _parser_state['last_run'] = datetime.now(timezone.utc).isoformat()
@@ -1201,14 +1233,15 @@ def run_initial_fetch():
     logger.info("Switched to monitoring mode.")
 
 
-def _group_media_updates(updates: list) -> tuple[list, list, list, dict]:
-    """Split updates into (vietnam_items, thailand_updates, arendabay_items, extra_items).
+def _group_media_updates(updates: list) -> tuple[list, list, list, dict, dict]:
+    """Split updates into (vietnam_items, thailand_updates, arendabay_items, extra_items, th_extra_items).
 
     Returns:
       vietnam_items: list of (update, override_photos) tuples for @vietnamparsing
       thailand_updates: list of raw updates from @thailandparsing
       arendabay_items: list of (update, override_photos) tuples for @arendabaykavietnam
       extra_items: dict of channel -> list of (update, override_photos) for EXTRA_CHANNELS
+      th_extra_items: dict of channel -> list of (update, override_photos) for TH_EXTRA_CHANNELS
     """
     from collections import OrderedDict
 
@@ -1216,9 +1249,12 @@ def _group_media_updates(updates: list) -> tuple[list, list, list, dict]:
     media_groups: dict = OrderedDict()
     arendabay_media_groups: dict = OrderedDict()
     extra_media_groups: dict = {}  # channel -> OrderedDict of mgid -> group
+    th_extra_media_groups: dict = {}  # channel -> OrderedDict of mgid -> group
     singles = []
     arendabay_singles = []
     extra_singles: dict = {}  # channel -> list of (upd, None)
+    th_extra_singles: dict = {}  # channel -> list of (upd, None)
+    _th_extra_lower = {k.lower(): k for k in TH_EXTRA_CHANNELS}
 
     for upd in updates:
         post = upd.get('channel_post') or upd.get('message') or {}
@@ -1269,6 +1305,30 @@ def _group_media_updates(updates: list) -> tuple[list, list, list, dict]:
                 if ch not in extra_singles:
                     extra_singles[ch] = []
                 extra_singles[ch].append((upd, None))
+            continue
+
+        if chat_username in _th_extra_lower:
+            ch = _th_extra_lower[chat_username]
+            mgid = post.get('media_group_id')
+            if mgid:
+                if ch not in th_extra_media_groups:
+                    th_extra_media_groups[ch] = OrderedDict()
+                if mgid not in th_extra_media_groups[ch]:
+                    th_extra_media_groups[ch][mgid] = {'main': upd, 'all_updates': []}
+                else:
+                    caption = post.get('caption') or post.get('text', '')
+                    existing_main_post = (
+                        th_extra_media_groups[ch][mgid]['main'].get('channel_post')
+                        or th_extra_media_groups[ch][mgid]['main'].get('message') or {}
+                    )
+                    existing_has_text = existing_main_post.get('caption') or existing_main_post.get('text')
+                    if caption and not existing_has_text:
+                        th_extra_media_groups[ch][mgid]['main'] = upd
+                th_extra_media_groups[ch][mgid]['all_updates'].append(upd)
+            else:
+                if ch not in th_extra_singles:
+                    th_extra_singles[ch] = []
+                th_extra_singles[ch].append((upd, None))
             continue
 
         if chat_username == 'vietnamparsing':
@@ -1349,7 +1409,25 @@ def _group_media_updates(updates: list) -> tuple[list, list, list, dict]:
                     all_photos.append(url)
             extra_items[ch].append((grp['main'], all_photos if all_photos else None))
 
-    return vietnam_items, thailand_updates, arendabay_items, extra_items
+    th_extra_items: dict = {}
+    for ch, singles_list in th_extra_singles.items():
+        th_extra_items[ch] = list(singles_list)
+    for ch, mg_dict in th_extra_media_groups.items():
+        if ch not in th_extra_items:
+            th_extra_items[ch] = []
+        for mgid, grp in mg_dict.items():
+            grp['all_updates'].sort(
+                key=lambda u: (u.get('channel_post') or u.get('message') or {}).get('message_id', 0)
+            )
+            all_photos = []
+            for upd in grp['all_updates']:
+                post = upd.get('channel_post') or upd.get('message') or {}
+                url = _extract_largest_photo_url(post)
+                if url and url not in all_photos:
+                    all_photos.append(url)
+            th_extra_items[ch].append((grp['main'], all_photos if all_photos else None))
+
+    return vietnam_items, thailand_updates, arendabay_items, extra_items, th_extra_items
 
 
 def _scrape_new_from_tme(existing_ids: set, data: dict) -> int:
@@ -1436,7 +1514,7 @@ def run_monitoring_loop():
                 existing_ids = get_existing_ids(data)
                 new_count = 0
 
-                vietnam_items, thailand_updates, arendabay_items, extra_items = _group_media_updates(updates)
+                vietnam_items, thailand_updates, arendabay_items, extra_items, th_extra_items = _group_media_updates(updates)
 
                 for upd, override_photos in vietnam_items:
                     item = process_bot_update(upd, override_photos=override_photos)
@@ -1488,6 +1566,35 @@ def run_monitoring_loop():
                     _parser_state['new_today'] = _parser_state.get('new_today', 0) + new_count
                     _parser_state['total_parsed'] = _parser_state.get('total_parsed', 0) + new_count
 
+                if th_extra_items:
+                    from thailandparsing_parser import (
+                        load_listings as th_load, save_listings as th_save,
+                        get_existing_ids as th_get_ids,
+                    )
+                    th_data = th_load()
+                    th_ids = th_get_ids(th_data)
+                    th_new = 0
+                    for ch, upd_list in th_extra_items.items():
+                        category, subcategory = TH_EXTRA_CHANNELS.get(ch, (None, None))
+                        if not category:
+                            continue
+                        for upd, override_photos in upd_list:
+                            item = process_extra_channel_update(upd, ch, category, subcategory, override_photos)
+                            if not item:
+                                continue
+                            if item['id'] in th_ids:
+                                continue
+                            if category not in th_data:
+                                th_data[category] = []
+                            th_data[category].insert(0, item)
+                            th_ids.add(item['id'])
+                            th_new += 1
+                            logger.info(f"New TH [{category}] from @{ch}: {item['title'][:60]}")
+                    if th_new > 0:
+                        th_save(th_data)
+                        _parser_state['new_today'] = _parser_state.get('new_today', 0) + th_new
+                        _parser_state['total_parsed'] = _parser_state.get('total_parsed', 0) + th_new
+
                 if thailand_updates:
                     add_thailand_listings(thailand_updates)
 
@@ -1537,6 +1644,24 @@ def run_monitoring_loop():
                         logger.info(f"TH id-scan added {n_th} new Thailand listings")
                 except Exception as e_th:
                     logger.warning(f"TH id-scan error: {e_th}")
+
+                # Thailand extra channels: scrape transport
+                for th_ch, (th_cat, th_subcat) in TH_EXTRA_CHANNELS.items():
+                    try:
+                        from thailandparsing_parser import (
+                            load_listings as th_load2, save_listings as th_save2,
+                            get_existing_ids as th_get_ids2,
+                        )
+                        th_ex_data = th_load2()
+                        th_ex_ids = th_get_ids2(th_ex_data)
+                        n_thx = fetch_extra_channel_history(th_ch, th_cat, th_subcat, th_ex_data, th_ex_ids, max_pages=1)
+                        if n_thx > 0:
+                            th_save2(th_ex_data)
+                            _parser_state['new_today'] = _parser_state.get('new_today', 0) + n_thx
+                            _parser_state['total_parsed'] = _parser_state.get('total_parsed', 0) + n_thx
+                            logger.info(f"TH scrape @{th_ch} added {n_thx} transport listings")
+                    except Exception as e_thx:
+                        logger.warning(f"TH @{th_ch} scrape error: {e_thx}")
 
             _parser_state['last_run'] = datetime.now(timezone.utc).isoformat()
         except Exception as e:
