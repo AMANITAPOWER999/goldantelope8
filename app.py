@@ -1352,7 +1352,13 @@ def get_listings(category):
                 'Муйне': ['муйне', 'mui ne', 'muine', 'mui_ne'],
                 'Камрань': ['камрань', 'cam ranh', 'camranh', 'cam_ranh'],
                 'Далат': ['далат', 'da lat', 'dalat', 'da_lat'],
-                'Хойан': ['хойан', 'hoi an', 'hoian', 'hoi_an']
+                'Хойан': ['хойан', 'hoi an', 'hoian', 'hoi_an'],
+                'Пхукет': ['пхукет', 'phuket', 'pkhuket'],
+                'Паттайя': ['паттай', 'pattaya', 'паттая'],
+                'Самуи': ['самуи', 'samui', 'koh samui'],
+                'Бангкок': ['бангкок', 'bangkok', 'бкк'],
+                'Хуахин': ['хуахин', 'hua hin', 'huahin', 'hua_hin'],
+                'Краби': ['краби', 'krabi'],
             }
             
             targets = city_keywords_map.get(city_filter, [city_filter.lower()])
