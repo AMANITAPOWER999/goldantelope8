@@ -2967,15 +2967,29 @@ def admin_moderate():
                     if target_channel:
                         tg_msg = send_photo_to_group(image_data, listing, target_channel)
                         if tg_msg:
-                            channel_username = target_channel.replace('@', '')
                             msg_id = tg_msg.get('message_id')
-                            listing['telegram_link'] = f"https://t.me/{channel_username}/{msg_id}"
-                            listing['source_channel'] = channel_username
-                            listing['photos'] = [f"https://t.me/{channel_username}/{msg_id}"]
-                            listing['all_images'] = listing['photos']
-                            listing['image_url'] = f"/tg_img/{channel_username}/{msg_id}"
-                            listing['telegram_photo'] = True
-                            print(f"MODERATION: Photo sent to {target_channel}, msg_id={msg_id}")
+                            is_private_group = isinstance(target_channel, int) or (isinstance(target_channel, str) and not target_channel.startswith('@'))
+                            if is_private_group:
+                                photo_list = tg_msg.get('photo', [])
+                                if photo_list:
+                                    file_id = photo_list[-1].get('file_id', '')
+                                    listing['telegram_file_id'] = file_id
+                                    listing['telegram_photo'] = True
+                                    fresh_url = get_telegram_photo_url(file_id)
+                                    if fresh_url:
+                                        listing['image_url'] = fresh_url
+                                    listing['photos'] = [listing.get('image_url', '')]
+                                    listing['all_images'] = listing['photos']
+                                    print(f"MODERATION: Photo sent to private group {target_channel}, file_id saved")
+                            else:
+                                channel_username = target_channel.replace('@', '')
+                                listing['telegram_link'] = f"https://t.me/{channel_username}/{msg_id}"
+                                listing['source_channel'] = channel_username
+                                listing['photos'] = [f"https://t.me/{channel_username}/{msg_id}"]
+                                listing['all_images'] = listing['photos']
+                                listing['image_url'] = f"/tg_img/{channel_username}/{msg_id}"
+                                listing['telegram_photo'] = True
+                                print(f"MODERATION: Photo sent to {target_channel}, msg_id={msg_id}")
                     else:
                         caption = f"📋 {listing.get('title', 'Объявление')}\n\n{listing.get('description', '')[:500]}"
                         file_id = send_photo_to_channel(image_data, caption)
@@ -2996,6 +3010,7 @@ def admin_moderate():
                 extra_images.append(img)
         
         if extra_images and target_channel:
+            is_private = isinstance(target_channel, int) or (isinstance(target_channel, str) and not target_channel.startswith('@'))
             for extra_img in extra_images:
                 try:
                     import base64
@@ -3003,9 +3018,17 @@ def admin_moderate():
                     extra_data = base64.b64decode(b64_data)
                     extra_msg = send_photo_to_group(extra_data, None, target_channel)
                     if extra_msg:
-                        channel_username = target_channel.replace('@', '')
-                        extra_msg_id = extra_msg.get('message_id')
-                        all_images.append(f"https://t.me/{channel_username}/{extra_msg_id}")
+                        if is_private:
+                            extra_photos = extra_msg.get('photo', [])
+                            if extra_photos:
+                                extra_fid = extra_photos[-1].get('file_id', '')
+                                extra_url = get_telegram_photo_url(extra_fid)
+                                if extra_url:
+                                    all_images.append(extra_url)
+                        else:
+                            channel_username = target_channel.replace('@', '')
+                            extra_msg_id = extra_msg.get('message_id')
+                            all_images.append(f"https://t.me/{channel_username}/{extra_msg_id}")
                 except:
                     pass
             if all_images:
