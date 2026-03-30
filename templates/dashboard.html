@@ -4863,22 +4863,22 @@
                     <!-- АНАЛИТИКА ПОСЕЩЕНИЙ -->
                     <!-- ══════════════════════════════════════════════ -->
                     <div style="background:#0f0f1a; border-radius:14px; padding:0; margin-bottom:22px; border:1px solid #2a2a3d; box-shadow:0 2px 20px rgba(0,0,0,.4); overflow:hidden;">
-                        <div style="background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%); padding:16px 22px; display:flex; align-items:center; gap:12px;">
+                        <div style="background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%); padding:16px 22px; display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
                             <span style="font-size:22px;">📊</span>
-                            <div style="flex:1;">
+                            <div style="flex:1;min-width:140px;">
                                 <div style="font-size:16px;font-weight:700;color:#fff;">Аналитика посещений</div>
                                 <div style="font-size:11px;color:#888;" id="analytics-update">загрузка...</div>
                             </div>
-                            <div style="display:flex;gap:8px;">
-                                <button onclick="switchAnalyticsPeriod('today')" class="analytics-period-btn active" data-period="today" style="padding:6px 14px;background:#d4af37;color:#1a1a2e;border:none;border-radius:6px;cursor:pointer;font-size:12px;font-weight:700;">Сегодня</button>
-                                <button onclick="switchAnalyticsPeriod('week')" class="analytics-period-btn" data-period="week" style="padding:6px 14px;background:#ffffff18;color:#aaa;border:1px solid #ffffff22;border-radius:6px;cursor:pointer;font-size:12px;font-weight:600;">7 дней</button>
-                                <button onclick="switchAnalyticsPeriod('month')" class="analytics-period-btn" data-period="month" style="padding:6px 14px;background:#ffffff18;color:#aaa;border:1px solid #ffffff22;border-radius:6px;cursor:pointer;font-size:12px;font-weight:600;">30 дней</button>
-                                <button onclick="loadAnalytics()" style="padding:6px 14px;background:#16a34a;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:12px;font-weight:600;">↻</button>
+                            <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                                <button onclick="switchAnalyticsPeriod('today')" class="analytics-period-btn active" data-period="today" style="padding:5px 10px;background:#d4af37;color:#1a1a2e;border:none;border-radius:6px;cursor:pointer;font-size:11px;font-weight:700;">Сегодня</button>
+                                <button onclick="switchAnalyticsPeriod('week')" class="analytics-period-btn" data-period="week" style="padding:5px 10px;background:#ffffff18;color:#aaa;border:1px solid #ffffff22;border-radius:6px;cursor:pointer;font-size:11px;font-weight:600;">7 дней</button>
+                                <button onclick="switchAnalyticsPeriod('month')" class="analytics-period-btn" data-period="month" style="padding:5px 10px;background:#ffffff18;color:#aaa;border:1px solid #ffffff22;border-radius:6px;cursor:pointer;font-size:11px;font-weight:600;">30 дней</button>
+                                <button onclick="loadAnalytics()" style="padding:5px 10px;background:#16a34a;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:11px;font-weight:600;">↻</button>
                             </div>
                         </div>
 
                         <div style="padding:18px 22px;">
-                            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px;" id="analytics-cards">
+                            <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:18px;" id="analytics-cards">
                                 <div style="background:#1a1a2e;border-radius:10px;padding:16px;text-align:center;border:1px solid #2a2a3d;">
                                     <div style="font-size:11px;color:#888;margin-bottom:6px;">Просмотры</div>
                                     <div style="font-size:28px;font-weight:800;color:#d4af37;" id="a-views">0</div>
@@ -4897,7 +4897,7 @@
                                 </div>
                             </div>
 
-                            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px;">
+                            <div style="display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:18px;">
                                 <div style="background:#1a1a2e;border-radius:10px;padding:16px;border:1px solid #2a2a3d;">
                                     <div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:10px;">Страны</div>
                                     <div id="a-countries" style="font-size:13px;color:#ccc;"></div>
@@ -5905,7 +5905,9 @@
             if (typeof updateBanner === 'function') updateBanner();
         }
         
+        var currentCategory = 'real_estate';
         function switchTab(tabName) {
+            currentCategory = tabName;
             window.currentSubcategory = null;
             document.querySelectorAll('.content').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
