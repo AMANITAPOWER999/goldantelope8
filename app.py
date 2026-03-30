@@ -2932,6 +2932,9 @@ def admin_moderate():
             'exchange': {
                 'vietnam': -5095538636,
             },
+            'money_exchange': {
+                'vietnam': -5095538636,
+            },
         }
         
         target_channel = CATEGORY_CHANNELS.get(category, {}).get(country)
