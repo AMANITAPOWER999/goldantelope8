@@ -2926,6 +2926,9 @@ def admin_moderate():
             'kids': {
                 'vietnam': '@detivietnam',
             },
+            'visas': {
+                'vietnam': '@vizaranvietnam',
+            },
             'tours': {
                 'vietnam': -5047481419,
             },
