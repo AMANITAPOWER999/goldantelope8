@@ -1178,6 +1178,62 @@
             color: #ccc;
             border-color: #2a2a3d;
         }
+
+        html.dark #submit-listing,
+        html.dark [id$="-submit-section"] {
+            background: #fff !important;
+            color: #333 !important;
+        }
+        html.dark #submit-listing *,
+        html.dark [id^="submit-"][id$="-form"] *,
+        html.dark [id$="-submit-section"] * {
+            color: #333 !important;
+        }
+        html.dark #submit-listing input[type="text"],
+        html.dark #submit-listing input[type="number"],
+        html.dark #submit-listing input[type="file"],
+        html.dark #submit-listing textarea,
+        html.dark #submit-listing select,
+        html.dark [id^="submit-"][id$="-form"] input[type="text"],
+        html.dark [id^="submit-"][id$="-form"] input[type="number"],
+        html.dark [id^="submit-"][id$="-form"] input[type="file"],
+        html.dark [id^="submit-"][id$="-form"] textarea,
+        html.dark [id^="submit-"][id$="-form"] select {
+            background: #fff !important;
+            color: #333 !important;
+            border-color: #ddd !important;
+        }
+        html.dark #submit-listing select option,
+        html.dark [id^="submit-"][id$="-form"] select option {
+            background: #fff !important;
+            color: #333 !important;
+        }
+        html.dark #submit-listing label,
+        html.dark [id^="submit-"][id$="-form"] label {
+            color: #333 !important;
+        }
+        html.dark #submit-listing form,
+        html.dark [id^="submit-"][id$="-form"] {
+            background: #fff !important;
+            border-color: #ddd !important;
+        }
+        html.dark #submit-listing input::placeholder,
+        html.dark #submit-listing textarea::placeholder,
+        html.dark [id^="submit-"][id$="-form"] input::placeholder,
+        html.dark [id^="submit-"][id$="-form"] textarea::placeholder {
+            color: #999 !important;
+        }
+        html.dark #submit-listing button[type="submit"],
+        html.dark [id^="submit-"][id$="-form"] button[type="submit"] {
+            color: #fff !important;
+        }
+        html.dark #submit-listing h2,
+        html.dark #submit-listing p,
+        html.dark [id^="submit-"][id$="-form"] h2,
+        html.dark [id^="submit-"][id$="-form"] p {
+            color: #fff !important;
+        }
+
         /* Скролл */
         html.dark ::-webkit-scrollbar { width: 8px; height: 8px; }
         html.dark ::-webkit-scrollbar-track { background: #0f0f1a; }
