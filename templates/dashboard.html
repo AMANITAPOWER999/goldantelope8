@@ -7064,13 +7064,13 @@
             }
             
             // Photo upload color change handler with 3MB size limit
-            const MAX_FILE_SIZE = 3 * 1024 * 1024; // 3MB
+            const MAX_FILE_SIZE = 20 * 1024 * 1024; // 20MB
             document.querySelectorAll('.photo-upload-wrapper input[type="file"]').forEach(input => {
                 input.addEventListener('change', function() {
                     if (this.files && this.files.length > 0) {
                         const file = this.files[0];
                         if (file.size > MAX_FILE_SIZE) {
-                            alert('Размер фото не должен превышать 3 МБ. Выберите другой файл.');
+                            alert('Размер фото не должен превышать 20 МБ. Выберите другой файл.');
                             this.value = '';
                             this.classList.remove('has-file');
                             return;
@@ -10773,8 +10773,8 @@
             for (let i = 0; i < 4; i++) {
                 const file = document.getElementById(`submit-photo-${i}`).files[0];
                 if (file) {
-                    if (file.size > 1024 * 1024) {
-                        status.textContent = `❌ Фото ${i+1} превышает 1 МБ`;
+                    if (file.size > 20 * 1024 * 1024) {
+                        status.textContent = `❌ Фото ${i+1} превышает 20 МБ`;
                         status.style.color = '#ff6b6b';
                         return;
                     }
@@ -10932,8 +10932,8 @@
             for (let i = 0; i < 4; i++) {
                 const file = document.getElementById(`medicine-photo-${i}`).files[0];
                 if (file) {
-                    if (file.size > 1024 * 1024) {
-                        status.textContent = '❌ Фото слишком большое (макс 1 МБ)';
+                    if (file.size > 20 * 1024 * 1024) {
+                        status.textContent = '❌ Фото слишком большое (макс 20 МБ)';
                         status.style.color = '#ff6b6b';
                         return;
                     }
@@ -11032,8 +11032,8 @@
             for (let i = 0; i < 4; i++) {
                 const file = document.getElementById(`visas-photo-${i}`).files[0];
                 if (file) {
-                    if (file.size > 1024 * 1024) {
-                        status.textContent = '❌ Фото слишком большое (макс 1 МБ)';
+                    if (file.size > 20 * 1024 * 1024) {
+                        status.textContent = '❌ Фото слишком большое (макс 20 МБ)';
                         status.style.color = '#ff6b6b';
                         return;
                     }
@@ -11087,8 +11087,8 @@
             for (let i = 0; i < 4; i++) {
                 const file = document.getElementById(`exchange-photo-${i}`).files[0];
                 if (file) {
-                    if (file.size > 1024 * 1024) {
-                        status.textContent = '❌ Фото слишком большое (макс 1 МБ)';
+                    if (file.size > 20 * 1024 * 1024) {
+                        status.textContent = '❌ Фото слишком большое (макс 20 МБ)';
                         status.style.color = '#ff6b6b';
                         return;
                     }
@@ -11141,8 +11141,8 @@
             for (let i = 0; i < 4; i++) {
                 const file = document.getElementById(`children-photo-${i}`).files[0];
                 if (file) {
-                    if (file.size > 1024 * 1024) {
-                        status.textContent = '❌ Фото слишком большое (макс 1 МБ)';
+                    if (file.size > 20 * 1024 * 1024) {
+                        status.textContent = '❌ Фото слишком большое (макс 20 МБ)';
                         status.style.color = '#ff6b6b';
                         return;
                     }
@@ -11200,8 +11200,8 @@
             for (let i = 0; i < 4; i++) {
                 const file = document.getElementById(`kids-photo-${i}`).files[0];
                 if (file) {
-                    if (file.size > 1024 * 1024) {
-                        status.textContent = `❌ Фото ${i+1} превышает 1 МБ`;
+                    if (file.size > 20 * 1024 * 1024) {
+                        status.textContent = `❌ Фото ${i+1} превышает 20 МБ`;
                         status.style.color = '#ff6b6b';
                         return;
                     }
@@ -11264,8 +11264,8 @@
             for (let i = 0; i < 4; i++) {
                 const file = document.getElementById(`restaurant-photo-${i}`).files[0];
                 if (file) {
-                    if (file.size > 1024 * 1024) {
-                        status.textContent = `❌ Фото ${i+1} превышает 1 МБ`;
+                    if (file.size > 20 * 1024 * 1024) {
+                        status.textContent = `❌ Фото ${i+1} превышает 20 МБ`;
                         status.style.color = '#ff6b6b';
                         return;
                     }
@@ -11323,8 +11323,8 @@
             for (let i = 0; i < 4; i++) {
                 const file = document.getElementById(`entertainment-photo-${i}`).files[0];
                 if (file) {
-                    if (file.size > 1024 * 1024) {
-                        status.textContent = `❌ Фото ${i+1} превышает 1 МБ`;
+                    if (file.size > 20 * 1024 * 1024) {
+                        status.textContent = `❌ Фото ${i+1} превышает 20 МБ`;
                         status.style.color = '#ff6b6b';
                         return;
                     }
@@ -11383,8 +11383,8 @@
             for (let i = 0; i < 4; i++) {
                 const file = document.getElementById(`tour-photo-${i}`).files[0];
                 if (file) {
-                    if (file.size > 1024 * 1024) {
-                        status.textContent = `❌ Фото ${i+1} превышает 1 МБ`;
+                    if (file.size > 20 * 1024 * 1024) {
+                        status.textContent = `❌ Фото ${i+1} превышает 20 МБ`;
                         status.style.color = '#ff6b6b';
                         return;
                     }
@@ -11442,8 +11442,8 @@
             for (let i = 0; i < 4; i++) {
                 const file = document.getElementById(`transport-photo-${i}`).files[0];
                 if (file) {
-                    if (file.size > 1024 * 1024) {
-                        status.textContent = `❌ Фото ${i+1} превышает 1 МБ`;
+                    if (file.size > 20 * 1024 * 1024) {
+                        status.textContent = `❌ Фото ${i+1} превышает 20 МБ`;
                         status.style.color = '#ff6b6b';
                         return;
                     }
@@ -11502,8 +11502,8 @@
             for (let i = 0; i < 4; i++) {
                 const file = document.getElementById(`realestate-photo-${i}`).files[0];
                 if (file) {
-                    if (file.size > 1024 * 1024) {
-                        status.textContent = `❌ Фото ${i+1} превышает 1 МБ`;
+                    if (file.size > 20 * 1024 * 1024) {
+                        status.textContent = `❌ Фото ${i+1} превышает 20 МБ`;
                         status.style.color = '#ff6b6b';
                         return;
                     }
