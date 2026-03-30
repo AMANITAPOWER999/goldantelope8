@@ -2926,6 +2926,12 @@ def admin_moderate():
             'kids': {
                 'vietnam': '@detivietnam',
             },
+            'tours': {
+                'vietnam': -5047481419,
+            },
+            'exchange': {
+                'vietnam': -5095538636,
+            },
         }
         
         target_channel = CATEGORY_CHANNELS.get(category, {}).get(country)
