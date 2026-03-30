@@ -5105,68 +5105,6 @@
                         </div>
                     </div>
 
-                    <div style="background: #ffebee; padding: 20px; border-radius: 8px; border: 1px solid #ef9a9a; margin-top: 20px;">
-                        <h4 style="margin: 0 0 15px 0; color: #c62828;">🚫 Чёрный список чата</h4>
-                        <p style="font-size: 12px; color: #666; margin: 0 0 15px 0;">Заблокированные пользователи не могут писать в чат сообщества</p>
-                        <div style="display: flex; gap: 10px; margin-bottom: 15px;">
-                            <input type="text" id="blacklist-username" placeholder="@ник пользователя" style="flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 13px;">
-                            <button onclick="addToBlacklist()" style="padding: 10px 20px; background: #c62828; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">Заблокировать</button>
-                        </div>
-                        <div id="blacklist-list" style="display: flex; flex-wrap: wrap; gap: 8px;">
-                            <span style="color: #999; font-size: 12px;">Загрузка...</span>
-                        </div>
-                    </div>
-
-                    <div style="background: #e3f2fd; padding: 20px; border-radius: 8px; border: 1px solid #90caf9; margin-top: 20px;">
-                        <h4 style="margin: 0 0 15px 0; color: #1565c0;">📡 Управление Telegram каналами</h4>
-                        <div style="display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;">
-                            <select id="channel-category" style="padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 13px; min-width: 150px;">
-                                <option value="chat">Чат</option>
-                                <option value="restaurants">Рестораны</option>
-                                <option value="tours">Экскурсии</option>
-                                <option value="transport">Транспорт</option>
-                                <option value="real_estate">Недвижимость</option>
-                                <option value="money_exchange">Обмен денег</option>
-                                <option value="entertainment">Развлечения</option>
-                                <option value="visas">Визаран</option>
-                                <option value="news">Фотосессия</option>
-                                <option value="medicine">Медицина</option>
-                                <option value="kids">Для детей</option>
-                            </select>
-                            <input type="text" id="new-channel-name" placeholder="@channel_name" style="flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 13px; min-width: 200px;">
-                            <button onclick="addChannelAdmin()" style="padding: 10px 20px; background: #1565c0; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">➕ Добавить</button>
-                        </div>
-                        <div id="channel-result" style="font-size: 12px; margin-bottom: 10px;"></div>
-                        <div id="channels-list" style="max-height: 400px; overflow-y: auto; background: white; border-radius: 6px; border: 1px solid #ddd;">
-                            <!-- Каналы будут здесь -->
-                        </div>
-                    </div>
-
-                    <!-- Ручной парсер -->
-                    <div style="background: white; border-radius: 12px; padding: 20px; border: 1px solid #ddd; margin-top: 20px;">
-                        <h3 style="margin: 0 0 15px 0; color: #333;">🔍 Ручной парсер Telegram</h3>
-                        <p style="font-size: 13px; color: #666; margin-bottom: 15px;">Введите @username канала и выберите категорию. Будут загружены все сообщения из канала.</p>
-                        <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 15px;">
-                            <input type="text" id="parser-channel" placeholder="@channel_name" style="flex: 1; min-width: 200px; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px;">
-                            <select id="parser-category" style="padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 13px;">
-                                <option value="restaurants">Рестораны</option>
-                                <option value="tours">Экскурсии</option>
-                                <option value="transport">Транспорт</option>
-                                <option value="real_estate">Недвижимость</option>
-                                <option value="money_exchange">Обмен денег</option>
-                                <option value="entertainment">Развлечения</option>
-                                <option value="visas">Визаран</option>
-                                <option value="news">Фотосессия</option>
-                                <option value="medicine">Медицина</option>
-                                <option value="kids">Для детей</option>
-                                <option value="chat">Чат</option>
-                            </select>
-                            <input type="number" id="parser-limit" placeholder="Лимит (100)" value="100" min="1" max="1000" style="width: 100px; padding: 10px; border: 1px solid #ddd; border-radius: 6px;">
-                            <button onclick="startManualParser()" id="parser-btn" style="padding: 10px 20px; background: #FF9800; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">🚀 Запустить парсинг</button>
-                        </div>
-                        <div id="parser-status" style="font-size: 13px; color: #666;"></div>
-                        <div id="parser-log" style="max-height: 300px; overflow-y: auto; background: #f5f5f5; border-radius: 6px; padding: 10px; font-family: monospace; font-size: 12px; margin-top: 10px; display: none;"></div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -6873,44 +6811,6 @@
             } catch(e) {}
         }
         
-        async function blockChatUser(username) {
-            if (!confirm(`Заблокировать @${username}?`)) return;
-            try {
-                await fetch('/api/admin/chat-blacklist', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({admin_key: adminPassword, action: 'add', username: username})
-                });
-                alert(`@${username} заблокирован`);
-                loadChatMessages();
-                loadBlacklist();
-            } catch(e) {}
-        }
-        
-        async function loadBlacklist() {
-            const list = document.getElementById('blacklist-list');
-            if (!list || !adminPassword) return;
-            try {
-                const r = await fetch('/api/admin/chat-blacklist', {
-                    method: 'GET',
-                    headers: {'X-Admin-Key': adminPassword}
-                });
-                const data = await r.json();
-                const users = data.users || [];
-                if (users.length === 0) {
-                    list.innerHTML = '<span style="color: #999; font-size: 12px;">Список пуст</span>';
-                    return;
-                }
-                list.innerHTML = users.map(u => `
-                    <div style="display: flex; align-items: center; gap: 5px; background: #fff; border: 1px solid #ef9a9a; border-radius: 20px; padding: 5px 10px;">
-                        <span style="font-size: 13px;">@${u}</span>
-                        <button onclick="removeFromBlacklist('${u}')" style="background: none; border: none; cursor: pointer; font-size: 12px; color: #c62828;">✕</button>
-                    </div>
-                `).join('');
-            } catch(e) {
-                list.innerHTML = '<span style="color: #c62828; font-size: 12px;">Ошибка загрузки</span>';
-            }
-        }
         
         async function thSendCode() {
             const phone = document.getElementById('th-phone-input').value.trim();
@@ -7010,33 +6910,6 @@
             }
         }
 
-        async function addToBlacklist() {
-            const input = document.getElementById('blacklist-username');
-            const username = input.value.trim();
-            if (!username) return;
-            try {
-                await fetch('/api/admin/chat-blacklist', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({admin_key: adminPassword, action: 'add', username: username})
-                });
-                input.value = '';
-                loadBlacklist();
-            } catch(e) {
-                alert('Ошибка');
-            }
-        }
-        
-        async function removeFromBlacklist(username) {
-            try {
-                await fetch('/api/admin/chat-blacklist', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({admin_key: adminPassword, action: 'remove', username: username})
-                });
-                loadBlacklist();
-            } catch(e) {}
-        }
 
 
         function sendMessage() {
@@ -10284,105 +10157,6 @@
             'medicine': 'Медицина', 'kids': 'Дети'
         };
 
-        async function loadChannelsAdmin() {
-            if (!adminAuthenticated) return;
-            
-            try {
-                const r = await fetch(`/api/admin/channels?country=${currentCountry}`);
-                const data = await r.json();
-                const container = document.getElementById('channels-list');
-                
-                let html = '';
-                const channels = data.channels || {};
-                
-                for (const [category, list] of Object.entries(channels)) {
-                    if (list && list.length > 0) {
-                        html += `<div style="padding: 12px; border-bottom: 1px solid #eee;">
-                            <div style="font-weight: 600; color: #1565c0; margin-bottom: 8px;">${categoryNames[category] || category} (${list.length})</div>
-                            <div style="display: flex; flex-wrap: wrap; gap: 6px;">`;
-                        
-                        for (const ch of list) {
-                            html += `<div style="display: inline-flex; align-items: center; background: #f5f5f5; padding: 4px 10px; border-radius: 15px; font-size: 12px;">
-                                <a href="https://t.me/${ch}" target="_blank" style="color: #0088cc; text-decoration: none;">@${ch}</a>
-                                <button onclick="removeChannelAdmin('${category}', '${ch}')" style="background: none; border: none; color: #ff6b6b; cursor: pointer; margin-left: 6px; font-size: 14px;" title="Удалить">×</button>
-                            </div>`;
-                        }
-                        
-                        html += '</div></div>';
-                    }
-                }
-                
-                if (!html) {
-                    html = '<div style="padding: 20px; text-align: center; color: #999;">Нет каналов для этой страны</div>';
-                }
-                
-                container.innerHTML = html;
-            } catch (e) {
-                console.error('Error loading channels:', e);
-            }
-        }
-
-        async function addChannelAdmin() {
-            const category = document.getElementById('channel-category').value;
-            const channel = document.getElementById('new-channel-name').value.trim();
-            const result = document.getElementById('channel-result');
-            
-            if (!channel) {
-                result.innerHTML = '<span style="color: #ff6b6b;">Введите имя канала</span>';
-                return;
-            }
-            
-            try {
-                const r = await fetch('/api/admin/add-channel', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({
-                        password: adminPassword_val,
-                        country: currentCountry,
-                        category: category,
-                        channel: channel
-                    })
-                });
-                const data = await r.json();
-                
-                if (data.success) {
-                    result.innerHTML = '<span style="color: #31a24c;">✅ ' + data.message + '</span>';
-                    document.getElementById('new-channel-name').value = '';
-                    loadChannelsAdmin();
-                } else {
-                    result.innerHTML = '<span style="color: #ff6b6b;">❌ ' + (data.error || 'Ошибка') + '</span>';
-                }
-            } catch (e) {
-                result.innerHTML = '<span style="color: #ff6b6b;">❌ Ошибка сети</span>';
-            }
-        }
-
-        async function removeChannelAdmin(category, channel) {
-            if (!confirm(`Удалить канал @${channel}?`)) return;
-            
-            try {
-                const r = await fetch('/api/admin/remove-channel', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({
-                        password: adminPassword_val,
-                        country: currentCountry,
-                        category: category,
-                        channel: channel
-                    })
-                });
-                const data = await r.json();
-                
-                if (data.success) {
-                    loadChannelsAdmin();
-                } else {
-                    alert('Ошибка: ' + (data.error || 'Unknown'));
-                }
-            } catch (e) {
-                alert('Ошибка сети');
-            }
-        }
-
         // Управление городами
         async function loadCitiesAdmin() {
             const category = document.getElementById('city-category').value;
@@ -10680,58 +10454,6 @@
             }
         }
 
-        // Ручной парсер
-        async function startManualParser() {
-            const channel = document.getElementById('parser-channel').value.trim();
-            const category = document.getElementById('parser-category').value;
-            const limit = parseInt(document.getElementById('parser-limit').value) || 100;
-            const btn = document.getElementById('parser-btn');
-            const status = document.getElementById('parser-status');
-            const log = document.getElementById('parser-log');
-            
-            if (!channel) {
-                status.innerHTML = '<span style="color: #ff6b6b;">❌ Введите название канала</span>';
-                return;
-            }
-            
-            btn.disabled = true;
-            btn.textContent = '⏳ Парсинг...';
-            status.innerHTML = '<span style="color: #FF9800;">🔄 Запуск парсера...</span>';
-            log.style.display = 'block';
-            log.innerHTML = `[${new Date().toLocaleTimeString()}] Начинаю парсинг канала ${channel}...\n`;
-            
-            try {
-                const r = await fetch('/api/admin/manual-parse', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({
-                        password: adminPassword_val,
-                        country: currentCountry,
-                        channel: channel,
-                        category: category,
-                        limit: limit
-                    })
-                });
-                const data = await r.json();
-                
-                if (data.success) {
-                    status.innerHTML = `<span style="color: #4CAF50;">✅ ${data.message}</span>`;
-                    log.innerHTML += `[${new Date().toLocaleTimeString()}] ✅ Успешно! Добавлено ${data.count || 0} объявлений\n`;
-                    if (data.log) {
-                        log.innerHTML += data.log;
-                    }
-                } else {
-                    status.innerHTML = `<span style="color: #ff6b6b;">❌ ${data.error || 'Ошибка'}</span>`;
-                    log.innerHTML += `[${new Date().toLocaleTimeString()}] ❌ Ошибка: ${data.error || 'Unknown'}\n`;
-                }
-            } catch (e) {
-                status.innerHTML = '<span style="color: #ff6b6b;">❌ Ошибка сети</span>';
-                log.innerHTML += `[${new Date().toLocaleTimeString()}] ❌ Ошибка сети: ${e.message}\n`;
-            }
-            
-            btn.disabled = false;
-            btn.textContent = '🚀 Запустить парсинг';
-        }
 
         // Капча
         function loadCaptcha() {
@@ -12218,8 +11940,6 @@
                     
                     renderAdminBanners();
                     switchBannerTab('web');
-                    loadChannelsAdmin();
-                    loadBlacklist();
                     renderDynamicCityButtons();
                     setTimeout(loadMonitoringStats, 500);
                     // Перезагрузить текущую категорию чтобы показать кнопки перемещения
