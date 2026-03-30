@@ -2914,9 +2914,11 @@ def admin_moderate():
             },
             'real_estate': {
                 'vietnam': '@vietnamparsing',
+                'thailand': '@thailandparsing',
             },
             'transport': {
                 'vietnam': '@baykivietnam',
+                'thailand': '@baykithailand',
             },
             'medicine': {
                 'vietnam': '@medvietnam',
