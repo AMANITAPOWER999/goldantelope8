@@ -2336,8 +2336,8 @@ def submit_listing():
                 if file and file.filename:
                     import base64
                     file_data = file.read()
-                    if len(file_data) > 1024 * 1024:
-                        return jsonify({'error': f'Фото {i+1} превышает 1 МБ'}), 400
+                    if len(file_data) > 20 * 1024 * 1024:
+                        return jsonify({'error': f'Фото {i+1} превышает 20 МБ'}), 400
                     ext = file.filename.rsplit('.', 1)[-1].lower() if '.' in file.filename else 'jpg'
                     data_url = f"data:image/{ext};base64,{base64.b64encode(file_data).decode()}"
                     images.append(data_url)
@@ -2348,8 +2348,8 @@ def submit_listing():
                 if file and file.filename:
                     import base64
                     file_data = file.read()
-                    if len(file_data) > 1024 * 1024:
-                        return jsonify({'error': f'Фото {i+1} превышает 1 МБ'}), 400
+                    if len(file_data) > 20 * 1024 * 1024:
+                        return jsonify({'error': f'Фото {i+1} превышает 20 МБ'}), 400
                     ext = file.filename.rsplit('.', 1)[-1].lower() if '.' in file.filename else 'jpg'
                     data_url = f"data:image/{ext};base64,{base64.b64encode(file_data).decode()}"
                     images.append(data_url)
@@ -2453,8 +2453,8 @@ def submit_restaurant():
             if file and file.filename:
                 import base64
                 file_data = file.read()
-                if len(file_data) > 1024 * 1024:
-                    return jsonify({'error': f'Фото {i+1} превышает 1 МБ'}), 400
+                if len(file_data) > 20 * 1024 * 1024:
+                    return jsonify({'error': f'Фото {i+1} превышает 20 МБ'}), 400
                 
                 ext = file.filename.rsplit('.', 1)[-1].lower() if '.' in file.filename else 'jpg'
                 data_url = f"data:image/{ext};base64,{base64.b64encode(file_data).decode()}"
@@ -2525,8 +2525,8 @@ def submit_entertainment():
             if file and file.filename:
                 import base64
                 file_data = file.read()
-                if len(file_data) > 1024 * 1024:
-                    return jsonify({'error': f'Фото {i+1} превышает 1 МБ'}), 400
+                if len(file_data) > 20 * 1024 * 1024:
+                    return jsonify({'error': f'Фото {i+1} превышает 20 МБ'}), 400
                 
                 ext = file.filename.rsplit('.', 1)[-1].lower() if '.' in file.filename else 'jpg'
                 data_url = f"data:image/{ext};base64,{base64.b64encode(file_data).decode()}"
@@ -2596,8 +2596,8 @@ def submit_tour():
             if file and file.filename:
                 import base64
                 file_data = file.read()
-                if len(file_data) > 1024 * 1024:
-                    return jsonify({'error': f'Фото {i+1} превышает 1 МБ'}), 400
+                if len(file_data) > 20 * 1024 * 1024:
+                    return jsonify({'error': f'Фото {i+1} превышает 20 МБ'}), 400
                 
                 ext = file.filename.rsplit('.', 1)[-1].lower() if '.' in file.filename else 'jpg'
                 data_url = f"data:image/{ext};base64,{base64.b64encode(file_data).decode()}"
@@ -2669,8 +2669,8 @@ def submit_transport():
             if file and file.filename:
                 import base64
                 file_data = file.read()
-                if len(file_data) > 1024 * 1024:
-                    return jsonify({'error': f'Фото {i+1} превышает 1 МБ'}), 400
+                if len(file_data) > 20 * 1024 * 1024:
+                    return jsonify({'error': f'Фото {i+1} превышает 20 МБ'}), 400
                 
                 ext = file.filename.rsplit('.', 1)[-1].lower() if '.' in file.filename else 'jpg'
                 data_url = f"data:image/{ext};base64,{base64.b64encode(file_data).decode()}"
@@ -2744,8 +2744,8 @@ def submit_realestate():
             if file and file.filename:
                 import base64
                 file_data = file.read()
-                if len(file_data) > 1024 * 1024:
-                    return jsonify({'error': f'Фото {i+1} превышает 1 МБ'}), 400
+                if len(file_data) > 20 * 1024 * 1024:
+                    return jsonify({'error': f'Фото {i+1} превышает 20 МБ'}), 400
                 
                 ext = file.filename.rsplit('.', 1)[-1].lower() if '.' in file.filename else 'jpg'
                 data_url = f"data:image/{ext};base64,{base64.b64encode(file_data).decode()}"
@@ -2821,8 +2821,8 @@ def submit_kids():
             if file and file.filename:
                 import base64
                 file_data = file.read()
-                if len(file_data) > 1024 * 1024:
-                    return jsonify({'error': f'Фото {i+1} превышает 1 МБ'}), 400
+                if len(file_data) > 20 * 1024 * 1024:
+                    return jsonify({'error': f'Фото {i+1} превышает 20 МБ'}), 400
                 
                 ext = file.filename.rsplit('.', 1)[-1].lower() if '.' in file.filename else 'jpg'
                 data_url = f"data:image/{ext};base64,{base64.b64encode(file_data).decode()}"
