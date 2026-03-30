@@ -53,9 +53,9 @@
         "user_amhdh2rzc_1774849386312",
         "user_rpjzljjpd_1774782792913"
       ],
-      "page_views": 733,
+      "page_views": 744,
       "countries": {
-        "vietnam": 733
+        "vietnam": 744
       },
       "categories": {},
       "hours": {
@@ -65,19 +65,19 @@
         "03": 120,
         "04": 69,
         "05": 153,
-        "06": 18
+        "06": 29
       },
       "referrers": {},
       "devices": {
-        "mobile": 33,
-        "desktop": 700
+        "mobile": 36,
+        "desktop": 708
       }
     }
   },
   "visitors": {
     "user_l4bmiotql_1774778260819": {
       "first_seen": "2026-03-29",
-      "visits": 2358,
+      "visits": 2363,
       "last_seen": "2026-03-30"
     },
     "test_user_1": {
@@ -102,7 +102,7 @@
     },
     "user_rpjzljjpd_1774782792913": {
       "first_seen": "2026-03-29",
-      "visits": 145,
+      "visits": 148,
       "last_seen": "2026-03-30"
     },
     "user_ckgbqk5ad_1774790602298": {
@@ -112,7 +112,7 @@
     },
     "user_5nv73h4ww_1774806415608": {
       "first_seen": "2026-03-29",
-      "visits": 36,
+      "visits": 39,
       "last_seen": "2026-03-30"
     },
     "user_b94mxl6ku_1774820251634": {
