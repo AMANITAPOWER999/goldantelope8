@@ -2908,7 +2908,22 @@ def admin_moderate():
         CATEGORY_CHANNELS = {
             'entertainment': {
                 'vietnam': '@razvlecheniyavietnam',
-            }
+            },
+            'restaurants': {
+                'vietnam': '@restoranvietnam',
+            },
+            'real_estate': {
+                'vietnam': '@vietnamparsing',
+            },
+            'transport': {
+                'vietnam': '@baykivietnam',
+            },
+            'medicine': {
+                'vietnam': '@medvietnam',
+            },
+            'kids': {
+                'vietnam': '@detivietnam',
+            },
         }
         
         target_channel = CATEGORY_CHANNELS.get(category, {}).get(country)
