@@ -2,8 +2,7 @@ import asyncio
 import json
 import os
 import threading
-import time
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 
 import gradio as gr
 from huggingface_hub import HfApi
@@ -12,6 +11,7 @@ from telethon.sessions import StringSession
 from telethon.tl.types import (
     UserStatusOnline, UserStatusRecently, UserStatusOffline,
     UserStatusLastWeek, UserStatusLastMonth,
+    PeerUser, MessageService,
 )
 from telethon.errors import (
     ChatAdminRequiredError, ChannelPrivateError, FloodWaitError
@@ -104,8 +104,9 @@ def log(m):
     t = datetime.now().strftime('%H:%M:%S')
     line = f"[{t}] {m}"
     status['log'].append(line)
-    if len(status['log'])>800: status['log']=status['log'][-500:]
-    print(line,flush=True)
+    if len(status['log']) > 1000:
+        status['log'] = status['log'][-700:]
+    print(line, flush=True)
 
 def get_status_text(st):
     if isinstance(st, UserStatusOnline): return 'online'
@@ -117,22 +118,103 @@ def get_status_text(st):
     if isinstance(st, UserStatusLastMonth): return 'last_month'
     return 'unknown'
 
-async def get_all_users(client, entity):
-    users = []
+async def get_participants(client, entity):
+    users = {}
     count = 0
-    async for u in client.iter_participants(entity, aggressive=True):
-        count += 1
-        if u.bot:
-            continue
-        users.append({
-            'user_id': u.id,
-            'username': u.username or '',
-            'first_name': u.first_name or '',
-            'last_name': u.last_name or '',
-            'phone': u.phone or '',
-            'last_seen': get_status_text(u.status),
-        })
+    try:
+        async for u in client.iter_participants(entity, aggressive=True):
+            count += 1
+            if u.bot:
+                continue
+            users[u.id] = {
+                'user_id': u.id,
+                'username': u.username or '',
+                'first_name': u.first_name or '',
+                'last_name': u.last_name or '',
+                'phone': u.phone or '',
+                'last_seen': get_status_text(u.status),
+            }
+    except ChatAdminRequiredError:
+        pass
+    except Exception:
+        pass
     return users, count
+
+async def get_message_authors(client, entity, months=6):
+    users = {}
+    msg_count = 0
+    cutoff = datetime.now(timezone.utc) - timedelta(days=months * 30)
+    try:
+        async for msg in client.iter_messages(entity, limit=None, offset_date=cutoff, reverse=True):
+            msg_count += 1
+            if isinstance(msg, MessageService):
+                continue
+            sender = msg.sender
+            if sender is None:
+                if msg.from_id and isinstance(msg.from_id, PeerUser):
+                    uid = msg.from_id.user_id
+                    if uid not in users:
+                        try:
+                            sender = await client.get_entity(uid)
+                        except Exception:
+                            users[uid] = {
+                                'user_id': uid,
+                                'username': '',
+                                'first_name': '',
+                                'last_name': '',
+                                'phone': '',
+                                'last_seen': 'from_messages',
+                            }
+                            continue
+                else:
+                    continue
+
+            if sender and hasattr(sender, 'bot') and sender.bot:
+                continue
+            if sender and hasattr(sender, 'id'):
+                if sender.id not in users:
+                    users[sender.id] = {
+                        'user_id': sender.id,
+                        'username': getattr(sender, 'username', '') or '',
+                        'first_name': getattr(sender, 'first_name', '') or '',
+                        'last_name': getattr(sender, 'last_name', '') or '',
+                        'phone': getattr(sender, 'phone', '') or '',
+                        'last_seen': 'from_messages',
+                    }
+
+            if msg.fwd_from and msg.fwd_from.from_id and isinstance(msg.fwd_from.from_id, PeerUser):
+                fwd_uid = msg.fwd_from.from_id.user_id
+                if fwd_uid not in users:
+                    try:
+                        fwd_user = await client.get_entity(fwd_uid)
+                        if not getattr(fwd_user, 'bot', False):
+                            users[fwd_uid] = {
+                                'user_id': fwd_uid,
+                                'username': getattr(fwd_user, 'username', '') or '',
+                                'first_name': getattr(fwd_user, 'first_name', '') or '',
+                                'last_name': getattr(fwd_user, 'last_name', '') or '',
+                                'phone': '',
+                                'last_seen': 'forwarded',
+                            }
+                    except Exception:
+                        users[fwd_uid] = {
+                            'user_id': fwd_uid,
+                            'username': '',
+                            'first_name': '',
+                            'last_name': '',
+                            'phone': '',
+                            'last_seen': 'forwarded',
+                        }
+
+            if msg_count % 5000 == 0:
+                log(f"      ...{msg_count} сообщений, {len(users)} авторов")
+    except FloodWaitError as e:
+        w = min(e.seconds, 120)
+        log(f"      FloodWait {e.seconds}с при чтении сообщений, жду {w}с")
+        await asyncio.sleep(w + 3)
+    except Exception as e:
+        log(f"      Ошибка при чтении сообщений: {type(e).__name__}: {e}")
+    return users, msg_count
 
 async def do_channel(client, ch, cat):
     try:
@@ -140,18 +222,36 @@ async def do_channel(client, ch, cat):
             ent = await asyncio.wait_for(client.get_entity(int(ch)), timeout=15)
         else:
             ent = await asyncio.wait_for(client.get_entity(ch), timeout=15)
-        try:
-            title = getattr(ent, 'title', ch)
-            participants_count = getattr(ent, 'participants_count', '?')
-            log(f"  @{ch} ({cat}) [{title}] ~{participants_count} подписчиков")
-            users, total = await asyncio.wait_for(get_all_users(client, ent), timeout=600)
-            log(f"    -> собрано {len(users)} из {total} (боты исключены)")
-            return users
-        except asyncio.TimeoutError:
-            log(f"    -> ТАЙМАУТ (10 мин), пропуск")
-            return []
+
+        title = getattr(ent, 'title', ch)
+        pc = getattr(ent, 'participants_count', '?')
+        log(f"  @{ch} ({cat}) [{title}] ~{pc} подп.")
+
+        p_users, p_count = await asyncio.wait_for(
+            get_participants(client, ent), timeout=600
+        )
+        log(f"    Участники: {len(p_users)} из {p_count}")
+
+        m_users, m_count = await asyncio.wait_for(
+            get_message_authors(client, ent, months=6), timeout=1800
+        )
+        log(f"    Сообщения (6мес): {m_count} сообщений, {len(m_users)} авторов")
+
+        merged = dict(p_users)
+        for uid, udata in m_users.items():
+            if uid not in merged:
+                merged[uid] = udata
+            else:
+                if not merged[uid]['username'] and udata['username']:
+                    merged[uid]['username'] = udata['username']
+                if not merged[uid]['first_name'] and udata['first_name']:
+                    merged[uid]['first_name'] = udata['first_name']
+
+        log(f"    ИТОГО: {len(merged)} уникальных (участники + авторы)")
+        return list(merged.values())
+
     except ChatAdminRequiredError:
-        log(f"  @{ch} — нет доступа (нужны права админа)")
+        log(f"  @{ch} — нет доступа")
         status['errors'] += 1
     except ChannelPrivateError:
         log(f"  @{ch} — приватный")
@@ -162,7 +262,7 @@ async def do_channel(client, ch, cat):
         await asyncio.sleep(w + 3)
         return await do_channel(client, ch, cat)
     except asyncio.TimeoutError:
-        log(f"  @{ch} — таймаут entity")
+        log(f"  @{ch} — таймаут")
         status['errors'] += 1
     except Exception as e:
         log(f"  @{ch} — ошибка: {type(e).__name__}: {e}")
@@ -174,7 +274,7 @@ def save(vn, th, st='in_progress'):
     r = {
         'collected_at': datetime.now(timezone.utc).isoformat(),
         'status': st,
-        'mode': 'ALL_USERS (no 24h filter)',
+        'mode': 'DEEP: participants + message_authors (6 months)',
         'stats': {
             'vietnam_unique': len(vn),
             'thailand_unique': len(th),
@@ -196,11 +296,11 @@ def save(vn, th, st='in_progress'):
                 path_in_repo='tg_users_database.json',
                 repo_id=HF_REPO,
                 repo_type='space',
-                commit_message=f'Update: VN={len(vn)} TH={len(th)} ({st})',
+                commit_message=f'Deep: VN={len(vn)} TH={len(th)} ({st})',
             )
-            log(f"  [загружено в HF repo: VN={len(vn)} TH={len(th)}]")
+            log(f"  [HF: VN={len(vn)} TH={len(th)}]")
     except Exception as e:
-        log(f"  [ошибка загрузки в HF: {e}]")
+        log(f"  [HF ошибка: {e}]")
 
 async def run():
     status.update(running=True, done=False, log=[], vn=0, th=0, idx=0, errors=0)
@@ -217,8 +317,8 @@ async def run():
         return
     me = await client.get_me()
     log(f"Авторизован: {me.first_name} id={me.id}")
-    log(f"РЕЖИМ: ГЛУБОКИЙ ПАРСИНГ — ВСЕ УЧАСТНИКИ (без фильтра 24ч)")
-    log(f"aggressive=True, лимит 10мин/канал")
+    log(f"РЕЖИМ: ГЛУБОКИЙ — участники + авторы сообщений за 6 месяцев")
+    log(f"+ пересланные сообщения (forwarded authors)")
     log(f"Каналов: VN={TOTAL_VN} TH={TOTAL_TH} всего={TOTAL}")
     log("")
 
@@ -245,16 +345,16 @@ async def run():
                 }
             if ch not in vn_u[uid]['channels']:
                 vn_u[uid]['channels'].append(ch)
-            if u['last_seen'] in ('online', 'recently') and vn_u[uid]['last_seen'] not in ('online',):
-                vn_u[uid]['last_seen'] = u['last_seen']
+            if u.get('username') and not vn_u[uid]['username']:
+                vn_u[uid]['username'] = u['username']
         status['vn'] = len(vn_u)
         if i % 3 == 0:
             save(vn_u, th_u)
-            log(f"  [сохранено: VN={len(vn_u)} уникальных]")
+            log(f"  [сохранено: VN={len(vn_u)}]")
         await asyncio.sleep(3)
 
     save(vn_u, th_u)
-    log(f"\nВьетнам завершён: {len(vn_u)} уникальных пользователей")
+    log(f"\nВьетнам завершён: {len(vn_u)} уникальных")
 
     log("")
     log("=" * 60)
@@ -278,12 +378,12 @@ async def run():
                 }
             if ch not in th_u[uid]['channels']:
                 th_u[uid]['channels'].append(ch)
-            if u['last_seen'] in ('online', 'recently') and th_u[uid]['last_seen'] not in ('online',):
-                th_u[uid]['last_seen'] = u['last_seen']
+            if u.get('username') and not th_u[uid]['username']:
+                th_u[uid]['username'] = u['username']
         status['th'] = len(th_u)
         if i % 3 == 0:
             save(vn_u, th_u)
-            log(f"  [сохранено: TH={len(th_u)} уникальных]")
+            log(f"  [сохранено: TH={len(th_u)}]")
         await asyncio.sleep(3)
 
     save(vn_u, th_u, 'complete')
@@ -294,12 +394,10 @@ async def run():
     log("ГОТОВО!")
     log(f"Вьетнам: {len(vn_u)} уникальных")
     log(f"Тайланд: {len(th_u)} уникальных")
-    log(f"ВСЕГО уникальных: {total}")
-    log(f"В обоих странах: {both}")
+    log(f"ВСЕГО: {total}")
+    log(f"В обоих: {both}")
     log(f"Ошибок: {status['errors']}")
-    log(f"Файл: {RESULT}")
     log("=" * 60)
-
     await client.disconnect()
     status['running'] = False
     status['done'] = True
@@ -308,7 +406,7 @@ def start():
     if status['running']:
         return "Уже работает!"
     threading.Thread(target=lambda: asyncio.new_event_loop().run_until_complete(run()), daemon=True).start()
-    return "Глубокий сбор запущен! (ВСЕ участники, без фильтра 24ч)"
+    return "ГЛУБОКИЙ сбор запущен! (участники + сообщения 6 мес + пересылки)"
 
 def get_st():
     if not status['running'] and not status['done']:
@@ -323,17 +421,17 @@ def get_st():
     )
 
 def get_log():
-    return "\n".join(status['log'][-100:]) or "Пусто"
+    return "\n".join(status['log'][-120:]) or "Пусто"
 
 def dl():
     return RESULT if os.path.exists(RESULT) else None
 
 with gr.Blocks(title="TG Deep Collector") as demo:
-    gr.Markdown(f"# Глубокий сбор базы TG — ВСЕ участники")
-    gr.Markdown(f"**{TOTAL_VN}** VN + **{TOTAL_TH}** TH = **{TOTAL}** каналов | aggressive=True | без фильтра 24ч")
+    gr.Markdown(f"# ГЛУБОКИЙ сбор: участники + авторы сообщений")
+    gr.Markdown(f"**{TOTAL}** каналов | participants + messages (6 мес) + forwarded")
     with gr.Row():
-        b1 = gr.Button("🚀 Запустить глубокий сбор", variant="primary")
-        b2 = gr.Button("🔄 Обновить статус")
+        b1 = gr.Button("🚀 Запустить", variant="primary")
+        b2 = gr.Button("🔄 Обновить")
     st = gr.Textbox(label="Статус", lines=6, interactive=False)
     lg = gr.Textbox(label="Лог", lines=25, interactive=False)
     b3 = gr.Button("📥 Скачать JSON")
