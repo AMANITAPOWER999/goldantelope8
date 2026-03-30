@@ -1,0 +1,76 @@
+{
+  "collected_at": "2026-03-30T07:45:06.403916+00:00",
+  "status": "in_progress",
+  "stats": {
+    "vietnam_unique_users": 9,
+    "thailand_unique_users": 0,
+    "users_in_both": 0
+  },
+  "vietnam": [
+    {
+      "user_id": 5692132359,
+      "username": "Sparta_VIETNAM",
+      "channels": [
+        "nhatrang_bg"
+      ]
+    },
+    {
+      "user_id": 6142501912,
+      "username": "black_groupPR07",
+      "channels": [
+        "nhatrang_bg"
+      ]
+    },
+    {
+      "user_id": 5933396332,
+      "username": "poni_poni99",
+      "channels": [
+        "nhatrang_bg"
+      ]
+    },
+    {
+      "user_id": 509870890,
+      "username": "pisarenko_1",
+      "channels": [
+        "nhatrang_bg"
+      ]
+    },
+    {
+      "user_id": 5697485849,
+      "username": "black_groupPR",
+      "channels": [
+        "nhatrang_bg"
+      ]
+    },
+    {
+      "user_id": 7532178602,
+      "username": "Nha_Trang_Admin",
+      "channels": [
+        "NhaTrangchat"
+      ]
+    },
+    {
+      "user_id": 1013329963,
+      "username": "MrWayne77",
+      "channels": [
+        "NhaTrang55"
+      ]
+    },
+    {
+      "user_id": 7024041668,
+      "username": "alinazakup",
+      "channels": [
+        "svoi_nhatrang",
+        "zhenskiy_nhatrang"
+      ]
+    },
+    {
+      "user_id": 7545482465,
+      "username": "gorilla_manager2",
+      "channels": [
+        "zhenskiy_nhatrang"
+      ]
+    }
+  ],
+  "thailand": []
+}

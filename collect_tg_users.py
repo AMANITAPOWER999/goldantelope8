@@ -130,34 +130,47 @@ def is_active_24h(status):
     return False
 
 
-async def collect_from_channel(client, channel_username, category, country):
+async def _fetch_participants(client, entity, timeout=45):
     users = []
+    count = 0
+    async for user in client.iter_participants(entity, limit=5000):
+        count += 1
+        if user.bot:
+            continue
+        if not is_active_24h(user.status):
+            continue
+        users.append({
+            'user_id': user.id,
+            'username': user.username or '',
+        })
+    return users, count
+
+
+async def collect_from_channel(client, channel_username, category, country):
     try:
-        entity = await client.get_entity(channel_username)
-        print(f"  [{country.upper()}] @{channel_username} ({category}) — получаю участников...")
-        count = 0
-        async for user in client.iter_participants(entity):
-            count += 1
-            if user.bot:
-                continue
-            if not is_active_24h(user.status):
-                continue
-            users.append({
-                'user_id': user.id,
-                'username': user.username or '',
-            })
-        print(f"    -> всего {count} участников, активных за 24ч: {len(users)}")
+        entity = await asyncio.wait_for(client.get_entity(channel_username), timeout=10)
+        print(f"  [{country.upper()}] @{channel_username} ({category}) — получаю участников...", flush=True)
+        try:
+            users, count = await asyncio.wait_for(_fetch_participants(client, entity), timeout=60)
+            print(f"    -> всего {count} участников, активных за 24ч: {len(users)}", flush=True)
+            return users
+        except asyncio.TimeoutError:
+            print(f"    -> таймаут (60с), пропускаю", flush=True)
+            return []
     except ChatAdminRequiredError:
-        print(f"  [{country.upper()}] @{channel_username} — нет доступа к списку участников (нужны права админа)")
+        print(f"  [{country.upper()}] @{channel_username} — нет доступа (нужны права админа)", flush=True)
     except ChannelPrivateError:
-        print(f"  [{country.upper()}] @{channel_username} — канал приватный, нет доступа")
+        print(f"  [{country.upper()}] @{channel_username} — канал приватный", flush=True)
     except FloodWaitError as e:
-        print(f"  [{country.upper()}] @{channel_username} — FloodWait {e.seconds}с, жду...")
-        await asyncio.sleep(e.seconds + 2)
+        wait = min(e.seconds, 60)
+        print(f"  [{country.upper()}] @{channel_username} — FloodWait {e.seconds}с, жду {wait}с...", flush=True)
+        await asyncio.sleep(wait + 2)
         return await collect_from_channel(client, channel_username, category, country)
+    except asyncio.TimeoutError:
+        print(f"  [{country.upper()}] @{channel_username} — таймаут на get_entity, пропускаю", flush=True)
     except Exception as e:
-        print(f"  [{country.upper()}] @{channel_username} — ошибка: {e}")
-    return users
+        print(f"  [{country.upper()}] @{channel_username} — ошибка: {e}", flush=True)
+    return []
 
 
 async def main():
@@ -183,6 +196,22 @@ async def main():
     vn_users = {}
     th_users = {}
 
+    def save_progress():
+        both = set(vn_users.keys()) & set(th_users.keys())
+        result = {
+            'collected_at': datetime.now(timezone.utc).isoformat(),
+            'status': 'in_progress',
+            'stats': {
+                'vietnam_unique_users': len(vn_users),
+                'thailand_unique_users': len(th_users),
+                'users_in_both': len(both),
+            },
+            'vietnam': list(vn_users.values()),
+            'thailand': list(th_users.values()),
+        }
+        with open('tg_users_database.json', 'w', encoding='utf-8') as f:
+            json.dump(result, f, ensure_ascii=False, indent=2)
+
     print("=" * 60)
     print("ВЬЕТНАМ")
     print("=" * 60)
@@ -199,14 +228,20 @@ async def main():
                 }
             if ch not in vn_users[uid]['channels']:
                 vn_users[uid]['channels'].append(ch)
-        await asyncio.sleep(1.5)
+        if i % 5 == 0:
+            save_progress()
+            print(f"  [промежуточно сохранено: VN={len(vn_users)}]", flush=True)
+        await asyncio.sleep(0.3)
+
+    save_progress()
+    print(f"\nВьетнам завершён: {len(vn_users)} уникальных пользователей", flush=True)
 
     print()
     print("=" * 60)
     print("ТАЙЛАНД")
     print("=" * 60)
     for i, (category, ch) in enumerate(thailand_channels, 1):
-        print(f"\n[{i}/{len(thailand_channels)}] @{ch}")
+        print(f"\n[{i}/{len(thailand_channels)}] @{ch}", flush=True)
         users = await collect_from_channel(client, ch, category, 'thailand')
         for u in users:
             uid = u['user_id']
@@ -218,7 +253,10 @@ async def main():
                 }
             if ch not in th_users[uid]['channels']:
                 th_users[uid]['channels'].append(ch)
-        await asyncio.sleep(1.5)
+        if i % 5 == 0:
+            save_progress()
+            print(f"  [промежуточно сохранено: TH={len(th_users)}]", flush=True)
+        await asyncio.sleep(0.3)
 
     both = set(vn_users.keys()) & set(th_users.keys())
 
