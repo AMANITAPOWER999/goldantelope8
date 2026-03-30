@@ -369,7 +369,8 @@ def track_visit(user_id, country=None, category=None, referrer=None, is_mobile=F
 
         if country:
             day['countries'][country] = day['countries'].get(country, 0) + 1
-        if category:
+        skip_categories = {'admin', 'submit-restaurant', 'submit-tour', 'submit-transport', 'submit-kids', 'submit-medicine', 'submit-exchange', 'submit-children', 'submit-visas', 'submit-realestate', 'submit-entertainment'}
+        if category and category not in skip_categories:
             day['categories'][category] = day['categories'].get(category, 0) + 1
 
         day['hours'][hour] = day['hours'].get(hour, 0) + 1

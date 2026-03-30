@@ -5843,8 +5843,9 @@
         }
         
         var currentCategory = 'real_estate';
+        var nonTrackableTabs = ['admin', 'submit-restaurant', 'submit-tour', 'submit-transport', 'submit-kids', 'submit-medicine', 'submit-exchange', 'submit-children', 'submit-visas', 'submit-realestate', 'submit-entertainment'];
         function switchTab(tabName) {
-            currentCategory = tabName;
+            if (!nonTrackableTabs.includes(tabName)) currentCategory = tabName;
             window.currentSubcategory = null;
             document.querySelectorAll('.content').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
@@ -11677,7 +11678,7 @@
                 ).join('');
             }
 
-            const catNames = {real_estate:'Недвижимость', transport:'Транспорт', restaurants:'Рестораны', entertainment:'Развлечения', tours:'Экскурсии', visas:'Визаран', kids:'Дети', medicine:'Медицина', money_exchange:'Обмен', marketplace:'Все чаты'};
+            const catNames = {real_estate:'Недвижимость', realestate:'Недвижимость', transport:'Транспорт', restaurants:'Рестораны', entertainment:'Развлечения', tours:'Экскурсии', visas:'Визаран', kids:'Дети', settings:'Дети', medicine:'Медицина', money_exchange:'Обмен валют', exchange:'Обмен валют', chat:'Все чаты', marketplace:'Барахолка'};
             const catsEl = document.getElementById('a-categories');
             const cats = d.categories || {};
             if (Object.keys(cats).length === 0) {
