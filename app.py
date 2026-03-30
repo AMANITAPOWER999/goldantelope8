@@ -2901,12 +2901,18 @@ def admin_moderate():
     save_pending_listings(country, pending)
     
     if action == 'approve':
-        # Определяем категорию из объявления
         category = listing.get('category', 'real_estate')
         listing['id'] = f"{country}_{category}_{int(time.time())}"
         listing['status'] = 'approved'
         
-        # Отправляем фото в Telegram канал и получаем URL
+        CATEGORY_CHANNELS = {
+            'entertainment': {
+                'vietnam': '@razvlecheniyavietnam',
+            }
+        }
+        
+        target_channel = CATEGORY_CHANNELS.get(category, {}).get(country)
+        
         print(f"MODERATION: Checking image_url for listing {listing.get('id')}")
         print(f"MODERATION: image_url exists: {bool(listing.get('image_url'))}")
         if listing.get('image_url'):
@@ -2916,19 +2922,16 @@ def admin_moderate():
                 image_data = None
                 print(f"MODERATION: image_url type: {image_url[:50] if image_url else 'None'}...")
                 
-                # Если это base64 data URL
                 if image_url.startswith('data:'):
                     print("MODERATION: Decoding base64 image...")
                     header, b64_data = image_url.split(',', 1)
                     image_data = base64.b64decode(b64_data)
                     print(f"MODERATION: Decoded {len(image_data)} bytes")
-                # Если это локальный файл
                 elif image_url.startswith('/static/') or image_url.startswith('static/'):
                     file_path = image_url.lstrip('/')
                     if os.path.exists(file_path):
                         with open(file_path, 'rb') as f:
                             image_data = f.read()
-                # Если это внешний URL
                 elif image_url.startswith('http'):
                     try:
                         resp = requests.get(image_url, timeout=30)
@@ -2938,19 +2941,53 @@ def admin_moderate():
                         pass
                 
                 if image_data:
-                    # Отправляем в Telegram канал и получаем file_id
-                    caption = f"📋 {listing.get('title', 'Объявление')}\n\n{listing.get('description', '')[:500]}"
-                    file_id = send_photo_to_channel(image_data, caption)
-                    
-                    if file_id:
-                        listing['telegram_file_id'] = file_id
-                        listing['telegram_photo'] = True
-                        # Получаем актуальный URL для первоначального отображения
-                        fresh_url = get_telegram_photo_url(file_id)
-                        if fresh_url:
-                            listing['image_url'] = fresh_url
+                    if target_channel:
+                        tg_msg = send_photo_to_group(image_data, listing, target_channel)
+                        if tg_msg:
+                            channel_username = target_channel.replace('@', '')
+                            msg_id = tg_msg.get('message_id')
+                            listing['telegram_link'] = f"https://t.me/{channel_username}/{msg_id}"
+                            listing['source_channel'] = channel_username
+                            listing['photos'] = [f"https://t.me/{channel_username}/{msg_id}"]
+                            listing['all_images'] = listing['photos']
+                            listing['image_url'] = f"/tg_img/{channel_username}/{msg_id}"
+                            listing['telegram_photo'] = True
+                            print(f"MODERATION: Photo sent to {target_channel}, msg_id={msg_id}")
+                    else:
+                        caption = f"📋 {listing.get('title', 'Объявление')}\n\n{listing.get('description', '')[:500]}"
+                        file_id = send_photo_to_channel(image_data, caption)
+                        if file_id:
+                            listing['telegram_file_id'] = file_id
+                            listing['telegram_photo'] = True
+                            fresh_url = get_telegram_photo_url(file_id)
+                            if fresh_url:
+                                listing['image_url'] = fresh_url
             except Exception as e:
                 print(f"Error uploading photo to Telegram: {e}")
+        
+        all_images = listing.get('all_images') or []
+        extra_images = []
+        for key in ['image_url_2', 'image_url_3', 'image_url_4']:
+            img = listing.get(key)
+            if img and img.startswith('data:'):
+                extra_images.append(img)
+        
+        if extra_images and target_channel:
+            for extra_img in extra_images:
+                try:
+                    import base64
+                    header, b64_data = extra_img.split(',', 1)
+                    extra_data = base64.b64decode(b64_data)
+                    extra_msg = send_photo_to_group(extra_data, None, target_channel)
+                    if extra_msg:
+                        channel_username = target_channel.replace('@', '')
+                        extra_msg_id = extra_msg.get('message_id')
+                        all_images.append(f"https://t.me/{channel_username}/{extra_msg_id}")
+                except:
+                    pass
+            if all_images:
+                listing['all_images'] = all_images
+                listing['photos'] = all_images
         
         data = load_data(country)
 
@@ -4030,6 +4067,46 @@ def manual_parse():
 # ============ TELEGRAM КАНАЛ ДЛЯ ФОТО ============
 
 TELEGRAM_PHOTO_CHANNEL = '-1003577636318'
+
+def send_photo_to_group(image_data, listing, chat_id):
+    bot_token = os.environ.get('TELEGRAM_BOT_TOKEN')
+    if not bot_token:
+        return None
+    try:
+        url = f"https://api.telegram.org/bot{bot_token}/sendPhoto"
+        caption_parts = []
+        if listing:
+            if listing.get('title'):
+                caption_parts.append(f"📋 {listing['title']}")
+            if listing.get('description'):
+                desc = listing['description'][:600]
+                caption_parts.append(desc)
+            if listing.get('city'):
+                caption_parts.append(f"📍 {listing['city']}")
+            if listing.get('contact_name'):
+                caption_parts.append(f"👤 {listing['contact_name']}")
+            if listing.get('telegram'):
+                tg = listing['telegram']
+                if not tg.startswith('@'):
+                    tg = '@' + tg
+                caption_parts.append(f"✈️ {tg}")
+            if listing.get('whatsapp'):
+                caption_parts.append(f"💬 {listing['whatsapp']}")
+        caption = '\n'.join(caption_parts)[:1024]
+        files = {'photo': ('photo.jpg', image_data, 'image/jpeg')}
+        data = {'chat_id': chat_id, 'caption': caption, 'parse_mode': 'HTML'}
+        print(f"TELEGRAM: Sending photo to group {chat_id}, size: {len(image_data)} bytes")
+        response = requests.post(url, files=files, data=data, timeout=30)
+        result = response.json()
+        if result.get('ok'):
+            print(f"TELEGRAM: Photo sent to {chat_id}, message_id={result['result']['message_id']}")
+            return result['result']
+        else:
+            print(f"TELEGRAM: Failed to send to {chat_id}: {result.get('description')}")
+            return None
+    except Exception as e:
+        print(f"TELEGRAM: Error sending to group {chat_id}: {e}")
+        return None
 
 def send_photo_to_channel(image_data, caption=''):
     """Отправить фото в Telegram канал и получить file_id для постоянного хранения"""
