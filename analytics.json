@@ -1,157 +1,38 @@
 {
   "daily": {
-    "2026-03-29": {
-      "unique_visitors": [
-        "user_l4bmiotql_1774778260819",
-        "test_user_1",
-        "test_user_2",
-        "user_2rau0bla2_1774778265568",
-        "user_uka68a8xb_1774778778375",
-        "user_rpjzljjpd_1774782792913",
-        "user_ckgbqk5ad_1774790602298",
-        "user_5nv73h4ww_1774806415608",
-        "user_b94mxl6ku_1774820251634"
-      ],
-      "page_views": 2003,
-      "countries": {
-        "vietnam": 2001,
-        "thailand": 2
-      },
-      "categories": {
-        "real_estate": 1,
-        "transport": 1
-      },
-      "hours": {
-        "09": 6,
-        "10": 147,
-        "11": 231,
-        "12": 207,
-        "13": 185,
-        "14": 128,
-        "15": 120,
-        "16": 122,
-        "17": 124,
-        "18": 120,
-        "19": 120,
-        "20": 120,
-        "21": 133,
-        "22": 120,
-        "23": 120
-      },
-      "referrers": {},
-      "devices": {
-        "mobile": 184,
-        "desktop": 1819
-      }
-    },
     "2026-03-30": {
       "unique_visitors": [
-        "user_l4bmiotql_1774778260819",
-        "user_5nv73h4ww_1774806415608",
-        "user_uka68a8xb_1774778778375",
-        "user_8aykt5ikz_1774847205420",
-        "user_amhdh2rzc_1774849386312",
         "user_rpjzljjpd_1774782792913",
-        "user_adwivieqk_1774851438861",
-        "user_8rrq7bior_1774853268515",
-        "user_v5g2gcast_1774853767838"
+        "user_l4bmiotql_1774778260819"
       ],
-      "page_views": 1118,
+      "page_views": 66,
       "countries": {
-        "vietnam": 1118
+        "vietnam": 66
       },
       "categories": {
-        "real_estate": 98,
-        "entertainment": 1,
-        "chat": 2,
-        "realestate": 11
+        "real_estate": 23,
+        "entertainment": 22,
+        "realestate": 21
       },
       "hours": {
-        "00": 133,
-        "01": 120,
-        "02": 120,
-        "03": 120,
-        "04": 69,
-        "05": 153,
-        "06": 231,
-        "07": 172
+        "08": 66
       },
       "referrers": {},
       "devices": {
-        "mobile": 96,
-        "desktop": 1022
+        "mobile": 0,
+        "desktop": 66
       }
     }
   },
   "visitors": {
-    "user_l4bmiotql_1774778260819": {
-      "first_seen": "2026-03-29",
-      "visits": 2565,
-      "last_seen": "2026-03-30"
-    },
-    "test_user_1": {
-      "first_seen": "2026-03-29",
-      "visits": 1,
-      "last_seen": "2026-03-29"
-    },
-    "test_user_2": {
-      "first_seen": "2026-03-29",
-      "visits": 1,
-      "last_seen": "2026-03-29"
-    },
-    "user_2rau0bla2_1774778265568": {
-      "first_seen": "2026-03-29",
-      "visits": 1,
-      "last_seen": "2026-03-29"
-    },
-    "user_uka68a8xb_1774778778375": {
-      "first_seen": "2026-03-29",
-      "visits": 227,
-      "last_seen": "2026-03-30"
-    },
     "user_rpjzljjpd_1774782792913": {
-      "first_seen": "2026-03-29",
-      "visits": 257,
-      "last_seen": "2026-03-30"
-    },
-    "user_ckgbqk5ad_1774790602298": {
-      "first_seen": "2026-03-29",
-      "visits": 14,
-      "last_seen": "2026-03-29"
-    },
-    "user_5nv73h4ww_1774806415608": {
-      "first_seen": "2026-03-29",
-      "visits": 39,
-      "last_seen": "2026-03-30"
-    },
-    "user_b94mxl6ku_1774820251634": {
-      "first_seen": "2026-03-29",
-      "visits": 11,
-      "last_seen": "2026-03-29"
-    },
-    "user_8aykt5ikz_1774847205420": {
       "first_seen": "2026-03-30",
-      "visits": 1,
+      "visits": 23,
       "last_seen": "2026-03-30"
     },
-    "user_amhdh2rzc_1774849386312": {
+    "user_l4bmiotql_1774778260819": {
       "first_seen": "2026-03-30",
-      "visits": 1,
-      "last_seen": "2026-03-30"
-    },
-    "user_adwivieqk_1774851438861": {
-      "first_seen": "2026-03-30",
-      "visits": 1,
-      "last_seen": "2026-03-30"
-    },
-    "user_8rrq7bior_1774853268515": {
-      "first_seen": "2026-03-30",
-      "visits": 1,
-      "last_seen": "2026-03-30"
-    },
-    "user_v5g2gcast_1774853767838": {
-      "first_seen": "2026-03-30",
-      "visits": 1,
+      "visits": 43,
       "last_seen": "2026-03-30"
     }
   }
