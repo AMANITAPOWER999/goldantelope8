@@ -21,7 +21,7 @@ API_ID = 32881984
 API_HASH = 'd2588f09dfbc5103ef77ef21c07dbf8b'
 SESSION = os.environ.get('TELETHON_SESSION', '')
 HF_TOKEN = os.environ.get('HF_TOKEN', '')
-HF_REPO = 'poweramanita/Baza'
+HF_REPO = 'poweramanita/tg-users-data'
 
 CHAT_VN = [
     'nhatrang_bg','NhaTrangchat','NhaTrang55','svoi_nhatrang',
@@ -295,7 +295,7 @@ def save(vn, th, st='in_progress'):
                 path_or_fileobj=RESULT,
                 path_in_repo='tg_users_database.json',
                 repo_id=HF_REPO,
-                repo_type='space',
+                repo_type='dataset',
                 commit_message=f'Deep: VN={len(vn)} TH={len(th)} ({st})',
             )
             log(f"  [HF: VN={len(vn)} TH={len(th)}]")
