@@ -3,13 +3,15 @@ import json
 import os
 import threading
 import time
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timezone
 
 import gradio as gr
+from huggingface_hub import HfApi
 from telethon import TelegramClient
 from telethon.sessions import StringSession
 from telethon.tl.types import (
     UserStatusOnline, UserStatusRecently, UserStatusOffline,
+    UserStatusLastWeek, UserStatusLastMonth,
 )
 from telethon.errors import (
     ChatAdminRequiredError, ChannelPrivateError, FloodWaitError
@@ -18,6 +20,8 @@ from telethon.errors import (
 API_ID = 32881984
 API_HASH = 'd2588f09dfbc5103ef77ef21c07dbf8b'
 SESSION = os.environ.get('TELETHON_SESSION', '')
+HF_TOKEN = os.environ.get('HF_TOKEN', '')
+HF_REPO = 'poweramanita/Baza'
 
 CHAT_VN = [
     'nhatrang_bg','NhaTrangchat','NhaTrang55','svoi_nhatrang',
@@ -93,120 +97,251 @@ TOTAL_VN = len(vn_channels)
 TOTAL_TH = len(th_channels)
 TOTAL = TOTAL_VN + TOTAL_TH
 
-status = {'running':False,'done':False,'vn':0,'th':0,'idx':0,'cur':'','log':[]}
+status = {'running':False,'done':False,'vn':0,'th':0,'idx':0,'cur':'','log':[],'errors':0}
 RESULT = '/tmp/tg_users_database.json'
 
 def log(m):
     t = datetime.now().strftime('%H:%M:%S')
     line = f"[{t}] {m}"
     status['log'].append(line)
-    if len(status['log'])>500: status['log']=status['log'][-300:]
+    if len(status['log'])>800: status['log']=status['log'][-500:]
     print(line,flush=True)
 
-def active24(s):
-    if s is None: return False
-    if isinstance(s,UserStatusOnline): return True
-    if isinstance(s,UserStatusRecently): return True
-    if isinstance(s,UserStatusOffline) and s.was_online:
-        return s.was_online > datetime.now(timezone.utc)-timedelta(hours=24)
-    return False
+def get_status_text(st):
+    if isinstance(st, UserStatusOnline): return 'online'
+    if isinstance(st, UserStatusRecently): return 'recently'
+    if isinstance(st, UserStatusOffline):
+        if st.was_online: return st.was_online.strftime('%Y-%m-%d %H:%M')
+        return 'offline'
+    if isinstance(st, UserStatusLastWeek): return 'last_week'
+    if isinstance(st, UserStatusLastMonth): return 'last_month'
+    return 'unknown'
 
-async def get_users(client,entity):
-    users=[]; count=0
-    async for u in client.iter_participants(entity,limit=10000):
-        count+=1
-        if u.bot: continue
-        if not active24(u.status): continue
-        users.append({'user_id':u.id,'username':u.username or ''})
-    return users,count
+async def get_all_users(client, entity):
+    users = []
+    count = 0
+    async for u in client.iter_participants(entity, aggressive=True):
+        count += 1
+        if u.bot:
+            continue
+        users.append({
+            'user_id': u.id,
+            'username': u.username or '',
+            'first_name': u.first_name or '',
+            'last_name': u.last_name or '',
+            'phone': u.phone or '',
+            'last_seen': get_status_text(u.status),
+        })
+    return users, count
 
-async def do_channel(client,ch,cat):
+async def do_channel(client, ch, cat):
     try:
-        ent = await asyncio.wait_for(client.get_entity(ch),timeout=15)
+        if isinstance(ch, int) or (isinstance(ch, str) and ch.lstrip('-').isdigit()):
+            ent = await asyncio.wait_for(client.get_entity(int(ch)), timeout=15)
+        else:
+            ent = await asyncio.wait_for(client.get_entity(ch), timeout=15)
         try:
-            users,total = await asyncio.wait_for(get_users(client,ent),timeout=120)
-            log(f"  @{ch} ({cat}) -> {total} всего, {len(users)} акт.")
+            title = getattr(ent, 'title', ch)
+            participants_count = getattr(ent, 'participants_count', '?')
+            log(f"  @{ch} ({cat}) [{title}] ~{participants_count} подписчиков")
+            users, total = await asyncio.wait_for(get_all_users(client, ent), timeout=600)
+            log(f"    -> собрано {len(users)} из {total} (боты исключены)")
             return users
         except asyncio.TimeoutError:
-            log(f"  @{ch} — таймаут, пропуск"); return []
-    except ChatAdminRequiredError: log(f"  @{ch} — нет доступа")
-    except ChannelPrivateError: log(f"  @{ch} — приватный")
+            log(f"    -> ТАЙМАУТ (10 мин), пропуск")
+            return []
+    except ChatAdminRequiredError:
+        log(f"  @{ch} — нет доступа (нужны права админа)")
+        status['errors'] += 1
+    except ChannelPrivateError:
+        log(f"  @{ch} — приватный")
+        status['errors'] += 1
     except FloodWaitError as e:
-        w=min(e.seconds,180); log(f"  @{ch} — FloodWait {e.seconds}с, жду {w}с")
-        await asyncio.sleep(w+3); return await do_channel(client,ch,cat)
-    except asyncio.TimeoutError: log(f"  @{ch} — таймаут entity")
-    except Exception as e: log(f"  @{ch} — ошибка: {e}")
+        w = min(e.seconds, 300)
+        log(f"  @{ch} — FloodWait {e.seconds}с, жду {w}с")
+        await asyncio.sleep(w + 3)
+        return await do_channel(client, ch, cat)
+    except asyncio.TimeoutError:
+        log(f"  @{ch} — таймаут entity")
+        status['errors'] += 1
+    except Exception as e:
+        log(f"  @{ch} — ошибка: {type(e).__name__}: {e}")
+        status['errors'] += 1
     return []
 
-def save(vn,th,st='in_progress'):
-    both=set(vn.keys())&set(th.keys())
-    r={'collected_at':datetime.now(timezone.utc).isoformat(),'status':st,
-       'stats':{'vn':len(vn),'th':len(th),'both':len(both)},
-       'vietnam':list(vn.values()),'thailand':list(th.values())}
-    with open(RESULT,'w') as f: json.dump(r,f,ensure_ascii=False,indent=2)
+def save(vn, th, st='in_progress'):
+    both = set(vn.keys()) & set(th.keys())
+    r = {
+        'collected_at': datetime.now(timezone.utc).isoformat(),
+        'status': st,
+        'mode': 'ALL_USERS (no 24h filter)',
+        'stats': {
+            'vietnam_unique': len(vn),
+            'thailand_unique': len(th),
+            'total_unique': len(set(vn.keys()) | set(th.keys())),
+            'in_both_countries': len(both),
+            'channels_vn': TOTAL_VN,
+            'channels_th': TOTAL_TH,
+        },
+        'vietnam': list(vn.values()),
+        'thailand': list(th.values()),
+    }
+    with open(RESULT, 'w') as f:
+        json.dump(r, f, ensure_ascii=False, indent=2)
+    try:
+        if HF_TOKEN:
+            api = HfApi(token=HF_TOKEN)
+            api.upload_file(
+                path_or_fileobj=RESULT,
+                path_in_repo='tg_users_database.json',
+                repo_id=HF_REPO,
+                repo_type='space',
+                commit_message=f'Update: VN={len(vn)} TH={len(th)} ({st})',
+            )
+            log(f"  [загружено в HF repo: VN={len(vn)} TH={len(th)}]")
+    except Exception as e:
+        log(f"  [ошибка загрузки в HF: {e}]")
 
 async def run():
-    status.update(running=True,done=False,log=[],vn=0,th=0,idx=0)
-    if not SESSION: log("ОШИБКА: TELETHON_SESSION не задана!"); status['running']=False; return
-    client=TelegramClient(StringSession(SESSION),API_ID,API_HASH)
+    status.update(running=True, done=False, log=[], vn=0, th=0, idx=0, errors=0)
+    if not SESSION:
+        log("ОШИБКА: TELETHON_SESSION не задана!")
+        status['running'] = False
+        return
+    client = TelegramClient(StringSession(SESSION), API_ID, API_HASH)
     await client.connect()
     if not await client.is_user_authorized():
-        log("ОШИБКА: сессия не авторизована!"); await client.disconnect(); status['running']=False; return
-    me=await client.get_me(); log(f"Авторизован: {me.first_name} id={me.id}")
-    log(f"Каналов: VN={TOTAL_VN} TH={TOTAL_TH} всего={TOTAL}\n")
-    vn_u,th_u={},{}
-    log("="*40+" ВЬЕТНАМ "+"="*40)
-    for i,(cat,ch) in enumerate(vn_channels,1):
-        status['idx']=i; status['cur']=f"VN @{ch}"
-        log(f"[{i}/{TOTAL_VN}] @{ch}")
-        for u in await do_channel(client,ch,cat):
-            uid=u['user_id']
-            if uid not in vn_u: vn_u[uid]={'user_id':uid,'username':u['username'],'channels':[]}
-            if ch not in vn_u[uid]['channels']: vn_u[uid]['channels'].append(ch)
-        status['vn']=len(vn_u)
-        if i%5==0: save(vn_u,th_u); log(f"  [сохранено VN={len(vn_u)}]")
-        await asyncio.sleep(2)
-    save(vn_u,th_u); log(f"\nВьетнам: {len(vn_u)} уникальных\n")
-    log("="*40+" ТАЙЛАНД "+"="*40)
-    for i,(cat,ch) in enumerate(th_channels,1):
-        status['idx']=TOTAL_VN+i; status['cur']=f"TH @{ch}"
-        log(f"[{i}/{TOTAL_TH}] @{ch}")
-        for u in await do_channel(client,ch,cat):
-            uid=u['user_id']
-            if uid not in th_u: th_u[uid]={'user_id':uid,'username':u['username'],'channels':[]}
-            if ch not in th_u[uid]['channels']: th_u[uid]['channels'].append(ch)
-        status['th']=len(th_u)
-        if i%5==0: save(vn_u,th_u); log(f"  [сохранено TH={len(th_u)}]")
-        await asyncio.sleep(2)
-    save(vn_u,th_u,'complete')
-    both=set(vn_u.keys())&set(th_u.keys())
-    log(f"\nГОТОВО! VN={len(vn_u)} TH={len(th_u)} в обоих={len(both)}")
-    await client.disconnect(); status['running']=False; status['done']=True
+        log("ОШИБКА: сессия не авторизована!")
+        await client.disconnect()
+        status['running'] = False
+        return
+    me = await client.get_me()
+    log(f"Авторизован: {me.first_name} id={me.id}")
+    log(f"РЕЖИМ: ГЛУБОКИЙ ПАРСИНГ — ВСЕ УЧАСТНИКИ (без фильтра 24ч)")
+    log(f"aggressive=True, лимит 10мин/канал")
+    log(f"Каналов: VN={TOTAL_VN} TH={TOTAL_TH} всего={TOTAL}")
+    log("")
+
+    vn_u, th_u = {}, {}
+
+    log("=" * 60)
+    log("ВЬЕТНАМ")
+    log("=" * 60)
+    for i, (cat, ch) in enumerate(vn_channels, 1):
+        status['idx'] = i
+        status['cur'] = f"VN [{i}/{TOTAL_VN}] @{ch}"
+        log(f"\n[{i}/{TOTAL_VN}] @{ch}")
+        for u in await do_channel(client, ch, cat):
+            uid = u['user_id']
+            if uid not in vn_u:
+                vn_u[uid] = {
+                    'user_id': uid,
+                    'username': u['username'],
+                    'first_name': u['first_name'],
+                    'last_name': u['last_name'],
+                    'phone': u['phone'],
+                    'last_seen': u['last_seen'],
+                    'channels': [],
+                }
+            if ch not in vn_u[uid]['channels']:
+                vn_u[uid]['channels'].append(ch)
+            if u['last_seen'] in ('online', 'recently') and vn_u[uid]['last_seen'] not in ('online',):
+                vn_u[uid]['last_seen'] = u['last_seen']
+        status['vn'] = len(vn_u)
+        if i % 3 == 0:
+            save(vn_u, th_u)
+            log(f"  [сохранено: VN={len(vn_u)} уникальных]")
+        await asyncio.sleep(3)
+
+    save(vn_u, th_u)
+    log(f"\nВьетнам завершён: {len(vn_u)} уникальных пользователей")
+
+    log("")
+    log("=" * 60)
+    log("ТАЙЛАНД")
+    log("=" * 60)
+    for i, (cat, ch) in enumerate(th_channels, 1):
+        status['idx'] = TOTAL_VN + i
+        status['cur'] = f"TH [{i}/{TOTAL_TH}] @{ch}"
+        log(f"\n[{i}/{TOTAL_TH}] @{ch}")
+        for u in await do_channel(client, ch, cat):
+            uid = u['user_id']
+            if uid not in th_u:
+                th_u[uid] = {
+                    'user_id': uid,
+                    'username': u['username'],
+                    'first_name': u['first_name'],
+                    'last_name': u['last_name'],
+                    'phone': u['phone'],
+                    'last_seen': u['last_seen'],
+                    'channels': [],
+                }
+            if ch not in th_u[uid]['channels']:
+                th_u[uid]['channels'].append(ch)
+            if u['last_seen'] in ('online', 'recently') and th_u[uid]['last_seen'] not in ('online',):
+                th_u[uid]['last_seen'] = u['last_seen']
+        status['th'] = len(th_u)
+        if i % 3 == 0:
+            save(vn_u, th_u)
+            log(f"  [сохранено: TH={len(th_u)} уникальных]")
+        await asyncio.sleep(3)
+
+    save(vn_u, th_u, 'complete')
+    total = len(set(vn_u.keys()) | set(th_u.keys()))
+    both = len(set(vn_u.keys()) & set(th_u.keys()))
+    log("")
+    log("=" * 60)
+    log("ГОТОВО!")
+    log(f"Вьетнам: {len(vn_u)} уникальных")
+    log(f"Тайланд: {len(th_u)} уникальных")
+    log(f"ВСЕГО уникальных: {total}")
+    log(f"В обоих странах: {both}")
+    log(f"Ошибок: {status['errors']}")
+    log(f"Файл: {RESULT}")
+    log("=" * 60)
+
+    await client.disconnect()
+    status['running'] = False
+    status['done'] = True
 
 def start():
-    if status['running']: return "Уже работает!"
-    threading.Thread(target=lambda:asyncio.new_event_loop().run_until_complete(run()),daemon=True).start()
-    return "Сбор запущен!"
+    if status['running']:
+        return "Уже работает!"
+    threading.Thread(target=lambda: asyncio.new_event_loop().run_until_complete(run()), daemon=True).start()
+    return "Глубокий сбор запущен! (ВСЕ участники, без фильтра 24ч)"
 
-def get_status():
-    if not status['running'] and not status['done']: return "Ожидание. Нажмите Запустить."
-    s="РАБОТАЕТ" if status['running'] else "ЗАВЕРШЁН"
-    return f"Статус: {s}\nПрогресс: {status['idx']}/{TOTAL}\nТекущий: {status['cur']}\nVN: {status['vn']} | TH: {status['th']}"
+def get_st():
+    if not status['running'] and not status['done']:
+        return "Ожидание. Нажмите Запустить."
+    s = "РАБОТАЕТ" if status['running'] else "ЗАВЕРШЁН"
+    return (
+        f"Статус: {s}\n"
+        f"Прогресс: {status['idx']}/{TOTAL} каналов\n"
+        f"Текущий: {status['cur']}\n"
+        f"VN: {status['vn']} | TH: {status['th']}\n"
+        f"Ошибок: {status['errors']}"
+    )
 
-def get_log(): return "\n".join(status['log'][-80:]) or "Пусто"
+def get_log():
+    return "\n".join(status['log'][-100:]) or "Пусто"
 
 def dl():
-    if os.path.exists(RESULT): return RESULT
-    return None
+    return RESULT if os.path.exists(RESULT) else None
 
-with gr.Blocks(title="TG Collector") as demo:
-    gr.Markdown(f"# Сбор базы TG ({TOTAL_VN} VN + {TOTAL_TH} TH = {TOTAL})")
+with gr.Blocks(title="TG Deep Collector") as demo:
+    gr.Markdown(f"# Глубокий сбор базы TG — ВСЕ участники")
+    gr.Markdown(f"**{TOTAL_VN}** VN + **{TOTAL_TH}** TH = **{TOTAL}** каналов | aggressive=True | без фильтра 24ч")
     with gr.Row():
-        b1=gr.Button("Запустить",variant="primary"); b2=gr.Button("Обновить статус")
-    st=gr.Textbox(label="Статус",lines=5,interactive=False)
-    lg=gr.Textbox(label="Лог",lines=20,interactive=False)
-    b3=gr.Button("Скачать JSON"); fo=gr.File(label="Результат")
-    b1.click(fn=start,outputs=st); b2.click(fn=get_status,outputs=st); b2.click(fn=get_log,outputs=lg)
-    b3.click(fn=dl,outputs=fo); demo.load(fn=get_status,outputs=st)
+        b1 = gr.Button("🚀 Запустить глубокий сбор", variant="primary")
+        b2 = gr.Button("🔄 Обновить статус")
+    st = gr.Textbox(label="Статус", lines=6, interactive=False)
+    lg = gr.Textbox(label="Лог", lines=25, interactive=False)
+    b3 = gr.Button("📥 Скачать JSON")
+    fo = gr.File(label="Результат")
+    b1.click(fn=start, outputs=st)
+    b2.click(fn=get_st, outputs=st)
+    b2.click(fn=get_log, outputs=lg)
+    b3.click(fn=dl, outputs=fo)
+    demo.load(fn=get_st, outputs=st)
 
-demo.launch(server_name="0.0.0.0",server_port=7860)
+demo.launch(server_name="0.0.0.0", server_port=7860)

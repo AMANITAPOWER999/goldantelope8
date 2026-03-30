@@ -1,0 +1,57 @@
+CHAT_VN = [
+    'nhatrang_bg','NhaTrangchat','NhaTrang55','svoi_nhatrang',
+    'zhenskiy_nhatrang','NhaTrangLady','NhaTrangSun',
+    'Danang_Viet','danang_women','danangchat_ask','zhenskiy_danang',
+    'Danang_people','Vietnam_Danang1','chat_danang','danang_chats',
+    'phanthietchat111','Nyachang_Vietnam','onus_vietnam','Viza_Vietnam',
+    'Dalat_Vietnam','vietnam_chat1','vietnam_chats',
+    'HoChiMinh_Saigon','HoChiMinhChatik','hochiminh01_bg',
+    'phu_quoc_chat','phuquoc_getmir_chat','fukuok_chat','chat_fukuok',
+    'hanoichatvip',
+]
+ENTERTAIN = [
+    'nhatrang_tusa_afisha','nhatrang_affiche','nyachangafisha',
+    'nhatrang_afisha','introconcertvn','afisha_nhatrang','T2TNhaTrangevents',
+    'nachang_tusa','drinkparty666','nyachang_ru',
+    'danangnew','ads_danang','danang_afisha','danangpals',
+]
+MED = [
+    'viet_med','viet_medicine','viethandentalrus','VietnamDentist','doctor_viet',
+    'Medicine_Vietnam','mediacenter_vietsovpetro_school','vietmedic','health_med_viet',
+]
+RE_VN = [
+    'phuquoc_rent_wt','phyquocnedvigimost','Viet_Life_Phu_Quoc_rent','nhatrangapartment',
+    'tanrealtorgh','viet_life_niachang','nychang_arenda','rent_nha_trang','nyachang_nedvizhimost',
+    'nedvizimost_nhatrang','nhatrangforrent79','NhatrangRentl','arenda_v_nyachang','rent_appart_nha',
+    'Arenda_Nyachang_Zhilye','NhaTrang_rental','realestatebythesea_1','NhaTrang_Luxury',
+    'luckyhome_nhatrang','rentnhatrang','megasforrentnhatrang','viethome',
+    'Vietnam_arenda','huynhtruonq','DaNangRentAFlat','danag_viet_life_rent','Danang_House',
+    'DaNangApartmentRent','danang_arenda','arenda_v_danang','HoChiMinhRentI','hcmc_arenda',
+    'Hanoirentapartment','HanoiRentl','Hanoi_Rent','PhuquocRentl',
+]
+BIKE_VN = [
+    'bike_nhatrang','motohub_nhatrang','NhaTrang_moto_market','RentBikeUniq',
+    'BK_rental','nha_trang_rent','RentTwentyTwo22NhaTrang',
+    'danang_bike_rent','bikerental1','viet_sovet',
+]
+CHAT_TH = [
+    'Phuket_chatBG','barakholka_pkhuket','chat_phuket','chats_phuket',
+    'huahinrus','rentinthai','bangkok_chat_znakomstva','Bangkok_market_bg',
+    'vse_svoi_bangkok','visa_thailand_chat','thailand_4at','rent_thailand_chat',
+    'thailand_chatt1','chat_bangkok','Bangkok_chats','PattayaSale',
+    'pattayachatonline','Pattayapar','chats_pattaya','phuketdating','KrabiChat',
+]
+RE_TH = [
+    'arenda_phukets','THAILAND_REAL_ESTATE_PHUKET','housephuket','arenda_phuket_thailand',
+    'phuket_nedvizhimost_rent','phuketsk_arenda','phuket_nedvizhimost_thailand','phuketsk_for_rent',
+    'phuket_rentas','rentalsphuketonli','rentbuyphuket','Phuket_thailand05','nedvizhimost_pattaya',
+    'arenda_pattaya','pattaya_realty_estate','HappyHomePattaya','sea_bangkok','Samui_for_you',
+    'sea_phuket','realty_in_thailand','nedvig_thailand','thailand_nedvizhimost',
+    'globe_nedvizhka_Thailand',
+]
+BIKE_TH = [
+    'arenda_thailandd','thailand_market','rental_service_thailand',
+    'samui_arenda2','motorrenta','nashi_phuket_auto',
+    'thailand_drive','PKHUKET_BAYKOV','Pattaya_Arenda_ru',
+    'pattaya_happy_auto','pattaya_arenda','pattayamoto',
+]
