@@ -3087,7 +3087,13 @@ def bot_webhook():
     if not chat_id:
         return jsonify({'ok': True})
 
-    if text == '/start':
+    print(f"WEBHOOK: chat_id={chat_id}, chat_type={message.get('chat',{}).get('type')}, chat_title={message.get('chat',{}).get('title')}, text={text[:50] if text else ''}")
+
+    if text == '/chatid':
+        chat_title = message.get('chat', {}).get('title', 'N/A')
+        chat_type = message.get('chat', {}).get('type', 'N/A')
+        send_message(chat_id, f'📋 <b>Chat ID:</b> <code>{chat_id}</code>\n<b>Title:</b> {chat_title}\n<b>Type:</b> {chat_type}')
+    elif text == '/start':
         handle_start(chat_id, user_name)
     elif text == '/app':
         handle_app(chat_id)
