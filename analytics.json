@@ -6,9 +6,9 @@
         "user_l4bmiotql_1774778260819",
         "user_uka68a8xb_1774778778375"
       ],
-      "page_views": 314,
+      "page_views": 320,
       "countries": {
-        "vietnam": 314
+        "vietnam": 320
       },
       "categories": {
         "real_estate": 160,
@@ -16,18 +16,18 @@
         "realestate": 100,
         "chat": 12,
         "settings": 1,
-        "transport": 3,
+        "transport": 9,
         "medicine": 2,
         "restaurants": 6
       },
       "hours": {
         "08": 133,
-        "09": 181
+        "09": 187
       },
       "referrers": {},
       "devices": {
         "mobile": 57,
-        "desktop": 257
+        "desktop": 263
       }
     }
   },
@@ -39,7 +39,7 @@
     },
     "user_l4bmiotql_1774778260819": {
       "first_seen": "2026-03-30",
-      "visits": 177,
+      "visits": 183,
       "last_seen": "2026-03-30"
     },
     "user_uka68a8xb_1774778778375": {
