@@ -4859,6 +4859,54 @@
 
                 <div id="admin-tools" style="display: none;">
 
+                    <!-- Модерация объявлений -->
+                    <div style="background: white; border-radius: 12px; padding: 20px; border: 1px solid #ddd; margin-bottom: 20px;">
+                        <h3 style="margin: 0 0 15px 0; color: #333;">📋 Модерация объявлений</h3>
+                        <button onclick="loadPendingListings()" style="padding: 10px 20px; background: #0088cc; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; margin-bottom: 15px;">🔄 Загрузить ожидающие</button>
+                        <div id="pending-count" style="font-size: 14px; color: #666; margin-bottom: 10px;"></div>
+                        <div id="pending-list" style="display: grid; gap: 15px;"></div>
+                    </div>
+
+                    <div style="background: #fafafa; padding: 20px; border-radius: 8px; border: 1px solid #eee; margin-bottom: 20px;">
+                        <h4 style="margin: 0 0 15px 0; color: #333;">🖼️ Управление баннерами (${currentCountry})</h4>
+                        
+                        <!-- Табы для выбора типа баннера -->
+                        <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                            <button id="banner-tab-web" onclick="switchBannerTab('web')" style="flex: 1; padding: 10px; background: #d4af37; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">🖥️ Веб-версия</button>
+                            <button id="banner-tab-mobile" onclick="switchBannerTab('mobile')" style="flex: 1; padding: 10px; background: #ddd; color: #333; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">📱 Мобильная</button>
+                        </div>
+                        
+                        <!-- Веб баннеры -->
+                        <div id="banner-section-web">
+                            <p style="font-size: 12px; color: #666; margin: 0 0 10px 0;">Баннеры для веб-версии (ПК)</p>
+                            <div id="admin-banners-list-web" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; margin-bottom: 15px;">
+                            </div>
+                            <div style="display: flex; gap: 10px; align-items: flex-end;">
+                                <div style="flex: 1;">
+                                    <label style="font-size: 12px; color: #666; font-weight: 600;">Загрузить веб баннер</label>
+                                    <input type="file" id="banner-upload-input-web" accept="image/*" style="width: 100%; padding: 8px; background: white; border: 1px solid #ddd; border-radius: 6px; margin-top: 5px;">
+                                </div>
+                                <button onclick="uploadBannerAdmin('web')" style="padding: 10px 20px; background: #31a24c; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; height: 40px;">Загрузить</button>
+                            </div>
+                            <div id="banner-upload-status-web" style="font-size: 12px; margin-top: 8px;"></div>
+                        </div>
+                        
+                        <!-- Мобильные баннеры -->
+                        <div id="banner-section-mobile" style="display: none;">
+                            <p style="font-size: 12px; color: #666; margin: 0 0 10px 0;">Баннеры для мобильной версии (Telegram Mini App)</p>
+                            <div id="admin-banners-list-mobile" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; margin-bottom: 15px;">
+                            </div>
+                            <div style="display: flex; gap: 10px; align-items: flex-end;">
+                                <div style="flex: 1;">
+                                    <label style="font-size: 12px; color: #666; font-weight: 600;">Загрузить мобильный баннер</label>
+                                    <input type="file" id="banner-upload-input-mobile" accept="image/*" style="width: 100%; padding: 8px; background: white; border: 1px solid #ddd; border-radius: 6px; margin-top: 5px;">
+                                </div>
+                                <button onclick="uploadBannerAdmin('mobile')" style="padding: 10px 20px; background: #31a24c; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; height: 40px;">Загрузить</button>
+                            </div>
+                            <div id="banner-upload-status-mobile" style="font-size: 12px; margin-top: 8px;"></div>
+                        </div>
+                    </div>
+
                     <!-- ══════════════════════════════════════════════ -->
                     <!-- АНАЛИТИКА ПОСЕЩЕНИЙ -->
                     <!-- ══════════════════════════════════════════════ -->
@@ -5055,55 +5103,6 @@
                         </div><!-- /content padding -->
                     </div><!-- /мониторинг -->
 
-                    <!-- Модерация объявлений -->
-                    <div style="background: white; border-radius: 12px; padding: 20px; border: 1px solid #ddd; margin-bottom: 20px;">
-                        <h3 style="margin: 0 0 15px 0; color: #333;">📋 Модерация объявлений</h3>
-                        <button onclick="loadPendingListings()" style="padding: 10px 20px; background: #0088cc; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; margin-bottom: 15px;">🔄 Загрузить ожидающие</button>
-                        <div id="pending-count" style="font-size: 14px; color: #666; margin-bottom: 10px;"></div>
-                        <div id="pending-list" style="display: grid; gap: 15px;"></div>
-                    </div>
-                    
-                    <div style="background: #fafafa; padding: 20px; border-radius: 8px; border: 1px solid #eee; margin-top: 20px;">
-                        <h4 style="margin: 0 0 15px 0; color: #333;">🖼️ Управление баннерами (${currentCountry})</h4>
-                        
-                        <!-- Табы для выбора типа баннера -->
-                        <div style="display: flex; gap: 10px; margin-bottom: 15px;">
-                            <button id="banner-tab-web" onclick="switchBannerTab('web')" style="flex: 1; padding: 10px; background: #d4af37; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">🖥️ Веб-версия</button>
-                            <button id="banner-tab-mobile" onclick="switchBannerTab('mobile')" style="flex: 1; padding: 10px; background: #ddd; color: #333; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">📱 Мобильная</button>
-                        </div>
-                        
-                        <!-- Веб баннеры -->
-                        <div id="banner-section-web">
-                            <p style="font-size: 12px; color: #666; margin: 0 0 10px 0;">Баннеры для веб-версии (ПК)</p>
-                            <div id="admin-banners-list-web" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; margin-bottom: 15px;">
-                                <!-- Веб баннеры -->
-                            </div>
-                            <div style="display: flex; gap: 10px; align-items: flex-end;">
-                                <div style="flex: 1;">
-                                    <label style="font-size: 12px; color: #666; font-weight: 600;">Загрузить веб баннер</label>
-                                    <input type="file" id="banner-upload-input-web" accept="image/*" style="width: 100%; padding: 8px; background: white; border: 1px solid #ddd; border-radius: 6px; margin-top: 5px;">
-                                </div>
-                                <button onclick="uploadBannerAdmin('web')" style="padding: 10px 20px; background: #31a24c; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; height: 40px;">Загрузить</button>
-                            </div>
-                            <div id="banner-upload-status-web" style="font-size: 12px; margin-top: 8px;"></div>
-                        </div>
-                        
-                        <!-- Мобильные баннеры -->
-                        <div id="banner-section-mobile" style="display: none;">
-                            <p style="font-size: 12px; color: #666; margin: 0 0 10px 0;">Баннеры для мобильной версии (Telegram Mini App)</p>
-                            <div id="admin-banners-list-mobile" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; margin-bottom: 15px;">
-                                <!-- Мобильные баннеры -->
-                            </div>
-                            <div style="display: flex; gap: 10px; align-items: flex-end;">
-                                <div style="flex: 1;">
-                                    <label style="font-size: 12px; color: #666; font-weight: 600;">Загрузить мобильный баннер</label>
-                                    <input type="file" id="banner-upload-input-mobile" accept="image/*" style="width: 100%; padding: 8px; background: white; border: 1px solid #ddd; border-radius: 6px; margin-top: 5px;">
-                                </div>
-                                <button onclick="uploadBannerAdmin('mobile')" style="padding: 10px 20px; background: #31a24c; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; height: 40px;">Загрузить</button>
-                            </div>
-                            <div id="banner-upload-status-mobile" style="font-size: 12px; margin-top: 8px;"></div>
-                        </div>
-                    </div>
 
                 </div>
             </div>
