@@ -1,155 +1,34 @@
 {
   "daily": {
-    "2026-03-30": {
-      "unique_visitors": [
-        "user_rpjzljjpd_1774782792913",
-        "user_l4bmiotql_1774778260819",
-        "user_uka68a8xb_1774778778375",
-        "user_6jci4menl_1774870819725",
-        "user_5nv73h4ww_1774806415608",
-        "user_rjnml8zqe_1774893785091"
-      ],
-      "page_views": 1842,
-      "countries": {
-        "vietnam": 1842
-      },
-      "categories": {
-        "real_estate": 976,
-        "entertainment": 701,
-        "realestate": 107,
-        "chat": 15,
-        "settings": 3,
-        "transport": 25,
-        "medicine": 3,
-        "restaurants": 7,
-        "exchange": 3,
-        "visas": 2
-      },
-      "hours": {
-        "08": 133,
-        "09": 199,
-        "10": 53,
-        "11": 95,
-        "12": 124,
-        "13": 120,
-        "14": 135,
-        "15": 141,
-        "16": 129,
-        "17": 1,
-        "18": 112,
-        "19": 120,
-        "20": 120,
-        "21": 120,
-        "22": 120,
-        "23": 120
-      },
-      "referrers": {},
-      "devices": {
-        "mobile": 111,
-        "desktop": 1731
-      }
-    },
     "2026-03-31": {
       "unique_visitors": [
-        "user_6jci4menl_1774870819725",
-        "user_7149x0k7w_1774925837401",
-        "user_8xnkuwtfe_1774932789196",
-        "user_uka68a8xb_1774778778375",
-        "user_71qbqrx56_1774940250477",
-        "user_ohmf3lecu_1774943490902",
-        "user_z3vroc8ve_1774943515024",
         "user_74q3oqm1i_1774944455428",
-        "user_e3wyrep0e_1774944706320"
+        "user_ohmf3lecu_1774943490902"
       ],
-      "page_views": 375,
+      "page_views": 3,
       "countries": {
-        "vietnam": 375
+        "vietnam": 3
       },
       "categories": {
-        "real_estate": 367,
-        "entertainment": 3,
-        "settings": 1,
-        "tours": 4
+        "real_estate": 3
       },
       "hours": {
-        "00": 19,
-        "02": 3,
-        "03": 4,
-        "04": 79,
-        "05": 61,
-        "06": 113,
-        "07": 63,
-        "08": 33
+        "08": 3
       },
       "referrers": {},
       "devices": {
-        "mobile": 11,
-        "desktop": 364
+        "mobile": 0,
+        "desktop": 3
       }
     }
   },
   "visitors": {
-    "user_rpjzljjpd_1774782792913": {
-      "first_seen": "2026-03-30",
-      "visits": 80,
-      "last_seen": "2026-03-30"
-    },
-    "user_l4bmiotql_1774778260819": {
-      "first_seen": "2026-03-30",
-      "visits": 299,
-      "last_seen": "2026-03-30"
-    },
-    "user_uka68a8xb_1774778778375": {
-      "first_seen": "2026-03-30",
-      "visits": 111,
-      "last_seen": "2026-03-31"
-    },
-    "user_6jci4menl_1774870819725": {
-      "first_seen": "2026-03-30",
-      "visits": 1666,
-      "last_seen": "2026-03-31"
-    },
-    "user_5nv73h4ww_1774806415608": {
-      "first_seen": "2026-03-30",
-      "visits": 4,
-      "last_seen": "2026-03-30"
-    },
-    "user_rjnml8zqe_1774893785091": {
-      "first_seen": "2026-03-30",
-      "visits": 1,
-      "last_seen": "2026-03-30"
-    },
-    "user_7149x0k7w_1774925837401": {
+    "user_74q3oqm1i_1774944455428": {
       "first_seen": "2026-03-31",
-      "visits": 7,
-      "last_seen": "2026-03-31"
-    },
-    "user_8xnkuwtfe_1774932789196": {
-      "first_seen": "2026-03-31",
-      "visits": 1,
-      "last_seen": "2026-03-31"
-    },
-    "user_71qbqrx56_1774940250477": {
-      "first_seen": "2026-03-31",
-      "visits": 1,
+      "visits": 2,
       "last_seen": "2026-03-31"
     },
     "user_ohmf3lecu_1774943490902": {
-      "first_seen": "2026-03-31",
-      "visits": 34,
-      "last_seen": "2026-03-31"
-    },
-    "user_z3vroc8ve_1774943515024": {
-      "first_seen": "2026-03-31",
-      "visits": 1,
-      "last_seen": "2026-03-31"
-    },
-    "user_74q3oqm1i_1774944455428": {
-      "first_seen": "2026-03-31",
-      "visits": 11,
-      "last_seen": "2026-03-31"
-    },
-    "user_e3wyrep0e_1774944706320": {
       "first_seen": "2026-03-31",
       "visits": 1,
       "last_seen": "2026-03-31"

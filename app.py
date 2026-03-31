@@ -4621,8 +4621,8 @@ def run_bot():
 
 # ============ GLOBALPARSING HUGGINGFACE SPACE INTEGRATION ============
 
-HF_SPACE_URL = 'https://poweramanita-a.hf.space'
-HF_API_URL = 'https://huggingface.co/api/spaces/poweramanita/a'
+HF_SPACE_URL = 'https://poweramanita-baza.hf.space'
+HF_API_URL = 'https://huggingface.co/api/spaces/poweramanita/Baza'
 
 @app.route('/api/admin/globalparsing-status', methods=['GET'])
 def globalparsing_status():
