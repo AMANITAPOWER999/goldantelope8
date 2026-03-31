@@ -3127,22 +3127,19 @@ def bot_webhook():
 
     print(f"WEBHOOK: chat_id={chat_id}, chat_type={message.get('chat',{}).get('type')}, chat_title={message.get('chat',{}).get('title')}, text={text[:50] if text else ''}")
 
-    # Обработка сообщений из extra-каналов (например @gavibeshub → entertainment)
     chat_username = message.get('chat', {}).get('username', '').lower()
     try:
-        from vietnamparsing_parser import EXTRA_CHANNELS, process_extra_channel_update, load_listings, save_listings, get_existing_ids
+        from vietnamparsing_parser import EXTRA_CHANNELS, process_extra_channel_update, atomic_add_listing
         if chat_username in EXTRA_CHANNELS:
             category, subcategory = EXTRA_CHANNELS[chat_username]
             update_wrapped = {'message': message} if data.get('message') else {'channel_post': message}
-            vn_data = load_listings()
-            vn_ids = get_existing_ids(vn_data)
             item = process_extra_channel_update(update_wrapped, chat_username, category, subcategory)
-            if item and item.get('id') not in vn_ids:
-                if category not in vn_data:
-                    vn_data[category] = []
-                vn_data[category].insert(0, item)
-                save_listings(vn_data)
-                print(f"WEBHOOK: New [{category}] listing from @{chat_username}: {item.get('title','')[:60]}")
+            if item:
+                added = atomic_add_listing(category, item)
+                if added:
+                    print(f"WEBHOOK: New [{category}] listing from @{chat_username}: {item.get('title','')[:60]}")
+                else:
+                    print(f"WEBHOOK: Duplicate [{category}] from @{chat_username}: {item.get('id')}")
     except Exception as e_extra:
         print(f"WEBHOOK extra channel error: {e_extra}")
 

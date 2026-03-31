@@ -13,6 +13,8 @@ from datetime import datetime, timezone
 logging.basicConfig(level=logging.INFO, format='%(asctime)s [%(levelname)s] %(message)s')
 logger = logging.getLogger(__name__)
 
+_listings_lock = threading.Lock()
+
 BOT_TOKEN = os.environ.get('VIETNAMPARSING_BOT_TOKEN', '') or os.environ.get('TELEGRAM_BOT_TOKEN', '')
 SOURCE_CHANNEL = 'vietnamparsing'
 ARENDABAY_CHANNEL = 'arendabaykavietnam'
@@ -567,7 +569,7 @@ def fetch_initial_200() -> int:
 
     logger.info(f"Total scraped: {len(all_messages)} messages across {pages_fetched} pages")
 
-    new_count = 0
+    new_items = []
     for msg in all_messages[:INITIAL_FETCH_LIMIT]:
         item_id = f"vietnamparsing_{msg['post_id']}"
         if item_id in existing_ids:
@@ -577,11 +579,22 @@ def fetch_initial_200() -> int:
         if item is None:
             continue
 
-        data['real_estate'].insert(0, item)
+        new_items.append(item)
         existing_ids.add(item_id)
-        new_count += 1
 
-    save_listings(data)
+    new_count = len(new_items)
+    if new_count > 0:
+        fresh_data = load_listings()
+        fresh_ids = get_existing_ids(fresh_data)
+        if 'real_estate' not in fresh_data:
+            fresh_data['real_estate'] = []
+        added = 0
+        for item in new_items:
+            if item['id'] not in fresh_ids:
+                fresh_data['real_estate'].insert(0, item)
+                added += 1
+        if added > 0:
+            save_listings(fresh_data)
     logger.info(f"Initial fetch complete. Added {new_count} new real estate listings.")
     return new_count
 
@@ -995,31 +1008,65 @@ def fetch_extra_channel_history(channel: str, category: str, subcategory,
 
 
 def load_listings() -> dict:
-    try:
-        with open(LISTINGS_FILE, 'r', encoding='utf-8') as f:
-            return json.load(f)
-    except Exception as e:
-        logger.warning(f"Could not load listings: {e}")
-        return {}
+    with _listings_lock:
+        try:
+            with open(LISTINGS_FILE, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        except Exception as e:
+            logger.warning(f"Could not load listings: {e}")
+            return {}
 
 
 def save_listings(data: dict):
-    try:
-        tmp = LISTINGS_FILE + '.tmp'
-        with open(tmp, 'w', encoding='utf-8') as f:
-            json.dump(data, f, ensure_ascii=False, indent=2)
+    with _listings_lock:
         try:
-            os.replace(tmp, LISTINGS_FILE)
-        except OSError:
-            import shutil
-            shutil.move(tmp, LISTINGS_FILE)
-    except Exception as e:
-        logger.error(f"Failed to save listings: {e}")
-        try:
-            with open(LISTINGS_FILE, 'w', encoding='utf-8') as f:
+            tmp = LISTINGS_FILE + '.tmp'
+            with open(tmp, 'w', encoding='utf-8') as f:
                 json.dump(data, f, ensure_ascii=False, indent=2)
-        except Exception as e2:
-            logger.error(f"Direct save also failed: {e2}")
+            try:
+                os.replace(tmp, LISTINGS_FILE)
+            except OSError:
+                import shutil
+                shutil.move(tmp, LISTINGS_FILE)
+        except Exception as e:
+            logger.error(f"Failed to save listings: {e}")
+            try:
+                with open(LISTINGS_FILE, 'w', encoding='utf-8') as f:
+                    json.dump(data, f, ensure_ascii=False, indent=2)
+            except Exception as e2:
+
+
+def atomic_add_listing(category: str, item: dict) -> bool:
+    with _listings_lock:
+        try:
+            with open(LISTINGS_FILE, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+        except Exception:
+            data = {}
+        ids = set()
+        for cat_items in data.values():
+            if isinstance(cat_items, list):
+                for it in cat_items:
+                    if isinstance(it, dict) and 'id' in it:
+                        ids.add(it['id'])
+        if item.get('id') in ids:
+            return False
+        if category not in data:
+            data[category] = []
+        data[category].insert(0, item)
+        try:
+            tmp = LISTINGS_FILE + '.tmp'
+            with open(tmp, 'w', encoding='utf-8') as f:
+                json.dump(data, f, ensure_ascii=False, indent=2)
+            try:
+                os.replace(tmp, LISTINGS_FILE)
+            except OSError:
+                import shutil
+                shutil.move(tmp, LISTINGS_FILE)
+            return True
+        except Exception as e:
+            logger.error(f"atomic_add_listing failed: {e}")
+            return False
 
 
 def get_existing_ids(data: dict) -> set:
