@@ -17,7 +17,7 @@ DEST = {
     'BIKE': 'baykivietnam',
     'CHAT_VN': 'chatiparsing',
     'CHAT_TH': 'chatiparsing',
-    'ENTERTAIN': 'razvlecheniyavietnam',
+    'ENTERTAIN': 'gavibeshub',
     'MED': 'medvietnam',
 }
 

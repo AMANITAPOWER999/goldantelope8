@@ -13,7 +13,7 @@ DEST = {
     'VIET': 'vietnamparsing',
     'THAI': 'thailandparsing',
     'BIKE': 'baykivietnam',
-    'ENTERTAIN': 'razvlecheniyavietnam',
+    'ENTERTAIN': 'gavibeshub',
     'MED': 'medvietnam',
 }
 

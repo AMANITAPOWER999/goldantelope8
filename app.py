@@ -2908,7 +2908,7 @@ def admin_moderate():
         
         CATEGORY_CHANNELS = {
             'entertainment': {
-                'vietnam': '@razvlecheniyavietnam',
+                'vietnam': '@gavibeshub',
             },
             'restaurants': {
                 'vietnam': '@restoranvietnam',
