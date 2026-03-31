@@ -856,8 +856,8 @@ def build_generic_listing(msg: dict, item_id: str, channel: str, category: str, 
         'text': clean_text,
         'price': price,
         'price_display': price_display,
-        'city': 'Вьетнам',
-        'city_ru': 'Вьетнам',
+        'city': CHANNEL_CITY_MAP.get(channel, 'Вьетнам'),
+        'city_ru': CHANNEL_CITY_MAP.get(channel, 'Вьетнам'),
         'date': date_str,
         'contact': f'@{channel}',
         'contact_name': channel,
@@ -976,6 +976,98 @@ def scrape_extra_channel_page(channel: str, before_id: int | None = None) -> lis
         except Exception:
             continue
     return results
+
+
+PRIVATE_SUPERGROUPS = {
+    'gavibeshub': -1003873439967,
+}
+
+CHANNEL_CITY_MAP = {
+    'gavibeshub': 'Нячанг',
+}
+
+
+def fetch_private_group_history_via_bot(channel: str, chat_id: int, category: str,
+                                         subcategory, data: dict, existing_ids: set,
+                                         max_msg_id: int = 50) -> int:
+    """Fetch history from a private supergroup via Bot API forwardMessage trick."""
+    if not BOT_TOKEN:
+        return 0
+    new_count = 0
+    if category not in data:
+        data[category] = []
+    file_id_map = {}
+    try:
+        with open('file_id_index.json', 'r') as f:
+            file_id_map = json.load(f)
+    except Exception:
+        pass
+
+    for msg_id in range(1, max_msg_id + 1):
+        item_id = f"{channel}_{msg_id}"
+        if item_id in existing_ids:
+            continue
+        try:
+            r = requests.post(
+                f'https://api.telegram.org/bot{BOT_TOKEN}/forwardMessage',
+                json={
+                    'chat_id': chat_id,
+                    'from_chat_id': chat_id,
+                    'message_id': msg_id,
+                    'disable_notification': True
+                },
+                timeout=10
+            )
+            result = r.json()
+            if not result.get('ok'):
+                continue
+
+            msg = result['result']
+            fwd_id = msg['message_id']
+            requests.post(
+                f'https://api.telegram.org/bot{BOT_TOKEN}/deleteMessage',
+                json={'chat_id': chat_id, 'message_id': fwd_id},
+                timeout=5
+            )
+
+            text = msg.get('text', '') or msg.get('caption', '') or ''
+            if not text.strip():
+                continue
+
+            has_photo = 'photo' in msg
+            photos = [f'https://t.me/{channel}/{msg_id}'] if has_photo else []
+
+            if has_photo and msg.get('photo'):
+                best = max(msg['photo'], key=lambda p: p.get('file_size', 0))
+                file_id_map[item_id] = best['file_id']
+
+            date_ts = msg.get('date', 0)
+            date_str = datetime.fromtimestamp(date_ts, tz=timezone.utc).isoformat() if date_ts else datetime.now(timezone.utc).isoformat()
+
+            msg_data = {
+                'post_id': msg_id,
+                'date': date_str,
+                'text': text,
+                'images': photos,
+            }
+            item = build_generic_listing(msg_data, item_id, channel, category, subcategory)
+            if item is None:
+                continue
+            data[category].insert(0, item)
+            existing_ids.add(item_id)
+            new_count += 1
+            logger.info(f"[{channel}] Bot API history: {item['title'][:60]}")
+            time.sleep(0.3)
+        except Exception as e:
+            logger.debug(f"[{channel}] msg_id={msg_id} error: {e}")
+            continue
+
+    try:
+        with open('file_id_index.json', 'w') as f:
+            json.dump(file_id_map, f, indent=2)
+    except Exception:
+        pass
+    return new_count
 
 
 def fetch_extra_channel_history(channel: str, category: str, subcategory,
@@ -1240,10 +1332,23 @@ def run_initial_fetch():
     except Exception as e:
         logger.warning(f"Arendabay history fetch error: {e}")
 
-    # Fetch history from extra channels
+    for ch, priv_chat_id in PRIVATE_SUPERGROUPS.items():
+        if ch in EXTRA_CHANNELS:
+            cat, subcat = EXTRA_CHANNELS[ch]
+            try:
+                pg_data = load_listings()
+                pg_ids = get_existing_ids(pg_data)
+                n = fetch_private_group_history_via_bot(ch, priv_chat_id, cat, subcat, pg_data, pg_ids)
+                if n > 0:
+                    save_listings(pg_data)
+                    count += n
+                    logger.info(f"Fetched {n} [{cat}] from private @{ch} via Bot API")
+            except Exception as e_pg:
+                logger.warning(f"[{ch}] private group history error: {e_pg}")
+
     EXTRA_PUBLIC_CHANNELS = {
         k: v for k, v in EXTRA_CHANNELS.items()
-        if k not in ('hsjsbkskbs',)  # skip private supergroup aliases
+        if k not in ('hsjsbkskbs',) and k not in PRIVATE_SUPERGROUPS
     }
     for ch, (cat, subcat) in EXTRA_PUBLIC_CHANNELS.items():
         try:

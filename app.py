@@ -3472,6 +3472,16 @@ def _build_msg_to_file_id_index():
             for i, mid in enumerate(mids):
                 if i < len(fids) and fids[i]:
                     idx[(ch, int(mid))] = fids[i]
+        if os.path.exists('file_id_index.json'):
+            try:
+                with open('file_id_index.json', 'r') as f:
+                    extra_idx = json.load(f)
+                for key, fid in extra_idx.items():
+                    parts = key.rsplit('_', 1)
+                    if len(parts) == 2:
+                        idx[(parts[0], int(parts[1]))] = fid
+            except Exception:
+                pass
         with _msg_to_file_id_lock:
             _msg_to_file_id.update(idx)
         logger.info(f'[file_id_index] Проиндексировано {len(idx)} пар msg_id→file_id')
