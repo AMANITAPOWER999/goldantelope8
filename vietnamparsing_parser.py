@@ -910,9 +910,30 @@ def process_extra_channel_update(update: dict, channel: str, category: str, subc
     if override_photos:
         photos = override_photos
     else:
-        # Используем стабильные t.me ссылки вместо CDN (CDN-ссылки от Bot API истекают)
         has_photo = bool(post.get('photo'))
-        photos = [f'https://t.me/{channel}/{msg_id}'] if has_photo else []
+        if has_photo:
+            if channel in PRIVATE_SUPERGROUPS:
+                photos = [f'/tg_img/{channel}/{msg_id}']
+                photo_list = post.get('photo', [])
+                if photo_list:
+                    largest = max(photo_list, key=lambda p: p.get('file_size', 0))
+                    fid = largest.get('file_id')
+                    if fid:
+                        try:
+                            idx_path = 'file_id_index.json'
+                            idx = {}
+                            if os.path.exists(idx_path):
+                                with open(idx_path, 'r') as _f:
+                                    idx = json.load(_f)
+                            idx[f'{channel}_{msg_id}'] = fid
+                            with open(idx_path, 'w') as _f:
+                                json.dump(idx, _f, ensure_ascii=False, indent=2)
+                        except Exception:
+                            pass
+            else:
+                photos = [f'https://t.me/{channel}/{msg_id}']
+        else:
+            photos = []
 
     item_id = f"{channel}_{msg_id}"
     msg_data = {
@@ -1666,6 +1687,15 @@ def run_monitoring_loop():
         try:
             updates, last_update_id = poll_bot_for_updates(last_update_id)
             if updates:
+                for _dbg_upd in updates:
+                    _dbg_post = _dbg_upd.get('channel_post') or _dbg_upd.get('message') or {}
+                    _dbg_chat = _dbg_post.get('chat', {})
+                    _dbg_uname = _dbg_chat.get('username', '')
+                    _dbg_cid = _dbg_chat.get('id', '')
+                    _dbg_title = _dbg_chat.get('title', '')
+                    _dbg_text = (_dbg_post.get('text') or _dbg_post.get('caption') or '')[:40]
+                    logger.info(f"[poll_debug] upd_id={_dbg_upd.get('update_id')} chat_id={_dbg_cid} username={_dbg_uname} title={_dbg_title} text={_dbg_text}")
+
                 # Handle private user commands (/start etc.)
                 _handle_user_commands(updates)
 
