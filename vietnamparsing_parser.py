@@ -1034,6 +1034,7 @@ def save_listings(data: dict):
                 with open(LISTINGS_FILE, 'w', encoding='utf-8') as f:
                     json.dump(data, f, ensure_ascii=False, indent=2)
             except Exception as e2:
+                logger.error(f"Direct save also failed: {e2}")
 
 
 def atomic_add_listing(category: str, item: dict) -> bool:
@@ -1080,19 +1081,25 @@ def get_existing_ids(data: dict) -> set:
 
 
 def poll_bot_for_updates(last_update_id: int = 0) -> tuple[list, int]:
-    """Poll for updates via getUpdates. If webhook is active, returns empty (webhook handles messages)."""
+    """Poll for updates via getUpdates every 30s. Deletes webhook if conflict."""
     if not BOT_TOKEN:
         return [], last_update_id
     try:
         url = f"https://api.telegram.org/bot{BOT_TOKEN}/getUpdates"
         params = {
             'offset': last_update_id + 1,
-            'timeout': 25,
+            'timeout': 20,
             'allowed_updates': json.dumps(['channel_post', 'message']),
         }
-        resp = requests.get(url, params=params, timeout=35)
+        resp = requests.get(url, params=params, timeout=30)
         if resp.status_code == 409:
-            return [], last_update_id
+            logger.info("getUpdates 409 — удаляю webhook для перехода на polling...")
+            requests.post(
+                f"https://api.telegram.org/bot{BOT_TOKEN}/deleteWebhook",
+                json={'drop_pending_updates': False}, timeout=10
+            )
+            time.sleep(2)
+            resp = requests.get(url, params=params, timeout=30)
         resp.raise_for_status()
         result = resp.json()
         updates = result.get('result', [])
