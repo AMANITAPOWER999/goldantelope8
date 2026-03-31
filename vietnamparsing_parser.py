@@ -1398,6 +1398,8 @@ def _group_media_updates(updates: list) -> tuple[list, list, list, dict, dict]:
     """
     from collections import OrderedDict
 
+    _private_chatid_to_channel = {v: k for k, v in PRIVATE_SUPERGROUPS.items()}
+
     thailand_updates = []
     media_groups: dict = OrderedDict()
     arendabay_media_groups: dict = OrderedDict()
@@ -1412,6 +1414,10 @@ def _group_media_updates(updates: list) -> tuple[list, list, list, dict, dict]:
     for upd in updates:
         post = upd.get('channel_post') or upd.get('message') or {}
         chat_username = post.get('chat', {}).get('username', '').lower()
+        if not chat_username:
+            chat_id = post.get('chat', {}).get('id')
+            if chat_id and chat_id in _private_chatid_to_channel:
+                chat_username = _private_chatid_to_channel[chat_id]
 
         if chat_username == 'thailandparsing':
             thailand_updates.append(upd)
