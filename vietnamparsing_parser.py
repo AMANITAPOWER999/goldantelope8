@@ -856,8 +856,8 @@ def build_generic_listing(msg: dict, item_id: str, channel: str, category: str, 
         'text': clean_text,
         'price': price,
         'price_display': price_display,
-        'city': CHANNEL_CITY_MAP.get(channel, 'Вьетнам'),
-        'city_ru': CHANNEL_CITY_MAP.get(channel, 'Вьетнам'),
+        'city': _detect_city_from_text(text, CHANNEL_CITY_MAP.get(channel, 'Вьетнам')),
+        'city_ru': _detect_city_from_text(text, CHANNEL_CITY_MAP.get(channel, 'Вьетнам')),
         'date': date_str,
         'contact': f'@{channel}',
         'contact_name': channel,
@@ -1006,6 +1006,31 @@ PRIVATE_SUPERGROUPS = {
 CHANNEL_CITY_MAP = {
     'gavibeshub': 'Нячанг',
 }
+
+CITY_KEYWORDS = {
+    'Нячанг': ['нячанг', 'nha trang', 'nhatrang'],
+    'Дананг': ['дананг', 'da nang', 'danang'],
+    'Хошимин': ['хошимин', 'ho chi minh', 'hochiminh', 'сайгон', 'saigon'],
+    'Ханой': ['ханой', 'hanoi', 'ha noi'],
+    'Фукуок': ['фукуок', 'phu quoc', 'phuquoc'],
+    'Далат': ['далат', 'da lat', 'dalat'],
+    'Муйне': ['муйне', 'mui ne', 'muine', 'муй не'],
+    'Фантьет': ['фантьет', 'фантхиет', 'phan thiet', 'phanthiet'],
+    'Вунгтау': ['вунгтау', 'vung tau', 'vungtau'],
+    'Хойан': ['хойан', 'хой ан', 'hoi an', 'hoian'],
+}
+
+
+def _detect_city_from_text(text: str, default_city: str = 'Вьетнам') -> str:
+    """Detect Vietnamese city name from message text."""
+    if not text:
+        return default_city
+    text_lower = text.lower()
+    for city, keywords in CITY_KEYWORDS.items():
+        for kw in keywords:
+            if kw in text_lower:
+                return city
+    return default_city
 
 
 def fetch_private_group_history_via_bot(channel: str, chat_id: int, category: str,

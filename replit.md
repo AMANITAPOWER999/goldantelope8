@@ -30,6 +30,7 @@ Goldantelope ASIA is an automated content parser for Telegram channels and group
 - **Telegram Photo Storage**: Approved photos are uploaded to a dedicated Telegram channel for archival.
 - **Internal Chat**: Features a community chat with Telegram ID authorization and a moderation blacklist managed via the admin panel.
 - **Transport Image Pipeline**: All transport photos stored as `https://t.me/<channel>/<msg_id>` (stable, never expires). Template auto-converts these to `/tg_img/<channel>/<id>` proxy calls. Proxy serves from disk cache → Bot API file_id index → live CDN scrape fallback. `repair_transport_images()` runs at startup to convert any legacy telesco.pe CDN links. New posts from extra channels (baykivietnam, RentBikeUniq, etc.) also use t.me format.
+- **City Auto-Detection**: `_detect_city_from_text()` in `vietnamparsing_parser.py` scans message text for city keywords (Нячанг, Дананг, Хошимин, Ханой, Фукуок, Далат, Муйне, Фантьет, Вунгтау, Хойан) and assigns the correct city. Falls back to `CHANNEL_CITY_MAP` default (e.g., Нячанг for gavibeshub). Applied in `build_generic_listing()` for all extra channel posts.
 
 #### Feature Specifications
 - **Content Categories**: 11 distinct content categories with tailored filtering options.
