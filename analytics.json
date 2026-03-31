@@ -55,12 +55,12 @@
         "user_7149x0k7w_1774925837401",
         "user_8xnkuwtfe_1774932789196"
       ],
-      "page_views": 120,
+      "page_views": 183,
       "countries": {
-        "vietnam": 120
+        "vietnam": 183
       },
       "categories": {
-        "real_estate": 112,
+        "real_estate": 175,
         "entertainment": 3,
         "settings": 1,
         "tours": 4
@@ -70,12 +70,13 @@
         "02": 3,
         "03": 4,
         "04": 79,
-        "05": 15
+        "05": 61,
+        "06": 17
       },
       "referrers": {},
       "devices": {
         "mobile": 7,
-        "desktop": 113
+        "desktop": 176
       }
     }
   },
@@ -97,7 +98,7 @@
     },
     "user_6jci4menl_1774870819725": {
       "first_seen": "2026-03-30",
-      "visits": 1463,
+      "visits": 1526,
       "last_seen": "2026-03-31"
     },
     "user_5nv73h4ww_1774806415608": {
