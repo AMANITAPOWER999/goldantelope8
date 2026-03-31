@@ -9,13 +9,13 @@
         "user_5nv73h4ww_1774806415608",
         "user_rjnml8zqe_1774893785091"
       ],
-      "page_views": 1132,
+      "page_views": 1842,
       "countries": {
-        "vietnam": 1132
+        "vietnam": 1842
       },
       "categories": {
-        "real_estate": 294,
-        "entertainment": 673,
+        "real_estate": 976,
+        "entertainment": 701,
         "realestate": 107,
         "chat": 15,
         "settings": 3,
@@ -36,12 +36,44 @@
         "15": 141,
         "16": 129,
         "17": 1,
-        "18": 2
+        "18": 112,
+        "19": 120,
+        "20": 120,
+        "21": 120,
+        "22": 120,
+        "23": 120
       },
       "referrers": {},
       "devices": {
-        "mobile": 110,
-        "desktop": 1022
+        "mobile": 111,
+        "desktop": 1731
+      }
+    },
+    "2026-03-31": {
+      "unique_visitors": [
+        "user_6jci4menl_1774870819725",
+        "user_7149x0k7w_1774925837401",
+        "user_8xnkuwtfe_1774932789196"
+      ],
+      "page_views": 107,
+      "countries": {
+        "vietnam": 107
+      },
+      "categories": {
+        "real_estate": 104,
+        "entertainment": 3
+      },
+      "hours": {
+        "00": 19,
+        "02": 3,
+        "03": 4,
+        "04": 79,
+        "05": 2
+      },
+      "referrers": {},
+      "devices": {
+        "mobile": 7,
+        "desktop": 100
       }
     }
   },
@@ -58,13 +90,13 @@
     },
     "user_uka68a8xb_1774778778375": {
       "first_seen": "2026-03-30",
-      "visits": 106,
+      "visits": 107,
       "last_seen": "2026-03-30"
     },
     "user_6jci4menl_1774870819725": {
       "first_seen": "2026-03-30",
-      "visits": 642,
-      "last_seen": "2026-03-30"
+      "visits": 1450,
+      "last_seen": "2026-03-31"
     },
     "user_5nv73h4ww_1774806415608": {
       "first_seen": "2026-03-30",
@@ -75,6 +107,16 @@
       "first_seen": "2026-03-30",
       "visits": 1,
       "last_seen": "2026-03-30"
+    },
+    "user_7149x0k7w_1774925837401": {
+      "first_seen": "2026-03-31",
+      "visits": 7,
+      "last_seen": "2026-03-31"
+    },
+    "user_8xnkuwtfe_1774932789196": {
+      "first_seen": "2026-03-31",
+      "visits": 1,
+      "last_seen": "2026-03-31"
     }
   }
 }

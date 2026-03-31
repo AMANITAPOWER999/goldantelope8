@@ -592,14 +592,14 @@ def build_listing_item(msg: dict, item_id: str) -> dict | None:
         return None
     blocked = is_blocked_source(text)
 
-    # Если текст это только t.me ссылка — подгружаем реальный текст поста через embed
-    _tg_link_only = re.match(r'^https?://t\.me/[\w/]+$', text.strip())
-    if _tg_link_only or len(text.strip()) < 15:
-        fetched = fetch_tg_post_text(text.strip())
+    _tg_link_re = re.search(r'(https?://t\.me/[\w]+/\d+)', text)
+    _text_without_links = re.sub(r'https?://\S+', '', text).strip()
+    if _tg_link_re and len(_text_without_links) < 50:
+        tg_link_url = _tg_link_re.group(1)
+        fetched = fetch_tg_post_text(tg_link_url)
         if fetched and len(fetched) >= 15:
-            orig_link = text.strip()
-            text = fetched + (f'\n\n{orig_link}' if orig_link.startswith('http') else '')
-            logger.info(f'[embed_enrich] {item_id}: enriched {len(fetched)} chars from {orig_link[:60]}')
+            text = fetched + f'\n\n{tg_link_url}'
+            logger.info(f'[embed_enrich] {item_id}: enriched {len(fetched)} chars from {tg_link_url[:60]}')
 
     price_vnd, price_display = extract_price(text)
     city = detect_city(text)
@@ -1716,14 +1716,15 @@ def repair_link_only_listings():
             desc = (item.get('description') or '').strip()
             tg_link = (item.get('telegram_link') or '').strip()
 
-            # Проверяем: description это только t.me URL или очень короткое
+            _desc_link = re.search(r'(https?://t\.me/[\w]+/\d+)', desc)
+            _desc_no_links = re.sub(r'https?://\S+', '', desc).strip()
             is_link_only = bool(re.match(r'^https?://t\.me/[\w/]+$', desc))
-            is_short = len(desc) < 20
+            is_short_with_link = bool(_desc_link) and len(_desc_no_links) < 50
 
-            if not (is_link_only or is_short):
+            if not (is_link_only or is_short_with_link or len(desc) < 20):
                 continue
 
-            target_url = tg_link or (desc if desc.startswith('http') else None)
+            target_url = tg_link or (_desc_link.group(1) if _desc_link else None) or (desc if desc.startswith('http') else None)
             if not target_url:
                 continue
 
