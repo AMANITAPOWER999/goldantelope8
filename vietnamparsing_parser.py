@@ -1033,14 +1033,10 @@ def get_existing_ids(data: dict) -> set:
 
 
 def poll_bot_for_updates(last_update_id: int = 0) -> tuple[list, int]:
+    """Poll for updates via getUpdates. If webhook is active, returns empty (webhook handles messages)."""
     if not BOT_TOKEN:
         return [], last_update_id
     try:
-        # First delete any existing webhook to avoid conflicts
-        requests.post(
-            f"https://api.telegram.org/bot{BOT_TOKEN}/deleteWebhook",
-            json={'drop_pending_updates': False}, timeout=10
-        )
         url = f"https://api.telegram.org/bot{BOT_TOKEN}/getUpdates"
         params = {
             'offset': last_update_id + 1,
@@ -1049,9 +1045,7 @@ def poll_bot_for_updates(last_update_id: int = 0) -> tuple[list, int]:
         }
         resp = requests.get(url, params=params, timeout=35)
         if resp.status_code == 409:
-            logger.warning("Bot API 409 conflict - another instance is polling. Retrying in 35s...")
-            time.sleep(35)
-            resp = requests.get(url, params=params, timeout=35)
+            return [], last_update_id
         resp.raise_for_status()
         result = resp.json()
         updates = result.get('result', [])
