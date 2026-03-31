@@ -5,20 +5,20 @@
         "user_74q3oqm1i_1774944455428",
         "user_ohmf3lecu_1774943490902"
       ],
-      "page_views": 22,
+      "page_views": 26,
       "countries": {
-        "vietnam": 22
+        "vietnam": 26
       },
       "categories": {
-        "real_estate": 22
+        "real_estate": 26
       },
       "hours": {
-        "08": 22
+        "08": 26
       },
       "referrers": {},
       "devices": {
         "mobile": 0,
-        "desktop": 22
+        "desktop": 26
       }
     }
   },
@@ -30,7 +30,7 @@
     },
     "user_ohmf3lecu_1774943490902": {
       "first_seen": "2026-03-31",
-      "visits": 13,
+      "visits": 17,
       "last_seen": "2026-03-31"
     }
   }
