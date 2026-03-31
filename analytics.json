@@ -5,32 +5,32 @@
         "user_74q3oqm1i_1774944455428",
         "user_ohmf3lecu_1774943490902"
       ],
-      "page_views": 16,
+      "page_views": 22,
       "countries": {
-        "vietnam": 16
+        "vietnam": 22
       },
       "categories": {
-        "real_estate": 16
+        "real_estate": 22
       },
       "hours": {
-        "08": 16
+        "08": 22
       },
       "referrers": {},
       "devices": {
         "mobile": 0,
-        "desktop": 16
+        "desktop": 22
       }
     }
   },
   "visitors": {
     "user_74q3oqm1i_1774944455428": {
       "first_seen": "2026-03-31",
-      "visits": 6,
+      "visits": 9,
       "last_seen": "2026-03-31"
     },
     "user_ohmf3lecu_1774943490902": {
       "first_seen": "2026-03-31",
-      "visits": 10,
+      "visits": 13,
       "last_seen": "2026-03-31"
     }
   }
