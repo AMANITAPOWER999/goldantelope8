@@ -1224,11 +1224,13 @@ def get_listings(category):
             'живая музыка', 'live music', 'выставк', 'exhibition',
             'ярмарк', 'fair', 'маркет', 'market',
             'пляжн', 'beach party', 'pool party',
+            'рыбалк', 'fishing', 'экскурси', 'excursion',
         ]
-        filtered = [x for x in filtered if any(
-            kw in (x.get('description', '') or x.get('title', '') or '').lower()
-            for kw in _ENT_KEYWORDS
-        )]
+        _ENT_TRUSTED_SOURCES = {'gavibeshub'}
+        filtered = [x for x in filtered if
+            x.get('source_group', '') in _ENT_TRUSTED_SOURCES or
+            any(kw in (x.get('description', '') or x.get('title', '') or '').lower() for kw in _ENT_KEYWORDS)
+        ]
 
     subcategory = request.args.get('subcategory')
     if subcategory:
