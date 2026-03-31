@@ -13,7 +13,7 @@ from datetime import datetime, timezone
 logging.basicConfig(level=logging.INFO, format='%(asctime)s [%(levelname)s] %(message)s')
 logger = logging.getLogger(__name__)
 
-BOT_TOKEN = os.environ.get('VIETNAMPARSING_BOT_TOKEN', '')
+BOT_TOKEN = os.environ.get('VIETNAMPARSING_BOT_TOKEN', '') or os.environ.get('TELEGRAM_BOT_TOKEN', '')
 SOURCE_CHANNEL = 'vietnamparsing'
 ARENDABAY_CHANNEL = 'arendabaykavietnam'
 BARAHOLKA_GROUP = 'hsjsbkskbs'  # supergroup @hsjsbkskbs = baraholkainvietnam
@@ -1625,6 +1625,20 @@ def run_monitoring_loop():
                         logger.info(f"Arendabay scrape added {n_ab} new bike listings")
                 except Exception as e_ab:
                     logger.warning(f"Arendabay scrape error: {e_ab}")
+
+                # VN extra channels: periodic re-scrape (public channels via t.me/s/)
+                for ex_ch, (ex_cat, ex_subcat) in EXTRA_CHANNELS.items():
+                    try:
+                        ex_data = load_listings()
+                        ex_ids = get_existing_ids(ex_data)
+                        n_ex = fetch_extra_channel_history(ex_ch, ex_cat, ex_subcat, ex_data, ex_ids, max_pages=1)
+                        if n_ex > 0:
+                            save_listings(ex_data)
+                            _parser_state['new_today'] = _parser_state.get('new_today', 0) + n_ex
+                            _parser_state['total_parsed'] = _parser_state.get('total_parsed', 0) + n_ex
+                            logger.info(f"VN extra @{ex_ch} scrape added {n_ex} [{ex_cat}] listings")
+                    except Exception as e_ex:
+                        logger.warning(f"VN extra @{ex_ch} scrape error: {e_ex}")
 
                 # Thailand: scan new posts by consecutive ID probing
                 try:
