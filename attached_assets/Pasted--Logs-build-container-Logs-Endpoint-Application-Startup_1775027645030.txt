@@ -1,0 +1,164 @@
+
+Logs
+
+build
+container
+
+Logs Endpoint
+
+
+
+===== Application Startup at 2026-04-01 07:09:43 =====
+
+/app/app.py:697: DeprecationWarning: 
+        on_event is deprecated, use lifespan event handlers instead.
+
+        Read more about it in the
+        [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+        
+  @app.on_event("startup")
+INFO:     Started server process [1]
+INFO:     Waiting for application startup.
+INFO:telethon.network.mtprotosender:Connecting to 91.108.56.142:443/TcpFull...
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:7860 (Press CTRL+C to quit)
+INFO:telethon.network.mtprotosender:Connection to 91.108.56.142:443/TcpFull complete!
+ERROR:parser:Client disconnected: The authorization key (session file) was used under two different IP addresses simultaneously, and can no longer be used. Use the same session exclusively, or use different sessions (caused by InvokeWithLayerRequest(InitConnectionRequest(GetConfigRequest))). Reconnecting in 30s...
+INFO:telethon.network.mtprotosender:Connecting to 91.108.56.142:443/TcpFull...
+INFO:telethon.network.mtprotosender:Connection to 91.108.56.142:443/TcpFull complete!
+ERROR:parser:Client disconnected: The authorization key (session file) was used under two different IP addresses simultaneously, and can no longer be used. Use the same session exclusively, or use different sessions (caused by InvokeWithLayerRequest(InitConnectionRequest(GetConfigRequest))). Reconnecting in 30s...
+INFO:telethon.network.mtprotosender:Connecting to 91.108.56.142:443/TcpFull...
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-42' coro=<Connection._send_loop() done, defined at /usr/local/lib/python3.11/site-packages/telethon/network/connection/connection.py:316> wait_for=<Future cancelled>>
+Exception ignored in: <coroutine object Connection._recv_loop at 0x7f3621de1b70>
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/asyncio/events.py", line 37, in __init__
+    context = contextvars.copy_context()
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: coroutine ignored GeneratorExit
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-43' coro=<Connection._recv_loop() running at /usr/local/lib/python3.11/site-packages/telethon/network/connection/connection.py:361> wait_for=<Future pending cb=[Task.task_wakeup()]>>
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-44' coro=<MTProtoSender._send_loop() done, defined at /usr/local/lib/python3.11/site-packages/telethon/network/mtprotosender.py:452> wait_for=<Future pending cb=[Task.task_wakeup()]>>
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-45' coro=<MTProtoSender._recv_loop() done, defined at /usr/local/lib/python3.11/site-packages/telethon/network/mtprotosender.py:503> wait_for=<Future cancelled>>
+INFO:telethon.network.mtprotosender:Connection to 91.108.56.142:443/TcpFull complete!
+ERROR:parser:Client disconnected: The authorization key (session file) was used under two different IP addresses simultaneously, and can no longer be used. Use the same session exclusively, or use different sessions (caused by InvokeWithLayerRequest(InitConnectionRequest(GetConfigRequest))). Reconnecting in 30s...
+INFO:telethon.network.mtprotosender:Connecting to 91.108.56.142:443/TcpFull...
+INFO:telethon.network.mtprotosender:Connection to 91.108.56.142:443/TcpFull complete!
+ERROR:parser:Client disconnected: The authorization key (session file) was used under two different IP addresses simultaneously, and can no longer be used. Use the same session exclusively, or use different sessions (caused by InvokeWithLayerRequest(InitConnectionRequest(GetConfigRequest))). Reconnecting in 30s...
+INFO:telethon.network.mtprotosender:Connecting to 91.108.56.142:443/TcpFull...
+INFO:telethon.network.mtprotosender:Connection to 91.108.56.142:443/TcpFull complete!
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-113' coro=<Connection._send_loop() done, defined at /usr/local/lib/python3.11/site-packages/telethon/network/connection/connection.py:316> wait_for=<Future cancelled>>
+Exception ignored in: <coroutine object Connection._recv_loop at 0x7f3621e04220>
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/telethon/crypto/libssl.py", line 124, in encrypt_ige
+    iv = (ctypes.c_ubyte * len(iv))(*iv)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: coroutine ignored GeneratorExit
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-114' coro=<Connection._recv_loop() running at /usr/local/lib/python3.11/site-packages/telethon/network/connection/connection.py:361> wait_for=<Future pending cb=[Task.task_wakeup()]>>
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-115' coro=<MTProtoSender._send_loop() done, defined at /usr/local/lib/python3.11/site-packages/telethon/network/mtprotosender.py:452> wait_for=<Future pending cb=[Task.task_wakeup()]>>
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-116' coro=<MTProtoSender._recv_loop() done, defined at /usr/local/lib/python3.11/site-packages/telethon/network/mtprotosender.py:503> wait_for=<Future cancelled>>
+ERROR:parser:Client disconnected: The authorization key (session file) was used under two different IP addresses simultaneously, and can no longer be used. Use the same session exclusively, or use different sessions (caused by InvokeWithLayerRequest(InitConnectionRequest(GetConfigRequest))). Reconnecting in 30s...
+INFO:     10.16.15.94:17926 - "GET / HTTP/1.1" 200 OK
+INFO:     10.16.4.116:37464 - "GET / HTTP/1.1" 200 OK
+INFO:telethon.network.mtprotosender:Connecting to 91.108.56.142:443/TcpFull...
+INFO:telethon.network.mtprotosender:Connection to 91.108.56.142:443/TcpFull complete!
+ERROR:parser:Client disconnected: The authorization key (session file) was used under two different IP addresses simultaneously, and can no longer be used. Use the same session exclusively, or use different sessions (caused by InvokeWithLayerRequest(InitConnectionRequest(GetConfigRequest))). Reconnecting in 30s...
+INFO:telethon.network.mtprotosender:Connecting to 91.108.56.142:443/TcpFull...
+INFO:telethon.network.mtprotosender:Connection to 91.108.56.142:443/TcpFull complete!
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-189' coro=<Connection._send_loop() done, defined at /usr/local/lib/python3.11/site-packages/telethon/network/connection/connection.py:316> wait_for=<Future cancelled>>
+Exception ignored in: <coroutine object Connection._recv_loop at 0x7f3621e06f20>
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/asyncio/mixins.py", line 16, in _get_loop
+    with _global_lock:
+RuntimeError: coroutine ignored GeneratorExit
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-190' coro=<Connection._recv_loop() running at /usr/local/lib/python3.11/site-packages/telethon/network/connection/connection.py:361> wait_for=<Future pending cb=[Task.task_wakeup()]>>
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-191' coro=<MTProtoSender._send_loop() done, defined at /usr/local/lib/python3.11/site-packages/telethon/network/mtprotosender.py:452> wait_for=<Future pending cb=[Task.task_wakeup()]>>
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-192' coro=<MTProtoSender._recv_loop() done, defined at /usr/local/lib/python3.11/site-packages/telethon/network/mtprotosender.py:503> wait_for=<Future cancelled>>
+ERROR:parser:Client disconnected: The authorization key (session file) was used under two different IP addresses simultaneously, and can no longer be used. Use the same session exclusively, or use different sessions (caused by InvokeWithLayerRequest(InitConnectionRequest(GetConfigRequest))). Reconnecting in 30s...
+INFO:telethon.network.mtprotosender:Connecting to 91.108.56.142:443/TcpFull...
+INFO:telethon.network.mtprotosender:Connection to 91.108.56.142:443/TcpFull complete!
+ERROR:parser:Client disconnected: The authorization key (session file) was used under two different IP addresses simultaneously, and can no longer be used. Use the same session exclusively, or use different sessions (caused by InvokeWithLayerRequest(InitConnectionRequest(GetConfigRequest))). Reconnecting in 30s...
+INFO:telethon.network.mtprotosender:Connecting to 91.108.56.142:443/TcpFull...
+INFO:telethon.network.mtprotosender:Connection to 91.108.56.142:443/TcpFull complete!
+ERROR:parser:Client disconnected: The authorization key (session file) was used under two different IP addresses simultaneously, and can no longer be used. Use the same session exclusively, or use different sessions (caused by InvokeWithLayerRequest(InitConnectionRequest(GetConfigRequest))). Reconnecting in 30s...
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-8' coro=<MTProtoSender._send_loop() running at /usr/local/lib/python3.11/site-packages/telethon/network/mtprotosender.py:470> wait_for=<Future pending cb=[Task.task_wakeup()]>>
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-9' coro=<MTProtoSender._recv_loop() running at /usr/local/lib/python3.11/site-packages/telethon/network/mtprotosender.py:513> wait_for=<Future pending cb=[Task.task_wakeup()]>>
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-6' coro=<Connection._send_loop() running at /usr/local/lib/python3.11/site-packages/telethon/network/connection/connection.py:322> wait_for=<Future pending cb=[Task.task_wakeup()]>>
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-7' coro=<Connection._recv_loop() running at /usr/local/lib/python3.11/site-packages/telethon/network/connection/connection.py:341> wait_for=<Future pending cb=[Task.task_wakeup()]>>
+Exception ignored in: <coroutine object Connection._recv_loop at 0x7f3621de06d0>
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/selectors.py", line 192, in get_key
+    raise KeyError("{!r} is not registered".format(fileobj)) from None
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: coroutine ignored GeneratorExit
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-78' coro=<Connection._send_loop() running at /usr/local/lib/python3.11/site-packages/telethon/network/connection/connection.py:322> wait_for=<Future pending cb=[Task.task_wakeup()]>>
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-79' coro=<Connection._recv_loop() running at /usr/local/lib/python3.11/site-packages/telethon/network/connection/connection.py:341> wait_for=<Future pending cb=[Task.task_wakeup()]>>
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-80' coro=<MTProtoSender._send_loop() running at /usr/local/lib/python3.11/site-packages/telethon/network/mtprotosender.py:470> wait_for=<Future pending cb=[Task.task_wakeup()]>>
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-81' coro=<MTProtoSender._recv_loop() running at /usr/local/lib/python3.11/site-packages/telethon/network/mtprotosender.py:513> wait_for=<Future pending cb=[Task.task_wakeup()]>>
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-151' coro=<MTProtoSender._send_loop() running at /usr/local/lib/python3.11/site-packages/telethon/network/mtprotosender.py:470> wait_for=<Future pending cb=[Task.task_wakeup()]>>
+Exception ignored in: <coroutine object Connection._recv_loop at 0x7f3621de2f20>
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/selectors.py", line 192, in get_key
+    raise KeyError("{!r} is not registered".format(fileobj)) from None
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: coroutine ignored GeneratorExit
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-149' coro=<Connection._send_loop() running at /usr/local/lib/python3.11/site-packages/telethon/network/connection/connection.py:322> wait_for=<Future pending cb=[Task.task_wakeup()]>>
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-152' coro=<MTProtoSender._recv_loop() running at /usr/local/lib/python3.11/site-packages/telethon/network/mtprotosender.py:513> wait_for=<Future pending cb=[Task.task_wakeup()]>>
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-150' coro=<Connection._recv_loop() running at /usr/local/lib/python3.11/site-packages/telethon/network/connection/connection.py:341> wait_for=<Future pending cb=[Task.task_wakeup()]>>
+Exception ignored in: <coroutine object Connection._recv_loop at 0x7f3621e064d0>
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/selectors.py", line 192, in get_key
+    raise KeyError("{!r} is not registered".format(fileobj)) from None
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: coroutine ignored GeneratorExit
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-224' coro=<Connection._send_loop() running at /usr/local/lib/python3.11/site-packages/telethon/network/connection/connection.py:322> wait_for=<Future pending cb=[Task.task_wakeup()]>>
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-225' coro=<Connection._recv_loop() running at /usr/local/lib/python3.11/site-packages/telethon/network/connection/connection.py:341> wait_for=<Future pending cb=[Task.task_wakeup()]>>
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-226' coro=<MTProtoSender._send_loop() running at /usr/local/lib/python3.11/site-packages/telethon/network/mtprotosender.py:470> wait_for=<Future pending cb=[Task.task_wakeup()]>>
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-227' coro=<MTProtoSender._recv_loop() running at /usr/local/lib/python3.11/site-packages/telethon/network/mtprotosender.py:513> wait_for=<Future pending cb=[Task.task_wakeup()]>>
+Exception ignored in: <coroutine object Connection._recv_loop at 0x7f3621e07c40>
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/selectors.py", line 192, in get_key
+    raise KeyError("{!r} is not registered".format(fileobj)) from None
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: coroutine ignored GeneratorExit
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-260' coro=<Connection._send_loop() done, defined at /usr/local/lib/python3.11/site-packages/telethon/network/connection/connection.py:316> wait_for=<Future cancelled>>
+Exception ignored in: <coroutine object Connection._recv_loop at 0x7f362182c6d0>
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/selectors.py", line 192, in get_key
+    raise KeyError("{!r} is not registered".format(fileobj)) from None
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: coroutine ignored GeneratorExit
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-261' coro=<Connection._recv_loop() running at /usr/local/lib/python3.11/site-packages/telethon/network/connection/connection.py:361> wait_for=<Future pending cb=[Task.task_wakeup()]>>
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-262' coro=<MTProtoSender._send_loop() done, defined at /usr/local/lib/python3.11/site-packages/telethon/network/mtprotosender.py:452> wait_for=<Future pending cb=[Task.task_wakeup()]>>
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-263' coro=<MTProtoSender._recv_loop() done, defined at /usr/local/lib/python3.11/site-packages/telethon/network/mtprotosender.py:503> wait_for=<Future cancelled>>
+ 
