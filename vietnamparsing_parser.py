@@ -28,6 +28,11 @@ EXTRA_CHANNELS = {
     'gavibeshub':           ('entertainment', None),
     'restoranvietnam':      ('restaurants', None),
     'obmenvietnam':         ('chat', None),
+    'GAvisarun':            ('visas', None),
+    'GAtours':              ('tours', None),
+    'GAkidsclub':           ('kids', None),
+    'GAclinic_vn':          ('medicine', None),
+    'GAfoods':              ('restaurants', None),
 }
 
 TH_EXTRA_CHANNELS = {
@@ -1001,10 +1006,20 @@ def scrape_extra_channel_page(channel: str, before_id: int | None = None) -> lis
 
 PRIVATE_SUPERGROUPS = {
     'gavibeshub': -1003873439967,
+    'GAvisarun': -1003798373372,
+    'GAtours': -1003806322614,
+    'GAkidsclub': -1003651083423,
+    'GAclinic_vn': -1003435759447,
+    'GAfoods': -1003824692347,
 }
 
 CHANNEL_CITY_MAP = {
     'gavibeshub': 'Нячанг',
+    'GAvisarun': 'Вьетнам',
+    'GAtours': 'Вьетнам',
+    'GAkidsclub': 'Вьетнам',
+    'GAclinic_vn': 'Вьетнам',
+    'GAfoods': 'Вьетнам',
 }
 
 CITY_KEYWORDS = {
@@ -1081,7 +1096,13 @@ def fetch_private_group_history_via_bot(channel: str, chat_id: int, category: st
                 continue
 
             has_photo = 'photo' in msg
-            photos = [f'https://t.me/{channel}/{msg_id}'] if has_photo else []
+            if has_photo:
+                if channel in PRIVATE_SUPERGROUPS:
+                    photos = [f'/tg_img/{channel}/{msg_id}']
+                else:
+                    photos = [f'https://t.me/{channel}/{msg_id}']
+            else:
+                photos = []
 
             if has_photo and msg.get('photo'):
                 best = max(msg['photo'], key=lambda p: p.get('file_size', 0))

@@ -1211,6 +1211,8 @@ def get_listings(category):
     else:
         filtered = [x for x in listings if not x.get('hidden', False)]
     
+    _GA_TRUSTED_SOURCES = {'gavibeshub', 'GAvisarun', 'GAtours', 'GAkidsclub', 'GAclinic_vn', 'GAfoods'}
+
     if category == 'entertainment':
         _ENT_KEYWORDS = [
             'вечеринк', 'party', 'клуб', 'club', 'ночной клуб', 'night club',
@@ -1226,9 +1228,8 @@ def get_listings(category):
             'пляжн', 'beach party', 'pool party',
             'рыбалк', 'fishing', 'экскурси', 'excursion',
         ]
-        _ENT_TRUSTED_SOURCES = {'gavibeshub'}
         filtered = [x for x in filtered if
-            x.get('source_group', '') in _ENT_TRUSTED_SOURCES or
+            x.get('source_group', '') in _GA_TRUSTED_SOURCES or
             any(kw in (x.get('description', '') or x.get('title', '') or '').lower() for kw in _ENT_KEYWORDS)
         ]
 
