@@ -1385,7 +1385,7 @@
             <button class="tab" data-tab="chat" onclick="switchTab('chat')"><img src="/static/icons/chat_new.png" data-light-src="/static/images/icons/chat.jpg" data-dark-src="/static/icons/chat_new.png" alt=""><span>Все чаты</span></button>
             <button class="tab" data-tab="transport" onclick="switchTab('transport')"><img src="/static/icons/transport_dark.png" data-light-src="/static/icons/transport.png" data-dark-src="/static/icons/transport_dark.png" alt=""><span>Транспорт</span></button>
             <button class="tab active" data-tab="realestate" onclick="switchTab('realestate')"><img src="/static/icons/realestate_dark.png" data-light-src="/static/icons/realestate.png" data-dark-src="/static/icons/realestate_dark.png" alt=""><span>Недвижимость</span></button>
-            <button class="tab" data-tab="exchange" onclick="switchTab('exchange')"><img src="/static/icons/exchange_new.png" data-light-src="/static/icons/exchange.png" data-dark-src="/static/icons/exchange_new.png" alt=""><span>Обмен денег</span></button>
+            <button class="tab" data-tab="exchange" onclick="switchTab('exchange')"><img src="/static/icons/exchange_new.png" data-light-src="/static/icons/exchange.png" data-dark-src="/static/icons/exchange_new.png" alt=""><span>Финансы</span></button>
             <button class="tab" data-tab="tours" onclick="switchTab('tours')"><img src="/static/images/icons/tours_dark.jpg" data-light-src="/static/images/icons/tours.jpg" data-dark-src="/static/images/icons/tours_dark.jpg" alt=""><span>Экскурсии</span></button>
             <button class="tab" data-tab="visas" onclick="switchTab('visas')"><img src="/static/icons/visas_new.png" data-light-src="/static/icons/visas.jpg" data-dark-src="/static/icons/visas_new.png" alt=""><span>Визаран</span></button>
             <button class="tab" data-tab="settings" onclick="switchTab('settings')"><img src="/static/icons/kids_new2.png" data-light-src="/static/icons/kids_new.png" data-dark-src="/static/icons/kids_new2.png" alt=""><span>Дети</span></button>
@@ -2451,7 +2451,7 @@
             </div>
         </div>
 
-        <!-- Обмен денег -->
+        <!-- Финансы -->
         <div id="exchange" class="content">
             <div id="vietnam-exchange-buttons" style="display: none; padding: 20px;">
                 <div class="tour-grid-container" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 25px;">
@@ -3473,7 +3473,7 @@
                     <option value="tours">Экскурсии</option>
                     <option value="transport">Транспорт</option>
                     <option value="real_estate">Недвижимость</option>
-                    <option value="money_exchange">Обмен денег</option>
+                    <option value="money_exchange">Финансы</option>
                     <option value="entertainment">Развлечения</option>
                     <option value="visas">Визаран</option>
                     <option value="news">Фотосессия</option>
@@ -3589,11 +3589,11 @@
             </div>
         </div>
 
-        <!-- Модальное окно для редактирования "Обмен денег" с 4 фото -->
+        <!-- Модальное окно для редактирования "Финансы" с 4 фото -->
         <div id="exchange-edit-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1001; align-items: center; justify-content: center; overflow-y: auto;">
             <div style="background: white; border-radius: 12px; padding: 20px; max-width: 600px; width: 90%; margin: 20px auto; box-shadow: 0 10px 40px rgba(0,0,0,0.3);">
                 <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
-                    <h3 style="margin: 0; color: #FF9800;">💵 Редактировать "Обмен денег"</h3>
+                    <h3 style="margin: 0; color: #FF9800;">💵 Редактировать "Финансы"</h3>
                     <button onclick="closeExchangeEditModal()" style="background: none; border: none; font-size: 24px; cursor: pointer; color: #999;">&times;</button>
                 </div>
                 <p style="margin: 0 0 15px 0; color: #666; font-size: 13px;" id="exchange-edit-id"></p>
@@ -5119,7 +5119,7 @@
         const translations = {
             ru: {
                 countries: { vietnam: '🇻🇳 Вьетнам', thailand: '🇹🇭 Тайланд', india: '🇮🇳 Индия', indonesia: '🇮🇩 Индонезия' },
-                tabs: { entertainment: 'Развлечения', restaurants: 'Рестораны', tours: 'Экскурсии', transport: 'Транспорт', realestate: 'Недвижимость', exchange: 'Обмен денег', settings: 'Дети', marketplace: 'Барахолка', visas: 'Визаран', news: 'Фотосессия', medicine: 'Медицина', chat: 'Все чаты' },
+                tabs: { entertainment: 'Развлечения', restaurants: 'Рестораны', tours: 'Экскурсии', transport: 'Транспорт', realestate: 'Недвижимость', exchange: 'Финансы', settings: 'Дети', marketplace: 'Барахолка', visas: 'Визаран', news: 'Фотосессия', medicine: 'Медицина', chat: 'Все чаты' },
                 status: { parser: 'Парсер:', total: 'Всего объявлений:', updated: 'Обновлено:', online: 'На портале', lang: 'Язык' },
                 filters: { rent: '🔑 Аренда', sale: '🏠 Продажа', ascending: '📈 По возрастанию', descending: '📉 По убыванию', newest: '🆕 Новые', oldest: '🕰️ Ранние', reset: '✕ Сброс', upto7m: 'До 7 млн', upto15m: 'До 15 млн', from15m: 'От 15 млн', upto30k: 'До 30,000 THB', upto100k: 'До 100,000 THB', all: 'Все', bike: '🏍️ Мотоцикл', car: '🚗 Авто', scooter: '🛵 Скутер', groups: '📌 Группы:', selectGroup: '-- Выбрать группу --', listings: 'объявлений', submit: '📝 Подать', listing: 'объявление' },
                 transport: { bikes: '🏍️ Байки', cars: '🚗 Авто', yachts: '⛵ Яхты', bicycles: '🚲 Велосипеды', submit: '📝 Подать', add: 'Добавить транспорт', cityFilter: '🏙️ Город:' },
@@ -5132,7 +5132,7 @@
             },
             en: {
                 countries: { vietnam: '🇻🇳 Vietnam', thailand: '🇹🇭 Thailand', india: '🇮🇳 India', indonesia: '🇮🇩 Indonesia' },
-                tabs: { entertainment: 'Entertainment', restaurants: 'Restaurants', tours: 'Tours', transport: 'Transport', realestate: 'Real Estate', exchange: 'Money Exchange', settings: 'For Kids', marketplace: 'Marketplace', visas: 'Visa Runs', news: 'Photoshoots', medicine: 'Medicine', chat: 'Chat' },
+                tabs: { entertainment: 'Entertainment', restaurants: 'Restaurants', tours: 'Tours', transport: 'Transport', realestate: 'Real Estate', exchange: 'Finance', settings: 'For Kids', marketplace: 'Marketplace', visas: 'Visa Runs', news: 'Photoshoots', medicine: 'Medicine', chat: 'Chat' },
                 status: { parser: 'Parser:', total: 'Total listings:', updated: 'Updated:', online: 'Online', lang: 'Language' },
                 filters: { rent: '🔑 Rent', sale: '🏠 Sale', ascending: '📈 Ascending', descending: '📉 Descending', newest: '🆕 Newest', oldest: '🕰️ Oldest', reset: '✕ Reset', upto7m: 'Up to 7M', upto15m: 'Up to 15M', from15m: 'From 15M', upto30k: 'Up to 30,000 THB', upto100k: 'Up to 100,000 THB', all: 'All', bike: '🏍️ Motorbike', car: '🚗 Car', scooter: '🛵 Scooter', groups: '📌 Groups:', selectGroup: '-- Select group --', listings: 'listings', submit: '📝 Submit', listing: 'listing' },
                 transport: { bikes: '🏍️ Bikes', cars: '🚗 Cars', yachts: '⛵ Yachts', bicycles: '🚲 Bicycles', submit: '📝 Submit', add: 'Add Vehicle', cityFilter: '🏙️ City:' },
@@ -5145,7 +5145,7 @@
             },
             vi: {
                 countries: { vietnam: '🇻🇳 Việt Nam', thailand: '🇹🇭 Thái Lan', india: '🇮🇳 Ấn Độ', indonesia: '🇮🇩 Inđônêxia' },
-                tabs: { entertainment: 'Giải trí', restaurants: 'Nhà hàng', tours: 'Tour', transport: 'Vận chuyển', realestate: 'Bất động sản', exchange: 'Đổi tiền', settings: 'Cho trẻ em', marketplace: 'Chợ đồ cũ', visas: 'Visa Run', news: 'Chụp ảnh', medicine: 'Y tế', chat: 'Trò chuyện' },
+                tabs: { entertainment: 'Giải trí', restaurants: 'Nhà hàng', tours: 'Tour', transport: 'Vận chuyển', realestate: 'Bất động sản', exchange: 'Tài chính', settings: 'Cho trẻ em', marketplace: 'Chợ đồ cũ', visas: 'Visa Run', news: 'Chụp ảnh', medicine: 'Y tế', chat: 'Trò chuyện' },
                 status: { parser: 'Parser:', total: 'Tổng tin:', updated: 'Cập nhật:', online: 'Trực tuyến', lang: 'Ngôn ngữ' },
                 filters: { rent: '🔑 Thuê', sale: '🏠 Bán', ascending: '📈 Tăng dần', descending: '📉 Giảm dần', newest: '🆕 Mới nhất', oldest: '🕰️ Cũ nhất', reset: '✕ Đặt lại', upto7m: 'Đến 7 triệu', upto15m: 'Đến 15 triệu', from15m: 'Từ 15 triệu', upto30k: 'Đến 30,000 THB', upto100k: 'Đến 100,000 THB', all: 'Tất cả', bike: '🏍️ Xe máy', car: '🚗 Ô tô', scooter: '🛵 Xe tay ga', groups: '📌 Nhóm:', selectGroup: '-- Chọn nhóm --', listings: 'tin đăng', submit: '📝 Đăng', listing: 'tin' },
                 transport: { bikes: '🏍️ Xe máy', cars: '🚗 Ô tô', yachts: '⛵ Du thuyền', bicycles: '🚲 Xe đạp', submit: '📝 Đăng', add: 'Thêm phương tiện', cityFilter: '🏙️ Thành phố:' },
@@ -9108,7 +9108,7 @@
             document.getElementById('kids-edit-modal').style.display = 'none';
         }
         
-        // === Функции для редактирования Обмен денег ===
+        // === Функции для редактирования Финансы ===
         let currentExchangeEditId = null;
         
         async function openExchangePhotoEdit(listingId, event) {
@@ -10152,7 +10152,7 @@
         const categoryNames = {
             'chat': 'Все чаты', 'restaurants': 'Рестораны', 'tours': 'Экскурсии',
             'transport': 'Транспорт', 'real_estate': 'Недвижимость',
-            'money_exchange': 'Обмен денег', 'entertainment': 'Развлечения',
+            'money_exchange': 'Финансы', 'entertainment': 'Развлечения',
             'marketplace': 'Барахолка', 'visas': 'Визаран', 'news': 'Фотосессия',
             'medicine': 'Медицина', 'kids': 'Дети'
         };
@@ -11349,7 +11349,7 @@
         const CATEGORY_NAMES = {
             real_estate: 'Недвижимость', restaurants: 'Рестораны', transport: 'Транспорт',
             entertainment: 'Развлечения', tours: 'Туры', chat: 'Все чаты',
-            marketplace: 'Барахолка', money_exchange: 'Обмен', kids: 'Дети',
+            marketplace: 'Барахолка', money_exchange: 'Финансы', kids: 'Дети',
         };
         const COUNTRY_FLAGS = {vietnam:'🇻🇳', thailand:'🇹🇭', india:'🇮🇳', indonesia:'🇮🇩'};
         const HF_DEST = {THAI:'@thailandparsing', VIET:'@vietnamparsing', BIKE:'@visaranvietnam'};
@@ -11678,7 +11678,7 @@
                 ).join('');
             }
 
-            const catNames = {real_estate:'Недвижимость', realestate:'Недвижимость', transport:'Транспорт', restaurants:'Рестораны', entertainment:'Развлечения', tours:'Экскурсии', visas:'Визаран', kids:'Дети', settings:'Дети', medicine:'Медицина', money_exchange:'Обмен валют', exchange:'Обмен валют', chat:'Все чаты', marketplace:'Барахолка'};
+            const catNames = {real_estate:'Недвижимость', realestate:'Недвижимость', transport:'Транспорт', restaurants:'Рестораны', entertainment:'Развлечения', tours:'Экскурсии', visas:'Визаран', kids:'Дети', settings:'Дети', medicine:'Медицина', money_exchange:'Финансы', exchange:'Финансы', chat:'Все чаты', marketplace:'Барахолка'};
             const catsEl = document.getElementById('a-categories');
             const cats = d.categories || {};
             if (Object.keys(cats).length === 0) {
@@ -11986,7 +11986,7 @@
                         <option value="tours">Экскурсии</option>
                         <option value="transport">Транспорт</option>
                         <option value="real_estate">Недвижимость</option>
-                        <option value="money_exchange">Обмен денег</option>
+                        <option value="money_exchange">Финансы</option>
                         <option value="entertainment">Развлечения</option>
                         <option value="visas">Визаран</option>
                         <option value="news">Фотосессия</option>

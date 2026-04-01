@@ -33,6 +33,7 @@ EXTRA_CHANNELS = {
     'GAkidsclub':           ('kids', None),
     'GAclinic_vn':          ('medicine', None),
     'GAfoods':              ('restaurants', None),
+    'GApayments':           ('money_exchange', None),
 }
 
 TH_EXTRA_CHANNELS = {
@@ -1011,6 +1012,7 @@ PRIVATE_SUPERGROUPS = {
     'GAkidsclub': -1003651083423,
     'GAclinic_vn': -1003435759447,
     'GAfoods': -1003824692347,
+    'GApayments': -1003752108127,
 }
 
 CHANNEL_CITY_MAP = {
@@ -1020,6 +1022,7 @@ CHANNEL_CITY_MAP = {
     'GAkidsclub': 'Вьетнам',
     'GAclinic_vn': 'Вьетнам',
     'GAfoods': 'Вьетнам',
+    'GApayments': 'Вьетнам',
 }
 
 CITY_KEYWORDS = {

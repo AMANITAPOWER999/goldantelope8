@@ -640,7 +640,7 @@ def groups_stats():
         'Новости': 'news',
         'Визаран': 'visas',
         'Экскурсии': 'tours',
-        'Обмен денег': 'money_exchange',
+        'Финансы': 'money_exchange',
         'Транспорт': 'transport',
         'Медицина': 'medicine'
     }
@@ -1211,7 +1211,7 @@ def get_listings(category):
     else:
         filtered = [x for x in listings if not x.get('hidden', False)]
     
-    _GA_TRUSTED_SOURCES = {'gavibeshub', 'GAvisarun', 'GAtours', 'GAkidsclub', 'GAclinic_vn', 'GAfoods'}
+    _GA_TRUSTED_SOURCES = {'gavibeshub', 'GAvisarun', 'GAtours', 'GAkidsclub', 'GAclinic_vn', 'GAfoods', 'GApayments'}
 
     if category == 'entertainment':
         _ENT_KEYWORDS = [
@@ -2404,7 +2404,7 @@ def submit_listing():
         save_pending_listings(country, pending)
         
         category_names = {
-            'money_exchange': 'Обмен денег',
+            'money_exchange': 'Финансы',
             'kids': 'Для детей',
             'marketplace': 'Барахолка',
             'visas': 'Визаран',
